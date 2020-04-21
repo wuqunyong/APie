@@ -21,12 +21,27 @@
 
 using namespace Envoy;
 
+class PortCb : public Network::ListenerCallbacks
+{
+	void onAccept(evutil_socket_t fd)
+	{
+		std::cout << fd << std::endl;
+	}
+
+	void onNewConnection(evutil_socket_t fd)
+	{
+
+	}
+};
+
 int main(int argc, char **argv)
 {
 	Event::Libevent::Global::initialize();
 	PlatformImpl platform;
 
+	PortCb cb;
 	Event::DispatchedThreadImpl test1;
+	auto ptrListen = test1.dispatcher().createListener(cb, 5007, 1024);
 	test1.start();
 
 	std::cin.get();

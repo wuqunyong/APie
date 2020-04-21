@@ -73,7 +73,15 @@ void DispatcherImpl::deferredDelete(DeferredDeletablePtr&& to_delete) {
   }
 }
 
-void DispatcherImpl::exit() { base_scheduler_.loopExit(); }
+void DispatcherImpl::start()
+{
+	mailbox_.registerFd(&base_scheduler_.base(), processCommand, this);
+}
+
+void DispatcherImpl::exit() 
+{ 
+	base_scheduler_.loopExit();
+}
 
 SignalEventPtr DispatcherImpl::listenForSignal(int signal_num, SignalCb cb) {
   return SignalEventPtr{new SignalEventImpl(*this, signal_num, cb)};
@@ -92,13 +100,13 @@ void DispatcherImpl::post(std::function<void()> callback) {
   }
 }
 
-void DispatcherImpl::run(RunType type) {
+void DispatcherImpl::run(void) {
   // Flush all post callbacks before we run the event loop. We do this because there are post
   // callbacks that have to get run before the initial event loop starts running. libevent does
   // not guarantee that events are run in any particular order. So even if we post() and call
   // event_base_once() before some other event, the other event might get called first.
   runPostCallbacks();
-  base_scheduler_.run(type);
+  base_scheduler_.run();
 }
 
 void DispatcherImpl::runPostCallbacks() {
@@ -120,6 +128,16 @@ void DispatcherImpl::runPostCallbacks() {
     }
     callback();
   }
+}
+
+void DispatcherImpl::handleCommand()
+{
+
+}
+
+void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void *arg)
+{
+	((DispatcherImpl*)arg)->handleCommand();
 }
 
 } // namespace Event

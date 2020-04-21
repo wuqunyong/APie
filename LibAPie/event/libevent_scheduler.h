@@ -23,7 +23,7 @@ public:
    *
    * @param mode The mode in which to run the event loop.
    */
-  void run(Dispatcher::RunType mode);
+  void run(void);
 
   /**
    * Exits the libevent loop.

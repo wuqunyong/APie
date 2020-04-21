@@ -13,6 +13,9 @@
 #include "../event/libevent.h"
 #include "../event/libevent_scheduler.h"
 
+#include "../network/Mailbox.h"
+#include "../network/Command.h"
+
 namespace Envoy {
 namespace Event {
 
@@ -34,14 +37,17 @@ public:
   TimerPtr createTimer(TimerCb cb) override;
   void deferredDelete(DeferredDeletablePtr&& to_delete) override;
 
+  void start() override;
   void exit() override;
   SignalEventPtr listenForSignal(int signal_num, SignalCb cb) override;
   void post(std::function<void()> callback) override;
-  void run(RunType type) override;
+  void run(void) override;
 
 private:
   void runPostCallbacks();
+  void handleCommand();
 
+  static void processCommand(evutil_socket_t fd, short event, void *arg);
 
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;
@@ -53,6 +59,8 @@ private:
   //std::list<std::function<void()>> post_callbacks_ GUARDED_BY(post_lock_);
   std::list<std::function<void()>> post_callbacks_;
   bool deferred_deleting_{};
+
+  APie::Mailbox<APie::Command> mailbox_;
 };
 
 } // namespace Event

@@ -160,9 +160,12 @@
     <ClInclude Include="event\timer_impl.h" />
     <ClInclude Include="MysqlDriver\MySQLConnector.h" />
     <ClInclude Include="MysqlDriver\ResultSet.h" />
+    <ClInclude Include="network\Command.h" />
     <ClInclude Include="network\listener.h" />
     <ClInclude Include="network\listener_impl.h" />
+    <ClInclude Include="network\Mailbox.h" />
     <ClInclude Include="network\platform_impl.h" />
+    <ClInclude Include="network\Signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +183,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp" />
     <ClCompile Include="MysqlDriver\ResultSet.cpp" />
+    <ClCompile Include="network\Command.cpp" />
     <ClCompile Include="network\listener_impl.cc" />
+    <ClCompile Include="network\Signaler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

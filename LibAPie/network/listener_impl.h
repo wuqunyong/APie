@@ -12,6 +12,7 @@ namespace Network {
 class ListenerImpl : public Listener {
 public:
   ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCallbacks& cb, uint16_t port, int backlog);
+  ~ListenerImpl();
 
   void disable() override;
   void enable() override;

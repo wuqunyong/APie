@@ -60,6 +60,8 @@ public:
    */
   virtual void deferredDelete(DeferredDeletablePtr&& to_delete) PURE;
 
+  virtual void start() PURE;
+
   /**
    * Exit the event loop.
    */
@@ -96,7 +98,7 @@ public:
     RunUntilExit // Runs the event-loop until loopExit() is called, blocking
                  // until there are pending or active events.
   };
-  virtual void run(RunType type) PURE;
+  virtual void run(void) PURE;
 
 };
 

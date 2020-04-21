@@ -34,6 +34,11 @@ ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCallbacks&
 	setupServerSocket(dispatcher, port, backlog);
 }
 
+ListenerImpl::~ListenerImpl()
+{
+
+}
+
 void ListenerImpl::setupServerSocket(Event::DispatcherImpl& dispatcher, uint16_t port, int backlog) {
 	memset(&listener_add_, 0, sizeof(listener_add_));
 	listener_add_.sin_family = AF_INET;

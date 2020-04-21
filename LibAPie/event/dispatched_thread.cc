@@ -22,9 +22,11 @@ void DispatchedThreadImpl::exit() {
   }
 }
 
-void DispatchedThreadImpl::threadRoutine(void) {
-  dispatcher_->run(Dispatcher::RunType::Block);
-  dispatcher_.reset();
+void DispatchedThreadImpl::threadRoutine(void) 
+{
+	dispatcher_->start();
+	dispatcher_->run();
+	dispatcher_.reset();
 }
 
 } // namespace Event
