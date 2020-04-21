@@ -19,7 +19,13 @@ void DispatchedThreadImpl::exit() {
   if (thread_.joinable()) {
     dispatcher_->exit();
     thread_.join();
+	listener_.clear();
   }
+}
+
+void DispatchedThreadImpl::push(std::shared_ptr<Network::Listener> listener)
+{
+	listener_.push_back(listener);
 }
 
 void DispatchedThreadImpl::threadRoutine(void) 

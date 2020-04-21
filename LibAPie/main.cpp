@@ -18,27 +18,17 @@
 
 #include "api/api_impl.h"
 #include "network/platform_impl.h"
+#include "network/Ctx.h"
 
 using namespace Envoy;
 
-class PortCb : public Network::ListenerCallbacks
-{
-	void onAccept(evutil_socket_t fd)
-	{
-		std::cout << fd << std::endl;
-	}
-
-};
 
 int main(int argc, char **argv)
 {
 	Event::Libevent::Global::initialize();
 	PlatformImpl platform;
 
-	PortCb cb;
-	Event::DispatchedThreadImpl test1;
-	auto ptrListen = test1.dispatcher().createListener(cb, 5007, 1024);
-	test1.start();
+	Envoy::CtxSingleton::get().init();
 
 	std::cin.get();
 

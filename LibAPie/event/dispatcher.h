@@ -47,7 +47,7 @@ public:
    *        another listener after restoring the destination address of a new connection.
    * @return Network::ListenerPtr a new listener that is owned by the caller.
    */
-  virtual Network::ListenerPtr createListener(Network::ListenerCallbacks& cb, uint16_t port, int backlog) PURE;
+  virtual Network::ListenerPtr createListener(Network::ListenerCbPtr cb, uint16_t port, int backlog) PURE;
 
   /**
    * Allocate a timer. @see Timer for docs on how to use the timer.

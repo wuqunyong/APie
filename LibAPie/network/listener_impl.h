@@ -11,7 +11,7 @@ namespace Network {
  */
 class ListenerImpl : public Listener {
 public:
-  ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCallbacks& cb, uint16_t port, int backlog);
+  ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCbPtr cb, uint16_t port, int backlog);
   ~ListenerImpl();
 
   void disable() override;
@@ -21,7 +21,7 @@ protected:
   void setupServerSocket(Event::DispatcherImpl& dispatcher, uint16_t port, int backlog);
 
   Event::DispatcherImpl& dispatcher_;
-  ListenerCallbacks& cb_;
+  ListenerCbPtr cb_;
 
 private:
   static void listenCallback(evconnlistener*, evutil_socket_t fd, sockaddr* remote_addr, int remote_addr_len, void* arg);

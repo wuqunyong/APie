@@ -33,7 +33,7 @@ public:
   event_base& base() { return base_scheduler_.base(); }
 
   void clearDeferredDeleteList() override;
-  Network::ListenerPtr createListener(Network::ListenerCallbacks& cb, uint16_t port, int backlog) override;
+  Network::ListenerPtr createListener(Network::ListenerCbPtr cb, uint16_t port, int backlog) override;
   TimerPtr createTimer(TimerCb cb) override;
   void deferredDelete(DeferredDeletablePtr&& to_delete) override;
 

@@ -15,7 +15,7 @@ namespace Network {
 
 void ListenerImpl::listenCallback(evconnlistener*, evutil_socket_t fd, sockaddr* remote_addr, int remote_addr_len, void* arg) {
   ListenerImpl* listener = static_cast<ListenerImpl*>(arg);
-  listener->cb_.onAccept(fd);
+  listener->cb_->onAccept(fd);
 }
 
 void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
@@ -27,7 +27,7 @@ void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
 }
 
 
-ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCallbacks& cb, uint16_t port, int backlog) :
+ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCbPtr cb, uint16_t port, int backlog) :
 	dispatcher_(dispatcher),
 	cb_(cb),
 	listener_(nullptr) {

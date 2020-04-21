@@ -9,6 +9,7 @@
 #include "../event/dispatcher.h"
 #include "../event/timer.h"
 #include "../event/dispatcher_impl.h"
+#include "../network/listener.h"
 
 namespace Envoy {
 namespace Event {
@@ -34,6 +35,16 @@ namespace Event {
  *
  * TODO(dnoe): Worker should probably be refactored to leverage this.
  */
+
+enum class EThreadType 
+{ 
+	TT_None = 0, 
+	TT_Listen, 
+	TT_IO,
+	TT_Logic,
+	TT_Log,
+};
+
 class DispatchedThreadImpl  {
 public:
   DispatchedThreadImpl() : dispatcher_(std::make_unique<Event::DispatcherImpl>()) {}
@@ -46,6 +57,7 @@ public:
   void start(void);
 
   Dispatcher& dispatcher() { return *dispatcher_; }
+  void push(std::shared_ptr<Network::Listener> listener);
 
   /**
    * Exit the dispatched thread. Will block until the thread joins.
@@ -57,6 +69,7 @@ private:
 
   DispatcherPtr dispatcher_;
   std::thread thread_;
+  std::vector<std::shared_ptr<Network::Listener>> listener_;
 };
 
 } // namespace Event

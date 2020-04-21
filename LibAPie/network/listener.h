@@ -22,6 +22,7 @@ public:
   virtual void onAccept(evutil_socket_t fd) PURE;
 };
 
+typedef std::shared_ptr<ListenerCallbacks> ListenerCbPtr;
 
 /**
  * An abstract socket listener. Free the listener to stop listening on the socket.

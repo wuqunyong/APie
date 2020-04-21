@@ -16,6 +16,9 @@
     <Filter Include="api">
       <UniqueIdentifier>{7c3d68e4-118c-46e5-9b76-555421e04c51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="singleton">
+      <UniqueIdentifier>{7e65b5e2-74b0-4fa9-9c91-c8a13237678a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MysqlDriver\MySQLConnector.h">
@@ -111,6 +114,18 @@
     <ClInclude Include="network\Signaler.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="network\Ctx.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton\const_singleton.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton\instance.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton\threadsafe_singleton.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -160,6 +175,9 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\Signaler.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\Ctx.cpp">
       <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
