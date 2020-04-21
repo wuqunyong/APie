@@ -55,7 +55,7 @@ bool MySQLConnector::connect(void)
 		//int rc = mysql_set_charset_name(this->mysql_, "utf8");
 
 		std::string sSetNames("SET NAMES `utf8`");
-		bool bResult = this->executeSQL(sSetNames.c_str(),sSetNames.size());
+		bool bResult = this->executeSQL(sSetNames.c_str(), (unsigned long)sSetNames.size());
 
 		ss << "mysql_autocommit|" << result << "," << sSetNames << "|" << bResult;
 		
@@ -189,9 +189,9 @@ bool MySQLConnector::escapeString(const std::string& from, std::string& to)
         return false;
     }
 
-    uint32_t file_len = 2*from.size() + 1;
+    size_t file_len = 2*from.size() + 1;
     char * chunk = new char [file_len];
-    unsigned long real_len = mysql_real_escape_string(this->mysql_, chunk, from.c_str(), from.size());
+    unsigned long real_len = mysql_real_escape_string(this->mysql_, chunk, from.c_str(), (unsigned long)from.size());
 
     //std::string str_image(chunk, real_len);
     //to = str_image;

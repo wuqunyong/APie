@@ -4,8 +4,17 @@
     <Filter Include="MysqlDriver">
       <UniqueIdentifier>{e1d2a02f-ef6b-4ceb-9bb0-f6b9024196f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Net">
-      <UniqueIdentifier>{8a762212-6d37-45bf-afac-b4af05091510}</UniqueIdentifier>
+    <Filter Include="common">
+      <UniqueIdentifier>{09156f59-cf45-4d8a-9ad3-547f8caab9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="event">
+      <UniqueIdentifier>{a437f882-3820-442e-abde-72a18b1cf68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{15b6a6e4-0a2f-4789-9afa-80ed1a50d5ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
+      <UniqueIdentifier>{7c3d68e4-118c-46e5-9b76-555421e04c51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -15,8 +24,83 @@
     <ClInclude Include="MysqlDriver\ResultSet.h">
       <Filter>MysqlDriver</Filter>
     </ClInclude>
-    <ClInclude Include="Net\WindowsPlatform.h">
-      <Filter>Net</Filter>
+    <ClInclude Include="common\c_smart_ptr.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\empty_string.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\enum_to_int.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pure.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\time.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="event\deferred_deletable.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\dispatched_thread.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\dispatcher.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\dispatcher_impl.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\event_impl_base.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\file_event.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\file_event_impl.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\libevent.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\libevent_scheduler.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\real_time_system.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\signal.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\signal_impl.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\timer.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="event\timer_impl.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="network\listener.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\listener_impl.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="api\api.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="api\api_impl.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="network\windows_platform.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="common\utility.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="network\platform_impl.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -27,5 +111,41 @@
       <Filter>MysqlDriver</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="event\dispatched_thread.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\dispatcher_impl.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\event_impl_base.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\file_event_impl.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\libevent.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\libevent_scheduler.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\real_time_system.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\signal_impl.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="event\timer_impl.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="network\listener_impl.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="api\api_impl.cc">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="common\utility.cc">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

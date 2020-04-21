@@ -2,7 +2,7 @@
 #define __PIE_MYSQLDRIVER_RESULTSET__
 
 #ifdef WIN32
-#include "../Net/WindowsPlatform.h"
+#include "../network/windows_platform.h"
 #else
 #include <pthread.h>
 #endif

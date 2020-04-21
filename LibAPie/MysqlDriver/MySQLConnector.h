@@ -2,7 +2,7 @@
 #define __PIE_MYSQLDRIVER_MYSQL_CONNECTOR__
 
 #ifdef WIN32
-#include "../Net/WindowsPlatform.h"
+#include "../network/windows_platform.h"
 #else
 #include <unistd.h>
 #include <pthread.h>

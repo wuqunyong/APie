@@ -74,8 +74,8 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\MySQL\MySQL Server 5.7\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,11 +98,11 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>libmysql.lib;mysqlclient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,14 +136,51 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="api\api.h" />
+    <ClInclude Include="api\api_impl.h" />
+    <ClInclude Include="common\c_smart_ptr.h" />
+    <ClInclude Include="common\empty_string.h" />
+    <ClInclude Include="common\enum_to_int.h" />
+    <ClInclude Include="common\pure.h" />
+    <ClInclude Include="common\time.h" />
+    <ClInclude Include="common\utility.h" />
+    <ClInclude Include="event\deferred_deletable.h" />
+    <ClInclude Include="event\dispatched_thread.h" />
+    <ClInclude Include="event\dispatcher.h" />
+    <ClInclude Include="event\dispatcher_impl.h" />
+    <ClInclude Include="event\event_impl_base.h" />
+    <ClInclude Include="event\file_event.h" />
+    <ClInclude Include="event\file_event_impl.h" />
+    <ClInclude Include="event\libevent.h" />
+    <ClInclude Include="event\libevent_scheduler.h" />
+    <ClInclude Include="event\real_time_system.h" />
+    <ClInclude Include="event\signal.h" />
+    <ClInclude Include="event\signal_impl.h" />
+    <ClInclude Include="event\timer.h" />
+    <ClInclude Include="event\timer_impl.h" />
     <ClInclude Include="MysqlDriver\MySQLConnector.h" />
     <ClInclude Include="MysqlDriver\ResultSet.h" />
-    <ClInclude Include="Net\WindowsPlatform.h" />
+    <ClInclude Include="network\listener.h" />
+    <ClInclude Include="network\listener_impl.h" />
+    <ClInclude Include="network\platform_impl.h" />
+    <ClInclude Include="network\windows_platform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="api\api_impl.cc" />
+    <ClCompile Include="common\utility.cc" />
+    <ClCompile Include="event\dispatched_thread.cc" />
+    <ClCompile Include="event\dispatcher_impl.cc" />
+    <ClCompile Include="event\event_impl_base.cc" />
+    <ClCompile Include="event\file_event_impl.cc" />
+    <ClCompile Include="event\libevent.cc" />
+    <ClCompile Include="event\libevent_scheduler.cc" />
+    <ClCompile Include="event\real_time_system.cc" />
+    <ClCompile Include="event\signal_impl.cc" />
+    <ClCompile Include="event\timer_impl.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp" />
     <ClCompile Include="MysqlDriver\ResultSet.cpp" />
+    <ClCompile Include="network\listener_impl.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
