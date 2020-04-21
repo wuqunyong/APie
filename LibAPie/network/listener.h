@@ -20,8 +20,6 @@ public:
   virtual ~ListenerCallbacks() {}
 
   virtual void onAccept(evutil_socket_t fd) PURE;
-
-  virtual void onNewConnection(evutil_socket_t fd) PURE;
 };
 
 

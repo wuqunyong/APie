@@ -28,10 +28,6 @@ class PortCb : public Network::ListenerCallbacks
 		std::cout << fd << std::endl;
 	}
 
-	void onNewConnection(evutil_socket_t fd)
-	{
-
-	}
 };
 
 int main(int argc, char **argv)
