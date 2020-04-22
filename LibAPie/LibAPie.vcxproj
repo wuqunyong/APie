@@ -160,6 +160,7 @@
     <ClInclude Include="event\timer_impl.h" />
     <ClInclude Include="MysqlDriver\MySQLConnector.h" />
     <ClInclude Include="MysqlDriver\ResultSet.h" />
+    <ClInclude Include="network\address.h" />
     <ClInclude Include="network\Command.h" />
     <ClInclude Include="network\Ctx.h" />
     <ClInclude Include="network\listener.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp" />
     <ClCompile Include="MysqlDriver\ResultSet.cpp" />
+    <ClCompile Include="network\address.cc" />
     <ClCompile Include="network\Command.cpp" />
     <ClCompile Include="network\Ctx.cpp" />
     <ClCompile Include="network\listener_impl.cc" />

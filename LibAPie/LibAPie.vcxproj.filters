@@ -126,6 +126,9 @@
     <ClInclude Include="singleton\threadsafe_singleton.h">
       <Filter>singleton</Filter>
     </ClInclude>
+    <ClInclude Include="network\address.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -178,6 +181,9 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\Ctx.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\address.cc">
       <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
