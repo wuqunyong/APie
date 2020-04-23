@@ -9,6 +9,7 @@
 #include <errno.h>
 
 #include "../serialization/ProtocolHead.h"
+#include "../event/dispatcher_impl.h"
 
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
@@ -49,17 +50,9 @@ bool Connection::validProtocol(ProtocolType iType)
 
 void Connection::close(std::string sInfo)
 {
-	uint64_t iSerialNum = this->iSerialNum;
-
-	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum;
-
-	//PIE_LOG("Dispatch/Dispatch", PIE_CYCLE_HOUR, PIE_NOTICE, "%s close:%s:%d->%s:%d   reason:%s", ss.str().c_str(), this->address.c_str(), this->port, this->sListenAddress.c_str(), this->iListenPort, sInfo.c_str());
-
-	//APie::IOThread::unregisterSession(iSerialNum);
-
 	this->sendConnectionClose();
-	delete this;
+
+	Event::DispatcherImpl::delConnection(this->iSerialNum);
 }
 
 Connection::~Connection()

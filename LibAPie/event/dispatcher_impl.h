@@ -6,6 +6,7 @@
 #include <vector>
 #include <mutex>
 #include <atomic>
+#include <map>
 
 #include "../api/api.h"
 #include "../common/time.h"
@@ -16,6 +17,7 @@
 
 #include "../network/Mailbox.h"
 #include "../network/Command.h"
+#include "../network/connection.h"
 
 namespace Envoy {
 namespace Event {
@@ -45,16 +47,20 @@ public:
   void run(void) override;
   void push(Command& cmd) override;
 
-private:
-	void handleNewConnect(PassiveConnect *itemPtr);
-
+ public:
+	static void addConnection(std::shared_ptr<Connection> ptrConnection);
+	static std::shared_ptr<Connection> getConnection(uint64_t iSerialNum);
+	static void delConnection(uint64_t iSerialNum);
 
 private:
   void runPostCallbacks();
   void handleCommand();
 
+  void handleNewConnect(PassiveConnect *itemPtr);
+
   static void processCommand(evutil_socket_t fd, short event, void *arg);
   static uint64_t generatorSerialNum();
+
 
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;
@@ -70,6 +76,9 @@ private:
   APie::Mailbox<Command> mailbox_;
 
   static std::atomic<uint64_t> serial_num_;
+
+  static std::mutex connecton_sync_;
+  static std::map<uint64_t, std::shared_ptr<Connection>> connection_map_;
 };
 
 } // namespace Event

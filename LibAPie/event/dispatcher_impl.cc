@@ -24,6 +24,8 @@ namespace Envoy {
 namespace Event {
 
 	std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
+	std::mutex DispatcherImpl::connecton_sync_;
+	std::map<uint64_t, std::shared_ptr<Connection>> DispatcherImpl::connection_map_;
 
 DispatcherImpl::DispatcherImpl()
 	: deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
@@ -185,6 +187,30 @@ uint64_t DispatcherImpl::generatorSerialNum()
 	return serial_num_;
 }
 
+void DispatcherImpl::addConnection(std::shared_ptr<Connection> ptrConnection)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	connection_map_[ptrConnection->getSerialNum()] = ptrConnection;
+}
+
+std::shared_ptr<Connection> DispatcherImpl::getConnection(uint64_t iSerialNum)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	auto findIte = connection_map_.find(iSerialNum);
+	if (findIte == connection_map_.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+void DispatcherImpl::delConnection(uint64_t iSerialNum)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	connection_map_.erase(iSerialNum);
+}
+
 static void readcb(struct bufferevent *bev, void *arg)
 {
 	Connection* ptrConnection = (Connection *)arg;
@@ -223,6 +249,8 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 
 	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
 	bufferevent_enable(bev, EV_READ | EV_WRITE);
+
+	DispatcherImpl::addConnection(ptrConnection);
 }
 
 } // namespace Event

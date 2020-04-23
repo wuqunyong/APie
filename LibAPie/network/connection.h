@@ -36,8 +36,7 @@ namespace Envoy
 	};
 
     class Connection :
-        public i_poll_events,
-		public std::enable_shared_from_this<Connection>
+        public i_poll_events
     {
     public:
 		Connection(uint64_t iSerialNum, bufferevent *bev, ProtocolType iType);
