@@ -5,6 +5,7 @@
 #include <list>
 #include <vector>
 #include <mutex>
+#include <atomic>
 
 #include "../api/api.h"
 #include "../common/time.h"
@@ -42,12 +43,18 @@ public:
   SignalEventPtr listenForSignal(int signal_num, SignalCb cb) override;
   void post(std::function<void()> callback) override;
   void run(void) override;
+  void push(Command& cmd) override;
+
+private:
+	void handleNewConnect(PassiveConnect *itemPtr);
+
 
 private:
   void runPostCallbacks();
   void handleCommand();
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
+  static uint64_t generatorSerialNum();
 
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;
@@ -60,7 +67,9 @@ private:
   std::list<std::function<void()>> post_callbacks_;
   bool deferred_deleting_{};
 
-  APie::Mailbox<APie::Command> mailbox_;
+  APie::Mailbox<Command> mailbox_;
+
+  static std::atomic<uint64_t> serial_num_;
 };
 
 } // namespace Event

@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 	PlatformImpl platform;
 
 	Envoy::CtxSingleton::get().init();
+	Envoy::CtxSingleton::get().start();
 
 	std::cin.get();
 

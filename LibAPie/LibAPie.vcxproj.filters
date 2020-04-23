@@ -19,6 +19,9 @@
     <Filter Include="singleton">
       <UniqueIdentifier>{7e65b5e2-74b0-4fa9-9c91-c8a13237678a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="serialization">
+      <UniqueIdentifier>{2d4affed-537d-4fd6-aaa6-a46dc71a0c43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MysqlDriver\MySQLConnector.h">
@@ -129,6 +132,18 @@
     <ClInclude Include="network\address.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="network\i_poll_events.hpp">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\connection.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="serialization\ByteBuffer.h">
+      <Filter>serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="serialization\ProtocolHead.h">
+      <Filter>serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -185,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="network\address.cc">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\connection.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="serialization\ByteBuffer.cpp">
+      <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="serialization\ProtocolHead.cpp">
+      <Filter>serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

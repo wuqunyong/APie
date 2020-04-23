@@ -51,9 +51,9 @@ namespace APie
 			signaler.send();
 		}
 
-		int size()
+		size_t size()
 		{
-			int iCount = 0;
+			size_t iCount = 0;
 			sync.lock();
 			iCount = this->pipe.size();
 			sync.unlock();

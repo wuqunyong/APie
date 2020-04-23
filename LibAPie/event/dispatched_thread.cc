@@ -11,21 +11,32 @@ namespace Envoy {
 namespace Event {
 
 void DispatchedThreadImpl::start(void) {
-
+	state_ = DTState::DTS_Running;
 	thread_ = std::thread([this]() -> void { threadRoutine(); });
 }
 
+DTState DispatchedThreadImpl::state()
+{
+	return state_;
+}
+
 void DispatchedThreadImpl::exit() {
-  if (thread_.joinable()) {
-    dispatcher_->exit();
-    thread_.join();
-	listener_.clear();
-  }
+	state_ = DTState::DTS_Exit;
+	if (thread_.joinable()) {
+		dispatcher_->exit();
+		thread_.join();
+		listener_.clear();
+	}
 }
 
 void DispatchedThreadImpl::push(std::shared_ptr<Network::Listener> listener)
 {
 	listener_.push_back(listener);
+}
+
+void DispatchedThreadImpl::push(Command& cmd)
+{
+	dispatcher_->push(cmd);
 }
 
 void DispatchedThreadImpl::threadRoutine(void) 

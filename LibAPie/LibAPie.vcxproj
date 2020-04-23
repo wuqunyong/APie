@@ -97,7 +97,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -162,13 +162,17 @@
     <ClInclude Include="MysqlDriver\ResultSet.h" />
     <ClInclude Include="network\address.h" />
     <ClInclude Include="network\Command.h" />
+    <ClInclude Include="network\connection.h" />
     <ClInclude Include="network\Ctx.h" />
+    <ClInclude Include="network\i_poll_events.hpp" />
     <ClInclude Include="network\listener.h" />
     <ClInclude Include="network\listener_impl.h" />
     <ClInclude Include="network\Mailbox.h" />
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\Signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
+    <ClInclude Include="serialization\ByteBuffer.h" />
+    <ClInclude Include="serialization\ProtocolHead.h" />
     <ClInclude Include="singleton\const_singleton.h" />
     <ClInclude Include="singleton\instance.h" />
     <ClInclude Include="singleton\threadsafe_singleton.h" />
@@ -190,9 +194,12 @@
     <ClCompile Include="MysqlDriver\ResultSet.cpp" />
     <ClCompile Include="network\address.cc" />
     <ClCompile Include="network\Command.cpp" />
+    <ClCompile Include="network\connection.cpp" />
     <ClCompile Include="network\Ctx.cpp" />
     <ClCompile Include="network\listener_impl.cc" />
     <ClCompile Include="network\Signaler.cpp" />
+    <ClCompile Include="serialization\ByteBuffer.cpp" />
+    <ClCompile Include="serialization\ProtocolHead.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

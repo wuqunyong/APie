@@ -13,6 +13,7 @@
 #include "../event/deferred_deletable.h"
 
 #include "../network/listener.h"
+#include "../network/Command.h"
 
 
 namespace Envoy {
@@ -83,22 +84,10 @@ public:
    */
   virtual void post(PostCb callback) PURE;
 
-  /**
-   * Run the event loop. This will not return until exit() is called either from within a callback
-   * or from a different thread.
-   * @param type specifies whether to run in blocking mode (run() will not return until exit() is
-   *              called) or non-blocking mode where only active events will be executed and then
-   *              run() will return.
-   */
-  enum class RunType {
-    Block,       // Executes any events that have been activated, then exit.
-    NonBlock,    // Waits for any pending events to activate, executes them,
-                 // then exits. Exits immediately if there are no pending or
-                 // active events.
-    RunUntilExit // Runs the event-loop until loopExit() is called, blocking
-                 // until there are pending or active events.
-  };
+
   virtual void run(void) PURE;
+
+  virtual void push(Command& cmd) PURE;
 
 };
 

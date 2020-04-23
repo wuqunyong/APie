@@ -25,8 +25,17 @@
 #include <vector>
 #include <stdlib.h>
 
-namespace APie
+#include <event2/util.h>
+
+#include "../network/connection.h"
+
+namespace Envoy
 {
+	struct PassiveConnect
+	{
+		evutil_socket_t iFd;
+		ProtocolType iType;
+	};
 
     //  This structure defines the commands that can be sent between threads.
     class Command
@@ -44,12 +53,18 @@ namespace APie
 		{
 			invalid_type = 0,
 
+			passive_connect,
+
 			done
         } type;
 
         union {
 			struct {
 			} invalid_type;
+
+			struct {
+				PassiveConnect* ptrData;
+			} passive_connect;
 
 			struct {
 			} done;

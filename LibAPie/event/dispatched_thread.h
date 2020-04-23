@@ -10,6 +10,7 @@
 #include "../event/timer.h"
 #include "../event/dispatcher_impl.h"
 #include "../network/listener.h"
+#include "../network/Command.h"
 
 namespace Envoy {
 namespace Event {
@@ -45,9 +46,22 @@ enum class EThreadType
 	TT_Log,
 };
 
+enum class DTState
+{
+	DTS_Ready = 0,
+	DTS_Running,
+	DTS_Exit,
+};
+
 class DispatchedThreadImpl  {
+	
 public:
-  DispatchedThreadImpl() : dispatcher_(std::make_unique<Event::DispatcherImpl>()) {}
+  DispatchedThreadImpl(EThreadType type) :
+	  type_(type),
+	  state_(DTState::DTS_Ready),
+	  dispatcher_(std::make_unique<Event::DispatcherImpl>())
+  {
+  }
 
   /**
    * Start the thread.
@@ -55,9 +69,11 @@ public:
    * @param guard_dog GuardDog instance to register with.
    */
   void start(void);
+  DTState state();
 
   Dispatcher& dispatcher() { return *dispatcher_; }
   void push(std::shared_ptr<Network::Listener> listener);
+  void push(Command& cmd);
 
   /**
    * Exit the dispatched thread. Will block until the thread joins.
@@ -67,6 +83,8 @@ public:
 private:
   void threadRoutine(void);
 
+  EThreadType type_;
+  DTState state_;
   DispatcherPtr dispatcher_;
   std::thread thread_;
   std::vector<std::shared_ptr<Network::Listener>> listener_;

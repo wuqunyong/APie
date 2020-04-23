@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <cassert>
 
 #include "../api/api.h"
 #include "../network/listener.h"
@@ -14,11 +15,15 @@
 #include "../event/signal_impl.h"
 #include "../event/timer_impl.h"
 #include "../network/listener_impl.h"
+#include "../network/connection.h"
 
 #include "event2/event.h"
+#include <assert.h>
 
 namespace Envoy {
 namespace Event {
+
+	std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
 
 DispatcherImpl::DispatcherImpl()
 	: deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
@@ -109,6 +114,11 @@ void DispatcherImpl::run(void) {
   base_scheduler_.run();
 }
 
+void DispatcherImpl::push(Command& cmd)
+{
+	mailbox_.send(cmd);
+}
+
 void DispatcherImpl::runPostCallbacks() {
   while (true) {
     // It is important that this declaration is inside the body of the loop so that the callback is
@@ -132,12 +142,87 @@ void DispatcherImpl::runPostCallbacks() {
 
 void DispatcherImpl::handleCommand()
 {
+	size_t iLoopCount = mailbox_.size();
 
+	while (iLoopCount >= 0)
+	{
+		iLoopCount--;
+
+		Command cmd;
+		int iResult = mailbox_.recv(cmd);
+		if (iResult != 0)
+		{
+			break;
+		}
+
+		switch (cmd.type)
+		{
+		case Command::passive_connect:
+		{
+			this->handleNewConnect(cmd.args.passive_connect.ptrData);
+			break;
+		}
+		default:
+		{
+			assert(false);
+		}
+		}
+
+		//  The assumption here is that each command is processed once only,
+		//  so deallocating it after processing is all right.
+		deallocateCommand(&cmd);
+	}
 }
 
 void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void *arg)
 {
 	((DispatcherImpl*)arg)->handleCommand();
+}
+
+uint64_t DispatcherImpl::generatorSerialNum()
+{
+	++serial_num_;
+	return serial_num_;
+}
+
+static void readcb(struct bufferevent *bev, void *arg)
+{
+	Connection* ptrConnection = (Connection *)arg;
+	ptrConnection->readcb();
+}
+
+static void writecb(struct bufferevent *bev, void *arg)
+{
+	Connection *ptrConnection = (Connection *)arg;
+	ptrConnection->writecb();
+}
+
+static void eventcb(struct bufferevent *bev, short what, void *arg)
+{
+	Connection *ptrConnection = (Connection *)arg;
+	ptrConnection->eventcb(what);
+}
+
+void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
+{
+	struct bufferevent *bev;
+	bev = bufferevent_socket_new(&base_scheduler_.base(), itemPtr->iFd, BEV_OPT_CLOSE_ON_FREE);
+	if (!bev)
+	{
+		evutil_closesocket(itemPtr->iFd);
+		return;
+	}
+
+	uint64_t iSerialNum = generatorSerialNum();
+	auto ptrConnection = std::make_shared<Connection>(iSerialNum, bev, itemPtr->iType);
+	if (nullptr == ptrConnection)
+	{
+		bufferevent_free(bev);
+		return;
+	}
+
+	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
+	bufferevent_enable(bev, EV_READ | EV_WRITE);
 }
 
 } // namespace Event
