@@ -12,6 +12,9 @@
 #include "../event/dispatcher_impl.h"
 
 
+#include "../../PBMsg/login_msg.pb.h"
+
+
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
 
@@ -143,7 +146,15 @@ void Connection::readPB()
 
 void Connection::recv(uint64_t iSerialNum, char* pBuf, uint32_t iLen)
 {
+	std::string requestStr(pBuf, iLen);
+	::login_msg::MSG_CLIENT_LOGINTOL request;
+	bool bResult = request.ParseFromString(requestStr);
+	if (!bResult)
+	{
+		return;
+	}
 
+	request.PrintDebugString();
 }
 
 void Connection::readcb()

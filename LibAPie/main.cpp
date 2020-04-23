@@ -20,6 +20,8 @@
 #include "network/platform_impl.h"
 #include "network/Ctx.h"
 
+#include "google/protobuf/message.h"
+
 using namespace Envoy;
 
 

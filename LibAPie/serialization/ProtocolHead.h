@@ -41,10 +41,10 @@ struct ProtocolHead
 		//this->iOpcode = 0;
 	}
 
-	uint8_t iMagic;
-	uint8_t iVersion;
+	uint16_t iMagic;
+	uint16_t iVersion;
 	uint32_t iBodyLen;  
-	uint16_t iCheckSum;
+	uint32_t iCheckSum;
 	//uint32_t iOpcode;
 };
 

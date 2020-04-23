@@ -74,7 +74,7 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -99,10 +99,11 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\PBMsg\login_msg.pb.h" />
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="singleton\threadsafe_singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\PBMsg\login_msg.pb.cc" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="common\utility.cc" />
     <ClCompile Include="event\dispatched_thread.cc" />

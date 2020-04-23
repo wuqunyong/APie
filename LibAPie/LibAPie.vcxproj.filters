@@ -22,6 +22,9 @@
     <Filter Include="serialization">
       <UniqueIdentifier>{2d4affed-537d-4fd6-aaa6-a46dc71a0c43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pb">
+      <UniqueIdentifier>{c495d341-8503-4616-8dae-5cb990bfce80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MysqlDriver\MySQLConnector.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="serialization\ProtocolHead.h">
       <Filter>serialization</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\login_msg.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -209,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="serialization\ProtocolHead.cpp">
       <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\login_msg.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
