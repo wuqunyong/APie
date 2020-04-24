@@ -4,7 +4,7 @@
 ByteBuffer& operator >> (ByteBuffer& stream, ProtocolHead& data)
 {
 	stream >> data.iMagic;
-	stream >> data.iVersion;
+	stream >> data.iOpcode;
 	stream >> data.iBodyLen;
 	stream >> data.iCheckSum;
 
@@ -14,7 +14,7 @@ ByteBuffer& operator >> (ByteBuffer& stream, ProtocolHead& data)
 ByteBuffer& operator << (ByteBuffer& stream, ProtocolHead data)
 {
 	stream << data.iMagic;
-	stream << data.iVersion;
+	stream << data.iOpcode;
 	stream << data.iBodyLen;
 	stream << data.iCheckSum;
 

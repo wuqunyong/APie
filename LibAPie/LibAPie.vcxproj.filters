@@ -150,6 +150,9 @@
     <ClInclude Include="..\PBMsg\login_msg.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="api\pb_handler.h">
+      <Filter>api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="..\PBMsg\login_msg.pb.cc">
       <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="api\pb_handler.cc">
+      <Filter>api</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

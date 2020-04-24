@@ -61,7 +61,7 @@ namespace Envoy
 
 		void readHttp();
 		void readPB();
-		void recv(uint64_t iSerialNum, char* pBuf, uint32_t iLen);
+		void recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr);
 
     private:
 		ProtocolType iType;

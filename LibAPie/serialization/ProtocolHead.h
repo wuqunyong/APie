@@ -35,14 +35,14 @@ struct ProtocolHead
 	ProtocolHead(void)
 	{
 		this->iMagic = 0x01;
-		this->iVersion = 0;
+		this->iOpcode = 0;
 		this->iBodyLen = 0;
 		this->iCheckSum = 0;
 		//this->iOpcode = 0;
 	}
 
 	uint16_t iMagic;
-	uint16_t iVersion;
+	uint16_t iOpcode;
 	uint32_t iBodyLen;  
 	uint32_t iCheckSum;
 	//uint32_t iOpcode;

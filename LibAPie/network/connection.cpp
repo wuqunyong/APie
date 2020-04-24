@@ -10,9 +10,12 @@
 
 #include "../serialization/ProtocolHead.h"
 #include "../event/dispatcher_impl.h"
-
+#include "../api/pb_handler.h"
+#include "../network/Ctx.h"
 
 #include "../../PBMsg/login_msg.pb.h"
+
+
 
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
@@ -131,7 +134,10 @@ void Connection::readPB()
 		evbuffer_remove(input, pBuf, iBodyLen);
 		pBuf[iBodyLen] = '\0';
 
-		this->recv(this->iSerialNum, pBuf, iBodyLen);
+		std::string requestStr(pBuf, iBodyLen);
+		free(pBuf);
+
+		this->recv(this->iSerialNum, head.iOpcode, requestStr);
 
 
 		size_t iCurLen = evbuffer_get_length(input);
@@ -144,17 +150,45 @@ void Connection::readPB()
 	}
 }
 
-void Connection::recv(uint64_t iSerialNum, char* pBuf, uint32_t iLen)
+void Connection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
-	std::string requestStr(pBuf, iLen);
-	::login_msg::MSG_CLIENT_LOGINTOL request;
-	bool bResult = request.ParseFromString(requestStr);
+	auto optionalData = Api::PBHandlerSingleton::get().get(iOpcode);
+	if (!optionalData)
+	{
+		return;
+	}
+
+
+	std::shared_ptr<::google::protobuf::Message> ptrMsg;
+	std::tie(ptrMsg, std::ignore) = *optionalData;
+
+	std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg->New());
+	newMsg->Clear();
+	//newMsg->CopyFrom(*ptrMsg);
+
+	bool bResult = newMsg->ParseFromString(requestStr);
 	if (!bResult)
 	{
 		return;
 	}
 
-	request.PrintDebugString();
+	newMsg->PrintDebugString();
+
+	PBRequest *itemObjPtr = new PBRequest;
+	itemObjPtr->iSerialNum = this->iSerialNum;
+	itemObjPtr->iOpcode = iOpcode;
+	itemObjPtr->ptrMsg = newMsg;
+
+	Command command;
+	command.type = Command::pb_reqeust;
+	command.args.pb_reqeust.ptrData = itemObjPtr;
+
+	auto ptrLogic = Envoy::CtxSingleton::get().getLogicThread();
+	if (ptrLogic == nullptr)
+	{
+		return;
+	}
+	ptrLogic->push(command);
 }
 
 void Connection::readcb()

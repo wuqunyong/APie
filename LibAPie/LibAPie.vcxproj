@@ -100,6 +100,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\libs;C:\Program Files\MySQL\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +141,7 @@
     <ClInclude Include="..\PBMsg\login_msg.pb.h" />
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
+    <ClInclude Include="api\pb_handler.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\empty_string.h" />
     <ClInclude Include="common\enum_to_int.h" />
@@ -182,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="..\PBMsg\login_msg.pb.cc" />
     <ClCompile Include="api\api_impl.cc" />
+    <ClCompile Include="api\pb_handler.cc" />
     <ClCompile Include="common\utility.cc" />
     <ClCompile Include="event\dispatched_thread.cc" />
     <ClCompile Include="event\dispatcher_impl.cc" />

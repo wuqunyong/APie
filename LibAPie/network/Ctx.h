@@ -26,6 +26,7 @@ namespace Envoy
 		void destroy();
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
+		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
 
     private:
 		typedef std::vector<std::shared_ptr<Event::DispatchedThreadImpl>> ThreadVec;

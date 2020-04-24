@@ -13,6 +13,15 @@ void Envoy::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::pb_reqeust:
+	{
+		if (NULL != cmd->args.pb_reqeust.ptrData)
+		{
+			delete cmd->args.pb_reqeust.ptrData;
+			cmd->args.pb_reqeust.ptrData = NULL;
+		}
+		break;
+	}
 	default:
 		/*  noop  */;
 	}

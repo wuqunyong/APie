@@ -88,6 +88,11 @@ void Ctx::start()
 			}
 		}
 	}
+
+	if (logic_thread_->state() == Event::DTState::DTS_Ready)
+	{
+		logic_thread_->start();
+	}
 }
 
 void Ctx::destroy()
@@ -110,4 +115,9 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()
 	return thread_[Event::EThreadType::TT_IO][iCur];
 }
 
+
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogicThread()
+{
+	return logic_thread_;
+}
 }

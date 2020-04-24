@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include <event2/util.h>
+#include <google/protobuf/message.h>
 
 #include "../network/connection.h"
 
@@ -35,6 +36,13 @@ namespace Envoy
 	{
 		evutil_socket_t iFd;
 		ProtocolType iType;
+	};
+
+	struct PBRequest
+	{
+		uint64_t iSerialNum;
+		uint32_t iOpcode;
+		std::shared_ptr<::google::protobuf::Message> ptrMsg;
 	};
 
     //  This structure defines the commands that can be sent between threads.
@@ -54,6 +62,7 @@ namespace Envoy
 			invalid_type = 0,
 
 			passive_connect,
+			pb_reqeust,
 
 			done
         } type;
@@ -65,6 +74,10 @@ namespace Envoy
 			struct {
 				PassiveConnect* ptrData;
 			} passive_connect;
+
+			struct {
+				PBRequest* ptrData;
+			} pb_reqeust;
 
 			struct {
 			} done;

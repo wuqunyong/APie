@@ -57,6 +57,8 @@ private:
   void handleCommand();
 
   void handleNewConnect(PassiveConnect *itemPtr);
+  void handlePBRequest(PBRequest *itemPtr);
+
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
   static uint64_t generatorSerialNum();

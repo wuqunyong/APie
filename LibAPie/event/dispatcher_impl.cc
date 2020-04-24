@@ -16,9 +16,11 @@
 #include "../event/timer_impl.h"
 #include "../network/listener_impl.h"
 #include "../network/connection.h"
+#include "../api/pb_handler.h"
 
 #include "event2/event.h"
 #include <assert.h>
+
 
 namespace Envoy {
 namespace Event {
@@ -146,7 +148,7 @@ void DispatcherImpl::handleCommand()
 {
 	size_t iLoopCount = mailbox_.size();
 
-	while (iLoopCount >= 0)
+	while (iLoopCount > 0)
 	{
 		iLoopCount--;
 
@@ -162,6 +164,11 @@ void DispatcherImpl::handleCommand()
 		case Command::passive_connect:
 		{
 			this->handleNewConnect(cmd.args.passive_connect.ptrData);
+			break;
+		}
+		case Command::pb_reqeust:
+		{
+			this->handlePBRequest(cmd.args.pb_reqeust.ptrData);
 			break;
 		}
 		default:
@@ -251,6 +258,19 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	bufferevent_enable(bev, EV_READ | EV_WRITE);
 
 	DispatcherImpl::addConnection(ptrConnection);
+}
+
+void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
+{
+	auto optionalData = Api::PBHandlerSingleton::get().get(itemPtr->iOpcode);
+	if (!optionalData)
+	{
+		return;
+	}
+
+	Api::PBCb cb;
+	std::tie(std::ignore, cb) = *optionalData;
+	cb(itemPtr->iSerialNum, itemPtr->ptrMsg);
 }
 
 } // namespace Event
