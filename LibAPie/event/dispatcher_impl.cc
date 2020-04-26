@@ -16,6 +16,8 @@
 #include "../event/timer_impl.h"
 #include "../network/listener_impl.h"
 #include "../network/connection.h"
+#include "../network/Ctx.h"
+
 #include "../api/pb_handler.h"
 
 #include "event2/event.h"
@@ -29,8 +31,9 @@ namespace Event {
 	std::mutex DispatcherImpl::connecton_sync_;
 	std::map<uint64_t, std::shared_ptr<Connection>> DispatcherImpl::connection_map_;
 
-DispatcherImpl::DispatcherImpl()
-	: deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
+DispatcherImpl::DispatcherImpl(uint32_t tid)
+	: tid_(tid),
+	deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
 	post_timer_(createTimer([this]() -> void { runPostCallbacks(); })),
 	current_to_delete_(&to_delete_1_) {}
 
@@ -171,6 +174,11 @@ void DispatcherImpl::handleCommand()
 			this->handlePBRequest(cmd.args.pb_reqeust.ptrData);
 			break;
 		}
+		case Command::send_data:
+		{
+			this->handleSendData(cmd.args.send_data.ptrData);
+			break;
+		}
 		default:
 		{
 			assert(false);
@@ -193,6 +201,7 @@ uint64_t DispatcherImpl::generatorSerialNum()
 	++serial_num_;
 	return serial_num_;
 }
+
 
 void DispatcherImpl::addConnection(std::shared_ptr<Connection> ptrConnection)
 {
@@ -247,7 +256,7 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	}
 
 	uint64_t iSerialNum = generatorSerialNum();
-	auto ptrConnection = std::make_shared<Connection>(iSerialNum, bev, itemPtr->iType);
+	auto ptrConnection = std::make_shared<Connection>(tid_, iSerialNum, bev, itemPtr->iType);
 	if (nullptr == ptrConnection)
 	{
 		bufferevent_free(bev);
@@ -272,6 +281,17 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	std::tie(std::ignore, cb) = *optionalData;
 	cb(itemPtr->iSerialNum, itemPtr->ptrMsg);
 }
+
+void DispatcherImpl::handleSendData(SendData *itemPtr)
+{
+	auto ptrConnection = getConnection(itemPtr->iSerialNum);
+	if (ptrConnection == nullptr)
+	{
+		return;
+	}
+	ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+}
+
 
 } // namespace Event
 } // namespace Envoy

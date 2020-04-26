@@ -15,6 +15,7 @@
 #include "../event/libevent.h"
 #include "../event/libevent_scheduler.h"
 
+#include "../network/object.hpp"
 #include "../network/Mailbox.h"
 #include "../network/Command.h"
 #include "../network/connection.h"
@@ -27,7 +28,7 @@ namespace Event {
  */
 class DispatcherImpl : public Dispatcher {
 public:
-  DispatcherImpl();
+  DispatcherImpl(uint32_t tid);
   ~DispatcherImpl();
 
   /**
@@ -58,12 +59,13 @@ private:
 
   void handleNewConnect(PassiveConnect *itemPtr);
   void handlePBRequest(PBRequest *itemPtr);
+  void handleSendData(SendData *itemPtr);
 
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
   static uint64_t generatorSerialNum();
 
-
+  uint32_t tid_;
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;
   TimerPtr post_timer_;

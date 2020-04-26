@@ -21,6 +21,7 @@
 
 #include "network/platform_impl.h"
 #include "network/Ctx.h"
+#include "network/output_stream.h"
 
 #include "google/protobuf/message.h"
 
@@ -45,6 +46,12 @@ int main(int argc, char **argv)
 		}
 		std::cout << "serialNum:" << serialNum << std::endl;
 		ptrReqeust->PrintDebugString();
+
+
+		::login_msg::MSG_CLIENT_LOGINTOL response;
+		response.set_user_id(ptrReqeust->user_id());
+
+		Network::OutputStream::sendMsg(serialNum, 1101, response);
 	};
 	Api::PBHandlerSingleton::get().registerHandler(1100, ::login_msg::MSG_CLIENT_LOGINTOL(), ptrCb);
 	std::cin.get();

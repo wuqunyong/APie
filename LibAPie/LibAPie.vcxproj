@@ -172,6 +172,8 @@
     <ClInclude Include="network\listener.h" />
     <ClInclude Include="network\listener_impl.h" />
     <ClInclude Include="network\Mailbox.h" />
+    <ClInclude Include="network\object.hpp" />
+    <ClInclude Include="network\output_stream.h" />
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\Signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
@@ -203,6 +205,8 @@
     <ClCompile Include="network\connection.cpp" />
     <ClCompile Include="network\Ctx.cpp" />
     <ClCompile Include="network\listener_impl.cc" />
+    <ClCompile Include="network\object.cpp" />
+    <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\Signaler.cpp" />
     <ClCompile Include="serialization\ByteBuffer.cpp" />
     <ClCompile Include="serialization\ProtocolHead.cpp" />

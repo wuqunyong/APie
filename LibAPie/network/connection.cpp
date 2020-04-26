@@ -23,7 +23,8 @@ static const unsigned int HTTP_BUF_LEN = 8192;
 
 namespace Envoy {
 
-Connection::Connection(uint64_t iSerialNum, bufferevent *bev, ProtocolType iType)
+Connection::Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType) :
+	tid_(tid)
 {
 	this->iSerialNum = iSerialNum;
 	this->bev = bev;
@@ -33,6 +34,11 @@ Connection::Connection(uint64_t iSerialNum, bufferevent *bev, ProtocolType iType
 uint64_t Connection::getSerialNum()
 {
 	return iSerialNum;
+}
+
+uint32_t Connection::getTId()
+{
+	return tid_;
 }
 
 bool Connection::validProtocol(ProtocolType iType)

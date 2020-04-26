@@ -20,6 +20,11 @@ DTState DispatchedThreadImpl::state()
 	return state_;
 }
 
+uint32_t DispatchedThreadImpl::getTId()
+{
+	return tid_;
+}
+
 void DispatchedThreadImpl::exit() {
 	state_ = DTState::DTS_Exit;
 	if (thread_.joinable()) {

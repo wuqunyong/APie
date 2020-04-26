@@ -56,10 +56,11 @@ enum class DTState
 class DispatchedThreadImpl  {
 	
 public:
-  DispatchedThreadImpl(EThreadType type) :
+  DispatchedThreadImpl(EThreadType type, uint32_t tid) :
 	  type_(type),
+	  tid_(tid),
 	  state_(DTState::DTS_Ready),
-	  dispatcher_(std::make_unique<Event::DispatcherImpl>())
+	  dispatcher_(std::make_unique<Event::DispatcherImpl>(tid))
   {
   }
 
@@ -70,6 +71,7 @@ public:
    */
   void start(void);
   DTState state();
+  uint32_t getTId();
 
   Dispatcher& dispatcher() { return *dispatcher_; }
   void push(std::shared_ptr<Network::Listener> listener);
@@ -84,6 +86,7 @@ private:
   void threadRoutine(void);
 
   EThreadType type_;
+  uint32_t tid_;
   DTState state_;
   DispatcherPtr dispatcher_;
   std::thread thread_;

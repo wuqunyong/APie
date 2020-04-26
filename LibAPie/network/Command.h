@@ -45,6 +45,12 @@ namespace Envoy
 		std::shared_ptr<::google::protobuf::Message> ptrMsg;
 	};
 
+	struct SendData
+	{
+		uint64_t iSerialNum;
+		std::string sData;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -63,6 +69,7 @@ namespace Envoy
 
 			passive_connect,
 			pb_reqeust,
+			send_data,
 
 			done
         } type;
@@ -79,6 +86,10 @@ namespace Envoy
 				PBRequest* ptrData;
 			} pb_reqeust;
 
+			struct {
+				SendData* ptrData;
+			} send_data;
+			
 			struct {
 			} done;
 

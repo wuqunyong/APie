@@ -153,6 +153,12 @@
     <ClInclude Include="api\pb_handler.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="network\object.hpp">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\output_stream.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
@@ -224,6 +230,12 @@
     </ClCompile>
     <ClCompile Include="api\pb_handler.cc">
       <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="network\object.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\output_stream.cc">
+      <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -24,6 +24,7 @@
 #include <string>
 
 #include "../network/i_poll_events.hpp"
+#include "../network/object.hpp"
 
 #include <event2/bufferevent.h>
 
@@ -39,9 +40,10 @@ namespace Envoy
         public i_poll_events
     {
     public:
-		Connection(uint64_t iSerialNum, bufferevent *bev, ProtocolType iType);
+		Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType);
 
 		uint64_t getSerialNum();
+		uint32_t getTId();
 
 		void readcb();
 		void writecb();
@@ -64,6 +66,7 @@ namespace Envoy
 		void recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr);
 
     private:
+		uint32_t tid_;
 		ProtocolType iType;
 		uint64_t iSerialNum;
 		bufferevent *bev;

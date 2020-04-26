@@ -12,8 +12,8 @@ Impl::Impl()
 {
 }
 
-Event::DispatcherPtr Impl::allocateDispatcher() {
-  return std::make_unique<Event::DispatcherImpl>();
+Event::DispatcherPtr Impl::allocateDispatcher(uint32_t tid) {
+  return std::make_unique<Event::DispatcherImpl>(tid);
 }
 
 

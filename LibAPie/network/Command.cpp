@@ -22,6 +22,15 @@ void Envoy::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::send_data:
+	{
+		if (NULL != cmd->args.send_data.ptrData)
+		{
+			delete cmd->args.send_data.ptrData;
+			cmd->args.send_data.ptrData = NULL;
+		}
+		break;
+	}
 	default:
 		/*  noop  */;
 	}

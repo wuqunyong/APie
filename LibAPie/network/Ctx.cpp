@@ -64,16 +64,16 @@ Ctx::~Ctx()
 
 void Ctx::init()
 {
-	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen);
+	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
 	auto ptrCb = std::make_shared<PortCb>();
 	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, 5007, 1024));
 
 	thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
-	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO));
-	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO));
+	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
+	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
 
-	logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic);
+	logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
 }
 
 void Ctx::start()
@@ -85,6 +85,7 @@ void Ctx::start()
 			if (elem->state() == Event::DTState::DTS_Ready)
 			{
 				elem->start();
+				thread_id_[elem->getTId()] = elem;
 			}
 		}
 	}
@@ -92,12 +93,19 @@ void Ctx::start()
 	if (logic_thread_->state() == Event::DTState::DTS_Ready)
 	{
 		logic_thread_->start();
+		thread_id_[logic_thread_->getTId()] = logic_thread_;
 	}
 }
 
 void Ctx::destroy()
 {
 
+}
+
+uint32_t Ctx::generatorTId()
+{
+	++tid_;
+	return tid_;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()
@@ -120,4 +128,16 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogicThread()
 {
 	return logic_thread_;
 }
+
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
+{
+	auto findIte = thread_id_.find(id);
+	if (findIte == thread_id_.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
 }
