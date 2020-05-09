@@ -17,8 +17,11 @@ SET GLOBAL time_zone = '+8:00';
 SET GLOBAL time_zone = 'Europe/Helsinki';
 SET @@global.time_zone = '+00:00';
 
-SELECT @@session.time_zone;
 
+SELECT @@session.time_zone;
+SET @@session.time_zone = "+00:00";  
+SELECT UNIX_TIMESTAMP();  
+SELECT FROM_UNIXTIME(1587905440)
 https://stackoverflow.com/questions/19023978/should-mysql-have-its-timezone-set-to-utc/19075291#19075291
 
 
@@ -28,3 +31,8 @@ SELECT CONVERT_TZ(FROM_UNIXTIME(1587902349), @@session.time_zone, '+00:00')
 
 mysql时间函数
 https://www.w3resource.com/mysql/date-and-time-functions/mysql-unix_timestamp-function.php
+
+
+path
+http://www.gameaipro.com
+jps+
