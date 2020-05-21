@@ -25,6 +25,9 @@
     <Filter Include="pb">
       <UniqueIdentifier>{c495d341-8503-4616-8dae-5cb990bfce80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{25f0b41d-abb2-4dd8-9b7e-e15aa35ebc23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MysqlDriver\MySQLConnector.h">
@@ -158,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="network\output_stream.h">
       <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="base\macros.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="common\macros.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -142,9 +142,11 @@
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
     <ClInclude Include="api\pb_handler.h" />
+    <ClInclude Include="base\macros.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\empty_string.h" />
     <ClInclude Include="common\enum_to_int.h" />
+    <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\time.h" />
     <ClInclude Include="common\utility.h" />
