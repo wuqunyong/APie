@@ -149,6 +149,7 @@
     <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\time.h" />
+    <ClInclude Include="common\time_conversion.h" />
     <ClInclude Include="common\utility.h" />
     <ClInclude Include="event\deferred_deletable.h" />
     <ClInclude Include="event\dispatched_thread.h" />

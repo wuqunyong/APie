@@ -168,6 +168,9 @@
     <ClInclude Include="common\macros.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="common\time_conversion.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">
