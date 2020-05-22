@@ -30,6 +30,7 @@ namespace Envoy {
 		const std::string& format_str = "%d-%d-%d %d:%d:%d";
 
 		struct tm* tmp_time = (struct tm*)malloc(sizeof(struct tm));
+		//strptime(time_str.c_str(), format_str.c_str(), tmp_time);
 		int iResult = sscanf(time_str.c_str(), format_str.c_str(),
 			&tmp_time->tm_year, &tmp_time->tm_mon, &tmp_time->tm_mday,
 			&tmp_time->tm_hour, &tmp_time->tm_min, &tmp_time->tm_sec);
