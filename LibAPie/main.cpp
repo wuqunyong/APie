@@ -10,6 +10,10 @@
 #include <windows.h>
 #include <direct.h>
 
+#include <stdio.h>
+#include <locale.h>
+#include <time.h>
+
 #include "yaml-cpp/yaml.h"
 
 #include "event/real_time_system.h"
@@ -117,6 +121,7 @@ template <typename MessageT,
 int main(int argc, char **argv)
 {
 	decltype(&TestA1::Shutdown) varT;
+
 
 	TestA1 testa;
 
