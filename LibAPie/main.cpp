@@ -212,6 +212,8 @@ int main(int argc, char **argv)
 
 	auto fun1 = std::bind(fun_1, std::placeholders::_1);
 
+	std::string sName = typeid(reqeust).name();
+
 	a.funcs_[1](reqeust);
 	a.funcs_[2](reqeust2);
 	//a.funcs_[3](reqeust);
