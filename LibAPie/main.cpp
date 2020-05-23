@@ -41,6 +41,8 @@ public:
 	void bind(uint64_t id, F func, Params params)
 	{
 		using OriginType = Params;
+		std::string sType = OriginType::descriptor()->full_name();
+
 		auto ptrCb = [func, params](::google::protobuf::Message& stMsg) mutable {
 			
 			//try
@@ -51,7 +53,7 @@ public:
 			//{
 			//	//std::cout << "e:" << e.what() << std::endl;
 			//}
-			auto &data = dynamic_cast<OriginType&>(stMsg);
+			OriginType &data = dynamic_cast<OriginType&>(stMsg);
 			func(data);
 		};
 
