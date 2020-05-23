@@ -15,6 +15,9 @@
 
 namespace Envoy {
 
+static const std::string EMPTY_STRING = "";
+
+
 /**
  * Real-world time implementation of TimeSource.
  */

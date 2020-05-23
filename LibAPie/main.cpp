@@ -35,20 +35,27 @@ using namespace Envoy;
 
 class dispatcher {
 public:
-	template <typename F, typename Params>
+	template <typename F, typename Params, typename std::enable_if<
+		std::is_base_of<google::protobuf::Message, Params>::value,
+		int>::type = 0 >
 	void bind(uint64_t id, F func, Params params)
 	{
-		auto ptrCb = [id,func, params](::google::protobuf::Message& stMsg) mutable {
-			try
-			{
-				params.CopyFrom(stMsg);
-			}
-			catch (const std::exception& a)
-			{
-				//std::cout << "e:" << e.what() << std::endl;
-			}
-			func(params);
+		using OriginType = Params;
+		auto ptrCb = [func, params](::google::protobuf::Message& stMsg) mutable {
+			
+			//try
+			//{
+			//	params.CopyFrom(stMsg);
+			//}
+			//catch (const std::exception& a)
+			//{
+			//	//std::cout << "e:" << e.what() << std::endl;
+			//}
+			auto &data = dynamic_cast<OriginType&>(stMsg);
+			func(data);
 		};
+
+
 		funcs_[id] = ptrCb;
 	}
 
@@ -56,16 +63,28 @@ public:
 	std::map<uint64_t, adaptor_type> funcs_;
 };
 
-void fun_1(::login_msg::MSG_CLIENT_LOGINTOL params)
+void fun_1(::login_msg::MSG_CLIENT_LOGINTOL& params)
 {
 	std::cout << "params:"<< params.DebugString() << std::endl;
 }
 
-void fun_2(::login_msg::MSG_LOGINSERVER_VALIDATE params)
+void fun_2(::login_msg::MSG_LOGINSERVER_VALIDATE& params)
 {
 	std::cout << "params:" << params.DebugString() << std::endl;
 }
 
+struct MyStruct11
+{
+	void CopyFrom(::google::protobuf::Message&)
+	{
+
+	}
+};
+
+void fun_3(MyStruct11 a)
+{
+	std::cout << "params:" << std::endl;
+}
 
 #define DEFINE_TYPE_TRAIT(name, func)                            \
   template <typename T>                                          \
@@ -181,14 +200,19 @@ int main(int argc, char **argv)
 	::login_msg::MSG_LOGINSERVER_VALIDATE reqeust1;
 	reqeust1.set_port(200);
 
+	::login_msg::MSG_LOGINSERVER_VALIDATE reqeust2;
+	reqeust2.set_user_id(1000);
+
 	dispatcher a;
 	a.bind(1, fun_1, ::login_msg::MSG_CLIENT_LOGINTOL());
 	a.bind(2, fun_2, ::login_msg::MSG_LOGINSERVER_VALIDATE());
+	//a.bind(3, fun_3, MyStruct11());
 
-	
+	auto fun1 = std::bind(fun_1, std::placeholders::_1);
 
 	a.funcs_[1](reqeust);
-	a.funcs_[2](reqeust);
+	a.funcs_[2](reqeust2);
+	//a.funcs_[3](reqeust);
 
 	auto ptrCb = [](uint64_t serialNum, std::shared_ptr<::google::protobuf::Message> ptrMsg) {
 		::login_msg::MSG_CLIENT_LOGINTOL *ptrReqeust = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL *>(ptrMsg.get());
