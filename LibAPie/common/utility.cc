@@ -10,4 +10,14 @@
 
 namespace APie {
 
-} // namespace Envoy
+	SystemTime RealTimeSource::systemTime() 
+	{ 
+		return std::chrono::system_clock::now(); 
+	}
+
+	MonotonicTime RealTimeSource::monotonicTime() 
+	{
+		return std::chrono::steady_clock::now(); 
+	}
+
+} // namespace APie

@@ -24,8 +24,8 @@ static const std::string EMPTY_STRING = "";
 class RealTimeSource : public TimeSource {
 public:
   // TimeSource
-  SystemTime systemTime() override { return std::chrono::system_clock::now(); }
-  MonotonicTime monotonicTime() override { return std::chrono::steady_clock::now(); }
+	SystemTime systemTime() override;
+	MonotonicTime monotonicTime() override;
 };
 
-} // namespace Envoy
+} // namespace APie

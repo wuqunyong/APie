@@ -179,7 +179,6 @@
     <ClCompile Include="MysqlDriver\ResultSet.cpp">
       <Filter>MysqlDriver</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="event\dispatched_thread.cc">
       <Filter>event</Filter>
     </ClCompile>

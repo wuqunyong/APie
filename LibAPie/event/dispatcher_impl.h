@@ -80,7 +80,6 @@ private:
   APie::Mailbox<Command> mailbox_;
 
   static std::atomic<uint64_t> serial_num_;
-
   static std::mutex connecton_sync_;
   static std::map<uint64_t, std::shared_ptr<Connection>> connection_map_;
 };

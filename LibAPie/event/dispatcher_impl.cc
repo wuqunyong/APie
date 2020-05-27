@@ -27,9 +27,9 @@
 namespace APie {
 namespace Event {
 
-	std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
-	std::mutex DispatcherImpl::connecton_sync_;
-	std::map<uint64_t, std::shared_ptr<Connection>> DispatcherImpl::connection_map_;
+std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
+std::mutex DispatcherImpl::connecton_sync_;
+std::map<uint64_t, std::shared_ptr<Connection>> DispatcherImpl::connection_map_;
 
 DispatcherImpl::DispatcherImpl(uint32_t tid)
 	: tid_(tid),

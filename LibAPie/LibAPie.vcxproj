@@ -39,7 +39,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -200,7 +200,6 @@
     <ClCompile Include="event\real_time_system.cc" />
     <ClCompile Include="event\signal_impl.cc" />
     <ClCompile Include="event\timer_impl.cc" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp" />
     <ClCompile Include="MysqlDriver\ResultSet.cpp" />
     <ClCompile Include="network\address.cc" />
