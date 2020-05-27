@@ -41,6 +41,7 @@ jps+
 protobuf
 chenshuo/recipes
 
+PRI_KEY_FLAG
 
 select TABLE_NAME, COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='%s' and COLUMN_KEY='PRI' and TABLE_NAME!='_table_list' order by `TABLE_NAME`
-db_name
+db_name 

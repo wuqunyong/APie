@@ -1,6 +1,6 @@
 #include "Command.h"
 
-void Envoy::deallocateCommand(Command* cmd)
+void APie::deallocateCommand(Command* cmd)
 {
 	switch(cmd->type)
 	{

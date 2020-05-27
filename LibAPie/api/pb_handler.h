@@ -9,7 +9,7 @@
 #include "../singleton/threadsafe_singleton.h"
 
 
-namespace Envoy {
+namespace APie {
 namespace Api {
 
 using PBCb = std::function<void(uint64_t serialNum, std::shared_ptr<::google::protobuf::Message> ptrMsg)>;

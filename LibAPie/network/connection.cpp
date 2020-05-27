@@ -21,7 +21,7 @@
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
 
-namespace Envoy {
+namespace APie {
 
 Connection::Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType) :
 	tid_(tid)
@@ -189,7 +189,7 @@ void Connection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& reques
 	command.type = Command::pb_reqeust;
 	command.args.pb_reqeust.ptrData = itemObjPtr;
 
-	auto ptrLogic = Envoy::CtxSingleton::get().getLogicThread();
+	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
 		return;

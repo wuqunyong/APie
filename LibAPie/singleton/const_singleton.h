@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Envoy {
+namespace APie {
 
 /**
  * ConstSingleton allows easy global cross-thread access to a const object.

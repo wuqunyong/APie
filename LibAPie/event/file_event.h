@@ -6,7 +6,7 @@
 
 #include "../common/pure.h"
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 struct FileReadyType {

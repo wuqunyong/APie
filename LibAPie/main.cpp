@@ -31,7 +31,7 @@
 
 #include "../../PBMsg/login_msg.pb.h"
 
-using namespace Envoy;
+using namespace APie;
 
 class dispatcher {
 public:
@@ -189,8 +189,8 @@ int main(int argc, char **argv)
 	Event::Libevent::Global::initialize();
 	PlatformImpl platform;
 
-	Envoy::CtxSingleton::get().init();
-	Envoy::CtxSingleton::get().start();
+	APie::CtxSingleton::get().init();
+	APie::CtxSingleton::get().start();
 
 
 	::login_msg::MSG_CLIENT_LOGINTOL reqeust;

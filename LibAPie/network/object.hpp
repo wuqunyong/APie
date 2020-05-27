@@ -23,7 +23,7 @@
 #include <stdint.h>
 
 
-namespace Envoy
+namespace APie
 {
     //  Base class for all objects that participate in inter-thread
     //  communication.

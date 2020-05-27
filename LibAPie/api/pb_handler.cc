@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <optional>
 
-namespace Envoy {
+namespace APie {
 namespace Api {
 
 bool PBHandler::registerHandler(uint32_t opcode, const ::google::protobuf::Message& msg, PBCb cb)

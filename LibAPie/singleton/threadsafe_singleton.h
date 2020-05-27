@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-namespace Envoy {
+namespace APie {
 
 
 template <class T> class ThreadSafeSingleton {

@@ -6,7 +6,7 @@
 #include "../common/time.h"
 #include "../event/dispatcher.h"
 
-namespace Envoy {
+namespace APie {
 namespace Api {
 
 /**

@@ -4,7 +4,7 @@
 
 #include "event2/event.h"
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 SignalEventImpl::SignalEventImpl(DispatcherImpl& dispatcher, int signal_num, SignalCb cb)

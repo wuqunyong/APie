@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace Envoy {
+namespace APie {
 /**
  * This is a helper that wraps C style API objects that need to be deleted with a smart pointer.
  */

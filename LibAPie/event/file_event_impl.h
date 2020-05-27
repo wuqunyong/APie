@@ -7,7 +7,7 @@
 #include "../event/dispatcher_impl.h"
 #include "../event/event_impl_base.h"
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 /**

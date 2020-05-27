@@ -2,7 +2,7 @@
 
 #include "event2/event_struct.h"
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 /**

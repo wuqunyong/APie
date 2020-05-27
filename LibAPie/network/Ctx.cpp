@@ -19,7 +19,7 @@
 
 
 
-namespace Envoy {
+namespace APie {
 
 	class PortCb : public Network::ListenerCallbacks
 	{
@@ -41,7 +41,7 @@ namespace Envoy {
 			command.type = Command::passive_connect;
 			command.args.passive_connect.ptrData = itemObjPtr;
 
-			auto ptrThread = Envoy::CtxSingleton::get().chooseIOThread();
+			auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
 			if (ptrThread == nullptr)
 			{
 				return;

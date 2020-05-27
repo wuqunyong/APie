@@ -4,7 +4,7 @@
 
 #include "event2/event.h"
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 TimerImpl::TimerImpl(Libevent::BasePtr& libevent, TimerCb cb) : cb_(cb) {

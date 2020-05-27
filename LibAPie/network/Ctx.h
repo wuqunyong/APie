@@ -11,7 +11,7 @@
 
 
 
-namespace Envoy
+namespace APie
 {
     //  Context object encapsulates all the global state associated with
     //  the library.
@@ -47,7 +47,7 @@ namespace Envoy
     };
     
 
-	typedef Envoy::ThreadSafeSingleton<Ctx> CtxSingleton;
+	typedef APie::ThreadSafeSingleton<Ctx> CtxSingleton;
 
 	//usage: Envoy::CtxSingleton::get();
 }

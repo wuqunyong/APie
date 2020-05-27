@@ -24,7 +24,7 @@
 #include "../network/object.hpp"
 
 
-namespace Envoy {
+namespace APie {
 	object_t::object_t(uint32_t tid) :
 		tid_(tid)
 	{

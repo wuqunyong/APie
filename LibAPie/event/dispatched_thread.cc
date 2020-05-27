@@ -7,7 +7,7 @@
 #include "../event/dispatcher.h"
 
 
-namespace Envoy {
+namespace APie {
 namespace Event {
 
 void DispatchedThreadImpl::start(void) {

@@ -28,7 +28,7 @@
 
 #include <event2/bufferevent.h>
 
-namespace Envoy
+namespace APie
 {
 	enum class ProtocolType
 	{

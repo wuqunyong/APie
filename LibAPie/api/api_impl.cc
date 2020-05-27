@@ -5,7 +5,7 @@
 
 #include "../event/dispatcher_impl.h"
 
-namespace Envoy {
+namespace APie {
 namespace Api {
 
 Impl::Impl()

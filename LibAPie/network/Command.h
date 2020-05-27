@@ -30,7 +30,7 @@
 
 #include "../network/connection.h"
 
-namespace Envoy
+namespace APie
 {
 	struct PassiveConnect
 	{
