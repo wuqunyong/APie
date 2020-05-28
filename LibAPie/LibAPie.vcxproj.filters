@@ -171,6 +171,7 @@
     <ClInclude Include="common\time_conversion.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="apie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">

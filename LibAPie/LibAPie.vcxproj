@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\PBMsg\login_msg.pb.h" />
+    <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
     <ClInclude Include="api\pb_handler.h" />
