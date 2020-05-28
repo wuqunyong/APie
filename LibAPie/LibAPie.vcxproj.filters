@@ -172,6 +172,9 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="apie.h" />
+    <ClInclude Include="common\message_traits.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MysqlDriver\MySQLConnector.cpp">

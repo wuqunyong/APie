@@ -68,29 +68,6 @@ void fun_3(MyStruct11 a)
 	std::cout << "params:" << std::endl;
 }
 
-#define DEFINE_TYPE_TRAIT(name, func)                            \
-  template <typename T>                                          \
-  class name {                                                   \
-   private:                                                      \
-    template <typename Class>                                    \
-    static char Test(decltype(&Class::func)*);                   \
-    template <typename>                                          \
-    static int Test(...);                                        \
-                                                                 \
-   public:                                                       \
-    static constexpr bool value = sizeof(Test<T>(nullptr)) == 1; \
-  };                                                             \
-                                                                 \
-  template <typename T>                                          \
-  constexpr bool name<T>::value;
-
-
-DEFINE_TYPE_TRAIT(HasShutdown, Shutdown)
-
-template <typename T>
-typename std::enable_if<HasShutdown<T>::value>::type CallShutdown(T *instance) {
-	instance->Shutdown();
-}
 
 //template <typename T>
 //typename std::enable_if<!HasShutdown<T>::value>::type CallShutdown(
@@ -153,8 +130,39 @@ inline std::string UnixSecondsToString(
 	return std::string(buff.data());
 }
 
+
+struct MyStructDb
+{
+	bool UpdateToDb() {
+		return true;
+	}
+	bool InsertToDb() {
+		return true;
+	}
+	bool LoadFromDb(std::string data) {
+		return true;
+	}
+	bool DeleteFromDb(int a) {
+		return true;
+	}
+};
+
+template <typename MessageT,
+	typename std::enable_if<
+	HasDbSerializer<MessageT>::value,
+	int>::type = 0>
+	bool Meta_UpdateToDb( MessageT& message) {
+	return message.UpdateToDb();
+}
+
+DEFINE_TYPE_TRAIT(HasTesttest, Testtest)
+
+
 int main(int argc, char **argv)
 {
+	MyStructDb db;
+	Meta_UpdateToDb(db);
+
 	decltype(&TestA1::Shutdown) varT;
 
 	auto iCurTime = time(NULL);

@@ -20,4 +20,6 @@
 #include "network/Ctx.h"
 #include "network/output_stream.h"
 
+#include "common/message_traits.h"
+
 #include "google/protobuf/message.h"

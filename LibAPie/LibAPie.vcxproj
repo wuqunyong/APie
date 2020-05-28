@@ -148,6 +148,7 @@
     <ClInclude Include="common\empty_string.h" />
     <ClInclude Include="common\enum_to_int.h" />
     <ClInclude Include="common\macros.h" />
+    <ClInclude Include="common\message_traits.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\time.h" />
     <ClInclude Include="common\time_conversion.h" />
