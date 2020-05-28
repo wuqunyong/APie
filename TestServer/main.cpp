@@ -133,6 +133,13 @@ inline std::string UnixSecondsToString(
 
 struct MyStructDb
 {
+	enum MyEnum
+	{
+		Field_0 = 0,
+		Field_1,
+		Field_2
+	};
+
 	bool UpdateToDb() {
 		return true;
 	}
@@ -145,7 +152,17 @@ struct MyStructDb
 	bool DeleteFromDb(int a) {
 		return true;
 	}
+
+	int a;
+	int b;
+
+	std::string c;
+
+	static std::string d;
 };
+
+std::string MyStructDb::d;
+
 
 template <typename MessageT,
 	typename std::enable_if<
@@ -160,6 +177,8 @@ DEFINE_TYPE_TRAIT(HasTesttest, Testtest)
 
 int main(int argc, char **argv)
 {
+	int bPodS = sizeof(MyStructDb);
+
 	MyStructDb db;
 	Meta_UpdateToDb(db);
 
