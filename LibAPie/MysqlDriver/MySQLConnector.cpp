@@ -86,6 +86,44 @@ void MySQLConnector::close(void)
 	}
 }
 
+struct MyStructField
+{
+	std::string db;
+	std::string table;
+	std::string name;
+	int iType;
+	uint32_t iLen;
+
+	bool is_primary;
+};
+
+bool getField(MYSQL_RES* pRES)
+{
+	// 填写字段信息
+	MYSQL_FIELD* fields = mysql_fetch_fields(pRES);
+	if (fields == nullptr)
+	{
+		return false;
+	}
+
+	std::vector<MyStructField> m_aFieldInfo;
+	UINT unNumFieldCnt = mysql_num_fields(pRES);
+	m_aFieldInfo.reserve(unNumFieldCnt);
+	//int nStrFieldIdx = 0;
+
+	for (UINT i = 0; i < unNumFieldCnt; i++)
+	{
+		MyStructField stFieldInfo;
+		stFieldInfo.db = fields[i].db;
+		stFieldInfo.table = fields[i].table;
+		stFieldInfo.name = fields[i].name; //列名
+		stFieldInfo.iType = fields[i].type;
+		m_aFieldInfo.push_back(stFieldInfo);
+	}
+
+	return true;
+}
+
 bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &results, bool flags)
 {
 	this->affected_rows_ = 0;
@@ -115,6 +153,9 @@ bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &resu
 
 			if(ptr_mysql_res != NULL)
 			{
+				getField(ptr_mysql_res);
+
+
 				my_ulonglong num_rows = mysql_num_rows(ptr_mysql_res);
 				if( num_rows > 0x00 )
 				{

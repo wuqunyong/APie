@@ -241,6 +241,34 @@ int main(int argc, char **argv)
 		Network::OutputStream::sendMsg(serialNum, 1101, response);
 	};
 	Api::PBHandlerSingleton::get().registerHandler(1100, ::login_msg::MSG_CLIENT_LOGINTOL(), ptrCb);
+
+
+
+
+
+	MySQLConnectOptions options;
+	options.host = "127.0.0.1";
+	options.user = "root";
+	options.passwd = "root";
+	options.db = "ff_base1";
+	options.port = 3306;
+
+	MySQLConnector mysqlConnector;
+	mysqlConnector.init(options);
+	bool bResult = mysqlConnector.connect();
+	if (!bResult)
+	{
+		std::stringstream ss;
+		ss << "DbThread::init mysql_connector connect error, " ;
+	}
+
+	std::string sql("SELECT * FROM role_base WHERE FALSE;");
+
+	ResultSet* results = nullptr;
+	bool bSQL = mysqlConnector.query(sql.c_str(), sql.size(), results);
+
+
+
 	std::cin.get();
 
     return 0;
