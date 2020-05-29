@@ -28,6 +28,9 @@
     <Filter Include="mysql_driver">
       <UniqueIdentifier>{e1d2a02f-ef6b-4ceb-9bb0-f6b9024196f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="crypto">
+      <UniqueIdentifier>{10cfd437-80df-45d3-94a9-9ba0a739444f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -181,6 +184,9 @@
     <ClInclude Include="mysql_driver\mysql_table.h">
       <Filter>mysql_driver</Filter>
     </ClInclude>
+    <ClInclude Include="crypto\crypto_utility.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -263,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="mysql_driver\mysql_table.cpp">
       <Filter>mysql_driver</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\crypto_utility.cc">
+      <Filter>crypto</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

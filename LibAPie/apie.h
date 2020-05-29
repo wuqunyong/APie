@@ -25,4 +25,6 @@
 #include "mysql_driver/mysql_connector.h"
 #include "mysql_driver/result_set.h"
 
+#include "crypto/crypto_utility.h"
+
 #include "google/protobuf/message.h"
