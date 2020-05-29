@@ -32,7 +32,7 @@ namespace Crypto {
 		return hex((const uint8_t*)src.data(), src.size());
 	}
 
-	std::string Utility::sha1Hex(const std::string& src)
+	std::string Utility::sha1(const std::string& src)
 	{
 		uint8_t output[20] = { '\0' };
 		size_t iLen = src.length();

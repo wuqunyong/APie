@@ -12,7 +12,7 @@ public:
 	static std::string hex(const std::string& src);
 	static std::string hex(const uint8_t* src, size_t srcLen);
 
-	static std::string sha1Hex(const std::string& src);
+	static std::string sha1(const std::string& src);
 	static std::string md5(const std::string& src);
 };
 
