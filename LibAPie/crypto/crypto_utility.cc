@@ -35,7 +35,6 @@ namespace Crypto {
 	std::string Utility::sha1Hex(const std::string& src)
 	{
 		uint8_t output[20] = { '\0' };
-		//sha1((const uint8_t*)src.data(), src.size(), output);
 		size_t iLen = src.length();
 		SHA1((unsigned char*)src.c_str(), iLen, (unsigned char*)&output);
 
