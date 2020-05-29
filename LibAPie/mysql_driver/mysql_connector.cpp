@@ -156,6 +156,8 @@ bool MySQLConnector::describeTable(const std::string tableName, MysqlTable& tabl
 				bool bResult = dumpTableStructure(ptr_mysql_res, table);
 				mysql_free_result(ptr_mysql_res);
 
+				mysql_commit(this->mysql_);
+
 				return bResult;
 			}
 			else // mysql_store_result() returned nothing; should it have?
