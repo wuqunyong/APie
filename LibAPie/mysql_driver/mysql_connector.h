@@ -15,6 +15,8 @@
 #include <mysql.h>
 
 #include "result_set.h"
+#include "mysql_table.h"
+#include "mysql_field.h"
 
 struct MySQLConnectOptions
 {
@@ -42,6 +44,8 @@ public:
 	bool query(const char *q, unsigned long length, ResultSet* &results, bool flags = true);
 	bool executeSQL(const char *q, unsigned long length);
 	void close(void);
+
+	bool describeTable(const std::string tableName, MysqlTable& table);
 
 private:
 	void initData();
@@ -74,6 +78,7 @@ public:
 private:
 	bool handleMySQLErrno(uint32_t err_no);
 	bool canTryReconnect(void);
+	bool dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table);
 
 private:
 	MYSQL* mysql_;

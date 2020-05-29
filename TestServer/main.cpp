@@ -268,6 +268,8 @@ int main(int argc, char **argv)
 	bool bSQL = mysqlConnector.query(sql.c_str(), sql.size(), results);
 
 
+	MysqlTable table;
+	bSQL = mysqlConnector.describeTable("role_base", table);
 
 	std::cin.get();
 

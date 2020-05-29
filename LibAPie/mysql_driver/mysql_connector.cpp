@@ -1,5 +1,7 @@
 #include "mysql_connector.h"
 
+#include <stdio.h>
+
 #include <sstream>
 #include <string>
 
@@ -86,42 +88,82 @@ void MySQLConnector::close(void)
 	}
 }
 
-struct MyStructField
+bool MySQLConnector::dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table)
 {
-	std::string db;
-	std::string table;
-	std::string name;
-	int iType;
-	uint32_t iLen;
-
-	bool is_primary;
-};
-
-bool getField(MYSQL_RES* pRES)
-{
-	// 填写字段信息
 	MYSQL_FIELD* fields = mysql_fetch_fields(pRES);
 	if (fields == nullptr)
 	{
 		return false;
 	}
 
-	std::vector<MyStructField> m_aFieldInfo;
-	UINT unNumFieldCnt = mysql_num_fields(pRES);
-	m_aFieldInfo.reserve(unNumFieldCnt);
-	//int nStrFieldIdx = 0;
+	bool bSetDbName = false;
 
-	for (UINT i = 0; i < unNumFieldCnt; i++)
+	uint32_t iFieldSize = mysql_num_fields(pRES);
+	table.getFields().reserve(iFieldSize);
+
+	for (uint32_t i = 0; i < iFieldSize; i++)
 	{
-		MyStructField stFieldInfo;
-		stFieldInfo.db = fields[i].db;
-		stFieldInfo.table = fields[i].table;
-		stFieldInfo.name = fields[i].name; //列名
-		stFieldInfo.iType = fields[i].type;
-		m_aFieldInfo.push_back(stFieldInfo);
+		if (!bSetDbName)
+		{
+			bSetDbName = true;
+			table.setDb(std::string(fields[i].db, fields[i].db_length));
+			table.setTable(std::string(fields[i].table, fields[i].table_length));
+		}
+		MysqlField field;
+		field.setName(fields[i].name, fields[i].name_length);
+		field.setFlags(fields[i].flags);
+		field.setType(fields[i].type);
+
+		table.appendField(field);
 	}
 
 	return true;
+}
+
+
+bool MySQLConnector::describeTable(const std::string tableName, MysqlTable& table)
+{
+	this->affected_rows_ = 0;
+	this->insert_id_ = 0;
+	this->error_ = "";
+
+	if (NULL == this->mysql_)
+	{
+		return false;
+	}
+	else
+	{
+		char sql[2048] = {'\0'};
+		snprintf(sql, 2048, "SELECT * FROM %s WHERE FALSE;", tableName.c_str());
+
+		if (mysql_real_query(this->mysql_, sql, (unsigned long)strlen(sql)))
+		{
+			uint32_t last_errno = mysql_errno(this->mysql_);
+
+			if (handleMySQLErrno(last_errno))  // If it returns true, an error was handled successfully (i.e. reconnection)
+			{
+				return describeTable(tableName, table);             // Try again
+			}
+
+			return false;
+		}
+		else
+		{
+			MYSQL_RES* ptr_mysql_res = mysql_store_result(this->mysql_);
+
+			if (ptr_mysql_res != NULL)
+			{
+				bool bResult = dumpTableStructure(ptr_mysql_res, table);
+				mysql_free_result(ptr_mysql_res);
+
+				return bResult;
+			}
+			else // mysql_store_result() returned nothing; should it have?
+			{
+				return false;
+			}
+		}
+	}
 }
 
 bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &results, bool flags)
@@ -153,9 +195,6 @@ bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &resu
 
 			if(ptr_mysql_res != NULL)
 			{
-				getField(ptr_mysql_res);
-
-
 				my_ulonglong num_rows = mysql_num_rows(ptr_mysql_res);
 				if( num_rows > 0x00 )
 				{
