@@ -1,4 +1,4 @@
-#include "ResultSet.h"
+#include "result_set.h"
 
 ResultSet::ResultSet(MYSQL_RES* ptr_mysql_res) : ptr_mysql_res_(ptr_mysql_res)
 {

@@ -1,5 +1,4 @@
-#ifndef __PIE_MYSQLDRIVER_MYSQL_CONNECTOR__
-#define __PIE_MYSQLDRIVER_MYSQL_CONNECTOR__
+#pragma once
 
 #ifdef WIN32
 #include "../network/windows_platform.h"
@@ -15,7 +14,7 @@
 
 #include <mysql.h>
 
-#include "ResultSet.h"
+#include "result_set.h"
 
 struct MySQLConnectOptions
 {
@@ -88,5 +87,3 @@ private:
 
 	//(my_ulonglong)-1
 };
-
-#endif

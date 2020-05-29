@@ -1,5 +1,4 @@
-#ifndef __PIE_MYSQLDRIVER_RESULTSET__
-#define __PIE_MYSQLDRIVER_RESULTSET__
+#pragma once
 
 #ifdef WIN32
 #include "../network/windows_platform.h"
@@ -128,4 +127,3 @@ protected:
     unsigned long *lengths_;
 };
 
-#endif

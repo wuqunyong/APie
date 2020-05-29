@@ -1,4 +1,4 @@
-#include "MySQLConnector.h"
+#include "mysql_connector.h"
 
 #include <sstream>
 #include <string>
