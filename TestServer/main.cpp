@@ -262,7 +262,7 @@ int main(int argc, char **argv)
 		ss << "DbThread::init mysql_connector connect error, " ;
 	}
 
-	std::string sql("SELECT * FROM role_base WHERE FALSE;");
+	std::string sql("SELECT * FROM role_base111111 WHERE FALSE;");
 
 	ResultSet* results = nullptr;
 	bool bSQL = mysqlConnector.query(sql.c_str(), sql.size(), results);

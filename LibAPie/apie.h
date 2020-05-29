@@ -22,7 +22,7 @@
 
 #include "common/message_traits.h"
 
-#include "MysqlDriver/MySQLConnector.h"
-#include "MysqlDriver/ResultSet.h"
+#include "mysql_driver/mysql_connector.h"
+#include "mysql_driver/result_set.h"
 
 #include "google/protobuf/message.h"
