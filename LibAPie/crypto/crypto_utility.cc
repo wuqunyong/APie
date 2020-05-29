@@ -1,6 +1,5 @@
 #include "crypto_utility.h"
 
-#include <stdint.h>
 #include <algorithm>
 #include <functional>
 
