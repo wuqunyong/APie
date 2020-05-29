@@ -34,19 +34,19 @@ namespace Crypto {
 
 	std::string Utility::sha1(const std::string& src)
 	{
-		uint8_t output[20] = { '\0' };
+		uint8_t output[SHA_DIGEST_LENGTH] = {'\0'};
 		size_t iLen = src.length();
 		SHA1((unsigned char*)src.c_str(), iLen, (unsigned char*)&output);
 
-		return hex(output, 20);
+		return hex(output, SHA_DIGEST_LENGTH);
 	}
 
 	std::string Utility::md5(const std::string& src)
 	{
-		unsigned char digest[MD5_DIGEST_LENGTH];
+		unsigned char digest[MD5_DIGEST_LENGTH] = {'\0'};
 		MD5((unsigned char*)src.c_str(), src.length(), (unsigned char*)&digest);
 
-		return hex(digest, 16);
+		return hex(digest, MD5_DIGEST_LENGTH);
 	}
 
 } // namespace Crypto
