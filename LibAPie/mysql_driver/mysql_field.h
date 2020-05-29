@@ -14,6 +14,27 @@
 class MysqlField
 {
 public:
+	enum class DB_FIELD_TYPE
+	{
+		T_NONE,
+
+		T_INT8,
+		T_INT16,
+		T_INT32,
+		T_INT64,
+
+		T_FLOAT,
+		T_DOUBLE,
+
+		T_STRING,
+		T_BYTES,
+
+		T_UINT8 = 0x20 | T_INT8,
+		T_UINT16 = 0x20 | T_INT16,
+		T_UINT32 = 0x20 | T_INT32,
+		T_UINT64 = 0x20 | T_INT64,
+	};
+
 	void setName(char * ptrName, uint32_t len);
 	void setType(uint32_t type);
 	void setFlags(uint32_t flags);
@@ -23,6 +44,8 @@ public:
 	uint32_t getType();
 	uint32_t getFlags();
 	uint32_t getOffset();
+
+	DB_FIELD_TYPE convertType();
 
 	bool is_nullable() const {
 		return !(m_flags & NOT_NULL_FLAG);
