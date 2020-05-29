@@ -14,9 +14,7 @@
 
 
 namespace APie {
-
-static const std::string EMPTY_STRING = "";
-
+namespace Common {
 
 /**
  * Real-world time implementation of TimeSource.
@@ -28,4 +26,5 @@ public:
 	MonotonicTime monotonicTime() override;
 };
 
+}
 } // namespace APie

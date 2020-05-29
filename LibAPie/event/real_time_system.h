@@ -19,7 +19,7 @@ public:
   MonotonicTime monotonicTime() override { return time_source_.monotonicTime(); }
 
 private:
-  RealTimeSource time_source_;
+	Common::RealTimeSource time_source_;
 };
 
 } // namespace Event

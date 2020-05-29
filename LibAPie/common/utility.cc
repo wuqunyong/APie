@@ -9,15 +9,17 @@
 
 
 namespace APie {
+namespace Common {
 
-	SystemTime RealTimeSource::systemTime() 
-	{ 
-		return std::chrono::system_clock::now(); 
-	}
-
-	MonotonicTime RealTimeSource::monotonicTime() 
+	SystemTime RealTimeSource::systemTime()
 	{
-		return std::chrono::steady_clock::now(); 
+		return std::chrono::system_clock::now();
 	}
 
+	MonotonicTime RealTimeSource::monotonicTime()
+	{
+		return std::chrono::steady_clock::now();
+	}
+
+}
 } // namespace APie
