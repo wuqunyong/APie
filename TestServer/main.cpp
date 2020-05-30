@@ -210,6 +210,21 @@ void test_crypto()
 
 }
 
+class TestPbClass
+{
+public:
+	static void HandleFun1(uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
+		std::cout << "serialNum:" << serialNum << std::endl;
+		msg.PrintDebugString();
+
+
+		::login_msg::MSG_CLIENT_LOGINTOL response;
+		response.set_user_id(msg.user_id());
+
+		Network::OutputStream::sendMsg(serialNum, 1101, response);
+	};
+};
+
 int main(int argc, char **argv)
 {
 	std::string strMds = APie::Crypto::Utility::md5("hello");
@@ -264,7 +279,7 @@ int main(int argc, char **argv)
 	a.funcs_[2](reqeust2);
 	//a.funcs_[3](reqeust);
 
-	auto ptrCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL& msg) {
+	auto ptrCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
 		std::cout << "serialNum:" << serialNum << std::endl;
 		msg.PrintDebugString();
 
@@ -274,7 +289,7 @@ int main(int argc, char **argv)
 
 		Network::OutputStream::sendMsg(serialNum, 1101, response);
 	};
-	Api::PBHandlerSingleton::get().bind(1100, ptrCb, ::login_msg::MSG_CLIENT_LOGINTOL());
+	Api::PBHandlerSingleton::get().bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
 
 
 
