@@ -158,20 +158,20 @@ void Connection::readPB()
 
 void Connection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
-	auto optionalData = Api::PBHandlerSingleton::get().get(iOpcode);
+	auto optionalData = Api::PBHandlerSingleton::get().getType(iOpcode);
 	if (!optionalData)
 	{
 		return;
 	}
 
+	std::string sType = optionalData.value();
+	auto ptrMsg = Api::PBHandlerSingleton::get().createMessage(sType);
+	if (ptrMsg == nullptr)
+	{
+		return;
+	}
 
-	std::shared_ptr<::google::protobuf::Message> ptrMsg;
-	std::tie(ptrMsg, std::ignore) = *optionalData;
-
-	std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg->New());
-	newMsg->Clear();
-	//newMsg->CopyFrom(*ptrMsg);
-
+	std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg);
 	bool bResult = newMsg->ParseFromString(requestStr);
 	if (!bResult)
 	{

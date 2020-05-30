@@ -43,8 +43,8 @@ public:
 		funcs_[id] = ptrCb;
 	}
 
-	using adaptor_type = std::function<void(::google::protobuf::Message& stMsg)>;
-	std::map<uint64_t, adaptor_type> funcs_;
+	using HandleFunction = std::function<void(::google::protobuf::Message& msg)>;
+	std::map<uint64_t, HandleFunction> funcs_;
 };
 
 void fun_1(::login_msg::MSG_CLIENT_LOGINTOL& params)
@@ -264,22 +264,17 @@ int main(int argc, char **argv)
 	a.funcs_[2](reqeust2);
 	//a.funcs_[3](reqeust);
 
-	auto ptrCb = [](uint64_t serialNum, std::shared_ptr<::google::protobuf::Message> ptrMsg) {
-		::login_msg::MSG_CLIENT_LOGINTOL *ptrReqeust = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL *>(ptrMsg.get());
-		if (ptrReqeust == nullptr)
-		{
-			return;
-		}
+	auto ptrCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL& msg) {
 		std::cout << "serialNum:" << serialNum << std::endl;
-		ptrReqeust->PrintDebugString();
+		msg.PrintDebugString();
 
 
 		::login_msg::MSG_CLIENT_LOGINTOL response;
-		response.set_user_id(ptrReqeust->user_id());
+		response.set_user_id(msg.user_id());
 
 		Network::OutputStream::sendMsg(serialNum, 1101, response);
 	};
-	Api::PBHandlerSingleton::get().registerHandler(1100, ::login_msg::MSG_CLIENT_LOGINTOL(), ptrCb);
+	Api::PBHandlerSingleton::get().bind(1100, ptrCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 
 
 

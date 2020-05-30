@@ -271,15 +271,13 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 
 void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 {
-	auto optionalData = Api::PBHandlerSingleton::get().get(itemPtr->iOpcode);
+	auto optionalData = Api::PBHandlerSingleton::get().getFunction(itemPtr->iOpcode);
 	if (!optionalData)
 	{
 		return;
 	}
 
-	Api::PBCb cb;
-	std::tie(std::ignore, cb) = *optionalData;
-	cb(itemPtr->iSerialNum, itemPtr->ptrMsg);
+	optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
 }
 
 void DispatcherImpl::handleSendData(SendData *itemPtr)

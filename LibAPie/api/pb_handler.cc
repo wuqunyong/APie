@@ -8,29 +8,41 @@
 namespace APie {
 namespace Api {
 
-bool PBHandler::registerHandler(uint32_t opcode, const ::google::protobuf::Message& msg, PBCb cb)
+std::optional<PBHandler::HandleFunction> PBHandler::getFunction(uint64_t opcode)
 {
-	auto findIte = handler_.find(opcode);
-	if (findIte != handler_.end())
-	{
-		return false;
-	}
-
-	std::shared_ptr<::google::protobuf::Message> ptrMsg(msg.New());
-	ptrMsg->CopyFrom(msg);
-	handler_[opcode] = std::tuple<std::shared_ptr<::google::protobuf::Message>, PBCb>(ptrMsg, cb);
-	return true;
-}
-
-std::optional<std::tuple<std::shared_ptr<::google::protobuf::Message>, PBCb>> PBHandler::get(uint32_t opcode)
-{
-	auto findIte = handler_.find(opcode);
-	if (findIte == handler_.end())
+	auto findIte = funcs_.find(opcode);
+	if (findIte == funcs_.end())
 	{
 		return std::nullopt;
 	}
 
-	return std::optional<std::tuple<std::shared_ptr<::google::protobuf::Message>, PBCb>>(findIte->second);
+	return std::optional<PBHandler::HandleFunction>(findIte->second);
+}
+
+std::optional<std::string> PBHandler::getType(uint64_t opcode)
+{
+	auto findIte = types_.find(opcode);
+	if (findIte == types_.end())
+	{
+		return std::nullopt;
+	}
+
+	return std::optional<std::string>(findIte->second);
+}
+
+google::protobuf::Message* PBHandler::createMessage(const std::string& typeName)
+{
+	google::protobuf::Message* message = NULL;
+	const google::protobuf::Descriptor* descriptor = google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(typeName);
+	if (descriptor)
+	{
+		const google::protobuf::Message* prototype = google::protobuf::MessageFactory::generated_factory()->GetPrototype(descriptor);
+		if (prototype)
+		{
+			message = prototype->New();
+		}
+	}
+	return message;
 }
 
 } // namespace Api
