@@ -81,7 +81,11 @@ private:
 
   static std::atomic<uint64_t> serial_num_;
   static std::mutex connecton_sync_;
+
+  //A server side Socket connection
   static std::map<uint64_t, std::shared_ptr<Connection>> connection_map_;
+
+  //A client side Socket connection.(ClientConnection)
 };
 
 } // namespace Event
