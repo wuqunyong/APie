@@ -29,7 +29,7 @@ namespace Event {
 
 std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
 std::mutex DispatcherImpl::connecton_sync_;
-std::map<uint64_t, std::shared_ptr<Connection>> DispatcherImpl::connection_map_;
+std::map<uint64_t, std::shared_ptr<ServerConnection>> DispatcherImpl::connection_map_;
 
 DispatcherImpl::DispatcherImpl(uint32_t tid)
 	: tid_(tid),
@@ -203,13 +203,13 @@ uint64_t DispatcherImpl::generatorSerialNum()
 }
 
 
-void DispatcherImpl::addConnection(std::shared_ptr<Connection> ptrConnection)
+void DispatcherImpl::addConnection(std::shared_ptr<ServerConnection> ptrConnection)
 {
 	std::lock_guard<std::mutex> guard(connecton_sync_);
 	connection_map_[ptrConnection->getSerialNum()] = ptrConnection;
 }
 
-std::shared_ptr<Connection> DispatcherImpl::getConnection(uint64_t iSerialNum)
+std::shared_ptr<ServerConnection> DispatcherImpl::getConnection(uint64_t iSerialNum)
 {
 	std::lock_guard<std::mutex> guard(connecton_sync_);
 	auto findIte = connection_map_.find(iSerialNum);
@@ -229,19 +229,19 @@ void DispatcherImpl::delConnection(uint64_t iSerialNum)
 
 static void readcb(struct bufferevent *bev, void *arg)
 {
-	Connection* ptrConnection = (Connection *)arg;
+	ServerConnection* ptrConnection = (ServerConnection *)arg;
 	ptrConnection->readcb();
 }
 
 static void writecb(struct bufferevent *bev, void *arg)
 {
-	Connection *ptrConnection = (Connection *)arg;
+	ServerConnection *ptrConnection = (ServerConnection *)arg;
 	ptrConnection->writecb();
 }
 
 static void eventcb(struct bufferevent *bev, short what, void *arg)
 {
-	Connection *ptrConnection = (Connection *)arg;
+	ServerConnection *ptrConnection = (ServerConnection *)arg;
 	ptrConnection->eventcb(what);
 }
 
@@ -256,7 +256,7 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	}
 
 	uint64_t iSerialNum = generatorSerialNum();
-	auto ptrConnection = std::make_shared<Connection>(tid_, iSerialNum, bev, itemPtr->iType);
+	auto ptrConnection = std::make_shared<ServerConnection>(tid_, iSerialNum, bev, itemPtr->iType);
 	if (nullptr == ptrConnection)
 	{
 		bufferevent_free(bev);

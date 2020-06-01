@@ -49,8 +49,8 @@ public:
   void push(Command& cmd) override;
 
  public:
-	static void addConnection(std::shared_ptr<Connection> ptrConnection);
-	static std::shared_ptr<Connection> getConnection(uint64_t iSerialNum);
+	static void addConnection(std::shared_ptr<ServerConnection> ptrConnection);
+	static std::shared_ptr<ServerConnection> getConnection(uint64_t iSerialNum);
 	static void delConnection(uint64_t iSerialNum);
 
 private:
@@ -83,7 +83,7 @@ private:
   static std::mutex connecton_sync_;
 
   //A server side Socket connection
-  static std::map<uint64_t, std::shared_ptr<Connection>> connection_map_;
+  static std::map<uint64_t, std::shared_ptr<ServerConnection>> connection_map_;
 
   //A client side Socket connection.(ClientConnection)
 };

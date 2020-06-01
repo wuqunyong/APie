@@ -23,7 +23,7 @@ static const unsigned int HTTP_BUF_LEN = 8192;
 
 namespace APie {
 
-Connection::Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType) :
+ServerConnection::ServerConnection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType) :
 	tid_(tid)
 {
 	this->iSerialNum = iSerialNum;
@@ -31,17 +31,17 @@ Connection::Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, Prot
 	this->iType = iType;
 }
 
-uint64_t Connection::getSerialNum()
+uint64_t ServerConnection::getSerialNum()
 {
 	return iSerialNum;
 }
 
-uint32_t Connection::getTId()
+uint32_t ServerConnection::getTId()
 {
 	return tid_;
 }
 
-bool Connection::validProtocol(ProtocolType iType)
+bool ServerConnection::validProtocol(ProtocolType iType)
 {
 	bool valid = false;
 
@@ -60,14 +60,14 @@ bool Connection::validProtocol(ProtocolType iType)
 	return valid;
 }
 
-void Connection::close(std::string sInfo)
+void ServerConnection::close(std::string sInfo)
 {
 	this->sendConnectionClose();
 
 	Event::DispatcherImpl::delConnection(this->iSerialNum);
 }
 
-Connection::~Connection()
+ServerConnection::~ServerConnection()
 {
 	if (this->bev != NULL)
 	{
@@ -76,7 +76,7 @@ Connection::~Connection()
 	}
 }
 
-void Connection::readHttp()
+void ServerConnection::readHttp()
 {
 	char buf[HTTP_BUF_LEN] = { 0 };
 
@@ -100,7 +100,7 @@ void Connection::readHttp()
 	}
 }
 
-void Connection::readPB()
+void ServerConnection::readPB()
 {
 	while (true)
 	{
@@ -156,7 +156,7 @@ void Connection::readPB()
 	}
 }
 
-void Connection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
+void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
 	auto optionalData = Api::PBHandlerSingleton::get().getType(iOpcode);
 	if (!optionalData)
@@ -197,7 +197,7 @@ void Connection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& reques
 	ptrLogic->push(command);
 }
 
-void Connection::readcb()
+void ServerConnection::readcb()
 {
 	switch (this->iType)
 	{
@@ -216,12 +216,12 @@ void Connection::readcb()
 	}
 }
 
-void Connection::writecb()
+void ServerConnection::writecb()
 {
 
 }
 
-void Connection::eventcb(short what)
+void ServerConnection::eventcb(short what)
 {
 	if (what & BEV_EVENT_EOF)
 	{
@@ -265,7 +265,7 @@ void Connection::eventcb(short what)
 }
 
 
-void Connection::handleSend(const char *data, size_t size)
+void ServerConnection::handleSend(const char *data, size_t size)
 {
 	if (NULL != this->bev)
 	{
@@ -277,12 +277,12 @@ void Connection::handleSend(const char *data, size_t size)
 	}
 }
 
-void Connection::sendConnectionClose()
+void ServerConnection::sendConnectionClose()
 {
 
 }
 
-void Connection::handleClose()
+void ServerConnection::handleClose()
 {
 	std::stringstream ss;
 	ss << "Session|active|" << "call By C_closeSocket";

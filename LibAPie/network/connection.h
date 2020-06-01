@@ -36,11 +36,11 @@ namespace APie
 		PT_PB,
 	};
 
-    class Connection :
+    class ServerConnection :
         public i_poll_events
     {
     public:
-		Connection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType);
+		ServerConnection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType);
 
 		uint64_t getSerialNum();
 		uint32_t getTId();
@@ -51,7 +51,7 @@ namespace APie
 
 
 		void close(std::string sInfo);
-        ~Connection();
+        ~ServerConnection();
 
 	public:
 		void handleSend(const char *data, size_t size);
@@ -73,8 +73,8 @@ namespace APie
 
 		//HttpRequestDecoder decoder;
 
-		Connection(const Connection&) = delete;
-        const Connection &operator = (const Connection&) = delete;
+		ServerConnection(const ServerConnection&) = delete;
+        const ServerConnection &operator = (const ServerConnection&) = delete;
     };
 
 }
