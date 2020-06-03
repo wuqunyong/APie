@@ -45,3 +45,13 @@ PRI_KEY_FLAG
 
 select TABLE_NAME, COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='%s' and COLUMN_KEY='PRI' and TABLE_NAME!='_table_list' order by `TABLE_NAME`
 db_name 
+
+
+MINIDUMP_EXCEPTION_INFORMATION
+
+SetUnhandledExceptionFilter(MyUnhandledExceptionFilter);
+SymGetLineFromAddr
+
+http://crashrpt.sourceforge.net/docs/html/exception_handling.html
+RaiseException
+AddVectoredExceptionHandler
