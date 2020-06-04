@@ -284,9 +284,45 @@ void SaveLog(EXCEPTION_POINTERS* pExceptionPointers)
 	fclose(pFile);
 }
 
+void CreateDump(EXCEPTION_POINTERS* pExceptionPointers)
+{
+	//时间
+	SYSTEMTIME stLocalTime;
+	GetLocalTime(&stLocalTime);
+
+	//创建dump文件
+	char szFileName[MAX_PATH] = { '\0' };
+	HANDLE hDumpFile = NULL;
+	_snprintf(szFileName, sizeof(szFileName) - 1, "Crash_%04d-%02d-%02d_%02d-%02d-%02d.dmp", stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay, stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond);
+	hDumpFile = CreateFileA(szFileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
+	if (hDumpFile == NULL)
+	{
+		return;
+	}
+
+	MINIDUMP_EXCEPTION_INFORMATION ExceptionInfo;
+	ExceptionInfo.ThreadId = GetCurrentThreadId();
+	ExceptionInfo.ExceptionPointers = pExceptionPointers;
+	ExceptionInfo.ClientPointers = TRUE;
+
+	MINIDUMP_TYPE MiniDumpWithDataSegs = MINIDUMP_TYPE(MiniDumpNormal
+		| MiniDumpWithHandleData
+		| MiniDumpWithUnloadedModules
+		| MiniDumpWithIndirectlyReferencedMemory
+		| MiniDumpScanMemory
+		| MiniDumpWithProcessThreadData
+		| MiniDumpWithFullMemory
+		| MiniDumpWithProcessThreadData);
+
+	//写入dump文件
+	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpWithDataSegs, &ExceptionInfo, NULL, NULL);
+	CloseHandle(hDumpFile);
+}
+
 LONG WINAPI ueh(EXCEPTION_POINTERS* p)
 {
 	SaveLog(p);
+	CreateDump(p);
 	printf("UEH\n");
 	//return EXCEPTION_CONTINUE_SEARCH;
 	return EXCEPTION_EXECUTE_HANDLER;
@@ -324,15 +360,15 @@ int main()
 	//SetUnhandledExceptionFilter(ueh2);
 
 	//__try {
-		//int *p = nullptr;
-		//*p = 1;
+		int *p = nullptr;
+		*p = 1;
 	//}
 	//__except (seh(GetExceptionInformation())) {
 		printf("except\n");
 
 	//}
 
-	RaiseException(0xc0000374, 0, 0, NULL);
+	//RaiseException(0xc0000374, 0, 0, NULL);
 
 	printf("end main\n");
 
