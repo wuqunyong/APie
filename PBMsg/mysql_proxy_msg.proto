@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package mysql_proxy_msg;
+
+
+enum MysqlScalarValueTypes 
+{
+	MSVT_None = 0;
+	MSVT_INT32 = 1; 
+	MSVT_INT64 = 2; 
+	MSVT_UINT32 = 3; 
+	MSVT_UINT64 = 4; 
+	MSVT_BOOL = 5; 
+	MSVT_STRING = 6; 
+	MSVT_BYTES = 7; 
+}
+
+message MysqlValue
+{
+	MysqlScalarValueTypes type = 1;
+	oneof payload {
+		int32 int32_v = 100;
+		int64 int64_v = 101;
+		uint32 uint32_v = 102;
+		uint64 uint64_v = 103;
+		bool bool_v = 104;
+		string string_v = 105;
+		bytes bytes_v = 106;
+	}
+}
+
+message MysqlField
+{
+	uint32 index = 1;
+	MysqlValue value = 2;
+}
+
+message MysqlRow
+{
+	repeated MysqlField fields = 1;
+}
+
+message MysqlTable
+{
+	string db = 1;
+	string name = 2;
+	repeated MysqlRow rows = 3;
+}
