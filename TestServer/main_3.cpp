@@ -36,6 +36,7 @@ public:
 	virtual uint32_t blockSize() = 0;
 	virtual void* blockAddress() = 0;
 	virtual uint32_t columNums() = 0;
+	virtual std::vector<uint32_t> layoutInfo() = 0;
 
 	bool query()
 	{
@@ -213,6 +214,7 @@ public:
 		uint32_t id_;
 		uint32_t length_;
 		std::string name_;
+		uint64_t count_;
 	});
 
 	virtual uint32_t blockSize()
@@ -230,6 +232,18 @@ public:
 		return 3;
 	}
 
+	virtual std::vector<uint32_t> layoutInfo()
+	{
+		std::vector<uint32_t> layout = {
+			offsetof(db_fields, id_),
+			offsetof(db_fields, length_),
+			offsetof(db_fields, name_),
+			offsetof(db_fields, count_),
+		};
+
+		return layout;
+	}
+
 public:
 	db_fields fields;
 };
@@ -241,13 +255,25 @@ bool query(T data)
 	return true;
 }
 
+
+PACKED_STRUCT(struct test_fields {
+	uint32_t id_;
+	uint32_t length_;
+	std::string name_;
+} aa, bb, cc);
+
 int main()
 {
+	bb.id_ = 10;
+	cc.length_ = 20;
+	aa.name_ = "hello";
+
 	{
 		MySQLData data;
 		data.addColumn(DeclarativeBase::Column{ 0, std::string("a"), ::mysql_proxy_msg::MSVT_UINT32, (uint32_t)sizeof(uint32_t), true });
 		data.addColumn(DeclarativeBase::Column(1, std::string("b"), ::mysql_proxy_msg::MSVT_UINT32, (uint32_t)sizeof(uint32_t), false));
 		data.addColumn(DeclarativeBase::Column(uint32_t(2), std::string("c"), ::mysql_proxy_msg::MSVT_STRING, (uint32_t)sizeof(std::string), false));
+		data.addColumn(DeclarativeBase::Column(uint32_t(3), std::string("d"), ::mysql_proxy_msg::MSVT_UINT64, (uint32_t)sizeof(uint64_t), false));
 		bool bResult = data.checkInvalid();
 
 		data.fields.id_ = 123456;
@@ -257,6 +283,7 @@ int main()
 		auto field1 = data.getValueByIndex(0);
 		auto field2 = data.getValueByIndex(1);
 		auto field3 = data.getValueByIndex(2);
+		auto layout = data.layoutInfo();
 	}
 
 
