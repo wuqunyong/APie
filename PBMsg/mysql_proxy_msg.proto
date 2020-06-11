@@ -25,11 +25,10 @@ message MysqlValue
 		int64 int64_v = 102;
 		uint32 uint32_v = 103;
 		uint64 uint64_v = 104;
-		bool bool_v = 105;
-		string string_v = 106;
-		bytes bytes_v = 107;
-		float float_v = 108;
-		double double_v = 209;
+		string string_v = 105;
+		bytes bytes_v = 106;
+		float float_v = 107;
+		double double_v = 108;
 	}
 }
 

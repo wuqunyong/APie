@@ -198,11 +198,6 @@ public:
 			ss << value.uint64_v();
 			break;
 		}
-		case ::mysql_proxy_msg::MSVT_BOOL:
-		{
-			ss << value.bool_v();
-			break;
-		}
 		case ::mysql_proxy_msg::MSVT_STRING:
 		{
 			ss << quotes << value.string_v() << quotes;
@@ -308,13 +303,6 @@ public:
 			uint64_t fieldValue = 0;
 			this->Extract(fieldValue, fieldAddress);
 			value.set_uint64_v(fieldValue);
-			break;
-		}
-		case ::mysql_proxy_msg::MSVT_BOOL:
-		{
-			bool fieldValue;
-			this->Extract(fieldValue, fieldAddress);
-			value.set_bool_v(fieldValue);
 			break;
 		}
 		case ::mysql_proxy_msg::MSVT_STRING:
