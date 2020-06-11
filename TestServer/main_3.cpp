@@ -471,7 +471,7 @@ public:
 	PACKED_STRUCT(struct db_fields {
 		uint64_t user_id;
 		uint64_t game_id;
-		uint16_t level;
+		uint32_t level;
 		uint64_t register_time;
 		uint64_t login_time;
 		uint64_t offline_time;
@@ -568,7 +568,7 @@ int main()
 		data.InitMetaData(table);
 		bResult = data.checkInvalid();
 
-		data.fields.user_id = 666;
+		data.fields.user_id = 200;
 		data.fields.game_id = 10980102021;
 		std::string querySql = data.query();
 
