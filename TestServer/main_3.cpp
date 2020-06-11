@@ -33,27 +33,69 @@ public:
 		return true;
 	}
 
-	bool query()
+	std::string query()
 	{
-		std::vector<uint32_t> primaryIndex;
+		std::stringstream ss;
+		ss << "SELECT ";
+
 		uint32_t iIndex = 0;
-		for (const auto& items : m_table.getFields())
+		for (auto &items : m_table.getFields())
+		{
+			iIndex++;
+			ss << "`" << items.getName() << "`";
+
+			if (iIndex < m_table.getFields().size())
+			{
+				ss << ",";
+			}
+			else
+			{
+				ss << " ";
+			}
+		}
+
+		ss << "FROM " << m_table.getTable() << " ";
+		ss << "WHERE ";
+
+		bool bFirst = true;
+		for (auto& items : m_table.getFields())
 		{
 			bool bResult = items.is_primary_key();
 			if (bResult)
 			{
-				primaryIndex.push_back(iIndex);
+				if (bFirst)
+				{
+					bFirst = false;
+				}
+				else
+				{
+					ss << " AND ";
+				}
+
+				ss << "`" << items.getName() << "`" << "=" << " ";
+
+				std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+				if (field.has_value())
+				{
+					ss << toString(field.value());
+				}
+				else
+				{
+					std::stringstream info;
+					ss << "invalid type|index:" << items.getIndex();
+					throw std::invalid_argument(info.str());
+				}
 			}
-
-			iIndex++;
 		}
 
-		if (primaryIndex.empty())
+		if (bFirst)
 		{
-			return false;
+			std::stringstream info;
+			ss << "no primary";
+			throw std::invalid_argument(info.str());
 		}
 
-		return true;
+		return ss.str();
 	};
 
 	bool checkInvalid()
@@ -129,6 +171,68 @@ public:
 		t = (*((T*)address));
 	};
 
+	std::string toString(::mysql_proxy_msg::MysqlValue& value)
+	{
+		std::string quotes("'");
+
+		std::stringstream ss;
+		switch (value.type())
+		{
+		case ::mysql_proxy_msg::MSVT_INT32:
+		{
+			ss << value.int32_v();
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_INT64:
+		{
+			ss << value.int64_v();
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_UINT32:
+		{
+			ss << value.uint32_v();
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_UINT64:
+		{
+			ss << value.uint64_v();
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_BOOL:
+		{
+			ss << value.bool_v();
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_STRING:
+		{
+			ss << quotes << value.string_v() << quotes;
+			break;
+		}
+		case ::mysql_proxy_msg::MSVT_BYTES:
+		{
+			ss << quotes << value.bytes_v() << quotes;
+			break;
+
+		}
+		case ::mysql_proxy_msg::MSVT_FLOAT:
+		{
+			ss << value.float_v();
+			break;
+
+		}
+		case ::mysql_proxy_msg::MSVT_DOUBLE:
+		{
+			ss << value.double_v();
+			break;
+
+		}
+		default:
+			break;
+		}
+
+		return ss.str();
+	}
+
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index)
 	{
 		if (index >= m_table.getFields().size())
@@ -149,28 +253,28 @@ public:
 		{
 		case ::mysql_proxy_msg::MSVT_INT32:
 		{
-			uint32_t fieldValue;
+			uint32_t fieldValue = 0;
 			this->Extract(fieldValue, fieldAddress);
 			value.set_int32_v(fieldValue);
 			break;
 		}
 		case ::mysql_proxy_msg::MSVT_INT64:
 		{
-			int64_t fieldValue;
+			int64_t fieldValue = 0;
 			this->Extract(fieldValue, fieldAddress);
 			value.set_int64_v(fieldValue);
 			break;
 		}
 		case ::mysql_proxy_msg::MSVT_UINT32:
 		{
-			uint32_t fieldValue;
+			uint32_t fieldValue = 0;
 			this->Extract(fieldValue, fieldAddress);
-			value.set_int32_v(fieldValue);
+			value.set_uint32_v(fieldValue);
 			break;
 		}
 		case ::mysql_proxy_msg::MSVT_UINT64:
 		{
-			uint64_t fieldValue;
+			uint64_t fieldValue = 0;
 			this->Extract(fieldValue, fieldAddress);
 			value.set_uint64_v(fieldValue);
 			break;
@@ -196,6 +300,21 @@ public:
 			value.set_bytes_v(fieldValue);
 			break;
 
+		}
+		case ::mysql_proxy_msg::MSVT_FLOAT:
+		{
+			float fieldValue = 0;
+			this->Extract(fieldValue, fieldAddress);
+			value.set_float_v(fieldValue);
+			break;
+
+		}
+		case ::mysql_proxy_msg::MSVT_DOUBLE:
+		{
+			double fieldValue = 0;
+			this->Extract(fieldValue, fieldAddress);
+			value.set_double_v(fieldValue);
+			break;
 		}
 		default:
 			return std::nullopt;
@@ -310,6 +429,11 @@ int main()
 		MySQLData data;
 		data.InitMetaData(table);
 		bResult = data.checkInvalid();
+
+		data.fields.user_id = 666;
+		data.fields.game_id = 10980102021;
+		std::string querySql = data.query();
+		bResult = mysqlConnector.executeSQL(querySql.c_str(), querySql.length());
 
 
 		auto field1 = data.getValueByIndex(0);

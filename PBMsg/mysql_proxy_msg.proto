@@ -21,13 +21,15 @@ message MysqlValue
 {
 	MysqlScalarValueTypes type = 1;
 	oneof payload {
-		int32 int32_v = 100;
-		int64 int64_v = 101;
-		uint32 uint32_v = 102;
-		uint64 uint64_v = 103;
-		bool bool_v = 104;
-		string string_v = 105;
-		bytes bytes_v = 106;
+		int32 int32_v = 101;
+		int64 int64_v = 102;
+		uint32 uint32_v = 103;
+		uint64 uint64_v = 104;
+		bool bool_v = 105;
+		string string_v = 106;
+		bytes bytes_v = 107;
+		float float_v = 108;
+		double double_v = 209;
 	}
 }
 
