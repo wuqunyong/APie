@@ -67,3 +67,13 @@ bool ResultSet::operator>> (uint64_t& ref_value)
 {
 	return this->Field<uint64_t>(ref_value);
 }
+
+bool  ResultSet::operator>> (float& ref_value)
+{
+	return this->Field<float>(ref_value);
+}
+
+bool ResultSet::operator>> (double& ref_value)
+{
+	return this->Field<double>(ref_value);
+}

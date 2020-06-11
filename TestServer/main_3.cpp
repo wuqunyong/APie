@@ -243,13 +243,126 @@ public:
 			uint32_t iIndex = 0;
 			for (auto &items : m_table.getFields())
 			{
+				void* address = blockAddress();
+				uint32_t iOffset = this->fieldOffset(iIndex);
+
+				switch (items.convertToDbType())
+				{
+				case MysqlField::DB_FIELD_TYPE::T_INT8:
+				{
+					int8_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_INT16:
+				{
+					int16_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_INT32:
+				{
+					int32_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_INT64:
+				{
+					int64_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_FLOAT:
+				{
+					float fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_DOUBLE:
+				{
+					double fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_BYTES:
+				{
+					std::string fieldValue;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_STRING:
+				{
+					std::string fieldValue;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT8:
+				{
+					uint8_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT16:
+				{
+					uint16_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT32:
+				{
+					uint32_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT64:
+				{
+					uint64_t fieldValue = 0;
+					*result >> fieldValue;
+
+					unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+					this->writeValue(fieldAddress, fieldValue);
+					break;
+				}
+				default:
+					break;
+				}
+
 				iIndex++;
 			}
-			//if ((*recordSet >> item.node_id1)
-			//	&& (*recordSet >> item.node_id2)
-			//	&& (*recordSet >> item.create_time)
-			//	&& (*recordSet >> item.update_time)
-			//	&& (*recordSet >> item.delete_flag))
 			
 		}
 
@@ -259,6 +372,13 @@ public:
 		}
 		return true;
 	}
+
+	template <typename T>
+	void writeValue(void* address, T value)
+	{
+		*((T*)address) = value;
+	}
+
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index)
 	{
 		if (index >= m_table.getFields().size())
@@ -269,7 +389,6 @@ public:
 		::mysql_proxy_msg::MysqlValue value;
 		void* address = blockAddress();
 		uint32_t iOffset = this->fieldOffset(index);
-		uint32_t iSize = this->fieldSize(index);
 
 		unsigned char* fieldAddress = (unsigned char*)(address) + iOffset;
 
@@ -457,7 +576,7 @@ int main()
 		bResult = mysqlConnector.query(querySql.c_str(), querySql.length(), recordSet);
 		if (NULL != recordSet)
 		{
-
+			data.loadFromDb(recordSet);
 			delete recordSet;
 			recordSet = NULL;
 		}

@@ -38,6 +38,10 @@ public:
 	bool operator>> (uint32_t& ref_value);
 	bool operator>> (uint64_t& ref_value);
 
+	bool operator>> (float& ref_value);
+	bool operator>> (double& ref_value);
+
+
 	bool operator>> (std::string& ref_value)
 	{
 		if ( (NULL == this->mysql_rows_) || (NULL == this->lengths_) || (this->index_ >= this->num_fields_) )
