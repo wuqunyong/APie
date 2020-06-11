@@ -13,6 +13,8 @@ enum MysqlScalarValueTypes
 	MSVT_BOOL = 5; 
 	MSVT_STRING = 6; 
 	MSVT_BYTES = 7; 
+	MSVT_FLOAT = 8; 
+	MSVT_DOUBLE = 9; 
 }
 
 message MysqlValue
@@ -45,4 +47,13 @@ message MysqlTable
 	string db = 1;
 	string name = 2;
 	repeated MysqlRow rows = 3;
+}
+
+enum MysqlDataManipulation
+{
+	MDM_None = 0;
+	MDM_SELECT = 1;
+	MDM_UPDATE = 2;
+	MDM_DELETE = 3;
+	MDM_INSERT = 4;
 }

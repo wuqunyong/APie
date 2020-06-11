@@ -6,6 +6,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/stubs/port.h>
 
+#include "apie.h"
 #include "../PBMsg/mysql_proxy_msg.pb.h"
 
 #include <tuple>
@@ -21,30 +22,24 @@
 class DeclarativeBase
 {
 public:
-	enum MetaType
-	{
-		Field_Index = 0,
-		Field_Name,
-		Field_Type,
-		Field_TypeSize,
-		Field_Primary,
-	};
 
-	//id,name,type,size,primary
-	using Column = std::tuple<uint16_t, std::string, ::mysql_proxy_msg::MysqlScalarValueTypes, uint32_t, bool>;
-	
 	virtual uint32_t blockSize() = 0;
 	virtual void* blockAddress() = 0;
-	virtual uint32_t columNums() = 0;
 	virtual std::vector<uint32_t> layoutInfo() = 0;
+
+	bool InitMetaData(MysqlTable& table)
+	{
+		m_table = table;
+		return true;
+	}
 
 	bool query()
 	{
 		std::vector<uint32_t> primaryIndex;
 		uint32_t iIndex = 0;
-		for (const auto& items : m_colume)
+		for (const auto& items : m_table.getFields())
 		{
-			bool bResult = std::get<Field_Primary>(items);
+			bool bResult = items.is_primary_key();
 			if (bResult)
 			{
 				primaryIndex.push_back(iIndex);
@@ -63,10 +58,15 @@ public:
 
 	bool checkInvalid()
 	{
-		uint32_t iBlockSize = 0;
-		for (const auto& items : m_colume)
+		if (m_table.getFields().size() != this->columNums())
 		{
-			auto iSize = std::get<Field_TypeSize>(items);
+			return false;
+		}
+
+		uint32_t iBlockSize = 0;
+		for (auto& items : m_table.getFields())
+		{
+			auto iSize = items.getSize();
 			iBlockSize += iSize;
 		}
 
@@ -75,49 +75,52 @@ public:
 			return false;
 		}
 
-		if (m_colume.size() != this->columNums())
+		auto layout = this->layoutInfo();
+		if (layout.size() != m_table.getFields().size())
 		{
 			return false;
+		}
+
+		uint32_t iIndex = 0;
+		for (auto& items : m_table.getFields())
+		{
+			if (items.getOffset() != layout[iIndex])
+			{
+				return false;
+			}
+			++iIndex;
 		}
 
 		return true;
 	}
 
-	void addColumn(Column info)
+	size_t columNums()
 	{
-		m_colume.push_back(info);
+		return this->layoutInfo().size();
 	}
 
 	uint32_t fieldOffset(uint32_t index)
 	{
-		if (index >= m_colume.size())
+		if (index >= m_table.getFields().size())
 		{
 			std::stringstream ss;
-			ss << "index:" << index << " > size:" << m_colume.size();
+			ss << "index:" << index << " > size:" << m_table.getFields().size();
 			throw std::out_of_range(ss.str().c_str());
 		}
 
-		uint32_t offset = 0;
-		for (uint32_t i = 0; i < index; i++)
-		{
-			auto tupleData = m_colume[i];
-			offset += std::get<Field_TypeSize>(tupleData);
-		}
-
-		return offset;
+		return m_table.getFields()[index].getOffset();
 	}
 
 	uint32_t fieldSize(uint32_t index)
 	{
-		if (index >= m_colume.size())
+		if (index >= m_table.getFields().size())
 		{
 			std::stringstream ss;
-			ss << "index:" << index << " > size:" << m_colume.size();
+			ss << "index:" << index << " > size:" << m_table.getFields().size();
 			throw std::out_of_range(ss.str().c_str());
 		}
 
-		auto tupleData = m_colume[index];
-		return std::get<Field_TypeSize>(tupleData);
+		return m_table.getFields()[index].getSize();
 	}
 
 	template <typename T>
@@ -128,7 +131,7 @@ public:
 
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index)
 	{
-		if (index >= m_colume.size())
+		if (index >= m_table.getFields().size())
 		{
 			return std::nullopt;
 		}
@@ -140,8 +143,7 @@ public:
 
 		unsigned char* fieldAddress = (unsigned char*)(address) + iOffset;
 
-		auto tupleData = m_colume[index];
-		auto fieldType = std::get<Field_Type>(tupleData);
+		auto fieldType = m_table.getFields()[index].getScalarType();
 		value.set_type(fieldType);
 		switch (fieldType)
 		{
@@ -203,42 +205,56 @@ public:
 	}
 
 private:
-	std::string m_tableName;
-	std::vector<Column> m_colume;
+	MysqlTable m_table;
 };
 
 
 class MySQLData : public DeclarativeBase {
 public:
 	PACKED_STRUCT(struct db_fields {
-		uint32_t id_;
-		uint32_t length_;
-		std::string name_;
-		uint64_t count_;
+		uint64_t user_id;
+		uint64_t game_id;
+		uint32_t level;
+		uint64_t register_time;
+		uint64_t login_time;
+		uint64_t offline_time;
+		std::string name;
+		std::string role_info;
+		std::string magic_slot_info;
+		std::string magic_info;
+		std::string guild_quest;
+		std::string match_info;
+		std::string global_mails_info;
+		std::string treasure_info;
 	});
-
-	virtual uint32_t blockSize()
-	{
-		return sizeof(fields);
-	}
 
 	virtual void* blockAddress()
 	{
 		return &fields;
 	}
 
-	virtual uint32_t columNums()
+	virtual uint32_t blockSize()
 	{
-		return 3;
+		return sizeof(fields);
 	}
 
 	virtual std::vector<uint32_t> layoutInfo()
 	{
 		std::vector<uint32_t> layout = {
-			offsetof(db_fields, id_),
-			offsetof(db_fields, length_),
-			offsetof(db_fields, name_),
-			offsetof(db_fields, count_),
+			offsetof(db_fields, user_id),
+			offsetof(db_fields, game_id),
+			offsetof(db_fields, level),
+			offsetof(db_fields, register_time),
+			offsetof(db_fields, login_time),
+			offsetof(db_fields, offline_time),
+			offsetof(db_fields, name),
+			offsetof(db_fields, role_info),
+			offsetof(db_fields, magic_slot_info),
+			offsetof(db_fields, magic_info),
+			offsetof(db_fields, guild_quest),
+			offsetof(db_fields, match_info),
+			offsetof(db_fields, global_mails_info),
+			offsetof(db_fields, treasure_info),
 		};
 
 		return layout;
@@ -269,16 +285,32 @@ int main()
 	aa.name_ = "hello";
 
 	{
-		MySQLData data;
-		data.addColumn(DeclarativeBase::Column{ 0, std::string("a"), ::mysql_proxy_msg::MSVT_UINT32, (uint32_t)sizeof(uint32_t), true });
-		data.addColumn(DeclarativeBase::Column(1, std::string("b"), ::mysql_proxy_msg::MSVT_UINT32, (uint32_t)sizeof(uint32_t), false));
-		data.addColumn(DeclarativeBase::Column(uint32_t(2), std::string("c"), ::mysql_proxy_msg::MSVT_STRING, (uint32_t)sizeof(std::string), false));
-		data.addColumn(DeclarativeBase::Column(uint32_t(3), std::string("d"), ::mysql_proxy_msg::MSVT_UINT64, (uint32_t)sizeof(uint64_t), false));
-		bool bResult = data.checkInvalid();
 
-		data.fields.id_ = 123456;
-		data.fields.length_ = 100;
-		data.fields.name_ = "hello world";
+		MySQLConnectOptions options;
+		options.host = "127.0.0.1";
+		options.user = "root";
+		options.passwd = "root";
+		options.db = "ff_base1";
+		options.port = 3306;
+
+		MySQLConnector mysqlConnector;
+		mysqlConnector.init(options);
+		bool bResult = mysqlConnector.connect();
+
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "DbThread::init mysql_connector connect error, ";
+		}
+
+		std::string sql("SELECT * FROM role_base WHERE FALSE;");
+
+		MysqlTable table;
+		bool bSQL = mysqlConnector.describeTable("role_base_copy", table);
+		MySQLData data;
+		data.InitMetaData(table);
+		bResult = data.checkInvalid();
+
 
 		auto field1 = data.getValueByIndex(0);
 		auto field2 = data.getValueByIndex(1);

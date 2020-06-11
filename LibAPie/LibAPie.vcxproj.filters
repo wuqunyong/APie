@@ -187,6 +187,9 @@
     <ClInclude Include="crypto\crypto_utility.h">
       <Filter>crypto</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\mysql_proxy_msg.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="crypto\crypto_utility.cc">
       <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

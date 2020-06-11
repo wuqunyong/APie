@@ -101,6 +101,7 @@ bool MySQLConnector::dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table)
 	uint32_t iFieldSize = mysql_num_fields(pRES);
 	table.getFields().reserve(iFieldSize);
 
+	uint32_t iOffset = 0;
 	for (uint32_t i = 0; i < iFieldSize; i++)
 	{
 		if (!bSetDbName)
@@ -110,9 +111,15 @@ bool MySQLConnector::dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table)
 			table.setTable(std::string(fields[i].table, fields[i].table_length));
 		}
 		MysqlField field;
+		field.setIndex(i);
 		field.setName(fields[i].name, fields[i].name_length);
 		field.setFlags(fields[i].flags);
 		field.setType(fields[i].type);
+		auto scalarType = field.convertType();
+		field.setScalarType(scalarType);
+
+		field.setOffset(iOffset);
+		iOffset += field.getSize();
 
 		table.appendField(field);
 	}
