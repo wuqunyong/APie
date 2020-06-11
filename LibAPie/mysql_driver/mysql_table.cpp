@@ -13,6 +13,7 @@ void MysqlTable::setTable(std::string tableName)
 void MysqlTable::appendField(MysqlField field)
 {
 	this->m_fields.push_back(field);
+	this->m_nameIndex[field.getName()] = field.getIndex();
 }
 
 std::string MysqlTable::getDb()
@@ -28,4 +29,15 @@ std::string MysqlTable::getTable()
 std::vector<MysqlField>& MysqlTable::getFields()
 {
 	return this->m_fields;
+}
+
+std::optional<uint32_t> MysqlTable::getIndexByName(const std::string& name)
+{
+	auto findIte = m_nameIndex.find(name);
+	if (findIte == m_nameIndex.end())
+	{
+		return std::nullopt;
+	}
+
+	return std::make_optional(findIte->second);
 }

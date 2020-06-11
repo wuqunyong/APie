@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <map>
+#include <optional>
 
 #include <mysql.h>
 
@@ -22,10 +23,12 @@ public:
 	std::string getDb();
 	std::string getTable();
 	std::vector<MysqlField>& getFields();
+	std::optional<uint32_t> getIndexByName(const std::string& name);
 
 private:
 	std::string m_db;
 	std::string m_table;
 	std::vector<MysqlField> m_fields;
+	std::map<std::string, uint32_t> m_nameIndex;
 };
 

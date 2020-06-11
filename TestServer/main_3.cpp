@@ -485,17 +485,17 @@ public:
 		std::string treasure_info;
 	});
 
-	virtual void* blockAddress()
+	virtual void* blockAddress() override
 	{
 		return &fields;
 	}
 
-	virtual uint32_t blockSize()
+	virtual uint32_t blockSize() override
 	{
 		return sizeof(fields);
 	}
 
-	virtual std::vector<uint32_t> layoutInfo()
+	virtual std::vector<uint32_t> layoutInfo() override
 	{
 		std::vector<uint32_t> layout = {
 			offsetof(db_fields, user_id),
