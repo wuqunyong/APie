@@ -16,26 +16,26 @@
 class MysqlField
 {
 public:
-	//enum class DB_FIELD_TYPE
-	//{
-	//	T_NONE,
+	enum class DB_FIELD_TYPE
+	{
+		T_NONE,
 
-	//	T_INT8,
-	//	T_INT16,
-	//	T_INT32,
-	//	T_INT64,
+		T_INT8,
+		T_INT16,
+		T_INT32,
+		T_INT64,
 
-	//	T_FLOAT,
-	//	T_DOUBLE,
+		T_FLOAT,
+		T_DOUBLE,
 
-	//	T_STRING,
-	//	T_BYTES,
+		T_STRING,
+		T_BYTES,
 
-	//	T_UINT8 = 0x20 | T_INT8,
-	//	T_UINT16 = 0x20 | T_INT16,
-	//	T_UINT32 = 0x20 | T_INT32,
-	//	T_UINT64 = 0x20 | T_INT64,
-	//};
+		T_UINT8 = 0x20 | T_INT8,
+		T_UINT16 = 0x20 | T_INT16,
+		T_UINT32 = 0x20 | T_INT32,
+		T_UINT64 = 0x20 | T_INT64,
+	};
 
 	void setIndex(uint32_t index);
 	void setName(char * ptrName, uint32_t len);
@@ -43,7 +43,6 @@ public:
 	void setSize(uint32_t size);
 	void setFlags(uint32_t flags);
 	void setOffset(uint32_t offset);
-	void setScalarType(::mysql_proxy_msg::MysqlScalarValueTypes type);
 
 	uint32_t getIndex();
 	std::string getName();
@@ -51,9 +50,10 @@ public:
 	uint32_t getSize();
 	uint32_t getFlags();
 	uint32_t getOffset();
-	::mysql_proxy_msg::MysqlScalarValueTypes getScalarType();
 
-	::mysql_proxy_msg::MysqlScalarValueTypes convertType();
+	::mysql_proxy_msg::MysqlScalarValueTypes convertToPbType();
+	DB_FIELD_TYPE convertToDbType();
+
 	uint32_t evaluateSize();
 
 	bool is_nullable() const {
@@ -102,7 +102,6 @@ private:
 	uint32_t m_offset;
 	uint32_t m_flags;
 
-	::mysql_proxy_msg::MysqlScalarValueTypes m_scalarType;
 	::mysql_proxy_msg::MysqlValue m_value;
 };
 

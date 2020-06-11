@@ -14,6 +14,8 @@ void MysqlField::setName(char * ptrName, uint32_t len)
 void MysqlField::setType(uint32_t type)
 {
 	this->m_type = type;
+
+	m_size = evaluateSize();
 }
 
 void MysqlField::setSize(uint32_t size)
@@ -29,12 +31,6 @@ void MysqlField::setFlags(uint32_t flags)
 void MysqlField::setOffset(uint32_t offset)
 {
 	this->m_offset = offset;
-}
-
-void MysqlField::setScalarType(::mysql_proxy_msg::MysqlScalarValueTypes type)
-{
-	m_scalarType = type;
-	m_size = evaluateSize();
 }
 
 uint32_t MysqlField::getIndex()
@@ -67,12 +63,72 @@ uint32_t MysqlField::getOffset()
 	return this->m_offset;
 }
 
-::mysql_proxy_msg::MysqlScalarValueTypes MysqlField::getScalarType()
+MysqlField::DB_FIELD_TYPE MysqlField::convertToDbType()
 {
-	return this->m_scalarType;
+	DB_FIELD_TYPE fieldType;
+	switch (m_type)
+	{
+	case MYSQL_TYPE_TINY_BLOB:
+	case MYSQL_TYPE_MEDIUM_BLOB:
+	case MYSQL_TYPE_LONG_BLOB:
+	case MYSQL_TYPE_BLOB:
+		fieldType = DB_FIELD_TYPE::T_BYTES;
+		break;
+
+	case FIELD_TYPE_STRING:
+	case FIELD_TYPE_VAR_STRING:
+	case FIELD_TYPE_DATETIME:
+		fieldType = DB_FIELD_TYPE::T_STRING;
+		break;
+
+	case FIELD_TYPE_FLOAT:
+		fieldType = DB_FIELD_TYPE::T_FLOAT;
+		break;
+
+	case FIELD_TYPE_DOUBLE:
+		fieldType = DB_FIELD_TYPE::T_DOUBLE;
+		break;
+
+	case FIELD_TYPE_TINY:
+		fieldType = DB_FIELD_TYPE::T_INT8;
+		break;
+
+	case FIELD_TYPE_SHORT:
+		fieldType = DB_FIELD_TYPE::T_INT16;
+		break;
+
+	case FIELD_TYPE_LONG:
+		fieldType = DB_FIELD_TYPE::T_INT32;
+		break;
+
+	case FIELD_TYPE_LONGLONG:
+		fieldType = DB_FIELD_TYPE::T_INT64;
+		break;
+
+	case MYSQL_TYPE_NEWDECIMAL:
+		fieldType = DB_FIELD_TYPE::T_INT64;
+		break;
+
+	default:
+		fieldType = DB_FIELD_TYPE::T_NONE;
+		break;
+	}
+
+	if (fieldType == DB_FIELD_TYPE::T_NONE)
+	{
+		return fieldType;
+	}
+
+	if (is_unsigned())
+	{
+		fieldType = DB_FIELD_TYPE(uint32_t(fieldType) | 0x20);
+	}
+
+	return fieldType;
 }
 
-::mysql_proxy_msg::MysqlScalarValueTypes MysqlField::convertType()
+
+::mysql_proxy_msg::MysqlScalarValueTypes MysqlField::convertToPbType()
 {
 	::mysql_proxy_msg::MysqlScalarValueTypes fieldType;
 	switch (m_type)
@@ -149,30 +205,33 @@ uint32_t MysqlField::getOffset()
 
 uint32_t MysqlField::evaluateSize()
 {
-	switch (m_scalarType)
+	DB_FIELD_TYPE dbType = convertToDbType();
+
+	switch (dbType)
 	{
-	case mysql_proxy_msg::MSVT_None:
-		return 0;
-	case mysql_proxy_msg::MSVT_INT32:
-		return sizeof(int32_t);
-	case mysql_proxy_msg::MSVT_INT64:
-		return sizeof(int64_t);
-	case mysql_proxy_msg::MSVT_UINT32:
+	case DB_FIELD_TYPE::T_INT8:
+	case DB_FIELD_TYPE::T_UINT8:
+		return sizeof(int8_t);
+	case DB_FIELD_TYPE::T_INT16:
+	case DB_FIELD_TYPE::T_UINT16:
+		return sizeof(int16_t);
+	case DB_FIELD_TYPE::T_INT32:
+	case DB_FIELD_TYPE::T_UINT32:
 		return sizeof(uint32_t);
-	case mysql_proxy_msg::MSVT_UINT64:
+	case DB_FIELD_TYPE::T_INT64:
+	case DB_FIELD_TYPE::T_UINT64:
 		return sizeof(uint64_t);
-	case mysql_proxy_msg::MSVT_BOOL:
-		return sizeof(bool);
-	case mysql_proxy_msg::MSVT_STRING:
-		return sizeof(std::string);
-	case mysql_proxy_msg::MSVT_BYTES:
-		return sizeof(std::string);
-	case mysql_proxy_msg::MSVT_FLOAT:
+	case DB_FIELD_TYPE::T_FLOAT:
 		return sizeof(float);
-	case mysql_proxy_msg::MSVT_DOUBLE:
+	case DB_FIELD_TYPE::T_DOUBLE:
 		return sizeof(double);
+	case DB_FIELD_TYPE::T_STRING:
+	case DB_FIELD_TYPE::T_BYTES:
+		return sizeof(std::string);
 	default:
-		return 0;
+		std::stringstream ss;
+		ss << "invalid db type" << (uint32_t)dbType;
+		throw std::invalid_argument(ss.str());
 	}
 
 	return 0;

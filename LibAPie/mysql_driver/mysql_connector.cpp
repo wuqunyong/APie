@@ -115,8 +115,6 @@ bool MySQLConnector::dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table)
 		field.setName(fields[i].name, fields[i].name_length);
 		field.setFlags(fields[i].flags);
 		field.setType(fields[i].type);
-		auto scalarType = field.convertType();
-		field.setScalarType(scalarType);
 
 		field.setOffset(iOffset);
 		iOffset += field.getSize();

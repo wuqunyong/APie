@@ -233,6 +233,37 @@ public:
 		return ss.str();
 	}
 
+	bool loadFromDb(ResultSet* result)
+	{
+		if (result == nullptr)
+		{
+			return false;
+		}
+
+		uint32_t iRowCount = 0;
+		while (result->MoveNext())
+		{
+			iRowCount++;
+
+			uint32_t iIndex = 0;
+			for (auto &items : m_table.getFields())
+			{
+				iIndex++;
+			}
+			//if ((*recordSet >> item.node_id1)
+			//	&& (*recordSet >> item.node_id2)
+			//	&& (*recordSet >> item.create_time)
+			//	&& (*recordSet >> item.update_time)
+			//	&& (*recordSet >> item.delete_flag))
+			
+		}
+
+		if (iRowCount != 1)
+		{
+			return false;
+		}
+		return true;
+	}
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index)
 	{
 		if (index >= m_table.getFields().size())
@@ -247,7 +278,7 @@ public:
 
 		unsigned char* fieldAddress = (unsigned char*)(address) + iOffset;
 
-		auto fieldType = m_table.getFields()[index].getScalarType();
+		auto fieldType = m_table.getFields()[index].convertToPbType();
 		value.set_type(fieldType);
 		switch (fieldType)
 		{
@@ -333,7 +364,7 @@ public:
 	PACKED_STRUCT(struct db_fields {
 		uint64_t user_id;
 		uint64_t game_id;
-		uint32_t level;
+		uint16_t level;
 		uint64_t register_time;
 		uint64_t login_time;
 		uint64_t offline_time;
@@ -433,7 +464,15 @@ int main()
 		data.fields.user_id = 666;
 		data.fields.game_id = 10980102021;
 		std::string querySql = data.query();
-		bResult = mysqlConnector.executeSQL(querySql.c_str(), querySql.length());
+
+		ResultSet* recordSet = NULL;
+		bResult = mysqlConnector.query(querySql.c_str(), querySql.length(), recordSet);
+		if (NULL != recordSet)
+		{
+
+			delete recordSet;
+			recordSet = NULL;
+		}
 
 
 		auto field1 = data.getValueByIndex(0);
