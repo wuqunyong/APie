@@ -10,11 +10,10 @@ enum MysqlScalarValueTypes
 	MSVT_INT64 = 2; 
 	MSVT_UINT32 = 3; 
 	MSVT_UINT64 = 4; 
-	MSVT_BOOL = 5; 
-	MSVT_STRING = 6; 
-	MSVT_BYTES = 7; 
-	MSVT_FLOAT = 8; 
-	MSVT_DOUBLE = 9; 
+	MSVT_STRING = 5; 
+	MSVT_BYTES = 6; 
+	MSVT_FLOAT = 7; 
+	MSVT_DOUBLE = 8; 
 }
 
 message MysqlValue
