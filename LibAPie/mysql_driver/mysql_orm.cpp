@@ -1,7 +1,7 @@
 #include "mysql_orm.h"
 
 
-bool DeclarativeBase::InitMetaData(MysqlTable& table)
+bool DeclarativeBase::initMetaData(MysqlTable& table)
 {
 	m_table = table;
 	return true;
@@ -361,42 +361,42 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	case ::mysql_proxy_msg::MSVT_INT32:
 	{
 		uint32_t fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_int32_v(fieldValue);
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_INT64:
 	{
 		int64_t fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_int64_v(fieldValue);
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_UINT32:
 	{
 		uint32_t fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_uint32_v(fieldValue);
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_UINT64:
 	{
 		uint64_t fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_uint64_v(fieldValue);
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_STRING:
 	{
 		std::string fieldValue;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_string_v(fieldValue);
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_BYTES:
 	{
 		std::string fieldValue;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_bytes_v(fieldValue);
 		break;
 
@@ -404,7 +404,7 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	case ::mysql_proxy_msg::MSVT_FLOAT:
 	{
 		float fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_float_v(fieldValue);
 		break;
 
@@ -412,7 +412,7 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	case ::mysql_proxy_msg::MSVT_DOUBLE:
 	{
 		double fieldValue = 0;
-		this->Extract(fieldValue, fieldAddress);
+		this->extract(fieldValue, fieldAddress);
 		value.set_double_v(fieldValue);
 		break;
 	}

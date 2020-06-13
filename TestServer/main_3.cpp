@@ -114,7 +114,7 @@ int main()
 		MysqlTable table;
 		bool bSQL = mysqlConnector.describeTable("role_base_copy", table);
 		MySQLData data;
-		data.InitMetaData(table);
+		data.initMetaData(table);
 		bResult = data.checkInvalid();
 
 		data.fields.user_id = 200;

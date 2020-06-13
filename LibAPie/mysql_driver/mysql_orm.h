@@ -33,10 +33,10 @@ public:
 	virtual void* blockAddress() = 0;
 	virtual std::vector<uint32_t> layoutInfo() = 0;
 
-	bool InitMetaData(MysqlTable& table);
+	bool initMetaData(MysqlTable& table);
 
 	template <typename T>
-	void Extract(T& t, unsigned char* address)
+	void extract(T& t, unsigned char* address)
 	{
 		t = (*((T*)address));
 	};
