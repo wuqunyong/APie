@@ -190,6 +190,9 @@
     <ClInclude Include="..\PBMsg\mysql_proxy_msg.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="mysql_driver\mysql_orm.h">
+      <Filter>mysql_driver</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -278,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc">
       <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="mysql_driver\mysql_orm.cpp">
+      <Filter>mysql_driver</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
