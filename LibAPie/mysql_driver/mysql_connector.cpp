@@ -173,7 +173,7 @@ bool MySQLConnector::describeTable(const std::string tableName, MysqlTable& tabl
 	}
 }
 
-bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &results, bool flags)
+bool MySQLConnector::query(const char *q, unsigned long length, std::shared_ptr<ResultSet> &results, bool flags)
 {
 	this->affected_rows_ = 0;
 	this->insert_id_ = 0;
@@ -205,7 +205,8 @@ bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &resu
 				my_ulonglong num_rows = mysql_num_rows(ptr_mysql_res);
 				if( num_rows > 0x00 )
 				{
-					results = new ResultSet(ptr_mysql_res);
+					auto ptrResults = new ResultSet(ptr_mysql_res);
+					results.reset(ptrResults);
 				}
 				else
 				{
@@ -254,13 +255,8 @@ bool MySQLConnector::query(const char *q, unsigned long length, ResultSet* &resu
 
 bool MySQLConnector::executeSQL(const char *q, unsigned long length)
 {
-	ResultSet* record_set = NULL;
+	std::shared_ptr<ResultSet> record_set;
 	bool bResult = this->query(q, length, record_set);
-	if (NULL != record_set)
-	{
-		delete record_set;
-		record_set = NULL;
-	}
 	return bResult;
 }
 

@@ -196,12 +196,14 @@ std::string DeclarativeBase::toString(::mysql_proxy_msg::MysqlValue& value)
 	return ss.str();
 }
 
-bool DeclarativeBase::loadFromDb(ResultSet* result)
+bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 {
-	if (result == nullptr)
+	if (!sharedPtr)
 	{
 		return false;
 	}
+
+	auto result = sharedPtr.get();
 
 	uint32_t iRowCount = 0;
 	while (result->MoveNext())

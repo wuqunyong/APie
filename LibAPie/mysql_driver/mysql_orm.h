@@ -47,7 +47,7 @@ public:
 		*((T*)address) = value;
 	}
 
-	bool loadFromDb(ResultSet* result);
+	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
 	std::string toString(::mysql_proxy_msg::MysqlValue& value);
 

@@ -41,7 +41,7 @@ public:
 public:
 	void init(MySQLConnectOptions& options);
 	bool connect(void);
-	bool query(const char *q, unsigned long length, ResultSet* &results, bool flags = true);
+	bool query(const char *q, unsigned long length, std::shared_ptr<ResultSet> &results, bool flags = true);
 	bool executeSQL(const char *q, unsigned long length);
 	void close(void);
 
