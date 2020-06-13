@@ -11,6 +11,8 @@
 #include <stdexcept>
 #include <iosfwd>
 #include <sstream>
+#include <bitset>
+#include <vector>
 
 #include <google/protobuf/message.h>
 
@@ -58,8 +60,10 @@ public:
 	uint32_t fieldSize(uint32_t index);
 
 	std::string query();
+	void markDirty(const std::vector<uint8_t>& index);
 
 private:
 	MysqlTable m_table;
+	std::bitset<256> m_dirtyFlags;
 };
 

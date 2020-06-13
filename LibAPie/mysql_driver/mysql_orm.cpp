@@ -425,3 +425,13 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	return std::make_optional(value);
 }
 
+void DeclarativeBase::markDirty(const std::vector<uint8_t>& index)
+{
+	for (const auto& items : index)
+	{
+		if (items < m_table.getFields().size() && items < m_dirtyFlags.size())
+		{
+			m_dirtyFlags.set(items);
+		}
+	}
+}
