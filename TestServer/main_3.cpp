@@ -121,14 +121,13 @@ int main()
 		data.fields.game_id = 10980102021;
 		std::string querySql = data.query();
 
-		ResultSet* recordSet = NULL;
+		std::shared_ptr<ResultSet> recordSet;
 		bResult = mysqlConnector.query(querySql.c_str(), querySql.length(), recordSet);
-		if (NULL != recordSet)
+		if (bResult)
 		{
 			data.loadFromDb(recordSet);
-			delete recordSet;
-			recordSet = NULL;
 		}
+
 
 
 		auto field1 = data.getValueByIndex(0);
