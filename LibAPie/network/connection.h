@@ -30,12 +30,6 @@
 
 namespace APie
 {
-	enum class ProtocolType
-	{
-		PT_HTTP = 0,
-		PT_PB,
-	};
-
     class ServerConnection :
         public i_poll_events
     {

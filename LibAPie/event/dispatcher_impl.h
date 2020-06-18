@@ -19,6 +19,7 @@
 #include "../network/Mailbox.h"
 #include "../network/Command.h"
 #include "../network/connection.h"
+#include "../network/client_connection.h"
 
 namespace APie {
 namespace Event {
@@ -53,6 +54,12 @@ public:
 	static std::shared_ptr<ServerConnection> getConnection(uint64_t iSerialNum);
 	static void delConnection(uint64_t iSerialNum);
 
+	static void addClientConnection(std::shared_ptr<ClientConnection> ptrConnection);
+	static std::shared_ptr<ClientConnection> getClientConnection(uint64_t iSerialNum);
+	static void delClientConnection(uint64_t iSerialNum);
+
+	static uint64_t generatorSerialNum();
+
 private:
   void runPostCallbacks();
   void handleCommand();
@@ -66,7 +73,6 @@ private:
 
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
-  static uint64_t generatorSerialNum();
 
   uint32_t tid_;
   LibeventScheduler base_scheduler_;
@@ -90,6 +96,7 @@ private:
   static std::map<uint64_t, std::shared_ptr<ServerConnection>> connection_map_;
 
   //A client side Socket connection.(ClientConnection)
+  static std::map<uint64_t, std::shared_ptr<ClientConnection>> client_connection_map_;
 };
 
 } // namespace Event

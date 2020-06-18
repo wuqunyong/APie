@@ -178,6 +178,7 @@
     <ClInclude Include="mysql_driver\result_set.h" />
     <ClInclude Include="network\address.h" />
     <ClInclude Include="network\client_connection.h" />
+    <ClInclude Include="network\client_proxy.h" />
     <ClInclude Include="network\Command.h" />
     <ClInclude Include="network\connection.h" />
     <ClInclude Include="network\Ctx.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="mysql_driver\result_set.cpp" />
     <ClCompile Include="network\address.cc" />
     <ClCompile Include="network\client_connection.cpp" />
+    <ClCompile Include="network\client_proxy.cpp" />
     <ClCompile Include="network\Command.cpp" />
     <ClCompile Include="network\connection.cpp" />
     <ClCompile Include="network\Ctx.cpp" />

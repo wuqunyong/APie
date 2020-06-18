@@ -271,7 +271,7 @@ std::string randomStr(int32_t iCount)
 
 	constexpr char CHAR_TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-	int iLen = strlen(CHAR_TABLE);
+	size_t iLen = strlen(CHAR_TABLE);
 	while (iCount > 0)
 	{
 		iCount--;

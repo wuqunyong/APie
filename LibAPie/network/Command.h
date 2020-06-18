@@ -29,6 +29,7 @@
 #include <google/protobuf/message.h>
 
 #include "../network/connection.h"
+#include "i_poll_events.hpp"
 
 namespace APie
 {
@@ -59,6 +60,20 @@ namespace APie
 		std::string sMsg;
 	};
 
+	struct DialParameters
+	{
+		std::string sIp;
+		uint16_t iPort;
+		ProtocolType iCodecType;
+		uint64_t iCurSerialNum;
+	};
+
+	struct DialResult
+	{
+		uint64_t iSerialNum;
+		uint32_t iResult;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -78,6 +93,8 @@ namespace APie
 			passive_connect,
 			pb_reqeust,
 			send_data,
+			dial,
+			dial_result,
 
 			async_log,
 
@@ -104,6 +121,15 @@ namespace APie
 				LogCmd* ptrData;
 			} async_log;
 
+			struct {
+				DialParameters* ptrData;
+			} dial;
+
+			struct {
+				DialResult* ptrData;
+			} dial_result;
+
+			
 			struct {
 			} done;
 

@@ -25,6 +25,12 @@
 namespace APie
 {
  
+	enum class ProtocolType
+	{
+		PT_HTTP = 0,
+		PT_PB,
+	};
+
     // Virtual interface to be exposed by object that want to be notified
     // about events on file descriptors.
  

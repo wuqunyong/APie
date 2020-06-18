@@ -20,5 +20,7 @@ std::shared_ptr<sockaddr_in> peerAddressFromFd(evutil_socket_t fd);
 
 std::string makeFriendlyAddress(sockaddr_in addr);
 
+int getInAddr(struct in_addr * dst, const char *address);
+
 } // namespace Network
 } // namespace Envoy

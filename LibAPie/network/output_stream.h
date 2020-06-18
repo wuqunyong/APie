@@ -15,11 +15,16 @@
 
 namespace APie {
 namespace Network {
+	enum class ConnetionType
+	{
+		CT_CLIENT = 0,
+		CT_SERVER = 1,
+	};
+
 	class OutputStream
 	{
 	public:
-		static void sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg);
-
+		static void sendMsg(ConnetionType type, uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 	};
 
 

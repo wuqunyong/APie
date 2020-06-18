@@ -31,6 +31,7 @@ namespace Event {
 std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
 std::mutex DispatcherImpl::connecton_sync_;
 std::map<uint64_t, std::shared_ptr<ServerConnection>> DispatcherImpl::connection_map_;
+std::map<uint64_t, std::shared_ptr<ClientConnection>> DispatcherImpl::client_connection_map_;
 
 DispatcherImpl::DispatcherImpl(uint32_t tid)
 	: tid_(tid),
@@ -235,6 +236,32 @@ void DispatcherImpl::delConnection(uint64_t iSerialNum)
 	std::lock_guard<std::mutex> guard(connecton_sync_);
 	connection_map_.erase(iSerialNum);
 }
+
+
+void DispatcherImpl::addClientConnection(std::shared_ptr<ClientConnection> ptrConnection)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	client_connection_map_[ptrConnection->getSerialNum()] = ptrConnection;
+}
+
+std::shared_ptr<ClientConnection> DispatcherImpl::getClientConnection(uint64_t iSerialNum)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	auto findIte = client_connection_map_.find(iSerialNum);
+	if (findIte == client_connection_map_.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+void DispatcherImpl::delClientConnection(uint64_t iSerialNum)
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	client_connection_map_.erase(iSerialNum);
+}
+
 
 static void readcb(struct bufferevent *bev, void *arg)
 {

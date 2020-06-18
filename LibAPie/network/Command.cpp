@@ -40,6 +40,24 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::dial:
+	{
+		if (NULL != cmd->args.dial.ptrData)
+		{
+			delete cmd->args.dial.ptrData;
+			cmd->args.dial.ptrData = NULL;
+		}
+		break;
+	}
+	case Command::dial_result:
+	{
+		if (NULL != cmd->args.dial_result.ptrData)
+		{
+			delete cmd->args.dial_result.ptrData;
+			cmd->args.dial_result.ptrData = NULL;
+		}
+		break;
+	}
 	default:
 		/*  noop  */;
 	}

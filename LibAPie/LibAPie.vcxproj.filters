@@ -208,6 +208,9 @@
     <ClInclude Include="common\string_utils.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="network\client_proxy.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -311,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="common\string_utils.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="network\client_proxy.cpp">
+      <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

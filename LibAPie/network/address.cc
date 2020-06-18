@@ -58,5 +58,28 @@ std::string makeFriendlyAddress(sockaddr_in addr) {
 	return ptr;
 }
 
+int getInAddr(struct in_addr * dst, const char *address)
+{
+	struct addrinfo hints;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_INET; // Only IPv4 address
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+
+	struct addrinfo* ai_list;
+	if (getaddrinfo(address, NULL, &hints, &ai_list) != 0)
+	{
+		dst->s_addr = INADDR_NONE;
+		return -1;
+	}
+
+	/* Return sin_addr for the first address returned */
+	struct sockaddr_in* sin = (struct sockaddr_in*)ai_list->ai_addr;
+	memcpy(dst, &sin->sin_addr, sizeof(struct in_addr));
+
+	freeaddrinfo(ai_list);
+	return 0;
+}
+
 } // namespace Network
 } // namespace Envoy
