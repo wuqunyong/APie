@@ -13,7 +13,6 @@
 
 namespace APie
 {
-
     class ClientConnection :
         public i_poll_events
     {

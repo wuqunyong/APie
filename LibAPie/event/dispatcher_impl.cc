@@ -23,6 +23,7 @@
 
 #include "event2/event.h"
 #include <assert.h>
+#include "../network/client_proxy.h"
 
 
 namespace APie {
@@ -189,6 +190,16 @@ void DispatcherImpl::handleCommand()
 			this->handleAsyncLog(cmd.args.async_log.ptrData);
 			break;
 		}
+		case Command::dial:
+		{
+			this->handleDial(cmd.args.dial.ptrData);
+			break;
+		}
+		case Command::dial_result:
+		{
+			this->handleDialResult(cmd.args.dial_result.ptrData);
+			break;
+		}
 		default:
 		{
 			assert(false);
@@ -325,6 +336,22 @@ void DispatcherImpl::handleSendData(SendData *itemPtr)
 	}
 	ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
 }
+
+
+void DispatcherImpl::handleDial(DialParameters* ptrCmd)
+{
+	ClientConnection::createClient(this->tid_, &(this->base()), ptrCmd);
+}
+
+void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
+{
+	auto clientProxy = APie::ClientProxy::findClient(ptrCmd->iSerialNum);
+	if (clientProxy)
+	{
+		clientProxy->onConnect(ptrCmd->iResult);
+	}
+}
+
 
 void DispatcherImpl::handleRotate(time_t cutTime)
 {

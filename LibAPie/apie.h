@@ -20,6 +20,7 @@
 #include "network/Ctx.h"
 #include "network/output_stream.h"
 #include "network/logger.h"
+#include "network/client_proxy.h"
 
 #include "common/message_traits.h"
 

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <string>
 #include <stdint.h>
 #include <queue>
@@ -14,7 +13,6 @@
 
 namespace APie
 {
-
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
@@ -28,7 +26,6 @@ namespace APie
 
 		ClientProxy();
 		~ClientProxy();
-
 		bool checkTag();
 
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
@@ -47,6 +44,7 @@ namespace APie
 
 
 	private:
+
 		void close();
 		void sendClose();
 		static uint64_t generatorId();
@@ -55,6 +53,7 @@ namespace APie
 		static bool registerClient(std::shared_ptr<ClientProxy> ptrClient);
 		static void unregisterClient(uint64_t iSerialNum);
 		static std::shared_ptr<ClientProxy> findClient(uint64_t iSerialNum);
+		static std::shared_ptr<ClientProxy> createClientProxy();
 
 	private:
 		uint32_t m_tag;

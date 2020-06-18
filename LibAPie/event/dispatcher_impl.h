@@ -71,6 +71,8 @@ private:
   void handleAsyncLog(LogCmd* ptrCmd);
   void handleRotate(time_t cutTime);
 
+  void handleDial(DialParameters* ptrCmd);
+  void handleDialResult(DialResult* ptrCmd);
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
 

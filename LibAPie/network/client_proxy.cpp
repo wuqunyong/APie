@@ -125,6 +125,11 @@ void ClientProxy::onConnect(uint32_t iResult)
 	ss << "recv|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port << ",iResult:" << iResult;
 	ASYNC_PIE_LOG("ClientProxy/onConnect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
+	if (iResult == 0)
+	{
+		this->m_hadEstablished = CONNECT_ESTABLISHED;
+	}
+
 	bool bContinue = false;
 	if (m_cb)
 	{
@@ -139,11 +144,6 @@ void ClientProxy::onConnect(uint32_t iResult)
 		}
 
 		this->close();
-		return;
-	}
-	else
-	{
-		this->m_hadEstablished = CONNECT_ESTABLISHED;
 	}
 }
 
@@ -211,4 +211,9 @@ std::shared_ptr<ClientProxy> ClientProxy::findClient(uint64_t iSerialNum)
 	}
 
 	return findIte->second;
+}
+
+std::shared_ptr<ClientProxy> ClientProxy::createClientProxy()
+{
+	return std::make_shared<ClientProxy>();
 }
