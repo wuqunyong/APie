@@ -14,9 +14,12 @@
 
 namespace APie
 {
+
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
+		using HandleConnectCB = std::function<bool(std::shared_ptr<ClientProxy>, uint32_t iResult)>;
+
 		enum CONNECT_STATE
 		{
 			CONNECT_CLOSE = 0,
@@ -28,7 +31,7 @@ namespace APie
 
 		bool checkTag();
 
-		int connect(const std::string& ip, uint16_t port, ProtocolType type);
+		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
 		void onConnect(uint32_t iResult);
 		void onPassiveClose(uint32_t iResult, const std::string& sInfo, uint32_t iActiveClose);
 
@@ -60,6 +63,7 @@ namespace APie
 		std::string m_ip;
 		uint16_t m_port;
 		ProtocolType m_codecType;
+		HandleConnectCB m_cb;
 
 		uint32_t m_hadEstablished; //当前的连接状态：0：未连接，1：已连上
 

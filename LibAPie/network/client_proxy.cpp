@@ -37,7 +37,7 @@ bool ClientProxy::checkTag()
 	return this->m_tag == 0xbadcafe0;
 }
 
-int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type)
+int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb)
 {
 	if (this->m_curSerialNum != 0)
 	{
@@ -48,6 +48,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	this->m_ip = ip;
 	this->m_port = port;
 	this->m_codecType = type;
+	this->m_cb = cb;
 
 	auto ptrProxy = shared_from_this();
 	ClientProxy::registerClient(ptrProxy);
@@ -124,13 +125,26 @@ void ClientProxy::onConnect(uint32_t iResult)
 	ss << "recv|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port << ",iResult:" << iResult;
 	ASYNC_PIE_LOG("ClientProxy/onConnect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
+	bool bContinue = false;
+	if (m_cb)
+	{
+		bContinue = m_cb(shared_from_this(), iResult);
+	}
+
 	if (iResult != 0)
 	{
+		if (bContinue)
+		{
+			return;
+		}
+
 		this->close();
 		return;
 	}
-
-	this->m_hadEstablished = CONNECT_ESTABLISHED;
+	else
+	{
+		this->m_hadEstablished = CONNECT_ESTABLISHED;
+	}
 }
 
 void ClientProxy::onPassiveClose(uint32_t iResult, const std::string& sInfo, uint32_t iActiveClose)
@@ -159,7 +173,6 @@ void ClientProxy::close()
 	ASYNC_PIE_LOG("ClientProxy/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	ClientProxy::unregisterClient(this->m_curSerialNum);
-	delete this;
 }
 
 uint64_t ClientProxy::generatorId()
