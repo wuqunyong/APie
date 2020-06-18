@@ -61,6 +61,9 @@ private:
   void handlePBRequest(PBRequest *itemPtr);
   void handleSendData(SendData *itemPtr);
 
+  void handleAsyncLog(LogCmd* ptrCmd);
+  void handleRotate(time_t cutTime);
+
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
   static uint64_t generatorSerialNum();
@@ -78,6 +81,7 @@ private:
   bool deferred_deleting_{};
 
   APie::Mailbox<Command> mailbox_;
+  time_t i_next_check_rotate;
 
   static std::atomic<uint64_t> serial_num_;
   static std::mutex connecton_sync_;

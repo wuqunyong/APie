@@ -19,6 +19,7 @@
 #include "../network/Ctx.h"
 
 #include "../api/pb_handler.h"
+#include "../network/logger.h"
 
 #include "event2/event.h"
 #include <assert.h>
@@ -35,7 +36,8 @@ DispatcherImpl::DispatcherImpl(uint32_t tid)
 	: tid_(tid),
 	deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
 	post_timer_(createTimer([this]() -> void { runPostCallbacks(); })),
-	current_to_delete_(&to_delete_1_) {}
+	current_to_delete_(&to_delete_1_),
+	i_next_check_rotate(0){}
 
 DispatcherImpl::~DispatcherImpl() {}
 
@@ -149,6 +151,7 @@ void DispatcherImpl::runPostCallbacks() {
 
 void DispatcherImpl::handleCommand()
 {
+	time_t iCurTime = time(NULL);
 	size_t iLoopCount = mailbox_.size();
 
 	while (iLoopCount > 0)
@@ -177,6 +180,12 @@ void DispatcherImpl::handleCommand()
 		case Command::send_data:
 		{
 			this->handleSendData(cmd.args.send_data.ptrData);
+			break;
+		}
+		case Command::async_log:
+		{
+			this->handleRotate(iCurTime);
+			this->handleAsyncLog(cmd.args.async_log.ptrData);
 			break;
 		}
 		default:
@@ -288,6 +297,22 @@ void DispatcherImpl::handleSendData(SendData *itemPtr)
 		return;
 	}
 	ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+}
+
+void DispatcherImpl::handleRotate(time_t cutTime)
+{
+	if (cutTime < i_next_check_rotate)
+	{
+		return;
+	}
+	i_next_check_rotate = cutTime + 120;
+
+	checkRotate();
+}
+
+void DispatcherImpl::handleAsyncLog(LogCmd* ptrCmd)
+{
+	pieLogRaw(ptrCmd->sFile.c_str(), ptrCmd->iCycle, ptrCmd->iLevel, ptrCmd->sMsg.c_str());
 }
 
 

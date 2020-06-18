@@ -31,6 +31,15 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::async_log:
+	{
+		if (NULL != cmd->args.async_log.ptrData)
+		{
+			delete cmd->args.async_log.ptrData;
+			cmd->args.async_log.ptrData = NULL;
+		}
+		break;
+	}
 	default:
 		/*  noop  */;
 	}

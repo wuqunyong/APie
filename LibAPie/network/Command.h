@@ -51,6 +51,14 @@ namespace APie
 		std::string sData;
 	};
 
+	struct LogCmd
+	{
+		std::string sFile;
+		int iCycle;
+		int iLevel;
+		std::string sMsg;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -71,6 +79,8 @@ namespace APie
 			pb_reqeust,
 			send_data,
 
+			async_log,
+
 			done
         } type;
 
@@ -90,6 +100,10 @@ namespace APie
 				SendData* ptrData;
 			} send_data;
 			
+			struct {
+				LogCmd* ptrData;
+			} async_log;
+
 			struct {
 			} done;
 

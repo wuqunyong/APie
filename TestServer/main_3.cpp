@@ -86,6 +86,11 @@ PACKED_STRUCT(struct test_fields {
 
 int main()
 {
+	PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "startup");
+
+	std::string sPath = APie::Filesystem::Directory::getCWD();
+	PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "CurPath:%s", sPath.c_str());
+
 	bb.id_ = 10;
 	cc.length_ = 20;
 	aa.name_ = "hello";

@@ -52,7 +52,8 @@ namespace APie {
 	};
 
 Ctx::Ctx() :
-	logic_thread_(nullptr)
+	logic_thread_(nullptr),
+	log_thread_(nullptr)
 {
 
 }
@@ -74,6 +75,7 @@ void Ctx::init()
 	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
 
 	logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
+	log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
 }
 
 void Ctx::start()
@@ -94,6 +96,12 @@ void Ctx::start()
 	{
 		logic_thread_->start();
 		thread_id_[logic_thread_->getTId()] = logic_thread_;
+	}
+
+	if (log_thread_->state() == Event::DTState::DTS_Ready)
+	{
+		log_thread_->start();
+		thread_id_[log_thread_->getTId()] = logic_thread_;
 	}
 }
 
@@ -127,6 +135,11 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogicThread()
 {
 	return logic_thread_;
+}
+
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogThread()
+{
+	return log_thread_;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
