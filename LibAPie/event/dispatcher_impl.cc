@@ -17,6 +17,7 @@
 #include "../network/listener_impl.h"
 #include "../network/connection.h"
 #include "../network/Ctx.h"
+#include "../network/i_poll_events.hpp"
 
 #include "../api/pb_handler.h"
 #include "../network/logger.h"
@@ -329,13 +330,33 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 
 void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 {
-	auto optionalData = Api::PBHandlerSingleton::get().getFunction(itemPtr->iOpcode);
-	if (!optionalData)
+	switch (itemPtr->type)
 	{
-		return;
-	}
+	case APie::ConnetionType::CT_SERVER:
+	{
+		auto optionalData = Api::OpcodeHandlerSingleton::get().server.getFunction(itemPtr->iOpcode);
+		if (!optionalData)
+		{
+			return;
+		}
 
-	optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+		break;
+	}
+	case APie::ConnetionType::CT_CLIENT:
+	{
+		auto optionalData = Api::OpcodeHandlerSingleton::get().client.getFunction(itemPtr->iOpcode);
+		if (!optionalData)
+		{
+			return;
+		}
+
+		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void DispatcherImpl::handleSendData(SendData *itemPtr)

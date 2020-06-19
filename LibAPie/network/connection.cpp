@@ -158,14 +158,14 @@ void ServerConnection::readPB()
 
 void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
-	auto optionalData = Api::PBHandlerSingleton::get().getType(iOpcode);
+	auto optionalData = Api::OpcodeHandlerSingleton::get().server.getType(iOpcode);
 	if (!optionalData)
 	{
 		return;
 	}
 
 	std::string sType = optionalData.value();
-	auto ptrMsg = Api::PBHandlerSingleton::get().createMessage(sType);
+	auto ptrMsg = Api::OpcodeHandlerSingleton::get().server.createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
 		return;
@@ -181,6 +181,7 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	newMsg->PrintDebugString();
 
 	PBRequest *itemObjPtr = new PBRequest;
+	itemObjPtr->type = ConnetionType::CT_SERVER;
 	itemObjPtr->iSerialNum = this->iSerialNum;
 	itemObjPtr->iOpcode = iOpcode;
 	itemObjPtr->ptrMsg = newMsg;

@@ -41,6 +41,7 @@ namespace APie
 
 	struct PBRequest
 	{
+		ConnetionType type;
 		uint64_t iSerialNum;
 		uint32_t iOpcode;
 		std::shared_ptr<::google::protobuf::Message> ptrMsg;

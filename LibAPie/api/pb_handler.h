@@ -57,8 +57,14 @@ private:
 	std::map<uint64_t, std::string> types_;
 };
 
+class OpcodeHandler 
+{
+public:
+	PBHandler client;
+	PBHandler server;
+};
 
-typedef ThreadSafeSingleton<PBHandler> PBHandlerSingleton;
+typedef ThreadSafeSingleton<OpcodeHandler> OpcodeHandlerSingleton;
 
 } // namespace Api
 } // namespace Envoy

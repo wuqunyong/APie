@@ -345,7 +345,7 @@ int main(int argc, char **argv)
 	APie::CtxSingleton::get().init();
 	APie::CtxSingleton::get().start();
 
-	APie::Api::PBHandlerSingleton::get().bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
 
 
 	auto ptrClient = APie::ClientProxy::createClientProxy();
