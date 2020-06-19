@@ -58,6 +58,8 @@ public:
 	static std::shared_ptr<ClientConnection> getClientConnection(uint64_t iSerialNum);
 	static void delClientConnection(uint64_t iSerialNum);
 
+	static void clearAllConnection();
+
 	static uint64_t generatorSerialNum();
 
 private:
@@ -73,6 +75,7 @@ private:
 
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
+  void handleStopThread(uint32_t iThreadId);
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
 

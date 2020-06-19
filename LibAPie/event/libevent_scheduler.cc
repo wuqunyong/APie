@@ -13,6 +13,11 @@ LibeventScheduler::LibeventScheduler() : libevent_(event_base_new())
 	assert(Libevent::Global::initialized());
 }
 
+LibeventScheduler::~LibeventScheduler()
+{
+
+}
+
 TimerPtr LibeventScheduler::createTimer(const TimerCb& cb) 
 {
   return std::make_unique<TimerImpl>(libevent_, cb);

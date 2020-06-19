@@ -72,7 +72,7 @@ void Ctx::init()
 	thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
 	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
-	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
+	//thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
 
 	logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
 	log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
@@ -101,13 +101,48 @@ void Ctx::start()
 	if (log_thread_->state() == Event::DTState::DTS_Ready)
 	{
 		log_thread_->start();
-		thread_id_[log_thread_->getTId()] = logic_thread_;
+		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
 }
 
 void Ctx::destroy()
 {
+	APie::Event::DispatcherImpl::clearAllConnection();
 
+	//----------------------1:stop----------------------------
+	for (auto& items : thread_id_)
+	{
+		items.second->stop();
+	}
+
+	bool bAllStop = false;
+	while (!bAllStop)
+	{
+		bAllStop = true;
+		for (auto& items : thread_id_)
+		{
+			if (items.second->state() != APie::Event::DTState::DTS_Exit)
+			{
+				bAllStop = false;
+				break;
+			}
+		}
+
+		SLEEP_MS(1000);
+	}
+	//----------------------2:sleep----------------------------
+	SLEEP_MS(1000);
+
+
+	//----------------------3:delete----------------------------
+	thread_id_.clear();
+
+	thread_.erase(APie::Event::EThreadType::TT_Listen);
+	thread_.erase(APie::Event::EThreadType::TT_IO);
+	//thread_.erase(APie::Event::EThreadType::TT_Logic);
+	//thread_.erase(APie::Event::EThreadType::TT_Log);
+	logic_thread_.reset();
+	log_thread_.reset();
 }
 
 uint32_t Ctx::generatorTId()

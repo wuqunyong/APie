@@ -200,6 +200,11 @@ void DispatcherImpl::handleCommand()
 			this->handleDialResult(cmd.args.dial_result.ptrData);
 			break;
 		}
+		case Command::stop_thread:
+		{
+			this->handleStopThread(cmd.args.stop_thread.iThreadId);
+			break;
+		}
 		default:
 		{
 			assert(false);
@@ -273,6 +278,12 @@ void DispatcherImpl::delClientConnection(uint64_t iSerialNum)
 	client_connection_map_.erase(iSerialNum);
 }
 
+void DispatcherImpl::clearAllConnection()
+{
+	std::lock_guard<std::mutex> guard(connecton_sync_);
+	client_connection_map_.clear();
+	connection_map_.clear();
+}
 
 static void readcb(struct bufferevent *bev, void *arg)
 {
@@ -352,6 +363,15 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	}
 }
 
+void DispatcherImpl::handleStopThread(uint32_t iThreadId)
+{
+	if (iThreadId != this->tid_)
+	{
+		return;
+	}
+
+	this->exit();
+}
 
 void DispatcherImpl::handleRotate(time_t cutTime)
 {

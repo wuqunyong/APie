@@ -14,6 +14,7 @@ namespace Event {
 class LibeventScheduler : public Scheduler {
 public:
   LibeventScheduler();
+  ~LibeventScheduler();
 
   // Scheduler
   TimerPtr createTimer(const TimerCb& cb) override;

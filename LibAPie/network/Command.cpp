@@ -58,6 +58,7 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	
 	default:
 		/*  noop  */;
 	}

@@ -98,6 +98,8 @@ namespace APie
 
 			async_log,
 
+			stop_thread,
+
 			done
         } type;
 
@@ -129,7 +131,10 @@ namespace APie
 				DialResult* ptrData;
 			} dial_result;
 
-			
+			struct {
+				uint32_t iThreadId;
+			} stop_thread;
+
 			struct {
 			} done;
 

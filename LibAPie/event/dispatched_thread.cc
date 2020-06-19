@@ -15,6 +15,11 @@ void DispatchedThreadImpl::start(void) {
 	thread_ = std::thread([this]() -> void { threadRoutine(); });
 }
 
+void DispatchedThreadImpl::stop()
+{
+	this->sendStop();
+}
+
 DTState DispatchedThreadImpl::state()
 {
 	return state_;
@@ -26,12 +31,12 @@ uint32_t DispatchedThreadImpl::getTId()
 }
 
 void DispatchedThreadImpl::exit() {
-	state_ = DTState::DTS_Exit;
 	if (thread_.joinable()) {
-		dispatcher_->exit();
+		//dispatcher_->exit();
 		thread_.join();
-		listener_.clear();
+		//listener_.clear();
 	}
+	state_ = DTState::DTS_Done;
 }
 
 void DispatchedThreadImpl::push(std::shared_ptr<Network::Listener> listener)
@@ -44,11 +49,21 @@ void DispatchedThreadImpl::push(Command& cmd)
 	dispatcher_->push(cmd);
 }
 
+void DispatchedThreadImpl::sendStop()
+{
+	Command command;
+	command.type = Command::stop_thread;
+	command.args.stop_thread.iThreadId = this->tid_;
+
+	this->push(command);
+}
+
 void DispatchedThreadImpl::threadRoutine(void) 
 {
 	dispatcher_->start();
 	dispatcher_->run();
-	dispatcher_.reset();
+	state_ = DTState::DTS_Exit;
+	//dispatcher_.reset();
 }
 
 } // namespace Event
