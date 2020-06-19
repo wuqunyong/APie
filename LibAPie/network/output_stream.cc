@@ -19,7 +19,7 @@ namespace Network {
 		
 		switch (type)
 		{
-		case APie::Network::ConnetionType::CT_SERVER:
+		case APie::ConnetionType::CT_SERVER:
 		{
 			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
@@ -30,7 +30,7 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::Network::ConnetionType::CT_CLIENT:
+		case APie::ConnetionType::CT_CLIENT:
 		{
 			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
@@ -58,6 +58,7 @@ namespace Network {
 		//size_t iSize = sizeof(ProtocolHead) + head.iBodyLen;
 
 		SendData *itemObjPtr = new SendData;
+		itemObjPtr->type = type;
 		itemObjPtr->iSerialNum = iSerialNum;
 		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
 		itemObjPtr->sData.append(msg.SerializeAsString());

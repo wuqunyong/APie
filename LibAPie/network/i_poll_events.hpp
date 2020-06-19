@@ -25,6 +25,12 @@
 namespace APie
 {
  
+	enum class ConnetionType
+	{
+		CT_CLIENT = 0,
+		CT_SERVER = 1,
+	};
+
 	enum class ProtocolType
 	{
 		PT_HTTP = 0,

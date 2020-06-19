@@ -48,6 +48,7 @@ namespace APie
 
 	struct SendData
 	{
+		ConnetionType type;
 		uint64_t iSerialNum;
 		std::string sData;
 	};

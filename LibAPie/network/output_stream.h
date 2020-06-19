@@ -8,6 +8,8 @@
 #include "../network/address.h"
 #include "../network/windows_platform.h"
 
+#include "i_poll_events.hpp"
+
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
@@ -15,11 +17,6 @@
 
 namespace APie {
 namespace Network {
-	enum class ConnetionType
-	{
-		CT_CLIENT = 0,
-		CT_SERVER = 1,
-	};
 
 	class OutputStream
 	{

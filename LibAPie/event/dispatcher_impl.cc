@@ -340,12 +340,31 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 
 void DispatcherImpl::handleSendData(SendData *itemPtr)
 {
-	auto ptrConnection = getConnection(itemPtr->iSerialNum);
-	if (ptrConnection == nullptr)
+	switch (itemPtr->type)
 	{
-		return;
+	case ConnetionType::CT_CLIENT:
+	{
+		auto ptrConnection = getClientConnection(itemPtr->iSerialNum);
+		if (ptrConnection == nullptr)
+		{
+			return;
+		}
+		ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+		break;
 	}
-	ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+	case ConnetionType::CT_SERVER:
+	{
+		auto ptrConnection = getConnection(itemPtr->iSerialNum);
+		if (ptrConnection == nullptr)
+		{
+			return;
+		}
+		ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 

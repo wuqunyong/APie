@@ -331,7 +331,7 @@ public:
 		::login_msg::MSG_CLIENT_LOGINTOL response;
 		response.set_user_id(msg.user_id());
 
-		APie::Network::OutputStream::sendMsg(APie::Network::ConnetionType::CT_SERVER, serialNum, 1101, response);
+		APie::Network::OutputStream::sendMsg(APie::ConnetionType::CT_SERVER, serialNum, 1101, response);
 	};
 };
 
@@ -349,7 +349,18 @@ int main(int argc, char **argv)
 
 
 	auto ptrClient = APie::ClientProxy::createClientProxy();
-	ptrClient->connect("127.0.0.1", 5007, APie::ProtocolType::PT_PB);
+	auto connectCb = [](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+		if (iResult == 0)
+		{
+			::login_msg::MSG_CLIENT_LOGINTOL msg;
+			msg.set_user_id(100);
+			msg.set_session_key("hello");
+
+			self->sendMsg(1100, msg);
+		}
+		return true;
+	};
+	ptrClient->connect("127.0.0.1", 5007, APie::ProtocolType::PT_PB, connectCb);
 
 	std::cin.get();
 	APie::CtxSingleton::get().destroy();
