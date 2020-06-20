@@ -37,6 +37,18 @@ int main(int argc, char **argv)
 
 	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
 		std::cout << "serialNum:" << serialNum << ",msg:" << msg.DebugString() << std::endl;
+
+		auto ptrClint = APie::ClientProxy::findClient(serialNum);
+		if (ptrClint == nullptr)
+		{
+			return;
+		}
+
+		::login_msg::MSG_CLIENT_LOGINTOL request;
+		request.set_user_id(time(NULL));
+		request.set_session_key("hello");
+
+		ptrClint->sendMsg(1100, request);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 	auto ptrClient = APie::ClientProxy::createClientProxy();
