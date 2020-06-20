@@ -8,6 +8,8 @@
 #include "../network/address.h"
 #include "../network/client_proxy.h"
 
+#include "../common/exception_trap.h"
+
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
 #else
@@ -68,6 +70,8 @@ Ctx::~Ctx()
 
 void Ctx::init()
 {
+	APie::ExceptionTrap();
+
 	APie::Event::Libevent::Global::initialize();
 
 	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());

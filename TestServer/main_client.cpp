@@ -30,8 +30,6 @@ public:
 
 int main(int argc, char **argv)
 {
-	APie::ExceptionTrap();
-
 	APie::CtxSingleton::get().init();
 	APie::CtxSingleton::get().start();
 
@@ -64,7 +62,7 @@ int main(int argc, char **argv)
 	};
 	ptrClient->setHeartbeatCb(heartbeatCb);
 	ptrClient->addHeartbeatTimer(1000);
-	//ptrClient.reset();
+	ptrClient.reset();
 
 	std::cin.get();
 	APie::CtxSingleton::get().destroy();
