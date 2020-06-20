@@ -148,6 +148,7 @@
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\empty_string.h" />
     <ClInclude Include="common\enum_to_int.h" />
+    <ClInclude Include="common\exception_trap.h" />
     <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\message_traits.h" />
     <ClInclude Include="common\pure.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\pb_handler.cc" />
+    <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\string_utils.cpp" />
     <ClCompile Include="common\utility.cc" />
     <ClCompile Include="crypto\crypto_utility.cc" />

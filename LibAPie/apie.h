@@ -23,6 +23,7 @@
 #include "network/client_proxy.h"
 
 #include "common/message_traits.h"
+#include "common/exception_trap.h"
 
 #include "filesystem/directory.h"
 

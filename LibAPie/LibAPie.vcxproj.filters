@@ -211,6 +211,9 @@
     <ClInclude Include="network\client_proxy.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="common\exception_trap.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="network\client_proxy.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="common\exception_trap.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
