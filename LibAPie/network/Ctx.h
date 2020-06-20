@@ -29,7 +29,6 @@ namespace APie
 
 		uint32_t generatorTId();
 
-
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogThread();
