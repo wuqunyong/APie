@@ -361,6 +361,7 @@ int main(int argc, char **argv)
 			msg.set_session_key("hello");
 
 			self->sendMsg(1100, msg);
+			self->addReconnectTimer(30000);
 		}
 		return true;
 	};

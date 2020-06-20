@@ -9,6 +9,9 @@
 #include <map>
 
 #include "i_poll_events.hpp"
+
+#include "../event/timer.h"
+
 #include <google/protobuf/message.h>
 
 namespace APie
@@ -29,6 +32,11 @@ namespace APie
 		bool checkTag();
 
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
+		int reconnect();
+		void addReconnectTimer(uint64_t interval);
+		void disableReconnectTimer();
+
+		uint32_t getReconnectTimes();
 		void onConnect(uint32_t iResult);
 		void onPassiveClose(uint32_t iResult, const std::string& sInfo, uint32_t iActiveClose);
 
@@ -44,8 +52,8 @@ namespace APie
 
 
 	private:
-
 		void close();
+		int sendConnect();
 		void sendClose();
 		static uint64_t generatorId();
 
@@ -65,7 +73,9 @@ namespace APie
 		HandleConnectCB m_cb;
 
 		uint32_t m_hadEstablished; //当前的连接状态：0：未连接，1：已连上
+		uint32_t m_reconnectTimes;
 
+		Event::TimerPtr m_reconnectTimer;
 
 		static std::mutex m_sync;
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;

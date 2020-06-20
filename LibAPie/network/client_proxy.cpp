@@ -25,10 +25,17 @@ ClientProxy::ClientProxy()
 	this->m_codecType = ProtocolType::PT_PB;
 
 	this->m_hadEstablished = CONNECT_CLOSE;
+	this->m_reconnectTimes = 0;
+
+	auto timerCb = [this](){ 
+		this->reconnect(); 
+	};
+	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 }
 
 ClientProxy::~ClientProxy()
 {
+	this->disableReconnectTimer();
 	this->m_tag = 0xdeadbeef;
 }
 
@@ -53,32 +60,33 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	auto ptrProxy = shared_from_this();
 	ClientProxy::registerClient(ptrProxy);
 
-	auto *ptr = new DialParameters;
-	if (NULL == ptr)
+	return this->sendConnect();
+}
+
+int ClientProxy::reconnect()
+{
+	if (this->m_curSerialNum == 0)
 	{
-		return 2;
+		return 10;
 	}
-	ptr->sIp = this->m_ip;
-	ptr->iPort = this->m_port;
-	ptr->iCodecType = this->m_codecType;
-	ptr->iCurSerialNum = this->m_curSerialNum;
 
-	Command cmd;
-	cmd.type = Command::dial;
-	cmd.args.dial.ptrData = ptr;
-
-	auto ptrIOThread = APie::CtxSingleton::get().chooseIOThread();
-	if (ptrIOThread == NULL)
+	if (this->m_hadEstablished == CONNECT_ESTABLISHED)
 	{
-		return 3;
+		return 11;
 	}
-	ptrIOThread->push(cmd);
 
-	std::stringstream ss;
-	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port;
-	ASYNC_PIE_LOG("ClientProxy/connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	this->m_reconnectTimes++;
+	return this->sendConnect();
+}
 
-	return 0;
+void ClientProxy::addReconnectTimer(uint64_t interval)
+{
+	this->m_reconnectTimer->enableTimer(std::chrono::milliseconds(interval));
+}
+
+void ClientProxy::disableReconnectTimer()
+{
+	this->m_reconnectTimer->disableTimer();
 }
 
 uint64_t ClientProxy::getSerialNum()
@@ -119,6 +127,11 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 }
 
 
+uint32_t ClientProxy::getReconnectTimes()
+{
+	return this->m_reconnectTimes;
+}
+
 void ClientProxy::onConnect(uint32_t iResult)
 {
 	std::stringstream ss;
@@ -127,6 +140,7 @@ void ClientProxy::onConnect(uint32_t iResult)
 
 	if (iResult == 0)
 	{
+		this->m_reconnectTimes = 0;
 		this->m_hadEstablished = CONNECT_ESTABLISHED;
 	}
 
@@ -157,6 +171,37 @@ void ClientProxy::onPassiveClose(uint32_t iResult, const std::string& sInfo, uin
 	this->m_hadEstablished = CONNECT_CLOSE;
 
 	this->close();
+}
+
+int ClientProxy::sendConnect()
+{
+	auto *ptr = new DialParameters;
+	if (NULL == ptr)
+	{
+		return 2;
+	}
+	ptr->sIp = this->m_ip;
+	ptr->iPort = this->m_port;
+	ptr->iCodecType = this->m_codecType;
+	ptr->iCurSerialNum = this->m_curSerialNum;
+
+	Command cmd;
+	cmd.type = Command::dial;
+	cmd.args.dial.ptrData = ptr;
+
+	auto ptrIOThread = APie::CtxSingleton::get().chooseIOThread();
+	if (ptrIOThread == NULL)
+	{
+		return 3;
+	}
+	ptrIOThread->push(cmd);
+
+	std::stringstream ss;
+	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
+		<<",reconnectTimes:" << this->m_reconnectTimes;
+	ASYNC_PIE_LOG("ClientProxy/connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+
+	return 0;
 }
 
 void ClientProxy::sendClose()
