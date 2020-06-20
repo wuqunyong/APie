@@ -8,6 +8,7 @@
 
 #include "../singleton/threadsafe_singleton.h"
 #include "../event/dispatched_thread.h"
+#include "../network/platform_impl.h"
 
 
 
@@ -46,6 +47,8 @@ namespace APie
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;
+
+		static PlatformImpl s_platform;
     };
     
 

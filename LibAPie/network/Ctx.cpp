@@ -6,6 +6,7 @@
 
 #include "../network/Ctx.h"
 #include "../network/address.h"
+#include "../network/client_proxy.h"
 
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
@@ -21,35 +22,37 @@
 
 namespace APie {
 
-	class PortCb : public Network::ListenerCallbacks
+PlatformImpl Ctx::s_platform;
+
+class PortCb : public Network::ListenerCallbacks
+{
+	void onAccept(evutil_socket_t fd)
 	{
-		void onAccept(evutil_socket_t fd)
+		std::cout << fd << std::endl;
+
+		auto ptrAddr = Network::addressFromFd(fd);
+		if (ptrAddr != nullptr)
 		{
-			std::cout << fd << std::endl;
-
-			auto ptrAddr = Network::addressFromFd(fd);
-			if (ptrAddr != nullptr)
-			{
-				std::string addr = Network::makeFriendlyAddress(*ptrAddr);
-			}
-
-			PassiveConnect *itemObjPtr = new PassiveConnect;
-			itemObjPtr->iFd = fd;
-			itemObjPtr->iType = ProtocolType::PT_PB;
-
-			Command command;
-			command.type = Command::passive_connect;
-			command.args.passive_connect.ptrData = itemObjPtr;
-
-			auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
-			if (ptrThread == nullptr)
-			{
-				return;
-			}
-			ptrThread->push(command);
+			std::string addr = Network::makeFriendlyAddress(*ptrAddr);
 		}
 
-	};
+		PassiveConnect *itemObjPtr = new PassiveConnect;
+		itemObjPtr->iFd = fd;
+		itemObjPtr->iType = ProtocolType::PT_PB;
+
+		Command command;
+		command.type = Command::passive_connect;
+		command.args.passive_connect.ptrData = itemObjPtr;
+
+		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
+		if (ptrThread == nullptr)
+		{
+			return;
+		}
+		ptrThread->push(command);
+	}
+
+};
 
 Ctx::Ctx() :
 	logic_thread_(nullptr),
@@ -65,6 +68,8 @@ Ctx::~Ctx()
 
 void Ctx::init()
 {
+	APie::Event::Libevent::Global::initialize();
+
 	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
 	auto ptrCb = std::make_shared<PortCb>();
 	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, 5007, 1024));
@@ -108,6 +113,7 @@ void Ctx::start()
 void Ctx::destroy()
 {
 	APie::Event::DispatcherImpl::clearAllConnection();
+	ClientProxy::clearClientProxy();
 
 	//----------------------1:stop----------------------------
 	for (auto& items : thread_id_)

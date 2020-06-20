@@ -31,11 +31,21 @@ ClientProxy::ClientProxy()
 		this->reconnect(); 
 	};
 	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+
+	auto heartbeatCb = [this]() {
+		if (this->m_heartbeatCb)
+		{
+			this->m_heartbeatCb(this);
+		}
+	};
+	this->m_heartbeatTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(heartbeatCb);
 }
 
 ClientProxy::~ClientProxy()
 {
 	this->disableReconnectTimer();
+	this->disableHeartbeatTimer();
+
 	this->m_tag = 0xdeadbeef;
 }
 
@@ -87,6 +97,21 @@ void ClientProxy::addReconnectTimer(uint64_t interval)
 void ClientProxy::disableReconnectTimer()
 {
 	this->m_reconnectTimer->disableTimer();
+}
+
+void ClientProxy::setHeartbeatCb(HeartbeatCB cb)
+{
+	this->m_heartbeatCb = cb;
+}
+
+void ClientProxy::addHeartbeatTimer(uint64_t interval)
+{
+	this->m_heartbeatTimer->enableTimer(std::chrono::milliseconds(interval));
+}
+
+void ClientProxy::disableHeartbeatTimer()
+{
+	this->m_heartbeatTimer->disableTimer();
 }
 
 uint64_t ClientProxy::getSerialNum()
@@ -256,6 +281,12 @@ std::shared_ptr<ClientProxy> ClientProxy::findClient(uint64_t iSerialNum)
 	}
 
 	return findIte->second;
+}
+
+void ClientProxy::clearClientProxy()
+{
+	std::lock_guard<std::mutex> guard(m_sync);
+	m_clientProxy.clear();
 }
 
 std::shared_ptr<ClientProxy> ClientProxy::createClientProxy()

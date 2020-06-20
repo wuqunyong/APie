@@ -337,11 +337,6 @@ public:
 
 int main(int argc, char **argv)
 {
-	SetUnhandledExceptionFilter(ueh);
-
-	APie::Event::Libevent::Global::initialize();
-	APie::PlatformImpl platform;
-
 	APie::CtxSingleton::get().init();
 	APie::CtxSingleton::get().start();
 
@@ -350,6 +345,7 @@ int main(int argc, char **argv)
 	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
 		std::cout << "serialNum:" << serialNum << ",msg:" << msg.DebugString() << std::endl;
 	};
+
 
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 	auto ptrClient = APie::ClientProxy::createClientProxy();
@@ -366,6 +362,14 @@ int main(int argc, char **argv)
 		return true;
 	};
 	ptrClient->connect("127.0.0.1", 5007, APie::ProtocolType::PT_PB, connectCb);
+
+	auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
+		std::cout << "curTime:" << time(NULL) << std::endl;
+		ptrClient->addHeartbeatTimer(1000);
+	};
+	ptrClient->setHeartbeatCb(heartbeatCb);
+	ptrClient->addHeartbeatTimer(1000);
+	ptrClient.reset();
 
 	std::cin.get();
 	APie::CtxSingleton::get().destroy();

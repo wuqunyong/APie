@@ -20,6 +20,7 @@ namespace APie
 	{
 	public:
 		using HandleConnectCB = std::function<bool(std::shared_ptr<ClientProxy>, uint32_t iResult)>;
+		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
 
 		enum CONNECT_STATE
 		{
@@ -33,8 +34,13 @@ namespace APie
 
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
 		int reconnect();
+
 		void addReconnectTimer(uint64_t interval);
 		void disableReconnectTimer();
+
+		void setHeartbeatCb(HeartbeatCB cb);
+		void addHeartbeatTimer(uint64_t interval);
+		void disableHeartbeatTimer();
 
 		uint32_t getReconnectTimes();
 		void onConnect(uint32_t iResult);
@@ -61,6 +67,9 @@ namespace APie
 		static bool registerClient(std::shared_ptr<ClientProxy> ptrClient);
 		static void unregisterClient(uint64_t iSerialNum);
 		static std::shared_ptr<ClientProxy> findClient(uint64_t iSerialNum);
+
+		static void clearClientProxy();
+
 		static std::shared_ptr<ClientProxy> createClientProxy();
 
 	private:
@@ -76,6 +85,9 @@ namespace APie
 		uint32_t m_reconnectTimes;
 
 		Event::TimerPtr m_reconnectTimer;
+
+		Event::TimerPtr m_heartbeatTimer;
+		HeartbeatCB m_heartbeatCb;
 
 		static std::mutex m_sync;
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;
