@@ -28,11 +28,8 @@ public:
 	};
 };
 
-int main(int argc, char **argv)
+std::tuple<uint32_t, std::string> initHook()
 {
-	APie::CtxSingleton::get().init();
-	APie::CtxSingleton::get().start();
-
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
 
 	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
@@ -51,6 +48,12 @@ int main(int argc, char **argv)
 		ptrClint->sendMsg(1100, request);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
+
+	return std::make_tuple(0, "");
+}
+
+std::tuple<uint32_t, std::string> startHook()
+{
 	auto ptrClient = APie::ClientProxy::createClientProxy();
 	auto connectCb = [](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
 		if (iResult == 0)
@@ -73,6 +76,17 @@ int main(int argc, char **argv)
 	ptrClient->setHeartbeatCb(heartbeatCb);
 	ptrClient->addHeartbeatTimer(1000);
 	ptrClient.reset();
+
+	return std::make_tuple(0, "");
+}
+
+int main(int argc, char **argv)
+{
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
+
+	APie::CtxSingleton::get().init();
+	APie::CtxSingleton::get().start();
 
 	std::cin.get();
 	APie::CtxSingleton::get().destroy();

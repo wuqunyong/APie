@@ -214,6 +214,9 @@
     <ClInclude Include="common\exception_trap.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="api\hook.h">
+      <Filter>api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="common\exception_trap.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="api\hook.cc">
+      <Filter>api</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

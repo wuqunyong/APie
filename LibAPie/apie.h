@@ -15,6 +15,7 @@
 
 #include "api/api_impl.h"
 #include "api/pb_handler.h"
+#include "api/hook.h"
 
 #include "network/platform_impl.h"
 #include "network/Ctx.h"

@@ -10,6 +10,8 @@
 
 #include "../common/exception_trap.h"
 
+#include "../api/hook.h"
+
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
 #else
@@ -19,6 +21,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #endif
+#include "logger.h"
+
 
 
 
@@ -74,6 +78,8 @@ void Ctx::init()
 
 	APie::Event::Libevent::Global::initialize();
 
+	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
+
 	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
 	auto ptrCb = std::make_shared<PortCb>();
 	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, 5007, 1024));
@@ -112,6 +118,8 @@ void Ctx::start()
 		log_thread_->start();
 		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
+
+	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
 }
 
 void Ctx::destroy()
