@@ -37,6 +37,8 @@ namespace APie
 		std::shared_ptr<Event::DispatchedThreadImpl> getThreadById(uint32_t id);
 
     private:
+		void handleSigProcMask();
+
 		typedef std::vector<std::shared_ptr<Event::DispatchedThreadImpl>> ThreadVec;
 		std::map<Event::EThreadType, ThreadVec> thread_;
 

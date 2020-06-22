@@ -101,7 +101,5 @@ int main(int argc, char **argv)
 	APie::CtxSingleton::get().init();
 	APie::CtxSingleton::get().start();
 	APie::CtxSingleton::get().waitForShutdown();
-
-	std::cin.get();
     return 0;
 }

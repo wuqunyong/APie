@@ -15,12 +15,24 @@
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
 #else
-#define SLEEP_MS(ms) usleep((ms) * 1000)
-
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+
+#define SLEEP_MS(ms) usleep((ms) * 1000)
+
+sigset_t g_SigSet;
 #endif
+
 #include "logger.h"
 
 
@@ -77,6 +89,8 @@ void Ctx::init()
 	APie::ExceptionTrap();
 
 	APie::Event::Libevent::Global::initialize();
+
+	this->handleSigProcMask();
 
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
@@ -163,9 +177,79 @@ void Ctx::destroy()
 	log_thread_.reset();
 }
 
+void Ctx::handleSigProcMask()
+{
+#ifdef WIN32
+#else
+	sigemptyset(&g_SigSet);
+	sigaddset(&g_SigSet, SIGTERM);
+	//sigaddset(&g_SigSet, SIGINT);
+	sigaddset(&g_SigSet, SIGHUP);
+	sigaddset(&g_SigSet, SIGQUIT);
+
+	sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
+#endif
+}
+
 void Ctx::waitForShutdown()
 {
-	std::cin.get();
+#ifdef WIN32
+	while (true)
+	{
+		std::cout << std::endl;
+
+		std::cout << ">>>";
+		char mystring[100];
+		char answer[100] = "exit";
+		char* prtGet = fgets(mystring, 100, stdin);
+		if (prtGet != NULL)
+		{
+			//std::cout << "Input Recv:" << mystring << std::endl;
+			int iResult = strncmp(mystring, answer, 4);
+			if (iResult == 0)
+			{
+				PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+				break;
+			}
+		}
+}
+#else
+	int actualSignal = 0;
+	int errCount = 0;
+	bool quitFlag = false;
+
+	pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "handleSigWait");
+
+	while (!quitFlag)
+	{
+		int status = sigwait(&g_SigSet, &actualSignal);
+		if (status != 0)
+		{
+			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error %d from sigwait", status);
+			if (errCount++ > 5)
+			{
+				fatalExit("sigwait error exit");
+			}
+			continue;
+		}
+
+		errCount = 0;
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Main thread: Got signal %d|%s",
+			actualSignal, strsignal(actualSignal));
+
+		switch (actualSignal) {
+		case SIGQUIT:
+		case SIGTERM:
+		case SIGHUP:
+			quitFlag = true;
+			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+			break;
+		default:
+			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
+			break;
+		}
+	}
+#endif
 
 	this->destroy();
 }
