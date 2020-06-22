@@ -52,6 +52,16 @@ std::tuple<uint32_t, std::string> initHook()
 	return std::make_tuple(0, "");
 }
 
+std::tuple<uint32_t, std::string> initHook1()
+{
+	return std::make_tuple(0, "");
+}
+
+std::tuple<uint32_t, std::string> initHook2()
+{
+	return std::make_tuple(0, "");
+}
+
 std::tuple<uint32_t, std::string> startHook()
 {
 	auto ptrClient = APie::ClientProxy::createClientProxy();
@@ -82,7 +92,10 @@ std::tuple<uint32_t, std::string> startHook()
 
 int main(int argc, char **argv)
 {
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook1, 1);
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook2, 2);
+
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
 
 	APie::CtxSingleton::get().init();
