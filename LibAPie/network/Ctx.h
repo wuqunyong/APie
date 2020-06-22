@@ -27,6 +27,8 @@ namespace APie
 		void start();
 		void destroy();
 
+		void waitForShutdown();
+
 		uint32_t generatorTId();
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();

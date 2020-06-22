@@ -163,6 +163,13 @@ void Ctx::destroy()
 	log_thread_.reset();
 }
 
+void Ctx::waitForShutdown()
+{
+	std::cin.get();
+
+	this->destroy();
+}
+
 uint32_t Ctx::generatorTId()
 {
 	++tid_;
