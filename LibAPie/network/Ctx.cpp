@@ -212,7 +212,7 @@ void Ctx::waitForShutdown()
 				break;
 			}
 		}
-}
+	}
 #else
 	int actualSignal = 0;
 	int errCount = 0;
