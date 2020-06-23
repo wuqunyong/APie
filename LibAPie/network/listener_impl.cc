@@ -27,11 +27,12 @@ void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
 }
 
 
-ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCbPtr cb, uint16_t port, int backlog) :
+ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCbPtr cb, Network::ListenerConfig config) :
 	dispatcher_(dispatcher),
 	cb_(cb),
+	config_(config),
 	listener_(nullptr) {
-	setupServerSocket(dispatcher, port, backlog);
+	setupServerSocket(dispatcher);
 }
 
 ListenerImpl::~ListenerImpl()
@@ -39,14 +40,29 @@ ListenerImpl::~ListenerImpl()
 
 }
 
-void ListenerImpl::setupServerSocket(Event::DispatcherImpl& dispatcher, uint16_t port, int backlog) {
+void ListenerImpl::setupServerSocket(Event::DispatcherImpl& dispatcher) {
 	memset(&listener_add_, 0, sizeof(listener_add_));
 	listener_add_.sin_family = AF_INET;
-	listener_add_.sin_addr.s_addr = INADDR_ANY;
-	listener_add_.sin_port = htons(port);
+	
+	if (config_.ip.compare("*") == 0)
+	{
+		listener_add_.sin_addr.s_addr = INADDR_ANY;
+	}
+	else
+	{
+		int result = inet_pton(AF_INET, config_.ip.c_str(), &listener_add_.sin_addr);
+		if (result != 1) 
+		{
+			std::stringstream ss;
+			ss << "occur error using inet_pton with " << config_.ip << "|result:" << result;
+			throw CreateListenerException(ss.str());
+		}
+	}
+	
+	listener_add_.sin_port = htons(config_.port);
 
 	auto ptrListen = evconnlistener_new_bind(&dispatcher.base(), listenCallback, (void *)this,
-		LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, backlog,
+		LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, config_.backlog,
 		(struct sockaddr*)&listener_add_,
 		sizeof(listener_add_));
 
@@ -55,7 +71,7 @@ void ListenerImpl::setupServerSocket(Event::DispatcherImpl& dispatcher, uint16_t
 	if (!listener_)
 	{
 		std::stringstream ss;
-		ss << "cannot listen on socket: port:" << port;
+		ss << "cannot listen on socket: port:" << config_.port;
 		throw CreateListenerException(ss.str());
 	}
 

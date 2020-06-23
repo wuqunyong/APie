@@ -74,9 +74,8 @@ void DispatcherImpl::clearDeferredDeleteList() {
   deferred_deleting_ = false;
 }
 
-Network::ListenerPtr DispatcherImpl::createListener(Network::ListenerCbPtr cb, uint16_t port, int backlog) {
-
-  return Network::ListenerPtr{new Network::ListenerImpl(*this, cb, port, backlog)};
+Network::ListenerPtr DispatcherImpl::createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) {
+  return Network::ListenerPtr{new Network::ListenerImpl(*this, cb, config)};
 }
 
 TimerPtr DispatcherImpl::createTimer(TimerCb cb) {

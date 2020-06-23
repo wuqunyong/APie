@@ -34,7 +34,7 @@ public:
 
   virtual void clearDeferredDeleteList() PURE;
 
-  virtual Network::ListenerPtr createListener(Network::ListenerCbPtr cb, uint16_t port, int backlog) PURE;
+  virtual Network::ListenerPtr createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) PURE;
 
   virtual Event::TimerPtr createTimer(TimerCb cb) PURE;
 

@@ -33,8 +33,9 @@ namespace APie
 
 	enum class ProtocolType
 	{
-		PT_HTTP = 0,
+		PT_None = 0,
 		PT_PB,
+		PT_HTTP,
 	};
 
     // Virtual interface to be exposed by object that want to be notified

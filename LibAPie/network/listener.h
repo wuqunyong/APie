@@ -7,10 +7,21 @@
 #include "../common/pure.h"
 #include "../event/libevent.h"
 
+#include "i_poll_events.hpp"
+
 #include <event2/util.h>
+
 
 namespace APie {
 namespace Network {
+
+struct ListenerConfig
+{
+	std::string ip;
+	uint16_t port = 0;
+	ProtocolType type = ProtocolType::PT_None;
+	int backlog = 1024;
+};
 
 /**
  * Callbacks invoked by a listener.

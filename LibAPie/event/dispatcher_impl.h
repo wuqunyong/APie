@@ -20,6 +20,7 @@
 #include "../network/Command.h"
 #include "../network/connection.h"
 #include "../network/client_connection.h"
+#include "../network/listener.h"
 
 namespace APie {
 namespace Event {
@@ -38,7 +39,7 @@ public:
   event_base& base() { return base_scheduler_.base(); }
 
   void clearDeferredDeleteList() override;
-  Network::ListenerPtr createListener(Network::ListenerCbPtr cb, uint16_t port, int backlog) override;
+  Network::ListenerPtr createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) override;
   TimerPtr createTimer(TimerCb cb) override;
   void deferredDelete(DeferredDeletablePtr&& to_delete) override;
 

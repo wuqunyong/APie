@@ -98,11 +98,18 @@ void Ctx::init(const std::string& configFile)
 
 		for (const auto& item : this->node_["listeners"])
 		{
+			std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
 			uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
+			uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
+
+			Network::ListenerConfig config;
+			config.ip = ip;
+			config.port = port;
+			config.type = static_cast<APie::ProtocolType>(type);
 
 			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
 			auto ptrCb = std::make_shared<PortCb>();
-			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, port, 1024));
+			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
 			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|port:%d", port);
