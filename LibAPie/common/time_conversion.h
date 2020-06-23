@@ -27,6 +27,8 @@ namespace APie {
 
 	inline uint64_t StringToUnixSeconds(const std::string& time_str)
 	{
+		//#include <iomanip>
+		//std::get_time
 		const std::string& format_str = "%d-%d-%d %d:%d:%d";
 
 		struct tm* tmp_time = (struct tm*)malloc(sizeof(struct tm));
@@ -48,6 +50,8 @@ namespace APie {
 
 	inline std::string UnixSecondsToString(uint64_t unix_seconds, const std::string& format_str = "%Y-%m-%d %H:%M:%S") 
 	{
+		//std::put_time
+
 		std::time_t t = unix_seconds;
 		//struct tm* pt = std::gmtime(&t);
 		struct tm* pt = std::localtime(&t);
