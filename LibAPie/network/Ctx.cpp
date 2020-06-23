@@ -133,21 +133,21 @@ void Ctx::init(const std::string& configFile)
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|BadFile exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|InvalidNode exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|Unexpected exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
 }
@@ -185,14 +185,14 @@ void Ctx::start()
 		std::stringstream ss;
 		ss << "InvalidNode exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "Unexpected exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
 }
