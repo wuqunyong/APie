@@ -104,13 +104,20 @@ void Ctx::init(const std::string& configFile)
 			auto ptrCb = std::make_shared<PortCb>();
 			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, port, 1024));
 			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
+
+			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|port:%d", port);
 		}
 
 		uint16_t ioThreads = this->node_["io_threads"].as<uint16_t>();
+		if (ioThreads <= 0 || ioThreads > 64)
+		{
+			ioThreads = 2;
+		}
 		for (uint32_t index = 0; index < ioThreads; index++)
 		{
 			thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
 		}
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "ioThreads: %d", ioThreads);
 
 		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
 		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
