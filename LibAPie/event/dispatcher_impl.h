@@ -50,6 +50,8 @@ public:
   void run(void) override;
   void push(Command& cmd) override;
 
+  std::atomic<bool>& terminating() override;
+
  public:
 	static void addConnection(std::shared_ptr<ServerConnection> ptrConnection);
 	static std::shared_ptr<ServerConnection> getConnection(uint64_t iSerialNum);
@@ -76,6 +78,7 @@ private:
 
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
+  void handleLogicExit(uint32_t iThreadId);
   void handleStopThread(uint32_t iThreadId);
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
@@ -94,6 +97,8 @@ private:
 
   APie::Mailbox<Command> mailbox_;
   time_t i_next_check_rotate;
+
+  std::atomic<bool> terminating_ = false;
 
   static std::atomic<uint64_t> serial_num_;
   static std::mutex connecton_sync_;

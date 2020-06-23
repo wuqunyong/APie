@@ -45,7 +45,7 @@ std::tuple<uint32_t, std::string> initHook()
 		request.set_user_id(time(NULL));
 		request.set_session_key("hello");
 
-		ptrClint->sendMsg(1100, request);
+		//ptrClint->sendMsg(1100, request);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 
@@ -98,6 +98,12 @@ std::tuple<uint32_t, std::string> startHook()
 	return std::make_tuple(0, "");
 }
 
+
+std::tuple<uint32_t, std::string> exitHook()
+{
+	return std::make_tuple(0, "");
+}
+
 int main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -112,6 +118,8 @@ int main(int argc, char **argv)
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook2, 2);
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
+
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Exit, exitHook);
 
 	APie::CtxSingleton::get().init(configFile);
 	APie::CtxSingleton::get().start();

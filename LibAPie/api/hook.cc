@@ -60,6 +60,13 @@ namespace Hook {
 				{
 					std::stringstream ss;
 					ss << "errorCode:" << std::get<0>(result) << "|info:" << std::get<1>(result);
+
+					if (point == HookPoint::HP_Exit)
+					{
+						PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "exit|%s", ss.str().c_str());
+						continue;
+					}
+
 					fatalExit(ss.str().c_str());
 				}
 			}

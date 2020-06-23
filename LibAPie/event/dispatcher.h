@@ -52,6 +52,7 @@ public:
 
   virtual void push(Command& cmd) PURE;
 
+  virtual std::atomic<bool>& terminating() PURE;
 };
 
 typedef std::unique_ptr<Dispatcher> DispatcherPtr;

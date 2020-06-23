@@ -25,6 +25,7 @@
 #include "event2/event.h"
 #include <assert.h>
 #include "../network/client_proxy.h"
+#include "../api/hook.h"
 
 
 namespace APie {
@@ -40,7 +41,11 @@ DispatcherImpl::DispatcherImpl(uint32_t tid)
 	deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
 	post_timer_(createTimer([this]() -> void { runPostCallbacks(); })),
 	current_to_delete_(&to_delete_1_),
-	i_next_check_rotate(0){}
+	i_next_check_rotate(0),
+	terminating_(false)
+{
+
+}
 
 DispatcherImpl::~DispatcherImpl() {}
 
@@ -130,6 +135,11 @@ void DispatcherImpl::push(Command& cmd)
 	mailbox_.send(cmd);
 }
 
+std::atomic<bool>& DispatcherImpl::terminating()
+{
+	return this->terminating_;
+}
+
 void DispatcherImpl::runPostCallbacks() {
   while (true) {
     // It is important that this declaration is inside the body of the loop so that the callback is
@@ -198,6 +208,11 @@ void DispatcherImpl::handleCommand()
 		case Command::dial_result:
 		{
 			this->handleDialResult(cmd.args.dial_result.ptrData);
+			break;
+		}
+		case Command::logic_exit:
+		{
+			this->handleLogicExit(cmd.args.logic_exit.iThreadId);
 			break;
 		}
 		case Command::stop_thread:
@@ -400,6 +415,18 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	{
 		clientProxy->onConnect(ptrCmd->iResult);
 	}
+}
+
+void DispatcherImpl::handleLogicExit(uint32_t iThreadId)
+{
+	if (iThreadId != this->tid_)
+	{
+		return;
+	}
+
+	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Exit);
+
+	terminating_ = true;
 }
 
 void DispatcherImpl::handleStopThread(uint32_t iThreadId)

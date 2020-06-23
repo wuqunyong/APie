@@ -328,6 +328,15 @@ void Ctx::waitForShutdown()
 	}
 #endif
 
+	Command command;
+	command.type = Command::logic_exit;
+	command.args.logic_exit.iThreadId = APie::CtxSingleton::get().getLogicThread()->getTId();
+	APie::CtxSingleton::get().getLogicThread()->push(command);
+
+	while (!APie::CtxSingleton::get().getLogicThread()->dispatcher().terminating())
+	{ 
+		std::this_thread::yield(); 
+	}
 	this->destroy();
 }
 
