@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <sstream>
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #include "../network/Ctx.h"
 #include "../network/address.h"
@@ -221,10 +223,12 @@ void Ctx::destroy()
 			}
 		}
 
-		SLEEP_MS(1000);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		//SLEEP_MS(1000);
 	}
 	//----------------------2:sleep----------------------------
-	SLEEP_MS(1000);
+	//SLEEP_MS(1000);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 
 	//----------------------3:delete----------------------------
