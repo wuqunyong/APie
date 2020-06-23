@@ -1,12 +1,12 @@
 listeners:
 - address:
     socket_address:
-      address: "127.0.0.1"
+      address: "*"
       port_value: 5007
       type: 1
 - address:
     socket_address:
-      address: "127.0.0.1"
+      address: "*"
       port_value: 5008
       type: 1
 clients:
