@@ -126,7 +126,7 @@ void Ctx::init(const std::string& configFile)
 			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
-			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|port:%d", port);
+			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:%s|port:%d|type:%d", ip.c_str(), port, type);
 		}
 
 		uint16_t ioThreads = this->node_["io_threads"].as<uint16_t>();
