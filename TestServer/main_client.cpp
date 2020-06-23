@@ -64,28 +64,36 @@ std::tuple<uint32_t, std::string> initHook2()
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	auto ptrClient = APie::ClientProxy::createClientProxy();
-	auto connectCb = [](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
-		if (iResult == 0)
-		{
-			::login_msg::MSG_CLIENT_LOGINTOL msg;
-			msg.set_user_id(100);
-			msg.set_session_key("hello");
+	for (const auto& item : APie::CtxSingleton::get().yamlNode()["clients"])
+	{
+		std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
+		uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
+		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
 
-			self->sendMsg(1100, msg);
-			self->addReconnectTimer(30000);
-		}
-		return true;
-	};
-	ptrClient->connect("127.0.0.1", 5007, APie::ProtocolType::PT_PB, connectCb);
+		auto ptrClient = APie::ClientProxy::createClientProxy();
+		auto connectCb = [](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+			if (iResult == 0)
+			{
+				::login_msg::MSG_CLIENT_LOGINTOL msg;
+				msg.set_user_id(100);
+				msg.set_session_key("hello");
 
-	auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
-		std::cout << "curTime:" << time(NULL) << std::endl;
+				self->sendMsg(1100, msg);
+				self->addReconnectTimer(30000);
+			}
+			return true;
+		};
+		ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
+
+		auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
+			std::cout << "curTime:" << time(NULL) << std::endl;
+			ptrClient->addHeartbeatTimer(1000);
+		};
+		ptrClient->setHeartbeatCb(heartbeatCb);
 		ptrClient->addHeartbeatTimer(1000);
-	};
-	ptrClient->setHeartbeatCb(heartbeatCb);
-	ptrClient->addHeartbeatTimer(1000);
-	ptrClient.reset();
+		ptrClient.reset();
+	}
+
 
 	return std::make_tuple(0, "");
 }
