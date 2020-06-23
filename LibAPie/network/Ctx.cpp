@@ -37,7 +37,6 @@ sigset_t g_SigSet;
 
 
 
-
 namespace APie {
 
 PlatformImpl Ctx::s_platform;
@@ -84,7 +83,7 @@ Ctx::~Ctx()
 
 }
 
-void Ctx::init()
+void Ctx::init(const std::string& configFile)
 {
 	APie::ExceptionTrap();
 
@@ -92,19 +91,51 @@ void Ctx::init()
 
 	this->handleSigProcMask();
 
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
+	try {
+		this->node_ = YAML::LoadFile(configFile);
 
-	auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
-	auto ptrCb = std::make_shared<PortCb>();
-	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, 5007, 1024));
+		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
-	thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
+		for (const auto& item : this->node_["listeners"])
+		{
+			uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
 
-	thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
-	//thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
+			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
+			auto ptrCb = std::make_shared<PortCb>();
+			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, port, 1024));
+			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
+		}
 
-	logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
-	log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
+		uint16_t ioThreads = this->node_["io_threads"].as<uint16_t>();
+		for (uint32_t index = 0; index < ioThreads; index++)
+		{
+			thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
+		}
+
+		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
+		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
+	}
+	catch (YAML::BadFile& e) {
+		std::stringstream ss;
+		ss << "fileName:" << configFile << "|BadFile exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		throw;
+	}
+	catch (YAML::InvalidNode& e) {
+		std::stringstream ss;
+		ss << "fileName:" << configFile << "|InvalidNode exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		throw;
+	}
+	catch (std::exception& e) {
+		std::stringstream ss;
+		ss << "fileName:" << configFile << "|Unexpected exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		throw;
+	}
 }
 
 void Ctx::start()
@@ -133,7 +164,23 @@ void Ctx::start()
 		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
 
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
+	try {
+		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
+	}
+	catch (YAML::InvalidNode& e) {
+		std::stringstream ss;
+		ss << "InvalidNode exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		throw;
+	}
+	catch (std::exception& e) {
+		std::stringstream ss;
+		ss << "Unexpected exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", ss.str().c_str());
+		throw;
+	}
 }
 
 void Ctx::destroy()
@@ -258,6 +305,11 @@ uint32_t Ctx::generatorTId()
 {
 	++tid_;
 	return tid_;
+}
+
+YAML::Node& Ctx::yamlNode()
+{
+	return this->node_;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()

@@ -92,13 +92,20 @@ std::tuple<uint32_t, std::string> startHook()
 
 int main(int argc, char **argv)
 {
+	if (argc != 2)
+	{
+		fatalExit("usage: exe <ConfFile>");
+	}
+
+	std::string configFile = argv[1];
+
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook1, 1);
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook2, 2);
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
 
-	APie::CtxSingleton::get().init();
+	APie::CtxSingleton::get().init(configFile);
 	APie::CtxSingleton::get().start();
 	APie::CtxSingleton::get().waitForShutdown();
     return 0;

@@ -58,3 +58,6 @@ AddVectoredExceptionHandler
 
 
 https://nats.io/download/nats-io/nats.go/
+
+yaml
+https://github.com/jbeder/yaml-cpp/wiki/Tutorial

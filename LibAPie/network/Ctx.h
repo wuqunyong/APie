@@ -10,7 +10,7 @@
 #include "../event/dispatched_thread.h"
 #include "../network/platform_impl.h"
 
-
+#include "yaml-cpp/yaml.h"
 
 namespace APie
 {
@@ -23,13 +23,14 @@ namespace APie
 		Ctx();
 		~Ctx();
 
-		void init();
+		void init(const std::string& configFile);
 		void start();
 		void destroy();
 
 		void waitForShutdown();
 
 		uint32_t generatorTId();
+		YAML::Node& yamlNode();
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
@@ -47,6 +48,7 @@ namespace APie
 		std::map<uint32_t, std::shared_ptr<Event::DispatchedThreadImpl>> thread_id_;
 
 		std::atomic<uint32_t> tid_ = 0;
+		YAML::Node node_;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;
