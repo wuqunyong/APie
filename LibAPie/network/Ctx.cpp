@@ -36,6 +36,7 @@ sigset_t g_SigSet;
 #endif
 
 #include "logger.h"
+#include "i_poll_events.hpp"
 
 
 
@@ -45,19 +46,27 @@ PlatformImpl Ctx::s_platform;
 
 class PortCb : public Network::ListenerCallbacks
 {
+public:
+	PortCb(ProtocolType type) : m_type(type)
+	{
+
+	}
+
 	void onAccept(evutil_socket_t fd)
 	{
-		std::cout << fd << std::endl;
+		//std::cout << fd << std::endl;
 
+		std::string ip;
 		auto ptrAddr = Network::addressFromFd(fd);
 		if (ptrAddr != nullptr)
 		{
-			std::string addr = Network::makeFriendlyAddress(*ptrAddr);
+			ip = Network::makeFriendlyAddress(*ptrAddr);
 		}
 
 		PassiveConnect *itemObjPtr = new PassiveConnect;
 		itemObjPtr->iFd = fd;
-		itemObjPtr->iType = ProtocolType::PT_PB;
+		itemObjPtr->iType = m_type;
+		itemObjPtr->sIp = ip;
 
 		Command command;
 		command.type = Command::passive_connect;
@@ -71,6 +80,8 @@ class PortCb : public Network::ListenerCallbacks
 		ptrThread->push(command);
 	}
 
+private:
+	ProtocolType m_type;
 };
 
 Ctx::Ctx() :
@@ -109,8 +120,9 @@ void Ctx::init(const std::string& configFile)
 			config.port = port;
 			config.type = static_cast<APie::ProtocolType>(type);
 
+			auto ptrCb = std::make_shared<PortCb>(config.type);
+
 			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
-			auto ptrCb = std::make_shared<PortCb>();
 			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
