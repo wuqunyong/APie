@@ -192,23 +192,10 @@ void Ctx::start()
 		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
 
-	try {
-		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
-	}
-	catch (YAML::InvalidNode& e) {
-		std::stringstream ss;
-		ss << "InvalidNode exception: " << e.what();
-
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
-		throw;
-	}
-	catch (std::exception& e) {
-		std::stringstream ss;
-		ss << "Unexpected exception: " << e.what();
-
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
-		throw;
-	}
+	Command command;
+	command.type = Command::logic_start;
+	command.args.logic_start.iThreadId = APie::CtxSingleton::get().getLogicThread()->getTId();
+	APie::CtxSingleton::get().getLogicThread()->push(command);
 }
 
 void Ctx::destroy()

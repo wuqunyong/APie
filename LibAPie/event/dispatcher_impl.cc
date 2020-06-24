@@ -210,6 +210,11 @@ void DispatcherImpl::handleCommand()
 			this->handleDialResult(cmd.args.dial_result.ptrData);
 			break;
 		}
+		case Command::logic_start:
+		{
+			this->handleLogicStart(cmd.args.logic_exit.iThreadId);
+			break;
+		}
 		case Command::logic_exit:
 		{
 			this->handleLogicExit(cmd.args.logic_exit.iThreadId);
@@ -414,6 +419,32 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	if (clientProxy)
 	{
 		clientProxy->onConnect(ptrCmd->iResult);
+	}
+}
+
+void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
+{
+	if (iThreadId != this->tid_)
+	{
+		return;
+	}
+
+	try {
+		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
+	}
+	catch (YAML::InvalidNode& e) {
+		std::stringstream ss;
+		ss << "InvalidNode exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		throw;
+	}
+	catch (std::exception& e) {
+		std::stringstream ss;
+		ss << "Unexpected exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		throw;
 	}
 }
 
