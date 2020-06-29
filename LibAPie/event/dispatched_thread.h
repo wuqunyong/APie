@@ -37,15 +37,6 @@ namespace Event {
 		* TODO(dnoe): Worker should probably be refactored to leverage this.
 		*/
 
-	enum class EThreadType
-	{
-		TT_None = 0,
-		TT_Listen,
-		TT_IO,
-		TT_Logic,
-		TT_Log,
-	};
-
 	enum class DTState
 	{
 		DTS_Ready = 0,
@@ -61,7 +52,7 @@ namespace Event {
 			type_(type),
 			tid_(tid),
 			state_(DTState::DTS_Ready),
-			dispatcher_(std::make_unique<Event::DispatcherImpl>(tid))
+			dispatcher_(std::make_unique<Event::DispatcherImpl>(type, tid))
 		{
 		}
 

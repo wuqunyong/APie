@@ -20,7 +20,7 @@ public:
    * Allocate a dispatcher.
    * @return Event::DispatcherPtr which is owned by the caller.
    */
-  virtual Event::DispatcherPtr allocateDispatcher(uint32_t tid) PURE;
+  virtual Event::DispatcherPtr allocateDispatcher(Event::EThreadType type, uint32_t tid) PURE;
 
 
 };

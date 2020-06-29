@@ -36,8 +36,9 @@ std::mutex DispatcherImpl::connecton_sync_;
 std::map<uint64_t, std::shared_ptr<ServerConnection>> DispatcherImpl::connection_map_;
 std::map<uint64_t, std::shared_ptr<ClientConnection>> DispatcherImpl::client_connection_map_;
 
-DispatcherImpl::DispatcherImpl(uint32_t tid)
-	: tid_(tid),
+DispatcherImpl::DispatcherImpl(EThreadType type, uint32_t tid)
+	: type_(type),
+	tid_(tid),
 	deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
 	post_timer_(createTimer([this]() -> void { runPostCallbacks(); })),
 	current_to_delete_(&to_delete_1_),

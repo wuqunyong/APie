@@ -30,7 +30,7 @@ namespace Event {
  */
 class DispatcherImpl : public Dispatcher {
 public:
-  DispatcherImpl(uint32_t tid);
+  DispatcherImpl(EThreadType type, uint32_t tid);
   ~DispatcherImpl();
 
   /**
@@ -84,6 +84,7 @@ private:
 
   static void processCommand(evutil_socket_t fd, short event, void *arg);
 
+  EThreadType type_;
   uint32_t tid_;
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;

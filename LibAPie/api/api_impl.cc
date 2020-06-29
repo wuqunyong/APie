@@ -12,8 +12,8 @@ Impl::Impl()
 {
 }
 
-Event::DispatcherPtr Impl::allocateDispatcher(uint32_t tid) {
-  return std::make_unique<Event::DispatcherImpl>(tid);
+Event::DispatcherPtr Impl::allocateDispatcher(Event::EThreadType type, uint32_t tid) {
+  return std::make_unique<Event::DispatcherImpl>(type, tid);
 }
 
 

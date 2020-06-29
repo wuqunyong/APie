@@ -19,6 +19,15 @@
 namespace APie {
 namespace Event {
 
+	enum class EThreadType
+	{
+		TT_None = 0,
+		TT_Listen,
+		TT_IO,
+		TT_Logic,
+		TT_Log,
+	};
+
 /**
  * Callback invoked when a dispatcher post() runs.
  */

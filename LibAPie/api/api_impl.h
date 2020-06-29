@@ -17,7 +17,7 @@ public:
   Impl();
 
   // Api::Api
-  Event::DispatcherPtr allocateDispatcher(uint32_t tid) override;
+  Event::DispatcherPtr allocateDispatcher(Event::EThreadType type, uint32_t tid) override;
 };
 
 } // namespace Api
