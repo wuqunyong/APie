@@ -10,7 +10,7 @@
 #include "../event/timer.h"
 #include "../event/dispatcher_impl.h"
 #include "../network/listener.h"
-#include "../network/Command.h"
+#include "../network/command.h"
 
 namespace APie {
 namespace Event {

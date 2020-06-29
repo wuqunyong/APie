@@ -16,8 +16,8 @@
 #include "../event/libevent_scheduler.h"
 
 #include "../network/object.hpp"
-#include "../network/Mailbox.h"
-#include "../network/Command.h"
+#include "../network/mailbox.h"
+#include "../network/command.h"
 #include "../network/connection.h"
 #include "../network/client_connection.h"
 #include "../network/listener.h"

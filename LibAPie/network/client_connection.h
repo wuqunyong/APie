@@ -8,7 +8,7 @@
 
 #include "windows_platform.h"
 #include "i_poll_events.hpp"
-#include "Command.h"
+#include "command.h"
 
 
 namespace APie

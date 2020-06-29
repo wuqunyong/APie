@@ -6,7 +6,7 @@
 
 
 #include "ctx.h"
-#include "Command.h"
+#include "command.h"
 #include "logger.h"
 #include "output_stream.h"
 #include "../event/dispatcher_impl.h"

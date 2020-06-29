@@ -114,15 +114,6 @@
     <ClInclude Include="network\platform_impl.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="network\Command.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\Mailbox.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\Signaler.h">
-      <Filter>network</Filter>
-    </ClInclude>
     <ClInclude Include="singleton\const_singleton.h">
       <Filter>singleton</Filter>
     </ClInclude>
@@ -217,6 +208,15 @@
     <ClInclude Include="network\ctx.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="network\command.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\signaler.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\mailbox.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -254,12 +254,6 @@
     </ClCompile>
     <ClCompile Include="common\utility.cc">
       <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="network\Command.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\Signaler.cpp">
-      <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\address.cc">
       <Filter>network</Filter>
@@ -328,6 +322,12 @@
       <Filter>api</Filter>
     </ClCompile>
     <ClCompile Include="network\ctx.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\command.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\signaler.cpp">
       <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>

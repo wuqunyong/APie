@@ -15,7 +15,7 @@
 #endif
 
 #include "ctx.h"
-#include "Command.h"
+#include "command.h"
 
 #include "../filesystem/directory.h"
 #include "../common/string_utils.h"

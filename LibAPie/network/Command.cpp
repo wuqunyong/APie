@@ -1,4 +1,4 @@
-#include "Command.h"
+#include "command.h"
 
 void APie::deallocateCommand(Command* cmd)
 {

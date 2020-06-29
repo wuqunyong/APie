@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Signaler.h"
+#include "signaler.h"
 
 #include <assert.h>
 
