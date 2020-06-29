@@ -132,12 +132,6 @@
     <ClInclude Include="network\connection.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="serialization\ByteBuffer.h">
-      <Filter>serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="serialization\ProtocolHead.h">
-      <Filter>serialization</Filter>
-    </ClInclude>
     <ClInclude Include="..\PBMsg\login_msg.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
@@ -217,6 +211,12 @@
     <ClInclude Include="network\mailbox.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="serialization\byte_buffer.h">
+      <Filter>serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="serialization\protocol_head.h">
+      <Filter>serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -260,12 +260,6 @@
     </ClCompile>
     <ClCompile Include="network\connection.cpp">
       <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="serialization\ByteBuffer.cpp">
-      <Filter>serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="serialization\ProtocolHead.cpp">
-      <Filter>serialization</Filter>
     </ClCompile>
     <ClCompile Include="..\PBMsg\login_msg.pb.cc">
       <Filter>pb</Filter>
@@ -329,6 +323,12 @@
     </ClCompile>
     <ClCompile Include="network\signaler.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="serialization\byte_buffer.cpp">
+      <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="serialization\protocol_head.cpp">
+      <Filter>serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -194,8 +194,8 @@
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
-    <ClInclude Include="serialization\ByteBuffer.h" />
-    <ClInclude Include="serialization\ProtocolHead.h" />
+    <ClInclude Include="serialization\byte_buffer.h" />
+    <ClInclude Include="serialization\protocol_head.h" />
     <ClInclude Include="singleton\const_singleton.h" />
     <ClInclude Include="singleton\instance.h" />
     <ClInclude Include="singleton\threadsafe_singleton.h" />
@@ -236,8 +236,8 @@
     <ClCompile Include="network\object.cpp" />
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
-    <ClCompile Include="serialization\ByteBuffer.cpp" />
-    <ClCompile Include="serialization\ProtocolHead.cpp" />
+    <ClCompile Include="serialization\byte_buffer.cpp" />
+    <ClCompile Include="serialization\protocol_head.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
