@@ -14,7 +14,7 @@
 #include <dirent.h>
 #endif
 
-#include "Ctx.h"
+#include "ctx.h"
 #include "Command.h"
 
 #include "../filesystem/directory.h"

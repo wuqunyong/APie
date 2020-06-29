@@ -183,7 +183,7 @@
     <ClInclude Include="network\client_proxy.h" />
     <ClInclude Include="network\Command.h" />
     <ClInclude Include="network\connection.h" />
-    <ClInclude Include="network\Ctx.h" />
+    <ClInclude Include="network\ctx.h" />
     <ClInclude Include="network\i_poll_events.hpp" />
     <ClInclude Include="network\listener.h" />
     <ClInclude Include="network\listener_impl.h" />
@@ -230,7 +230,7 @@
     <ClCompile Include="network\client_proxy.cpp" />
     <ClCompile Include="network\Command.cpp" />
     <ClCompile Include="network\connection.cpp" />
-    <ClCompile Include="network\Ctx.cpp" />
+    <ClCompile Include="network\ctx.cpp" />
     <ClCompile Include="network\listener_impl.cc" />
     <ClCompile Include="network\logger.cpp" />
     <ClCompile Include="network\object.cpp" />

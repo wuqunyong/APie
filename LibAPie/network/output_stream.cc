@@ -7,7 +7,7 @@
 #include <assert.h>
 
 #include "../event/dispatcher_impl.h"
-#include "../network/Ctx.h"
+#include "../network/ctx.h"
 #include "../serialization/ProtocolHead.h"
 
 namespace APie {

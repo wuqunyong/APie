@@ -18,7 +18,7 @@
 #include "api/hook.h"
 
 #include "network/platform_impl.h"
-#include "network/Ctx.h"
+#include "network/ctx.h"
 #include "network/output_stream.h"
 #include "network/logger.h"
 #include "network/client_proxy.h"

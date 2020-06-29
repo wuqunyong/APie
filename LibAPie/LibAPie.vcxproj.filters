@@ -123,9 +123,6 @@
     <ClInclude Include="network\Signaler.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="network\Ctx.h">
-      <Filter>network</Filter>
-    </ClInclude>
     <ClInclude Include="singleton\const_singleton.h">
       <Filter>singleton</Filter>
     </ClInclude>
@@ -217,6 +214,9 @@
     <ClInclude Include="api\hook.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="network\ctx.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -259,9 +259,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\Signaler.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\Ctx.cpp">
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\address.cc">
@@ -329,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="api\hook.cc">
       <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ctx.cpp">
+      <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

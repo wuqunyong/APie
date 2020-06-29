@@ -11,7 +11,7 @@
 #include "../serialization/ProtocolHead.h"
 #include "../event/dispatcher_impl.h"
 #include "../api/pb_handler.h"
-#include "../network/Ctx.h"
+#include "../network/ctx.h"
 
 #include "../../PBMsg/login_msg.pb.h"
 
