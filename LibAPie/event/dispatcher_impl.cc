@@ -1,31 +1,32 @@
 #include "../event/dispatcher_impl.h"
 
+#include <ctime>
 #include <chrono>
 #include <cstdint>
 #include <functional>
 #include <string>
 #include <vector>
 #include <cassert>
-
-#include "../api/api.h"
-#include "../network/listener.h"
-
+#include <assert.h>
 
 #include "../event/libevent_scheduler.h"
 #include "../event/signal_impl.h"
 #include "../event/timer_impl.h"
+
+#include "../network/listener.h"
 #include "../network/listener_impl.h"
 #include "../network/connection.h"
 #include "../network/ctx.h"
 #include "../network/i_poll_events.hpp"
-
-#include "../api/pb_handler.h"
+#include "../network/client_proxy.h"
 #include "../network/logger.h"
 
-#include "event2/event.h"
-#include <assert.h>
-#include "../network/client_proxy.h"
+#include "../api/api.h"
+#include "../api/pb_handler.h"
 #include "../api/hook.h"
+
+#include "event2/event.h"
+#include "influxdb.hpp"
 
 
 namespace APie {
@@ -41,8 +42,10 @@ DispatcherImpl::DispatcherImpl(EThreadType type, uint32_t tid)
 	tid_(tid),
 	deferred_delete_timer_(createTimer([this]() -> void { clearDeferredDeleteList(); })),
 	post_timer_(createTimer([this]() -> void { runPostCallbacks(); })),
+	interval_timer_(createTimer([this]() -> void { runIntervalCallbacks(); })),
 	current_to_delete_(&to_delete_1_),
 	i_next_check_rotate(0),
+	i_next_metric_time(0),
 	terminating_(false)
 {
 
@@ -128,6 +131,7 @@ void DispatcherImpl::run(void) {
   // not guarantee that events are run in any particular order. So even if we post() and call
   // event_base_once() before some other event, the other event might get called first.
   runPostCallbacks();
+  interval_timer_->enableTimer(std::chrono::milliseconds(1000));
   base_scheduler_.run();
 }
 
@@ -139,6 +143,26 @@ void DispatcherImpl::push(Command& cmd)
 std::atomic<bool>& DispatcherImpl::terminating()
 {
 	return this->terminating_;
+}
+
+void DispatcherImpl::runIntervalCallbacks()
+{
+	MetricData *ptrData = new MetricData;
+	ptrData->sMetric = "queue";
+	ptrData->tag["thread"] = std::to_string(static_cast<uint32_t>(type_));
+	ptrData->field["mailbox"] = mailbox_.size();
+
+	Command command;
+	command.type = Command::metric_data;
+	command.args.metric_data.ptrData = ptrData;
+
+	auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+	if (ptrMetric != nullptr)
+	{
+		ptrMetric->push(command);;
+	}
+
+	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
 }
 
 void DispatcherImpl::runPostCallbacks() {
@@ -178,6 +202,25 @@ void DispatcherImpl::handleCommand()
 			break;
 		}
 
+		if (type_ != EThreadType::TT_Metrics)
+		{
+			MetricData *ptrData = new MetricData;
+			ptrData->sMetric = "protocol" + std::to_string(cmd.type);
+			ptrData->tag["type"] = std::to_string(cmd.type);
+			ptrData->field["value"] = 1;
+
+			Command command;
+			command.type = Command::metric_data;
+			command.args.metric_data.ptrData = ptrData;
+
+			auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+			if (ptrMetric != nullptr)
+			{
+				ptrMetric->push(command);;
+			}
+		
+		}
+
 		switch (cmd.type)
 		{
 		case Command::passive_connect:
@@ -199,6 +242,11 @@ void DispatcherImpl::handleCommand()
 		{
 			this->handleRotate(iCurTime);
 			this->handleAsyncLog(cmd.args.async_log.ptrData);
+			break;
+		}
+		case Command::metric_data:
+		{
+			this->handleMetric(cmd.args.metric_data.ptrData);
 			break;
 		}
 		case Command::dial:
@@ -487,6 +535,35 @@ void DispatcherImpl::handleAsyncLog(LogCmd* ptrCmd)
 	pieLogRaw(ptrCmd->sFile.c_str(), ptrCmd->iCycle, ptrCmd->iLevel, ptrCmd->sMsg.c_str());
 }
 
+void DispatcherImpl::handleMetric(MetricData* ptrCmd)
+{
+	auto metric = influxdb_cpp::builder();
+	auto& measure = metric.meas(ptrCmd->sMetric);
+	for (const auto& items : ptrCmd->tag)
+	{
+		measure.tag(items.first, items.second);
+	}
+	std::size_t iCount = ptrCmd->field.size();
+	std::size_t iIndex = 0;
+	for (const auto& items : ptrCmd->field)
+	{
+		iIndex++;
+		if (iIndex < iCount)
+		{
+			measure.field(items.first, items.second);
+		}
+		else
+		{
+			std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+			auto duration = now.time_since_epoch();
+			auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+
+			//uint64_t iCurTime = time(NULL) * 1000000000;
+			uint64_t iCurTime = nanoseconds.count();
+			measure.field(items.first, items.second).timestamp(iCurTime).send_udp("127.0.0.1", 8089);
+		}
+	}
+}
 
 } // namespace Event
 } // namespace Envoy

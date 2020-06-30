@@ -77,6 +77,13 @@ namespace APie
 		uint32_t iResult;
 	};
 
+	struct MetricData
+	{
+		std::string sMetric;
+		std::map<std::string, std::string> tag;
+		std::map<std::string, double> field;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -100,6 +107,7 @@ namespace APie
 			dial_result,
 
 			async_log,
+			metric_data,
 
 			logic_start,
 			logic_exit,
@@ -127,6 +135,10 @@ namespace APie
 			struct {
 				LogCmd* ptrData;
 			} async_log;
+
+			struct {
+				MetricData* ptrData;
+			} metric_data;
 
 			struct {
 				DialParameters* ptrData;

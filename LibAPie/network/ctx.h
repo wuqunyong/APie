@@ -35,6 +35,8 @@ namespace APie
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogThread();
+		std::shared_ptr<Event::DispatchedThreadImpl> getMetricsThread();
+
 		std::shared_ptr<Event::DispatchedThreadImpl> getThreadById(uint32_t id);
 
     private:
@@ -45,6 +47,7 @@ namespace APie
 
 		std::shared_ptr<Event::DispatchedThreadImpl> logic_thread_;
 		std::shared_ptr<Event::DispatchedThreadImpl> log_thread_;
+		std::shared_ptr<Event::DispatchedThreadImpl> metrics_thread_;
 		std::map<uint32_t, std::shared_ptr<Event::DispatchedThreadImpl>> thread_id_;
 
 		std::atomic<uint32_t> tid_ = 0;

@@ -67,6 +67,7 @@ public:
 
 private:
   void runPostCallbacks();
+  void runIntervalCallbacks();
   void handleCommand();
 
   void handleNewConnect(PassiveConnect *itemPtr);
@@ -74,6 +75,8 @@ private:
   void handleSendData(SendData *itemPtr);
 
   void handleAsyncLog(LogCmd* ptrCmd);
+  void handleMetric(MetricData* ptrCmd);
+
   void handleRotate(time_t cutTime);
 
   void handleDial(DialParameters* ptrCmd);
@@ -89,6 +92,8 @@ private:
   LibeventScheduler base_scheduler_;
   TimerPtr deferred_delete_timer_;
   TimerPtr post_timer_;
+  TimerPtr interval_timer_;
+
   std::vector<DeferredDeletablePtr> to_delete_1_;
   std::vector<DeferredDeletablePtr> to_delete_2_;
   std::vector<DeferredDeletablePtr>* current_to_delete_;
@@ -99,6 +104,7 @@ private:
 
   APie::Mailbox<Command> mailbox_;
   time_t i_next_check_rotate;
+  time_t i_next_metric_time;
 
   std::atomic<bool> terminating_ = false;
 

@@ -26,6 +26,7 @@ namespace Event {
 		TT_IO,
 		TT_Logic,
 		TT_Log,
+		TT_Metrics,
 	};
 
 /**

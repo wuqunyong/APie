@@ -73,7 +73,7 @@ void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 
 	//todo
 
-	delete this;
+	//delete this;
 }
 
 void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)

@@ -45,7 +45,7 @@ std::tuple<uint32_t, std::string> initHook()
 		request.set_user_id(time(NULL));
 		request.set_session_key("hello");
 
-		//ptrClint->sendMsg(1100, request);
+		ptrClint->sendMsg(1100, request);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 

@@ -40,6 +40,15 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::metric_data:
+	{
+		if (NULL != cmd->args.metric_data.ptrData)
+		{
+			delete cmd->args.metric_data.ptrData;
+			cmd->args.metric_data.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::dial:
 	{
 		if (NULL != cmd->args.dial.ptrData)

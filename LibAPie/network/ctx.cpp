@@ -86,7 +86,8 @@ private:
 
 Ctx::Ctx() :
 	logic_thread_(nullptr),
-	log_thread_(nullptr)
+	log_thread_(nullptr),
+	metrics_thread_(nullptr)
 {
 
 }
@@ -142,6 +143,7 @@ void Ctx::init(const std::string& configFile)
 
 		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
 		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
+		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
 	}
 	catch (YAML::BadFile& e) {
 		std::stringstream ss;
@@ -192,6 +194,13 @@ void Ctx::start()
 		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
 
+	if (metrics_thread_->state() == Event::DTState::DTS_Ready)
+	{
+		metrics_thread_->start();
+		thread_id_[metrics_thread_->getTId()] = metrics_thread_;
+	}
+	
+
 	Command command;
 	command.type = Command::logic_start;
 	command.args.logic_start.iThreadId = APie::CtxSingleton::get().getLogicThread()->getTId();
@@ -239,6 +248,7 @@ void Ctx::destroy()
 	//thread_.erase(APie::Event::EThreadType::TT_Log);
 	logic_thread_.reset();
 	log_thread_.reset();
+	metrics_thread_.reset();
 }
 
 void Ctx::handleSigProcMask()
@@ -362,6 +372,11 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogicThread()
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogThread()
 {
 	return log_thread_;
+}
+
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getMetricsThread()
+{
+	return metrics_thread_;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
