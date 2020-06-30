@@ -149,7 +149,7 @@ void DispatcherImpl::runIntervalCallbacks()
 {
 	MetricData *ptrData = new MetricData;
 	ptrData->sMetric = "queue";
-	ptrData->tag["thread"] = std::to_string(static_cast<uint32_t>(type_));
+	ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
 	ptrData->field["mailbox"] = mailbox_.size();
 
 	Command command;
@@ -200,25 +200,6 @@ void DispatcherImpl::handleCommand()
 		if (iResult != 0)
 		{
 			break;
-		}
-
-		if (type_ != EThreadType::TT_Metrics)
-		{
-			MetricData *ptrData = new MetricData;
-			ptrData->sMetric = "protocol" + std::to_string(cmd.type);
-			ptrData->tag["type"] = std::to_string(cmd.type);
-			ptrData->field["value"] = 1;
-
-			Command command;
-			command.type = Command::metric_data;
-			command.args.metric_data.ptrData = ptrData;
-
-			auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
-			if (ptrMetric != nullptr)
-			{
-				ptrMetric->push(command);;
-			}
-		
 		}
 
 		switch (cmd.type)

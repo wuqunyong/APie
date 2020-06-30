@@ -29,6 +29,37 @@ namespace Event {
 		TT_Metrics,
 	};
 
+	inline std::string toStirng(EThreadType type)
+	{
+		switch (type)
+		{
+		case APie::Event::EThreadType::TT_Listen:
+		{
+			return "TT_Listen";
+		}
+		case APie::Event::EThreadType::TT_IO:
+		{
+			return "TT_IO";
+		}
+		case APie::Event::EThreadType::TT_Logic:
+		{
+			return "TT_Logic";
+		}
+		case APie::Event::EThreadType::TT_Log:
+		{
+			return "TT_Log";
+		}
+		case APie::Event::EThreadType::TT_Metrics:
+		{
+			return "TT_Metrics";
+		}
+		default:
+			break;
+		}
+
+		return "None";
+	}
+
 /**
  * Callback invoked when a dispatcher post() runs.
  */
