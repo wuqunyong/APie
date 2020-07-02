@@ -39,6 +39,32 @@ namespace APie
 
 		std::shared_ptr<Event::DispatchedThreadImpl> getThreadById(uint32_t id);
 
+		template <typename T>
+		T yamlAs(std::vector<std::string> index)
+		{
+			std::lock_guard<std::mutex> guard(node_sync_);
+
+			YAML::Node node = node_;
+			for (const auto &items : index)
+			{
+				node = node[items];
+			}
+			return node.as<T>();
+		}
+		
+		template <typename T, typename S>
+		T yamlAs(std::vector<std::string> index, const S& fallback)
+		{
+			std::lock_guard<std::mutex> guard(node_sync_);
+
+			YAML::Node node = node_;
+			for (const auto &items : index)
+			{
+				node = node[items];
+			}
+			return node.as<T>(fallback);
+		}
+
     private:
 		void handleSigProcMask();
 
@@ -52,6 +78,7 @@ namespace APie
 
 		std::atomic<uint32_t> tid_ = 0;
 		YAML::Node node_;
+		std::mutex node_sync_;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;

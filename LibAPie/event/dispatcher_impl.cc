@@ -147,22 +147,26 @@ std::atomic<bool>& DispatcherImpl::terminating()
 
 void DispatcherImpl::runIntervalCallbacks()
 {
-	MetricData *ptrData = new MetricData;
-	ptrData->sMetric = "queue";
-	ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
-	ptrData->field["mailbox"] = mailbox_.size();
-
-	Command command;
-	command.type = Command::metric_data;
-	command.args.metric_data.ptrData = ptrData;
-
-	auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
-	if (ptrMetric != nullptr)
+	bool enable = APie::CtxSingleton::get().yamlAs<bool>({"metrics","enable"}, false);
+	if (enable)
 	{
-		ptrMetric->push(command);;
-	}
+		MetricData *ptrData = new MetricData;
+		ptrData->sMetric = "queue";
+		ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
+		ptrData->field["mailbox"] = mailbox_.size();
 
-	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
+		Command command;
+		command.type = Command::metric_data;
+		command.args.metric_data.ptrData = ptrData;
+
+		auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+		if (ptrMetric != nullptr)
+		{
+			ptrMetric->push(command);;
+		}
+
+		interval_timer_->enableTimer(std::chrono::milliseconds(1000));
+	}
 }
 
 void DispatcherImpl::runPostCallbacks() {
@@ -541,7 +545,10 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 
 			//uint64_t iCurTime = time(NULL) * 1000000000;
 			uint64_t iCurTime = nanoseconds.count();
-			measure.field(items.first, items.second).timestamp(iCurTime).send_udp("127.0.0.1", 8089);
+
+			std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({"metrics","ip"}, "127.0.0.1");
+			uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({"metrics","udp_port"}, 8089);
+			measure.field(items.first, items.second).timestamp(iCurTime).send_udp(ip, port);
 		}
 	}
 }

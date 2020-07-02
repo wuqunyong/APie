@@ -21,3 +21,8 @@ clients:
       port_value: 5008
       type: 1      
 io_threads: 2
+
+metrics:
+  enable: true
+  ip: "127.0.0.1"
+  udp_port: 8089
