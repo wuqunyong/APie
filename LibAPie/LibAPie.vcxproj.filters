@@ -217,6 +217,9 @@
     <ClInclude Include="serialization\protocol_head.h">
       <Filter>serialization</Filter>
     </ClInclude>
+    <ClInclude Include="common\file.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="serialization\protocol_head.cpp">
       <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="common\file.cc">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
