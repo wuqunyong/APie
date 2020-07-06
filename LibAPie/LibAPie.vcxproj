@@ -145,6 +145,7 @@
     <ClInclude Include="api\api_impl.h" />
     <ClInclude Include="api\hook.h" />
     <ClInclude Include="api\pb_handler.h" />
+    <ClInclude Include="api\pubsub.h" />
     <ClInclude Include="base\macros.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\empty_string.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\hook.cc" />
     <ClCompile Include="api\pb_handler.cc" />
+    <ClCompile Include="api\pubsub.cc" />
     <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\file.cc" />
     <ClCompile Include="common\string_utils.cpp" />

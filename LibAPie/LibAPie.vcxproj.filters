@@ -220,6 +220,9 @@
     <ClInclude Include="common\file.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="api\pubsub.h">
+      <Filter>api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="common\file.cc">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="api\pubsub.cc">
+      <Filter>api</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

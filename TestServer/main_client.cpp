@@ -111,6 +111,27 @@ int main(int argc, char **argv)
 		fatalExit("usage: exe <ConfFile>");
 	}
 
+	auto ptrTest1 = [](const std::string& topic, ::google::protobuf::Message& msg) {
+		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+		std::cout << refMsg.DebugString();
+
+		auto userId = refMsg.user_id() + 111;
+		refMsg.set_user_id(userId);
+	};
+	APie::PubSubSingleton::get().subscribe("test1", ptrTest1);
+
+	auto ptrTest2 = [](const std::string& topic, ::google::protobuf::Message& msg) {
+		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+		std::cout << refMsg.DebugString();
+	};
+	APie::PubSubSingleton::get().subscribe("test1", ptrTest2);
+
+	::login_msg::MSG_CLIENT_LOGINTOL msg;
+	msg.set_user_id(100);
+	msg.set_session_key("hello");
+	APie::PubSubSingleton::get().publish("test1", msg);
+	APie::PubSubSingleton::get().publish("test2", msg);
+
 	std::string configFile = argv[1];
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook1, 1);
