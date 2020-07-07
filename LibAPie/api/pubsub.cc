@@ -13,8 +13,18 @@ namespace APie {
 
 	uint64_t PubSub::subscribe(uint64_t topic, SubscribeCallback cb, int32_t priority)
 	{
-		uint64_t id = genarateId();
+		uint64_t id = generateId();
 		this->subscribeImpl(topic, id, cb, priority);
+		return id;
+	}
+
+	uint64_t PubSub::subscribe(std::vector<uint64_t> topics, SubscribeCallback cb, int32_t priority)
+	{
+		uint64_t id = generateId();
+		for (const auto& topic : topics)
+		{
+			this->subscribeImpl(topic, id, cb, priority);
+		}
 		return id;
 	}
 
@@ -89,7 +99,7 @@ namespace APie {
 		}
 	}
 
-	uint64_t PubSub::genarateId()
+	uint64_t PubSub::generateId()
 	{
 		//std::lock_guard<std::mutex> lock(m_topicMutex);
 		++m_id;
