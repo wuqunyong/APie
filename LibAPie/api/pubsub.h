@@ -31,8 +31,7 @@ public:
 
 	uint64_t subscribe(uint64_t topic, SubscribeCallback cb, int32_t priority = 0);
 	uint64_t subscribe(std::vector<uint64_t> topics, SubscribeCallback cb, int32_t priority = 0);
-
-
+	
 	void unregister(uint64_t topic, uint64_t id);
 
 	void publish(uint64_t topic, ::google::protobuf::Message& msg);
