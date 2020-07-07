@@ -11,7 +11,7 @@
 
 namespace APie {
 
-	uint64_t PubSub::subscribe(const std::string& topic, SubscribeCallback cb, int32_t priority)
+	uint64_t PubSub::subscribe(uint64_t topic, SubscribeCallback cb, int32_t priority)
 	{
 		uint64_t id = genarateId();;
 
@@ -35,7 +35,7 @@ namespace APie {
 		return id;
 	}
 
-	void PubSub::publish(const std::string& topic, ::google::protobuf::Message& msg)
+	void PubSub::publish(uint64_t topic, ::google::protobuf::Message& msg)
 	{
 		auto findIte = m_topicMap.find(topic);
 		if (findIte != m_topicMap.end())
