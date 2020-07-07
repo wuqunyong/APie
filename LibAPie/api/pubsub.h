@@ -37,6 +37,8 @@ public:
 private:
 	uint64_t genarateId();
 
+	void subscribeImpl(uint64_t topic, uint64_t id, SubscribeCallback cb, int32_t priority);
+
 public:
 	uint64_t m_id = { 0 };
 	ChannelMap m_topicMap;

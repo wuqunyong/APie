@@ -13,8 +13,13 @@ namespace APie {
 
 	uint64_t PubSub::subscribe(uint64_t topic, SubscribeCallback cb, int32_t priority)
 	{
-		uint64_t id = genarateId();;
+		uint64_t id = genarateId();
+		this->subscribeImpl(topic, id, cb, priority);
+		return id;
+	}
 
+	void PubSub::subscribeImpl(uint64_t topic, uint64_t id, SubscribeCallback cb, int32_t priority)
+	{
 		SubEntry entry;
 		entry.id = id;
 		entry.cb = cb;
@@ -31,8 +36,6 @@ namespace APie {
 		{
 			findIte->second.push_back(entry);
 		}
-
-		return id;
 	}
 
 	void PubSub::unregister(uint64_t topic, uint64_t id)
