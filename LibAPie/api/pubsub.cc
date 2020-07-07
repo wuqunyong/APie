@@ -67,6 +67,14 @@ namespace APie {
 		findIte->second.erase(std::remove_if(findIte->second.begin(), findIte->second.end(), cmp), findIte->second.end());
 	}
 
+	void PubSub::unregister(std::vector<uint64_t> topics, uint64_t id)
+	{
+		for (const auto& topic : topics)
+		{
+			this->unregister(topic, id);
+		}
+	}
+
 	void PubSub::publish(uint64_t topic, ::google::protobuf::Message& msg)
 	{
 		auto findIte = m_topicMap.find(topic);
