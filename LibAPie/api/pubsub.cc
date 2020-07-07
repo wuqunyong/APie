@@ -35,6 +35,25 @@ namespace APie {
 		return id;
 	}
 
+	void PubSub::unregister(uint64_t topic, uint64_t id)
+	{
+		auto findIte = m_topicMap.find(topic);
+		if (findIte == m_topicMap.end())
+		{
+			return;
+		}
+
+		auto cmp = [id](SubEntry entry) {
+			if (entry.id == id)
+			{
+				return true;
+			}
+
+			return false;
+		};
+		findIte->second.erase(std::remove_if(findIte->second.begin(), findIte->second.end(), cmp), findIte->second.end());
+	}
+
 	void PubSub::publish(uint64_t topic, ::google::protobuf::Message& msg)
 	{
 		auto findIte = m_topicMap.find(topic);

@@ -125,6 +125,9 @@ int main(int argc, char **argv)
 		std::cout << refMsg.DebugString();
 	};
 	APie::PubSubSingleton::get().subscribe(1, ptrTest2);
+	uint64_t id = APie::PubSubSingleton::get().subscribe(1, ptrTest2);
+	APie::PubSubSingleton::get().unregister(1, id);
+
 
 	::login_msg::MSG_CLIENT_LOGINTOL msg;
 	msg.set_user_id(100);
