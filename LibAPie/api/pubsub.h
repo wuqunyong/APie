@@ -22,11 +22,6 @@ namespace APie {
 
 class PubSub {
 public:
-	enum PubTopicEvent
-	{
-		PTE_LogicCmd = 1, //::pubsub::LOGIC_CMD
-		PTE_Max = 1024,
-	};
 
 	using SubscribeCallback = std::function<void(uint64_t topic, ::google::protobuf::Message& msg)>;
 

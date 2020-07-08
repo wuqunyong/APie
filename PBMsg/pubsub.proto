@@ -4,6 +4,11 @@ package pubsub;
 
 //---------------------------------------
 
+enum PUB_TOPIC
+{
+	PT_None = 0;
+	PT_LogicCmd = 1;
+}
 
 message LOGIC_CMD
 {

@@ -95,11 +95,11 @@ std::tuple<uint32_t, std::string> startHook()
 	}
 
 
-	APie::PubSubSingleton::get().subscribe(APie::PubSub::PTE_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg1 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
 		std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.DebugString() << std::endl;
 	});
-	APie::PubSubSingleton::get().subscribe(APie::PubSub::PTE_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg2 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
 		std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.DebugString() << std::endl;
 	});

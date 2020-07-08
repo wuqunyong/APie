@@ -484,7 +484,7 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 		*ptrParams = items;
 	}
 
-	PubSubSingleton::get().publish(PubSub::PTE_LogicCmd, msg);
+	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
 }
 
 void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
