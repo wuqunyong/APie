@@ -45,9 +45,17 @@ namespace APie
 			std::lock_guard<std::mutex> guard(node_sync_);
 
 			YAML::Node node = YAML::Clone(node_);
+			//YAML::Node node = node_;
 			for (const auto &items : index)
 			{
-				node = node[items];
+				if (node[items])
+				{
+					node = node[items];
+				}
+				else
+				{
+					throw std::invalid_argument("Configuration|field:" + items + "|not found");
+				}
 			}
 			return node.as<T>();
 		}
@@ -58,9 +66,17 @@ namespace APie
 			std::lock_guard<std::mutex> guard(node_sync_);
 
 			YAML::Node node = YAML::Clone(node_);
+			//YAML::Node node = node_;
 			for (const auto &items : index)
 			{
-				node = node[items];
+				if (node[items])
+				{
+					node = node[items];
+				}
+				else
+				{
+					return fallback;
+				}
 			}
 			return node.as<T>(fallback);
 		}
