@@ -159,6 +159,13 @@ void Ctx::init(const std::string& configFile)
 		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
 		throw;
 	}
+	catch (YAML::BadConversion& e) {
+		std::stringstream ss;
+		ss << "fileName:" << configFile << "|BadConversion exception: " << e.what();
+
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		throw;
+	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|Unexpected exception: " << e.what();

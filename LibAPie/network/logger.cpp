@@ -85,7 +85,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 	if (true)
 	{
 		bMergeFlag = true;
-		ptrFile = getCacheFile("poseidon_mgr.log", PIE_CYCLE_DAY);
+		ptrFile = getCacheFile("apie.log", PIE_CYCLE_DAY);
 	}
 	else
 	{
@@ -124,9 +124,7 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN];
 
-	//TODO
-	int iConfigLogLevel = 1;
-
+	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -144,8 +142,7 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN] = {'\0'};
 
-	//TODO
-	int iConfigLogLevel = 1;
+	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -307,7 +304,7 @@ void checkRotate()
 			++ite;
 			cacheMap.erase(o);
 
-			std::string toDir = "/usr/local/poseidon-mgr/logs-backup/";
+			std::string toDir = APie::CtxSingleton::get().yamlAs<std::string>({ "log","backup" }, ".");
 			moveFile(fromFile, toDir);
 			continue;
 		}
@@ -358,8 +355,7 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	struct stat statInfo;
 	if (0 == fstat(fileFd, &statInfo))
 	{
-		//TODO
-		int32_t iSize = 128;
+		int32_t iSize = APie::CtxSingleton::get().yamlAs<int>({ "log","split_size" }, 128);
 		if (statInfo.st_size > 1024 * 1024 * iSize)
 		{
 			return true;

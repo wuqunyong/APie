@@ -1,3 +1,4 @@
+io_threads: 2
 listeners:
 - address:
     socket_address:
@@ -19,9 +20,13 @@ clients:
     socket_address:
       address: "127.0.0.1"
       port_value: 5008
-      type: 1      
-io_threads: 2
-
+      type: 1
+log:
+  merge: true
+  level: 0
+  show_pos: false
+  split_size: 128
+  backup: "D:/backup"
 metrics:
   enable: true
   ip: "127.0.0.1"

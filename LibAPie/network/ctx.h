@@ -44,7 +44,7 @@ namespace APie
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
 
-			YAML::Node node = node_;
+			YAML::Node node = YAML::Clone(node_);
 			for (const auto &items : index)
 			{
 				node = node[items];
@@ -57,7 +57,7 @@ namespace APie
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
 
-			YAML::Node node = node_;
+			YAML::Node node = YAML::Clone(node_);
 			for (const auto &items : index)
 			{
 				node = node[items];

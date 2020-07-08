@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+#include "Ctx.h"
+
 /* Log levels */
 #define PIE_DEBUG 0
 #define PIE_VERBOSE 1
@@ -53,7 +55,7 @@ void fatalExit(const char* message);
 
 #ifdef WIN32
 #define PIE_LOG(file, cycle, level, format, ...) do { \
-    bool bShowPos = true; \
+    bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true); \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -67,7 +69,7 @@ void fatalExit(const char* message);
 } while (0);
 #else
 #define PIE_LOG(file, cycle, level, format, args...) do { \
-	bool bShowPos = true; \
+	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true); \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -84,7 +86,7 @@ void fatalExit(const char* message);
 
 #ifdef WIN32
 #define ASYNC_PIE_LOG(file, cycle, level, format, ...) do { \
-	bool bShowPos = true;                                                 \
+	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);                                                 \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -98,7 +100,7 @@ void fatalExit(const char* message);
 } while (0);
 #else
 #define ASYNC_PIE_LOG(file, cycle, level, format, args...) do { \
-	bool bShowPos = true;  \
+	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);  \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
