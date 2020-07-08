@@ -24,7 +24,7 @@ class PubSub {
 public:
 	enum PubTopicEvent
 	{
-		PTE_LogicCmd = 1,
+		PTE_LogicCmd = 1, //::pubsub::LOGIC_CMD
 		PTE_Max = 1024,
 	};
 
