@@ -45,7 +45,7 @@ std::tuple<uint32_t, std::string> initHook()
 		request.set_user_id(time(NULL));
 		request.set_session_key("hello");
 
-		ptrClint->sendMsg(1100, request);
+		//ptrClint->sendMsg(1100, request);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 
@@ -87,13 +87,22 @@ std::tuple<uint32_t, std::string> startHook()
 
 		auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
 			std::cout << "curTime:" << time(NULL) << std::endl;
-			ptrClient->addHeartbeatTimer(1000);
+			ptrClient->addHeartbeatTimer(30000);
 		};
 		ptrClient->setHeartbeatCb(heartbeatCb);
 		ptrClient->addHeartbeatTimer(1000);
 		ptrClient.reset();
 	}
 
+
+	APie::PubSubSingleton::get().subscribe(APie::PubSub::PTE_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+		auto& refMsg1 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+		std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.DebugString() << std::endl;
+	});
+	APie::PubSubSingleton::get().subscribe(APie::PubSub::PTE_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+		auto& refMsg2 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+		std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.DebugString() << std::endl;
+	});
 
 	return std::make_tuple(0, "");
 }

@@ -81,6 +81,8 @@ private:
 
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
+  void handleLogicCmd(LogicCmd* ptrCmd);
+
   void handleLogicStart(uint32_t iThreadId);
   void handleLogicExit(uint32_t iThreadId);
   void handleStopThread(uint32_t iThreadId);

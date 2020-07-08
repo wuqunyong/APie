@@ -273,9 +273,9 @@ void Ctx::waitForShutdown()
 		std::cout << std::endl;
 
 		std::cout << ">>>";
-		char mystring[100];
-		char answer[100] = "exit";
-		char* prtGet = fgets(mystring, 100, stdin);
+		char mystring[2048] = {'\0'};
+		char answer[2048] = "exit";
+		char* prtGet = fgets(mystring, 2048, stdin);
 		if (prtGet != NULL)
 		{
 			//std::cout << "Input Recv:" << mystring << std::endl;
@@ -285,6 +285,14 @@ void Ctx::waitForShutdown()
 				PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
 				break;
 			}
+
+			auto ptrCmd = new LogicCmd;
+			ptrCmd->sCmd = mystring;
+
+			Command command;
+			command.type = Command::logic_cmd;
+			command.args.logic_cmd.ptrData = ptrCmd;
+			APie::CtxSingleton::get().getLogicThread()->push(command);
 		}
 	}
 #else

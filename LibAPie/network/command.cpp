@@ -68,6 +68,17 @@ void APie::deallocateCommand(Command* cmd)
 		break;
 	}
 	
+	case Command::logic_cmd:
+	{
+		if (NULL != cmd->args.logic_cmd.ptrData)
+		{
+			delete cmd->args.logic_cmd.ptrData;
+			cmd->args.logic_cmd.ptrData = NULL;
+		}
+		break;
+	}
+	
+
 	default:
 		/*  noop  */;
 	}

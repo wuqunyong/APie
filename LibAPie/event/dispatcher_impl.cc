@@ -24,6 +24,9 @@
 #include "../api/api.h"
 #include "../api/pb_handler.h"
 #include "../api/hook.h"
+#include "../api/pubsub.h"
+
+#include "../common/string_utils.h"
 
 #include "event2/event.h"
 #include "influxdb.hpp"
@@ -244,6 +247,11 @@ void DispatcherImpl::handleCommand()
 			this->handleDialResult(cmd.args.dial_result.ptrData);
 			break;
 		}
+		case Command::logic_cmd:
+		{
+			this->handleLogicCmd(cmd.args.logic_cmd.ptrData);
+			break;
+		}
 		case Command::logic_start:
 		{
 			this->handleLogicStart(cmd.args.logic_exit.iThreadId);
@@ -454,6 +462,29 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	{
 		clientProxy->onConnect(ptrCmd->iResult);
 	}
+}
+
+void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
+{
+	std::string cmd = ptrCmd->sCmd;
+
+	::pubsub::LOGIC_CMD msg;
+
+	std::vector<std::string> fields = APie::SplitString(cmd, "|", APie::TRIM_WHITESPACE, APie::SPLIT_WANT_ALL);
+	auto firstIte = fields.begin();
+	if (firstIte != fields.end())
+	{
+		msg.set_cmd(*firstIte);
+		fields.erase(firstIte);
+	}
+
+	for (const auto& items : fields)
+	{
+		auto ptrParams = msg.add_params();
+		*ptrParams = items;
+	}
+
+	PubSubSingleton::get().publish(PubSub::PTE_LogicCmd, msg);
 }
 
 void DispatcherImpl::handleLogicStart(uint32_t iThreadId)

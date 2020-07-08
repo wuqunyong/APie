@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pubsub;
+
+//---------------------------------------
+
+
+message LOGIC_CMD
+{
+	string cmd = 1;
+	repeated string params = 2;
+}

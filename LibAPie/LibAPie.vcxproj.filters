@@ -223,6 +223,9 @@
     <ClInclude Include="api\pubsub.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\pubsub.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -341,6 +344,9 @@
     </ClCompile>
     <ClCompile Include="api\pubsub.cc">
       <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\pubsub.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

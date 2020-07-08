@@ -84,6 +84,11 @@ namespace APie
 		std::map<std::string, double> field;
 	};
 
+	struct LogicCmd
+	{
+		std::string sCmd;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -108,6 +113,8 @@ namespace APie
 
 			async_log,
 			metric_data,
+
+			logic_cmd,
 
 			logic_start,
 			logic_exit,
@@ -147,6 +154,10 @@ namespace APie
 			struct {
 				DialResult* ptrData;
 			} dial_result;
+
+			struct {
+				LogicCmd* ptrData;
+			} logic_cmd;
 
 			struct {
 				uint32_t iThreadId;

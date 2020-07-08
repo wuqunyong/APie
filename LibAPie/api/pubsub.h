@@ -14,10 +14,20 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
+#include "../../PBMsg/pubsub.pb.h"
+
+
 namespace APie {
+
 
 class PubSub {
 public:
+	enum PubTopicEvent
+	{
+		PTE_LogicCmd = 1,
+		PTE_Max = 1024,
+	};
+
 	using SubscribeCallback = std::function<void(uint64_t topic, ::google::protobuf::Message& msg)>;
 
 	struct SubEntry
