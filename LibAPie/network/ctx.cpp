@@ -126,6 +126,13 @@ void Ctx::init(const std::string& configFile)
 			config.port = port;
 			config.type = static_cast<APie::ProtocolType>(type);
 
+			if (config.type <= ProtocolType::PT_None || config.type >= ProtocolType::PT_MAX)
+			{
+				std::stringstream ss;
+				ss << "invalid listener type:" << type;
+				fatalExit(ss.str().c_str());
+			}
+
 			auto ptrCb = std::make_shared<PortCb>(config.type);
 
 			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());

@@ -36,6 +36,7 @@ namespace APie
 		PT_None = 0,
 		PT_PB,
 		PT_HTTP,
+		PT_MAX,
 	};
 
     // Virtual interface to be exposed by object that want to be notified
