@@ -98,12 +98,12 @@ void APie::deallocateCommand(Command* cmd)
 		break;
 	}
 
-	case Command::client_recv_packet:
+	case Command::recv_http_response:
 	{
-		if (NULL != cmd->args.client_recv_packet.ptrData)
+		if (NULL != cmd->args.recv_http_response.ptrData)
 		{
-			delete cmd->args.client_recv_packet.ptrData;
-			cmd->args.client_recv_packet.ptrData = NULL;
+			delete cmd->args.recv_http_response.ptrData;
+			cmd->args.recv_http_response.ptrData = NULL;
 		}
 		break;
 	}

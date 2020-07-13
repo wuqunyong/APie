@@ -120,10 +120,10 @@ namespace APie
 
 			logic_cmd,
 
-			recv_http_request,  //passive_connect
-			send_http_response, //passive_connect
+			recv_http_request,  //server:passive_connect
+			send_http_response, //server:passive_connect
 
-			client_recv_packet, //active_connect
+			recv_http_response, //client:active_connect
 
 
 			logic_start,
@@ -182,7 +182,7 @@ namespace APie
 			struct {
 				uint64_t iSerialNum;
 				HttpResponse* ptrData;
-			} client_recv_packet;
+			} recv_http_response;
 
 			struct {
 				uint32_t iThreadId;

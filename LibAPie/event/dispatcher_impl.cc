@@ -267,6 +267,21 @@ void DispatcherImpl::handleCommand()
 			this->handleStopThread(cmd.args.stop_thread.iThreadId);
 			break;
 		}
+		case Command::recv_http_request:
+		{
+			
+			break;
+		}
+		case Command::send_http_response:
+		{
+
+			break;
+		}
+		case Command::recv_http_response:
+		{
+
+			break;
+		}
 		default:
 		{
 			assert(false);

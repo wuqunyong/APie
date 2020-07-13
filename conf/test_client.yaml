@@ -9,7 +9,7 @@ listeners:
     socket_address:
       address: "*"
       port_value: 5008
-      type: 1
+      type: 2
 clients:
 - address:
     socket_address:
@@ -20,7 +20,7 @@ clients:
     socket_address:
       address: "127.0.0.1"
       port_value: 5008
-      type: 1
+      type: 2
 log:
   merge: true
   level: 0

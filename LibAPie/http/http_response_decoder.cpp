@@ -86,9 +86,9 @@ namespace APie
 		ASYNC_PIE_LOG("http/recv_response", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", tmp.c_str());
 
 		Command cmd;
-		cmd.type = Command::client_recv_packet;
-		cmd.args.client_recv_packet.iSerialNum = m_session_ptr->getSerialNum();
-		cmd.args.client_recv_packet.ptrData = m_response_ptr;
+		cmd.type = Command::recv_http_response;
+		cmd.args.recv_http_response.iSerialNum = m_session_ptr->getSerialNum();
+		cmd.args.recv_http_response.ptrData = m_response_ptr;
 		CtxSingleton::get().getLogicThread()->push(cmd);
 
 		m_response_ptr = new HttpResponse;
