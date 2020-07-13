@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
 	auto ptrTest1 = [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-		std::cout << refMsg.DebugString();
+		std::cout << "sub:" << refMsg.DebugString();
 
 		auto userId = refMsg.user_id() + 111;
 		refMsg.set_user_id(userId);
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
 
 	auto ptrTest2 = [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-		std::cout << refMsg.DebugString();
+		std::cout << "sub:" << refMsg.DebugString();
 	};
 	APie::PubSubSingleton::get().subscribe(1, ptrTest2);
 	uint64_t id = APie::PubSubSingleton::get().subscribe(1, ptrTest2);

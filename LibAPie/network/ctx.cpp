@@ -37,6 +37,7 @@ sigset_t g_SigSet;
 
 #include "logger.h"
 #include "i_poll_events.hpp"
+#include "../common/string_utils.h"
 
 
 
@@ -305,8 +306,14 @@ void Ctx::waitForShutdown()
 				break;
 			}
 
+			std::string cmd = APie::TrimString(mystring, APie::kWhitespaceASCII);
+			if (cmd.empty())
+			{
+				continue;
+			}
+
 			auto ptrCmd = new LogicCmd;
-			ptrCmd->sCmd = mystring;
+			ptrCmd->sCmd = cmd;
 
 			Command command;
 			command.type = Command::logic_cmd;
