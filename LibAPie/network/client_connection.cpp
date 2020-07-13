@@ -46,6 +46,8 @@ APie::ClientConnection::ClientConnection(integer_t iSerialNum, bufferevent *bev,
 	}
 
 	this->iLocalPort = ntohs(addr.sin_port);
+
+	this->decoder.setConnectSession(this);
 }
 
 uint64_t APie::ClientConnection::getSerialNum()
@@ -124,11 +126,11 @@ void APie::ClientConnection::readHttp()
 		size_t minLen = (len > HTTP_BUF_LEN) ? HTTP_BUF_LEN : len;
 		evbuffer_remove(input, buf, minLen);
 
-		//int result = decoder.execute(buf, minLen);
-		//if (result != 0)
-		//{
-		//	return;
-		//}
+		int result = decoder.execute(buf, minLen);
+		if (result != 0)
+		{
+			return;
+		}
 	}
 }
 

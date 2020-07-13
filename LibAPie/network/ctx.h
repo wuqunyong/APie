@@ -81,6 +81,8 @@ namespace APie
 			return node.as<T>(fallback);
 		}
 
+		std::string launchTime();
+
     private:
 		void handleSigProcMask();
 
@@ -91,6 +93,8 @@ namespace APie
 		std::shared_ptr<Event::DispatchedThreadImpl> log_thread_;
 		std::shared_ptr<Event::DispatchedThreadImpl> metrics_thread_;
 		std::map<uint32_t, std::shared_ptr<Event::DispatchedThreadImpl>> thread_id_;
+
+		std::string m_launchTime;
 
 		std::atomic<uint32_t> tid_ = 0;
 		YAML::Node node_;

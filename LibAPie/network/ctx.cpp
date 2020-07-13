@@ -99,6 +99,11 @@ Ctx::~Ctx()
 
 void Ctx::init(const std::string& configFile)
 {
+	char timebuf[64] = { '\0' };
+	time_t now = time(NULL);
+	strftime(timebuf, sizeof(timebuf), "%Y%m%d_%H%M%S", localtime(&now));
+	m_launchTime = timebuf;
+
 	APie::ExceptionTrap();
 
 	APie::Event::Libevent::Global::initialize();
@@ -361,6 +366,11 @@ uint32_t Ctx::generatorTId()
 YAML::Node& Ctx::yamlNode()
 {
 	return this->node_;
+}
+
+std::string Ctx::launchTime()
+{
+	return m_launchTime;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()

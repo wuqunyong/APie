@@ -26,6 +26,8 @@
 #include "../network/i_poll_events.hpp"
 #include "../network/object.hpp"
 
+#include "../http/http_request_decoder.h"
+
 #include <event2/bufferevent.h>
 
 namespace APie
@@ -65,7 +67,7 @@ namespace APie
 		uint64_t iSerialNum;
 		bufferevent *bev;
 
-		//HttpRequestDecoder decoder;
+		HttpRequestDecoder decoder;
 
 		ServerConnection(const ServerConnection&) = delete;
         const ServerConnection &operator = (const ServerConnection&) = delete;

@@ -29,6 +29,10 @@
 #include <google/protobuf/message.h>
 
 #include "../network/connection.h"
+
+#include "../http/http_request.h"
+#include "../http/http_response.h"
+
 #include "i_poll_events.hpp"
 
 namespace APie
@@ -116,6 +120,12 @@ namespace APie
 
 			logic_cmd,
 
+			recv_http_request,  //passive_connect
+			send_http_response, //passive_connect
+
+			client_recv_packet, //active_connect
+
+
 			logic_start,
 			logic_exit,
 			stop_thread,
@@ -158,6 +168,21 @@ namespace APie
 			struct {
 				LogicCmd* ptrData;
 			} logic_cmd;
+
+			struct {
+				uint64_t iSerialNum;
+				HttpRequest* ptrData;
+			} recv_http_request;
+
+			struct {
+				uint64_t iSerialNum;
+				HttpResponse* ptrData;
+			} send_http_response;
+
+			struct {
+				uint64_t iSerialNum;
+				HttpResponse* ptrData;
+			} client_recv_packet;
 
 			struct {
 				uint32_t iThreadId;

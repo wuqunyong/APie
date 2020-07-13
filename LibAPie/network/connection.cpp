@@ -29,6 +29,8 @@ ServerConnection::ServerConnection(uint32_t tid, uint64_t iSerialNum, buffereven
 	this->iSerialNum = iSerialNum;
 	this->bev = bev;
 	this->iType = iType;
+
+	this->decoder.setSession(this);
 }
 
 uint64_t ServerConnection::getSerialNum()
@@ -92,11 +94,11 @@ void ServerConnection::readHttp()
 		size_t minLen = (len > HTTP_BUF_LEN) ? HTTP_BUF_LEN : len;
 		evbuffer_remove(input, buf, minLen);
 
-		//int result = decoder.execute(buf, minLen);
-		//if (result != 0)
-		//{
-		//	return;
-		//}
+		int result = decoder.execute(buf, minLen);
+		if (result != 0)
+		{
+			return;
+		}
 	}
 }
 

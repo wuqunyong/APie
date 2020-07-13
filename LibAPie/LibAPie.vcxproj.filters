@@ -34,6 +34,12 @@
     <Filter Include="filesystem">
       <UniqueIdentifier>{755630d5-90cb-4d03-bec1-cd7cee33502f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="http">
+      <UniqueIdentifier>{a0d82ed2-8cf5-4770-a906-e7285fb68676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="http\http-parser">
+      <UniqueIdentifier>{db652e8d-aec6-4d5b-bca2-9ba015634fd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -226,6 +232,39 @@
     <ClInclude Include="..\PBMsg\pubsub.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="http\http_common.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_parser_impl.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_parser_settings.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_request.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_request_decoder.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_response.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_response_decoder.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\http_util.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="http\string_util.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
+      <Filter>http\http-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="common\noncopyable.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -347,6 +386,33 @@
     </ClCompile>
     <ClCompile Include="..\PBMsg\pubsub.pb.cc">
       <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_parser_impl.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_parser_settings.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_request.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_request_decoder.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_response.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_response_decoder.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\http_util.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="http\string_util.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
+      <Filter>http\http-parser</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

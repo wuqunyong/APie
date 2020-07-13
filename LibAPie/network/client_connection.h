@@ -10,6 +10,8 @@
 #include "i_poll_events.hpp"
 #include "command.h"
 
+#include "../http/http_response_decoder.h"
+
 
 namespace APie
 {
@@ -63,7 +65,7 @@ namespace APie
 
 		//class IOThread* ptrThreadObj;
 
-		//HttpResponseDecoder decoder;
+		HttpResponseDecoder decoder;
 
 		ClientConnection(const ClientConnection&);
         const ClientConnection &operator = (const ClientConnection&);

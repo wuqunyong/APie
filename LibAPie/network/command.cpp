@@ -77,7 +77,36 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-	
+
+	case Command::recv_http_request:
+	{
+		if (NULL != cmd->args.recv_http_request.ptrData)
+		{
+			delete cmd->args.recv_http_request.ptrData;
+			cmd->args.recv_http_request.ptrData = NULL;
+		}
+		break;
+	}
+
+	case Command::send_http_response:
+	{
+		if (NULL != cmd->args.send_http_response.ptrData)
+		{
+			delete cmd->args.send_http_response.ptrData;
+			cmd->args.send_http_response.ptrData = NULL;
+		}
+		break;
+	}
+
+	case Command::client_recv_packet:
+	{
+		if (NULL != cmd->args.client_recv_packet.ptrData)
+		{
+			delete cmd->args.client_recv_packet.ptrData;
+			cmd->args.client_recv_packet.ptrData = NULL;
+		}
+		break;
+	}
 
 	default:
 		/*  noop  */;
