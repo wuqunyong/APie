@@ -21,7 +21,7 @@ namespace Network {
 	class OutputStream
 	{
 	public:
-		static void sendMsg(ConnetionType type, uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg);
+		static void sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
 	};
 
 

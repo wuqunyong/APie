@@ -13,12 +13,35 @@
 namespace APie {
 namespace Network {
 
-	void OutputStream::sendMsg(ConnetionType type, uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg)
+	void OutputStream::sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
 	{
 		uint32_t iThreadId = 0;
 		
 		switch (type)
 		{
+		case APie::ConnetionType::CT_NONE:
+		{
+			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			if (ptrConnection == nullptr)
+			{
+				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
+				if (ptrClient == nullptr)
+				{
+					return;
+				}
+				else
+				{
+					iThreadId = ptrClient->getTId();
+					type = ConnetionType::CT_CLIENT;
+				}
+			}
+			else
+			{
+				iThreadId = ptrConnection->getTId();
+				type = ConnetionType::CT_SERVER;
+			}
+			break;
+		}
 		case APie::ConnetionType::CT_SERVER:
 		{
 			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);

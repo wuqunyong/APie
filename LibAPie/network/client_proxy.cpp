@@ -146,7 +146,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 		return -1;
 	}
 
-	APie::Network::OutputStream::sendMsg(APie::ConnetionType::CT_CLIENT, this->m_curSerialNum, iOpcode, msg);
+	APie::Network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, APie::ConnetionType::CT_CLIENT);
 	return 0;
 }
 

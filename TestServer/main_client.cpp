@@ -24,7 +24,7 @@ public:
 		::login_msg::MSG_CLIENT_LOGINTOL response;
 		response.set_user_id(msg.user_id());
 
-		APie::Network::OutputStream::sendMsg(APie::ConnetionType::CT_SERVER, serialNum, 1101, response);
+		APie::Network::OutputStream::sendMsg(serialNum, 1101, response, APie::ConnetionType::CT_SERVER);
 	};
 };
 
