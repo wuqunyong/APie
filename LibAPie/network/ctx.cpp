@@ -98,6 +98,22 @@ Ctx::~Ctx()
 
 }
 
+EndPoint Ctx::identify()
+{
+	EndPoint point;
+	point.type = this->yamlAs<uint32_t>({ "identify","type" }, 0);
+	point.id = this->yamlAs<uint32_t>({ "identify","id" }, 0);
+	return point;
+}
+
+uint64_t Ctx::getNowMilliseconds()
+{
+	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+	auto duration = now.time_since_epoch();
+	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+	return milliseconds.count();
+}
+
 void Ctx::init(const std::string& configFile)
 {
 	char timebuf[64] = { '\0' };

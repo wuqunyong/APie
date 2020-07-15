@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package rpc_msg;
+
+//-------------RPC-------------
+
+enum RPC_OPCODES {
+	PRC_None = 0;
+}
+
+enum RPC_CODE {
+	CODE_Ok = 0;
+	CODE_Ok_Async = 1;
+
+	CODE_Timeout = 100;
+	CODE_Unregister = 101;
+}
+
+
+message CHANNEL
+{
+	uint32 type = 1;
+	uint32 id = 2;
+}
+
+message CONTROLLER 
+{
+	uint64 serial_num = 1;
+	uint64 timeout_ms = 2;
+}
+
+message CLIENT_IDENTIFIER
+{
+	CHANNEL stub = 1;
+	uint64 seq_id = 2;
+	bool required_reply = 3;
+}
+
+message SERVER_IDENTIFIER
+{
+	CHANNEL stub = 1;
+}
+
+message RPC_REQUEST
+{
+	CLIENT_IDENTIFIER client = 1;
+	SERVER_IDENTIFIER server = 2;
+	RPC_OPCODES opcodes = 3;
+	bytes args_data = 4;
+}
+
+message STATUS
+{
+	uint32 code = 1;
+	string msg = 2;
+}
+
+message RPC_RESPONSE
+{
+	CLIENT_IDENTIFIER client = 1;
+	SERVER_IDENTIFIER server = 2;
+	STATUS status = 3;
+	bytes result_data = 4;
+}
+

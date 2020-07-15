@@ -140,7 +140,9 @@
   <ItemGroup>
     <ClInclude Include="..\PBMsg\login_msg.pb.h" />
     <ClInclude Include="..\PBMsg\mysql_proxy_msg.pb.h" />
+    <ClInclude Include="..\PBMsg\opcodes.pb.h" />
     <ClInclude Include="..\PBMsg\pubsub.pb.h" />
+    <ClInclude Include="..\PBMsg\rpc_msg.pb.h" />
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h" />
     <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
@@ -208,6 +210,9 @@
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
+    <ClInclude Include="rpc\client\rpc_client.h" />
+    <ClInclude Include="rpc\init.h" />
+    <ClInclude Include="rpc\server\rpc_server.h" />
     <ClInclude Include="serialization\byte_buffer.h" />
     <ClInclude Include="serialization\protocol_head.h" />
     <ClInclude Include="singleton\const_singleton.h" />
@@ -217,7 +222,9 @@
   <ItemGroup>
     <ClCompile Include="..\PBMsg\login_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc" />
+    <ClCompile Include="..\PBMsg\opcodes.pb.cc" />
     <ClCompile Include="..\PBMsg\pubsub.pb.cc" />
+    <ClCompile Include="..\PBMsg\rpc_msg.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\hook.cc" />
@@ -262,6 +269,9 @@
     <ClCompile Include="network\object.cpp" />
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
+    <ClCompile Include="rpc\client\rpc_client.cpp" />
+    <ClCompile Include="rpc\init.cpp" />
+    <ClCompile Include="rpc\server\rpc_server.cpp" />
     <ClCompile Include="serialization\byte_buffer.cpp" />
     <ClCompile Include="serialization\protocol_head.cpp" />
   </ItemGroup>

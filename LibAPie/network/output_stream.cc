@@ -13,7 +13,7 @@
 namespace APie {
 namespace Network {
 
-	void OutputStream::sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
 	{
 		uint32_t iThreadId = 0;
 		
@@ -27,7 +27,7 @@ namespace Network {
 				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
 				if (ptrClient == nullptr)
 				{
-					return;
+					return false;
 				}
 				else
 				{
@@ -47,7 +47,7 @@ namespace Network {
 			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				return;
+				return false;
 			}
 
 			iThreadId = ptrConnection->getTId();
@@ -58,7 +58,7 @@ namespace Network {
 			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				return;
+				return false;
 			}
 
 			iThreadId = ptrConnection->getTId();
@@ -71,7 +71,7 @@ namespace Network {
 		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
 		if (ptrThread == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		ProtocolHead head;
@@ -90,6 +90,8 @@ namespace Network {
 		command.type = Command::send_data;
 		command.args.send_data.ptrData = itemObjPtr;
 		ptrThread->push(command);
+
+		return true;
 	}
 
 } // namespace Network

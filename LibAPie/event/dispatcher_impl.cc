@@ -28,6 +28,9 @@
 
 #include "../common/string_utils.h"
 
+#include "../rpc/client/rpc_client.h"
+#include "../rpc/server/rpc_server.h"
+
 #include "event2/event.h"
 #include "influxdb.hpp"
 
@@ -134,7 +137,7 @@ void DispatcherImpl::run(void) {
   // not guarantee that events are run in any particular order. So even if we post() and call
   // event_base_once() before some other event, the other event might get called first.
   runPostCallbacks();
-  interval_timer_->enableTimer(std::chrono::milliseconds(1000));
+  interval_timer_->enableTimer(std::chrono::milliseconds(200));
   base_scheduler_.run();
 }
 
@@ -156,7 +159,7 @@ void DispatcherImpl::runIntervalCallbacks()
 		MetricData *ptrData = new MetricData;
 		ptrData->sMetric = "queue";
 		ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
-		ptrData->field["mailbox"] = mailbox_.size();
+		ptrData->field["mailbox"] = (double)mailbox_.size();
 
 		Command command;
 		command.type = Command::metric_data;
@@ -167,9 +170,20 @@ void DispatcherImpl::runIntervalCallbacks()
 		{
 			ptrMetric->push(command);;
 		}
-
-		interval_timer_->enableTimer(std::chrono::milliseconds(1000));
 	}
+
+	switch (type_)
+	{
+	case APie::Event::EThreadType::TT_Logic:
+	{
+		APie::RPC::RpcClientSingleton::get().handleTimeout();
+		break;
+	}
+	default:
+		break;
+	}
+
+	interval_timer_->enableTimer(std::chrono::milliseconds(200));
 }
 
 void DispatcherImpl::runPostCallbacks() {

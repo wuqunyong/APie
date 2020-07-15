@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package opcodes;
+
+//-------------OPCODE-------------
+
+enum OPCODE_ID {
+	OP_None = 0;
+	OP_RPC_REQUEST = 1;
+	OP_RPC_RESPONSE = 2;
+}
+
+

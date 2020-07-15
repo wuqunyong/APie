@@ -10,6 +10,8 @@
 #include "../event/dispatched_thread.h"
 #include "../network/platform_impl.h"
 
+#include "../../PBMsg/rpc_msg.pb.h"
+
 #include "yaml-cpp/yaml.h"
 
 namespace APie
@@ -17,11 +19,20 @@ namespace APie
     //  Context object encapsulates all the global state associated with
     //  the library.
     
+	struct EndPoint
+	{
+		uint32_t type = 0;
+		uint32_t id = 0;
+	};
+
     class Ctx
     {
     public:
 		Ctx();
 		~Ctx();
+
+		EndPoint identify();
+		uint64_t getNowMilliseconds();
 
 		void init(const std::string& configFile);
 		void start();
