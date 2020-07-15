@@ -46,7 +46,7 @@ namespace RPC {
 	{
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
-		server.set_type(APie::CtxSingleton::get().identify().id);
+		server.set_id(APie::CtxSingleton::get().identify().id);
 
 		::rpc_msg::RPC_RESPONSE response;
 		*response.mutable_client() = request.client();

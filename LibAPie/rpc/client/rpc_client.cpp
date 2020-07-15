@@ -33,7 +33,7 @@ namespace RPC {
 
 		::rpc_msg::CHANNEL client;
 		client.set_type(APie::CtxSingleton::get().identify().type);
-		client.set_type(APie::CtxSingleton::get().identify().id);
+		client.set_id(APie::CtxSingleton::get().identify().id);
 
 		::rpc_msg::RPC_REQUEST request;
 		*request.mutable_client()->mutable_stub() = client;

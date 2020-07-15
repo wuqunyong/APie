@@ -149,29 +149,29 @@ int main(int argc, char **argv)
 		fatalExit("usage: exe <ConfFile>");
 	}
 
-	auto ptrTest1 = [](uint64_t topic, ::google::protobuf::Message& msg) {
-		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-		std::cout << "sub:" << refMsg.DebugString();
+	//auto ptrTest1 = [](uint64_t topic, ::google::protobuf::Message& msg) {
+	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+	//	std::cout << "sub:" << refMsg.DebugString();
 
-		auto userId = refMsg.user_id() + 111;
-		refMsg.set_user_id(userId);
-	};
-	APie::PubSubSingleton::get().subscribe(1, ptrTest1);
+	//	auto userId = refMsg.user_id() + 111;
+	//	refMsg.set_user_id(userId);
+	//};
+	//APie::PubSubSingleton::get().subscribe(1, ptrTest1);
 
-	auto ptrTest2 = [](uint64_t topic, ::google::protobuf::Message& msg) {
-		auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-		std::cout << "sub:" << refMsg.DebugString();
-	};
-	APie::PubSubSingleton::get().subscribe(1, ptrTest2);
-	uint64_t id = APie::PubSubSingleton::get().subscribe(1, ptrTest2);
-	APie::PubSubSingleton::get().unregister(1, id);
+	//auto ptrTest2 = [](uint64_t topic, ::google::protobuf::Message& msg) {
+	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+	//	std::cout << "sub:" << refMsg.DebugString();
+	//};
+	//APie::PubSubSingleton::get().subscribe(1, ptrTest2);
+	//uint64_t id = APie::PubSubSingleton::get().subscribe(1, ptrTest2);
+	//APie::PubSubSingleton::get().unregister(1, id);
 
 
-	::login_msg::MSG_CLIENT_LOGINTOL msg;
-	msg.set_user_id(100);
-	msg.set_session_key("hello");
-	APie::PubSubSingleton::get().publish(1, msg);
-	APie::PubSubSingleton::get().publish(2, msg);
+	//::login_msg::MSG_CLIENT_LOGINTOL msg;
+	//msg.set_user_id(100);
+	//msg.set_session_key("hello");
+	//APie::PubSubSingleton::get().publish(1, msg);
+	//APie::PubSubSingleton::get().publish(2, msg);
 
 	std::string configFile = argv[1];
 
