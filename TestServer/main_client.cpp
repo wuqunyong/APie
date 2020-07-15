@@ -46,6 +46,22 @@ std::tuple<uint32_t, std::string> initHook()
 		request.set_session_key("hello");
 
 		//ptrClint->sendMsg(1100, request);
+
+		::rpc_msg::CONTROLLER cntl;
+		cntl.set_serial_num(serialNum);
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(1);
+		server.set_id(1);
+
+		auto rpcCB = [](const rpc_msg::STATUS& status, const std::string& replyData)
+		{
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		APie::RPC::RpcClientSingleton::get().call(cntl, server, ::rpc_msg::PRC_None, request, rpcCB);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 
@@ -59,6 +75,19 @@ std::tuple<uint32_t, std::string> initHook1()
 
 std::tuple<uint32_t, std::string> initHook2()
 {
+	APie::RPC::init();
+
+	auto rpcCB = [](const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args) -> std::tuple<uint32_t, std::string> {
+		::login_msg::MSG_CLIENT_LOGINTOL request;
+		if (!request.ParseFromString(args))
+		{
+			return std::make_tuple(::rpc_msg::CODE_Unregister, "");;
+		}
+
+		return std::make_tuple(::rpc_msg::CODE_Ok, "");;
+	};
+	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::PRC_None, rpcCB);
+
 	return std::make_tuple(0, "");
 }
 

@@ -14,7 +14,7 @@ namespace RPC {
 		m_iSeqId = 0;
 		m_iCheckTimeoutAt = curTime + CHECK_INTERVAL;
 
-		APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcClient::handleResponse, ::rpc_msg::RPC_RESPONSE::default_instance());
+		APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_RPC_RESPONSE, RpcClient::handleResponse, ::rpc_msg::RPC_RESPONSE::default_instance());
 
 		return true;
 	}
@@ -51,7 +51,11 @@ namespace RPC {
 			m_expireAt[m_iSeqId] = iExpireAt;
 		}
 
-		APie::Network::OutputStream::sendMsg(cntl.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+		bool bResult = APie::Network::OutputStream::sendMsg(cntl.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+		if (!bResult)
+		{
+			//TODO
+		}
 
 		return true;
 	}
