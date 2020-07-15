@@ -84,7 +84,7 @@ std::tuple<uint32_t, std::string> initHook2()
 			return std::make_tuple(::rpc_msg::CODE_Unregister, "");;
 		}
 
-		return std::make_tuple(::rpc_msg::CODE_Ok, "");;
+		return std::make_tuple(::rpc_msg::CODE_Ok, "aaaaaaaaaaaaaaa");;
 	};
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::PRC_None, rpcCB);
 
