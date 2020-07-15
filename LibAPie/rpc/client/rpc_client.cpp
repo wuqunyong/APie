@@ -11,9 +11,10 @@ namespace RPC {
 	bool RpcClient::init()
 	{
 		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
-
 		m_iSeqId = 0;
 		m_iCheckTimeoutAt = curTime + CHECK_INTERVAL;
+
+		APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcClient::handleResponse, ::rpc_msg::RPC_RESPONSE::default_instance());
 
 		return true;
 	}
@@ -109,5 +110,21 @@ namespace RPC {
 			m_reply.erase(findIte);
 		}
 	}
+
+	void RpcClient::handleResponse(uint64_t iSerialNum, ::rpc_msg::RPC_RESPONSE response)
+	{
+		uint64_t seqId = response.client().seq_id();
+		auto replyCb = RpcClientSingleton::get().find(seqId);
+		if (replyCb == nullptr)
+		{
+			//TODO
+			return;
+		}
+		replyCb(response.status(), response.result_data());
+
+		RpcClientSingleton::get().del(seqId);
+		RpcClientSingleton::get().handleTimeout();
+	}
+
 } // namespace RPC
 } // namespace APie

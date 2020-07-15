@@ -4,6 +4,9 @@
 #include <cstdint>
 #include <string>
 
+#include "../../api/api.h"
+#include "../../api/pb_handler.h"
+
 #include "../../network/ctx.h"
 #include "../../network/address.h"
 #include "../../network/output_stream.h"
@@ -24,10 +27,11 @@ namespace RPC {
 	{
 	public:
 		bool init();
-
 		bool call(::rpc_msg::CONTROLLER cntl, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
-
 		void handleTimeout();
+
+	public:
+		static void handleResponse(uint64_t iSerialNum, ::rpc_msg::RPC_RESPONSE response);
 
 	private:
 		RpcReplyCb find(uint64_t seqId);
