@@ -2,5 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="service_registry.cpp" />
+    <ClCompile Include="service_init.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
   </ItemGroup>
 </Project>

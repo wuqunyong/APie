@@ -143,6 +143,7 @@
     <ClInclude Include="..\PBMsg\opcodes.pb.h" />
     <ClInclude Include="..\PBMsg\pubsub.pb.h" />
     <ClInclude Include="..\PBMsg\rpc_msg.pb.h" />
+    <ClInclude Include="..\PBMsg\service_discovery.pb.h" />
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h" />
     <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="network\command.h" />
     <ClInclude Include="network\connection.h" />
     <ClInclude Include="network\ctx.h" />
+    <ClInclude Include="network\end_point.h" />
     <ClInclude Include="network\i_poll_events.hpp" />
     <ClInclude Include="network\listener.h" />
     <ClInclude Include="network\listener_impl.h" />
@@ -225,6 +227,7 @@
     <ClCompile Include="..\PBMsg\opcodes.pb.cc" />
     <ClCompile Include="..\PBMsg\pubsub.pb.cc" />
     <ClCompile Include="..\PBMsg\rpc_msg.pb.cc" />
+    <ClCompile Include="..\PBMsg\service_discovery.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\hook.cc" />
@@ -264,6 +267,7 @@
     <ClCompile Include="network\command.cpp" />
     <ClCompile Include="network\connection.cpp" />
     <ClCompile Include="network\ctx.cpp" />
+    <ClCompile Include="network\end_point.cpp" />
     <ClCompile Include="network\listener_impl.cc" />
     <ClCompile Include="network\logger.cpp" />
     <ClCompile Include="network\object.cpp" />

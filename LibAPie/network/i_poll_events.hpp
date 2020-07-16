@@ -25,6 +25,27 @@
 namespace APie
 {
  
+	struct EndPoint
+	{
+		uint32_t type = 0;
+		uint32_t id = 0;
+
+		bool operator<(const EndPoint& other)
+		{
+			if (type != other.type)
+			{
+				return type < other.type;
+			}
+
+			if (id != other.id)
+			{
+				return id < other.id;
+			}
+
+			return false;
+		}
+	};
+
 	enum class ConnetionType
 	{
 		CT_NONE = 0,

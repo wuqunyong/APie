@@ -87,6 +87,8 @@ private:
   void handleLogicExit(uint32_t iThreadId);
   void handleStopThread(uint32_t iThreadId);
 
+  void registerEndpoint();
+
   static void processCommand(evutil_socket_t fd, short event, void *arg);
 
   EThreadType type_;

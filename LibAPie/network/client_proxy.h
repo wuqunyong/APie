@@ -56,6 +56,8 @@ namespace APie
 		ProtocolType getCodecType();
 		std::string getHosts();
 
+		bool isConnectted();
+
 
 	private:
 		void close();

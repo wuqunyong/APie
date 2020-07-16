@@ -24,9 +24,11 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\ropcodes.proto\022\007opcodes*A\n\tOPCODE_ID\022\013\n"
-  "\007OP_None\020\000\022\022\n\016OP_RPC_REQUEST\020\001\022\023\n\017OP_RPC"
-  "_RESPONSE\020\002b\006proto3"
+  "\n\ropcodes.proto\022\007opcodes*\234\001\n\tOPCODE_ID\022\013"
+  "\n\007OP_None\020\000\022\022\n\016OP_RPC_REQUEST\020\001\022\023\n\017OP_RP"
+  "C_RESPONSE\020\002\022\037\n\033OP_MSG_REQUEST_ADD_INSTA"
+  "NCE\020\003\022\034\n\030OP_MSG_RESP_ADD_INSTANCE\020\004\022\032\n\026O"
+  "P_MSG_NOTICE_INSTANCE\020\005b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -35,7 +37,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 99,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 191,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -53,6 +55,9 @@ bool OPCODE_ID_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;

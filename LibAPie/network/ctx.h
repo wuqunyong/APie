@@ -9,6 +9,7 @@
 #include "../singleton/threadsafe_singleton.h"
 #include "../event/dispatched_thread.h"
 #include "../network/platform_impl.h"
+#include "../network/i_poll_events.hpp"
 
 #include "../../PBMsg/rpc_msg.pb.h"
 
@@ -18,12 +19,6 @@ namespace APie
 {
     //  Context object encapsulates all the global state associated with
     //  the library.
-    
-	struct EndPoint
-	{
-		uint32_t type = 0;
-		uint32_t id = 0;
-	};
 
     class Ctx
     {

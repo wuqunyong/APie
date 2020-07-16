@@ -22,6 +22,12 @@ enum class HookPoint
 	HP_Exit = 2,
 };
 
+enum HookResult
+{
+	HR_Ok = 0,
+	HR_Error = 1,
+};
+
 class HookRegistry {
 public:
 	using HookCallback = std::function<std::tuple<uint32_t, std::string>(void)>;

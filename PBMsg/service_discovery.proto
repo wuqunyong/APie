@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package service_discovery;
+
+//--------------------------
+
+enum EndPointType {
+	EPT_None = 0;
+	EPT_Service_Registry = 1;
+	EPT_Route_Proxy = 2;
+	EPT_Max = 3;
+}
+
+message EndPointInstance
+{
+	EndPointType type = 1;
+	uint32 id = 2;
+	string auth = 3;
+	string ip = 4;
+	uint32 port = 5;
+	uint32 codec_type = 6;
+}
+
+message MSG_REQUEST_ADD_INSTANCE
+{
+	EndPointInstance instance = 1;
+}
+
+message MSG_RESP_ADD_INSTANCE
+{
+	uint32 status_code = 1;
+}
+
+message MSG_NOTICE_INSTANCE
+{
+	repeated EndPointInstance add_instance = 1;
+	repeated EndPointInstance del_instance = 2;
+}

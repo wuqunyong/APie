@@ -289,6 +289,12 @@
     <ClInclude Include="..\PBMsg\opcodes.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="network\end_point.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PBMsg\service_discovery.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -452,6 +458,12 @@
     </ClCompile>
     <ClCompile Include="rpc\init.cpp">
       <Filter>rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="network\end_point.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\service_discovery.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

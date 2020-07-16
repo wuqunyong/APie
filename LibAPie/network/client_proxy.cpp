@@ -139,6 +139,11 @@ std::string ClientProxy::getHosts()
 	return ss.str();
 }
 
+bool ClientProxy::isConnectted()
+{
+	return this->m_hadEstablished == CONNECT_ESTABLISHED;
+}
+
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	if (this->m_hadEstablished != CONNECT_ESTABLISHED)

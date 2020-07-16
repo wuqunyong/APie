@@ -20,6 +20,7 @@
 #include "../network/i_poll_events.hpp"
 #include "../network/client_proxy.h"
 #include "../network/logger.h"
+#include "../network/end_point.h"
 
 #include "../api/api.h"
 #include "../api/pb_handler.h"
@@ -611,6 +612,10 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 			measure.field(items.first, items.second).timestamp(iCurTime).send_udp(ip, port);
 		}
 	}
+}
+
+void DispatcherImpl::registerEndpoint()
+{
 }
 
 } // namespace Event
