@@ -98,7 +98,7 @@ std::optional<::service_discovery::EndPointInstance> EndPointMgr::findEndpoint(E
 }
 
 
-void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, ::service_discovery::MSG_RESP_ADD_INSTANCE response)
+void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response)
 {
 	if (response.status_code() != opcodes::StatusCode::SC_Ok)
 	{

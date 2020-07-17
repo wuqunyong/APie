@@ -31,7 +31,7 @@ namespace RPC {
 		void handleTimeout();
 
 	public:
-		static void handleResponse(uint64_t iSerialNum, ::rpc_msg::RPC_RESPONSE response);
+		static void handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response);
 
 	private:
 		RpcReplyCb find(uint64_t seqId);

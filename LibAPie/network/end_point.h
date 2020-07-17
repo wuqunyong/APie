@@ -38,7 +38,7 @@ namespace APie
 		void setState(State state);
 
 	public:
-		static void handleRespAddInstance(uint64_t iSerialNum, ::service_discovery::MSG_RESP_ADD_INSTANCE response);
+		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);
 
 	private:
 		State m_state = { Unregistered };

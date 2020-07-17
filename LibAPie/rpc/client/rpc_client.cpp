@@ -116,7 +116,7 @@ namespace RPC {
 		}
 	}
 
-	void RpcClient::handleResponse(uint64_t iSerialNum, ::rpc_msg::RPC_RESPONSE response)
+	void RpcClient::handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response)
 	{
 		uint64_t seqId = response.client().seq_id();
 		auto replyCb = RpcClientSingleton::get().find(seqId);

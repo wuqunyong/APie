@@ -43,7 +43,7 @@ namespace RPC {
 		return true;
 	}
 
-	void RpcServer::handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST request)
+	void RpcServer::handleRequest(uint64_t iSerialNum, const ::rpc_msg::RPC_REQUEST& request)
 	{
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
