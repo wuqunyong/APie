@@ -6,10 +6,7 @@ void ServiceRegistry::init()
 {
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_MSG_REQUEST_ADD_INSTANCE, ServiceRegistry::handleRequestAddInstance, ::service_discovery::MSG_REQUEST_ADD_INSTANCE::default_instance());
 
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_ServerPeerClose, [](uint64_t topic, ::google::protobuf::Message& msg) {
-		auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-		std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
-	});
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 }
 
 void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
@@ -40,6 +37,12 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
 	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, response);
+}
+
+void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
+	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
 }
 
 }
