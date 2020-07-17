@@ -39,7 +39,8 @@ namespace APie
 
 	public:
 		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);
-
+		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
+		
 	private:
 		State m_state = { Unregistered };
 		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };

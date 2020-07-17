@@ -92,7 +92,7 @@ static void InitDefaultsscc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2epro
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[4];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[1];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_service_5fdiscovery_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -124,8 +124,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, mode_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, add_instance_),
-  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, del_instance_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, delete_instance_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, update_instance_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
@@ -149,13 +151,18 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   " \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"Q\n\030MSG_REQUEST_"
   "ADD_INSTANCE\0225\n\010instance\030\001 \001(\0132#.service"
   "_discovery.EndPointInstance\",\n\025MSG_RESP_"
-  "ADD_INSTANCE\022\023\n\013status_code\030\001 \001(\r\"\213\001\n\023MS"
-  "G_NOTICE_INSTANCE\0229\n\014add_instance\030\001 \003(\0132"
-  "#.service_discovery.EndPointInstance\0229\n\014"
-  "del_instance\030\002 \003(\0132#.service_discovery.E"
-  "ndPointInstance*X\n\014EndPointType\022\014\n\010EPT_N"
-  "one\020\000\022\030\n\024EPT_Service_Registry\020\001\022\023\n\017EPT_R"
-  "oute_Proxy\020\002\022\013\n\007EPT_Max\020\003b\006proto3"
+  "ADD_INSTANCE\022\023\n\013status_code\030\001 \001(\r\"\371\001\n\023MS"
+  "G_NOTICE_INSTANCE\022+\n\004mode\030\001 \001(\0162\035.servic"
+  "e_discovery.UpdateMode\0229\n\014add_instance\030\002"
+  " \003(\0132#.service_discovery.EndPointInstanc"
+  "e\022<\n\017delete_instance\030\003 \003(\0132#.service_dis"
+  "covery.EndPointInstance\022<\n\017update_instan"
+  "ce\030\004 \003(\0132#.service_discovery.EndPointIns"
+  "tance*X\n\014EndPointType\022\014\n\010EPT_None\020\000\022\030\n\024E"
+  "PT_Service_Registry\020\001\022\023\n\017EPT_Route_Proxy"
+  "\020\002\022\013\n\007EPT_Max\020\003*:\n\nUpdateMode\022\013\n\007UM_None"
+  "\020\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006pro"
+  "to3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
 };
@@ -168,7 +175,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 553,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 723,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 4, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -187,6 +194,21 @@ bool EndPointType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* UpdateMode_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_service_5fdiscovery_2eproto);
+  return file_level_enum_descriptors_service_5fdiscovery_2eproto[1];
+}
+bool UpdateMode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -945,13 +967,16 @@ MSG_NOTICE_INSTANCE::MSG_NOTICE_INSTANCE(const MSG_NOTICE_INSTANCE& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
       add_instance_(from.add_instance_),
-      del_instance_(from.del_instance_) {
+      delete_instance_(from.delete_instance_),
+      update_instance_(from.update_instance_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  mode_ = from.mode_;
   // @@protoc_insertion_point(copy_constructor:service_discovery.MSG_NOTICE_INSTANCE)
 }
 
 void MSG_NOTICE_INSTANCE::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_NOTICE_INSTANCE_service_5fdiscovery_2eproto.base);
+  mode_ = 0;
 }
 
 MSG_NOTICE_INSTANCE::~MSG_NOTICE_INSTANCE() {
@@ -978,7 +1003,9 @@ void MSG_NOTICE_INSTANCE::Clear() {
   (void) cached_has_bits;
 
   add_instance_.Clear();
-  del_instance_.Clear();
+  delete_instance_.Clear();
+  update_instance_.Clear();
+  mode_ = 0;
   _internal_metadata_.Clear();
 }
 
@@ -989,28 +1016,48 @@ const char* MSG_NOTICE_INSTANCE::_InternalParse(const char* ptr, ::PROTOBUF_NAME
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // repeated .service_discovery.EndPointInstance add_instance = 1;
+      // .service_discovery.UpdateMode mode = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          _internal_set_mode(static_cast<::service_discovery::UpdateMode>(val));
+        } else goto handle_unusual;
+        continue;
+      // repeated .service_discovery.EndPointInstance add_instance = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_add_instance(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .service_discovery.EndPointInstance del_instance = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+      // repeated .service_discovery.EndPointInstance delete_instance = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_del_instance(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_delete_instance(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated .service_discovery.EndPointInstance update_instance = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_update_instance(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -1039,20 +1086,35 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated .service_discovery.EndPointInstance add_instance = 1;
+  // .service_discovery.UpdateMode mode = 1;
+  if (this->mode() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_mode(), target);
+  }
+
+  // repeated .service_discovery.EndPointInstance add_instance = 2;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_add_instance_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, this->_internal_add_instance(i), target, stream);
+      InternalWriteMessage(2, this->_internal_add_instance(i), target, stream);
   }
 
-  // repeated .service_discovery.EndPointInstance del_instance = 2;
+  // repeated .service_discovery.EndPointInstance delete_instance = 3;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_del_instance_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->_internal_delete_instance_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_del_instance(i), target, stream);
+      InternalWriteMessage(3, this->_internal_delete_instance(i), target, stream);
+  }
+
+  // repeated .service_discovery.EndPointInstance update_instance = 4;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_update_instance_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, this->_internal_update_instance(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1071,18 +1133,31 @@ size_t MSG_NOTICE_INSTANCE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .service_discovery.EndPointInstance add_instance = 1;
+  // repeated .service_discovery.EndPointInstance add_instance = 2;
   total_size += 1UL * this->_internal_add_instance_size();
   for (const auto& msg : this->add_instance_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .service_discovery.EndPointInstance del_instance = 2;
-  total_size += 1UL * this->_internal_del_instance_size();
-  for (const auto& msg : this->del_instance_) {
+  // repeated .service_discovery.EndPointInstance delete_instance = 3;
+  total_size += 1UL * this->_internal_delete_instance_size();
+  for (const auto& msg : this->delete_instance_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .service_discovery.EndPointInstance update_instance = 4;
+  total_size += 1UL * this->_internal_update_instance_size();
+  for (const auto& msg : this->update_instance_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // .service_discovery.UpdateMode mode = 1;
+  if (this->mode() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_mode());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1117,7 +1192,11 @@ void MSG_NOTICE_INSTANCE::MergeFrom(const MSG_NOTICE_INSTANCE& from) {
   (void) cached_has_bits;
 
   add_instance_.MergeFrom(from.add_instance_);
-  del_instance_.MergeFrom(from.del_instance_);
+  delete_instance_.MergeFrom(from.delete_instance_);
+  update_instance_.MergeFrom(from.update_instance_);
+  if (from.mode() != 0) {
+    _internal_set_mode(from._internal_mode());
+  }
 }
 
 void MSG_NOTICE_INSTANCE::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1142,7 +1221,9 @@ void MSG_NOTICE_INSTANCE::InternalSwap(MSG_NOTICE_INSTANCE* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   add_instance_.InternalSwap(&other->add_instance_);
-  del_instance_.InternalSwap(&other->del_instance_);
+  delete_instance_.InternalSwap(&other->delete_instance_);
+  update_instance_.InternalSwap(&other->update_instance_);
+  swap(mode_, other->mode_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata MSG_NOTICE_INSTANCE::GetMetadata() const {

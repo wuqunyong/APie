@@ -104,6 +104,32 @@ inline bool EndPointType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EndPointType>(
     EndPointType_descriptor(), name, value);
 }
+enum UpdateMode : int {
+  UM_None = 0,
+  UM_Full = 1,
+  UM_Incremental = 2,
+  UpdateMode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  UpdateMode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool UpdateMode_IsValid(int value);
+constexpr UpdateMode UpdateMode_MIN = UM_None;
+constexpr UpdateMode UpdateMode_MAX = UM_Incremental;
+constexpr int UpdateMode_ARRAYSIZE = UpdateMode_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* UpdateMode_descriptor();
+template<typename T>
+inline const std::string& UpdateMode_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, UpdateMode>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function UpdateMode_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    UpdateMode_descriptor(), enum_t_value);
+}
+inline bool UpdateMode_Parse(
+    const std::string& name, UpdateMode* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<UpdateMode>(
+    UpdateMode_descriptor(), name, value);
+}
 // ===================================================================
 
 class EndPointInstance :
@@ -671,10 +697,12 @@ class MSG_NOTICE_INSTANCE :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAddInstanceFieldNumber = 1,
-    kDelInstanceFieldNumber = 2,
+    kAddInstanceFieldNumber = 2,
+    kDeleteInstanceFieldNumber = 3,
+    kUpdateInstanceFieldNumber = 4,
+    kModeFieldNumber = 1,
   };
-  // repeated .service_discovery.EndPointInstance add_instance = 1;
+  // repeated .service_discovery.EndPointInstance add_instance = 2;
   int add_instance_size() const;
   private:
   int _internal_add_instance_size() const;
@@ -692,23 +720,50 @@ class MSG_NOTICE_INSTANCE :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
       add_instance() const;
 
-  // repeated .service_discovery.EndPointInstance del_instance = 2;
-  int del_instance_size() const;
+  // repeated .service_discovery.EndPointInstance delete_instance = 3;
+  int delete_instance_size() const;
   private:
-  int _internal_del_instance_size() const;
+  int _internal_delete_instance_size() const;
   public:
-  void clear_del_instance();
-  ::service_discovery::EndPointInstance* mutable_del_instance(int index);
+  void clear_delete_instance();
+  ::service_discovery::EndPointInstance* mutable_delete_instance(int index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >*
-      mutable_del_instance();
+      mutable_delete_instance();
   private:
-  const ::service_discovery::EndPointInstance& _internal_del_instance(int index) const;
-  ::service_discovery::EndPointInstance* _internal_add_del_instance();
+  const ::service_discovery::EndPointInstance& _internal_delete_instance(int index) const;
+  ::service_discovery::EndPointInstance* _internal_add_delete_instance();
   public:
-  const ::service_discovery::EndPointInstance& del_instance(int index) const;
-  ::service_discovery::EndPointInstance* add_del_instance();
+  const ::service_discovery::EndPointInstance& delete_instance(int index) const;
+  ::service_discovery::EndPointInstance* add_delete_instance();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
-      del_instance() const;
+      delete_instance() const;
+
+  // repeated .service_discovery.EndPointInstance update_instance = 4;
+  int update_instance_size() const;
+  private:
+  int _internal_update_instance_size() const;
+  public:
+  void clear_update_instance();
+  ::service_discovery::EndPointInstance* mutable_update_instance(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >*
+      mutable_update_instance();
+  private:
+  const ::service_discovery::EndPointInstance& _internal_update_instance(int index) const;
+  ::service_discovery::EndPointInstance* _internal_add_update_instance();
+  public:
+  const ::service_discovery::EndPointInstance& update_instance(int index) const;
+  ::service_discovery::EndPointInstance* add_update_instance();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
+      update_instance() const;
+
+  // .service_discovery.UpdateMode mode = 1;
+  void clear_mode();
+  ::service_discovery::UpdateMode mode() const;
+  void set_mode(::service_discovery::UpdateMode value);
+  private:
+  ::service_discovery::UpdateMode _internal_mode() const;
+  void _internal_set_mode(::service_discovery::UpdateMode value);
+  public:
 
   // @@protoc_insertion_point(class_scope:service_discovery.MSG_NOTICE_INSTANCE)
  private:
@@ -716,7 +771,9 @@ class MSG_NOTICE_INSTANCE :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > add_instance_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > del_instance_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > delete_instance_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > update_instance_;
+  int mode_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
 };
@@ -1023,7 +1080,27 @@ inline void MSG_RESP_ADD_INSTANCE::set_status_code(::PROTOBUF_NAMESPACE_ID::uint
 
 // MSG_NOTICE_INSTANCE
 
-// repeated .service_discovery.EndPointInstance add_instance = 1;
+// .service_discovery.UpdateMode mode = 1;
+inline void MSG_NOTICE_INSTANCE::clear_mode() {
+  mode_ = 0;
+}
+inline ::service_discovery::UpdateMode MSG_NOTICE_INSTANCE::_internal_mode() const {
+  return static_cast< ::service_discovery::UpdateMode >(mode_);
+}
+inline ::service_discovery::UpdateMode MSG_NOTICE_INSTANCE::mode() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.mode)
+  return _internal_mode();
+}
+inline void MSG_NOTICE_INSTANCE::_internal_set_mode(::service_discovery::UpdateMode value) {
+  
+  mode_ = value;
+}
+inline void MSG_NOTICE_INSTANCE::set_mode(::service_discovery::UpdateMode value) {
+  _internal_set_mode(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_NOTICE_INSTANCE.mode)
+}
+
+// repeated .service_discovery.EndPointInstance add_instance = 2;
 inline int MSG_NOTICE_INSTANCE::_internal_add_instance_size() const {
   return add_instance_.size();
 }
@@ -1062,43 +1139,82 @@ MSG_NOTICE_INSTANCE::add_instance() const {
   return add_instance_;
 }
 
-// repeated .service_discovery.EndPointInstance del_instance = 2;
-inline int MSG_NOTICE_INSTANCE::_internal_del_instance_size() const {
-  return del_instance_.size();
+// repeated .service_discovery.EndPointInstance delete_instance = 3;
+inline int MSG_NOTICE_INSTANCE::_internal_delete_instance_size() const {
+  return delete_instance_.size();
 }
-inline int MSG_NOTICE_INSTANCE::del_instance_size() const {
-  return _internal_del_instance_size();
+inline int MSG_NOTICE_INSTANCE::delete_instance_size() const {
+  return _internal_delete_instance_size();
 }
-inline void MSG_NOTICE_INSTANCE::clear_del_instance() {
-  del_instance_.Clear();
+inline void MSG_NOTICE_INSTANCE::clear_delete_instance() {
+  delete_instance_.Clear();
 }
-inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::mutable_del_instance(int index) {
-  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_NOTICE_INSTANCE.del_instance)
-  return del_instance_.Mutable(index);
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::mutable_delete_instance(int index) {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_NOTICE_INSTANCE.delete_instance)
+  return delete_instance_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >*
-MSG_NOTICE_INSTANCE::mutable_del_instance() {
-  // @@protoc_insertion_point(field_mutable_list:service_discovery.MSG_NOTICE_INSTANCE.del_instance)
-  return &del_instance_;
+MSG_NOTICE_INSTANCE::mutable_delete_instance() {
+  // @@protoc_insertion_point(field_mutable_list:service_discovery.MSG_NOTICE_INSTANCE.delete_instance)
+  return &delete_instance_;
 }
-inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::_internal_del_instance(int index) const {
-  return del_instance_.Get(index);
+inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::_internal_delete_instance(int index) const {
+  return delete_instance_.Get(index);
 }
-inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::del_instance(int index) const {
-  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.del_instance)
-  return _internal_del_instance(index);
+inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::delete_instance(int index) const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.delete_instance)
+  return _internal_delete_instance(index);
 }
-inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::_internal_add_del_instance() {
-  return del_instance_.Add();
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::_internal_add_delete_instance() {
+  return delete_instance_.Add();
 }
-inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::add_del_instance() {
-  // @@protoc_insertion_point(field_add:service_discovery.MSG_NOTICE_INSTANCE.del_instance)
-  return _internal_add_del_instance();
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::add_delete_instance() {
+  // @@protoc_insertion_point(field_add:service_discovery.MSG_NOTICE_INSTANCE.delete_instance)
+  return _internal_add_delete_instance();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
-MSG_NOTICE_INSTANCE::del_instance() const {
-  // @@protoc_insertion_point(field_list:service_discovery.MSG_NOTICE_INSTANCE.del_instance)
-  return del_instance_;
+MSG_NOTICE_INSTANCE::delete_instance() const {
+  // @@protoc_insertion_point(field_list:service_discovery.MSG_NOTICE_INSTANCE.delete_instance)
+  return delete_instance_;
+}
+
+// repeated .service_discovery.EndPointInstance update_instance = 4;
+inline int MSG_NOTICE_INSTANCE::_internal_update_instance_size() const {
+  return update_instance_.size();
+}
+inline int MSG_NOTICE_INSTANCE::update_instance_size() const {
+  return _internal_update_instance_size();
+}
+inline void MSG_NOTICE_INSTANCE::clear_update_instance() {
+  update_instance_.Clear();
+}
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::mutable_update_instance(int index) {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_NOTICE_INSTANCE.update_instance)
+  return update_instance_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >*
+MSG_NOTICE_INSTANCE::mutable_update_instance() {
+  // @@protoc_insertion_point(field_mutable_list:service_discovery.MSG_NOTICE_INSTANCE.update_instance)
+  return &update_instance_;
+}
+inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::_internal_update_instance(int index) const {
+  return update_instance_.Get(index);
+}
+inline const ::service_discovery::EndPointInstance& MSG_NOTICE_INSTANCE::update_instance(int index) const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.update_instance)
+  return _internal_update_instance(index);
+}
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::_internal_add_update_instance() {
+  return update_instance_.Add();
+}
+inline ::service_discovery::EndPointInstance* MSG_NOTICE_INSTANCE::add_update_instance() {
+  // @@protoc_insertion_point(field_add:service_discovery.MSG_NOTICE_INSTANCE.update_instance)
+  return _internal_add_update_instance();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
+MSG_NOTICE_INSTANCE::update_instance() const {
+  // @@protoc_insertion_point(field_list:service_discovery.MSG_NOTICE_INSTANCE.update_instance)
+  return update_instance_;
 }
 
 #ifdef __GNUC__
@@ -1121,6 +1237,11 @@ template <> struct is_proto_enum< ::service_discovery::EndPointType> : ::std::tr
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::EndPointType>() {
   return ::service_discovery::EndPointType_descriptor();
+}
+template <> struct is_proto_enum< ::service_discovery::UpdateMode> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::UpdateMode>() {
+  return ::service_discovery::UpdateMode_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

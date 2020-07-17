@@ -10,7 +10,9 @@ namespace APie{
 
 void SelfRegistration::init()
 {
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
+
 	this->registerEndpoint();
 }
 
@@ -100,12 +102,19 @@ std::optional<::service_discovery::EndPointInstance> EndPointMgr::findEndpoint(E
 
 void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response)
 {
+	std::cout << "iSerialNum:" << iSerialNum << ",response:" << response.DebugString() << std::endl;
+
 	if (response.status_code() != opcodes::StatusCode::SC_Ok)
 	{
 		return;
 	}
 
 	APie::CtxSingleton::get().getEndpoint()->setState(APie::SelfRegistration::Registered);
+}
+
+void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice)
+{
+	std::cout << "iSerialNum:" << iSerialNum << ",notice:" << notice.DebugString() << std::endl;
 }
 
 }

@@ -36,6 +36,8 @@ namespace APie {
 		void updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
 		void deleteBySerialNum(uint64_t iSerialNum);
 
+		void broadcast();
+
 	public:
 		std::map<uint64_t, RegisteredEndPoint> m_registered;
 		std::map<EndPoint, uint64_t> m_pointMap;

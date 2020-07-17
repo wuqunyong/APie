@@ -56,13 +56,33 @@ void ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 	}
 }
 
+void ServiceRegistry::broadcast()
+{
+	::service_discovery::MSG_NOTICE_INSTANCE notice;
+	notice.set_mode(service_discovery::UM_Full);
+	for (const auto& items : m_registered)
+	{
+		auto ptrAdd = notice.add_add_instance();
+		*ptrAdd = items.second.instance;
+	}
+
+	for (const auto& items : m_registered)
+	{
+		APie::Network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
+	}
+}
+
 void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& request)
 {
+	std::cout << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString() << std::endl;
+
 	ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
 
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
 	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, response);
+
+	ServiceRegistrySingleton::get().broadcast();
 }
 
 void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
@@ -72,6 +92,8 @@ void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Mess
 
 	uint64_t iSerialNum = refMsg.serial_num();
 	ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
+
+	ServiceRegistrySingleton::get().broadcast();
 }
 
 }

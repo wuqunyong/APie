@@ -4,11 +4,19 @@ package service_discovery;
 
 //--------------------------
 
-enum EndPointType {
+enum EndPointType 
+{
 	EPT_None = 0;
 	EPT_Service_Registry = 1;
 	EPT_Route_Proxy = 2;
 	EPT_Max = 3;
+}
+
+enum UpdateMode
+{
+	UM_None = 0;
+	UM_Full = 1;
+	UM_Incremental = 2; 
 }
 
 message EndPointInstance
@@ -33,6 +41,8 @@ message MSG_RESP_ADD_INSTANCE
 
 message MSG_NOTICE_INSTANCE
 {
-	repeated EndPointInstance add_instance = 1;
-	repeated EndPointInstance del_instance = 2;
+	UpdateMode mode = 1;
+	repeated EndPointInstance add_instance = 2;
+	repeated EndPointInstance delete_instance = 3;
+	repeated EndPointInstance update_instance = 4;
 }

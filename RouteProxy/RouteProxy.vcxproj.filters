@@ -2,9 +2,20 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\route_proxy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\route_proxy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{36c5c607-b7ff-48d5-becc-78ee559c99ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

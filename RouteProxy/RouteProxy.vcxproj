@@ -124,9 +124,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="logic\route_proxy.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="logic\route_proxy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
   </ItemGroup>
