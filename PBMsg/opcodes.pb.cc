@@ -28,8 +28,9 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "\n\007OP_None\020\000\022\022\n\016OP_RPC_REQUEST\020\001\022\023\n\017OP_RP"
   "C_RESPONSE\020\002\022\037\n\033OP_MSG_REQUEST_ADD_INSTA"
   "NCE\020\003\022\034\n\030OP_MSG_RESP_ADD_INSTANCE\020\004\022\032\n\026O"
-  "P_MSG_NOTICE_INSTANCE\020\005*\027\n\nStatusCode\022\t\n"
-  "\005SC_Ok\020\000b\006proto3"
+  "P_MSG_NOTICE_INSTANCE\020\005*I\n\nStatusCode\022\t\n"
+  "\005SC_Ok\020\000\022\023\n\016SC_Rpc_Timeout\020\350\007\022\033\n\026SC_Disc"
+  "overy_AuthError\020\320\017b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -38,7 +39,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 216,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 266,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -72,6 +73,8 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor() {
 bool StatusCode_IsValid(int value) {
   switch (value) {
     case 0:
+    case 1000:
+    case 2000:
       return true;
     default:
       return false;

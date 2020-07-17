@@ -8,10 +8,28 @@ enum PUB_TOPIC
 {
 	PT_None = 0;
 	PT_LogicCmd = 1;
+	PT_PeerClose = 2;
+	PT_ServerPeerClose = 3;
 }
 
 message LOGIC_CMD
 {
 	string cmd = 1;
 	repeated string params = 2;
+}
+
+message PEER_CLOSE
+{
+	uint64 serial_num = 1;
+	uint32 result = 2;
+	string info = 3;
+	uint32 active = 4;
+}
+
+message SERVER_PEER_CLOSE
+{
+	uint64 serial_num = 1;
+	uint32 result = 2;
+	string info = 3;
+	uint32 active = 4;
 }

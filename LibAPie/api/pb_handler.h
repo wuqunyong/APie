@@ -7,6 +7,7 @@
 #include <google/protobuf/message.h>
 
 #include "../singleton/threadsafe_singleton.h"
+#include "../network/logger.h"
 
 
 namespace APie {
@@ -27,6 +28,10 @@ public:
 		auto findIte = funcs_.find(opcode);
 		if (findIte != funcs_.end())
 		{
+			std::stringstream ss;
+			ss << "duplicate opcode: " << opcode;
+			fatalExit(ss.str().c_str());
+
 			return false;
 		}
 

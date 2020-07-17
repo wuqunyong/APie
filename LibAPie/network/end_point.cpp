@@ -16,11 +16,11 @@ void SelfRegistration::init()
 
 void SelfRegistration::registerEndpoint()
 {
-	//auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-	//if (identityType == ::service_discovery::EndPointType::EPT_Service_Registry)
-	//{
-	//	return;
-	//}
+	auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
+	if (identityType == ::service_discovery::EndPointType::EPT_Service_Registry)
+	{
+		return;
+	}
 
 	if (!APie::CtxSingleton::get().yamlNode()["service_registry"])
 	{

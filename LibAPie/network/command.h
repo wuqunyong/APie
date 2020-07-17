@@ -88,6 +88,22 @@ namespace APie
 		std::map<std::string, double> field;
 	};
 
+	struct PeerClose
+	{
+		uint64_t iSerialNum;
+		uint32_t iResult;
+		std::string sInfo;
+		uint32_t iActive;
+	};
+
+	struct ServerPeerClose
+	{
+		uint64_t iSerialNum;
+		uint32_t iResult;
+		std::string sInfo;
+		uint32_t iActive;
+	};
+
 	struct LogicCmd
 	{
 		std::string sCmd;
@@ -119,6 +135,9 @@ namespace APie
 			metric_data,
 
 			logic_cmd,
+
+			peer_close,        //client: passive, active(IOThread -> LogicThread)
+			server_peer_close, //server: 
 
 			recv_http_request,  //server:passive_connect
 			send_http_response, //server:passive_connect
@@ -168,6 +187,14 @@ namespace APie
 			struct {
 				LogicCmd* ptrData;
 			} logic_cmd;
+
+			struct {
+				PeerClose* ptrData;
+			} peer_close;
+
+			struct {
+				ServerPeerClose* ptrData;
+			} server_peer_close;
 
 			struct {
 				uint64_t iSerialNum;

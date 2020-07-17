@@ -30,6 +30,7 @@ namespace APie
 		EndPoint identify();
 		std::shared_ptr<SelfRegistration> getEndpoint();
 		uint64_t getNowMilliseconds();
+		uint64_t getNowSeconds();
 
 		void init(const std::string& configFile);
 		void start();

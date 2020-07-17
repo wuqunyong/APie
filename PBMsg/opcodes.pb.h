@@ -88,12 +88,14 @@ inline bool OPCODE_ID_Parse(
 }
 enum StatusCode : int {
   SC_Ok = 0,
+  SC_Rpc_Timeout = 1000,
+  SC_Discovery_AuthError = 2000,
   StatusCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   StatusCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool StatusCode_IsValid(int value);
 constexpr StatusCode StatusCode_MIN = SC_Ok;
-constexpr StatusCode StatusCode_MAX = SC_Ok;
+constexpr StatusCode StatusCode_MAX = SC_Discovery_AuthError;
 constexpr int StatusCode_ARRAYSIZE = StatusCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor();

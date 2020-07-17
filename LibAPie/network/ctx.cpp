@@ -120,6 +120,15 @@ uint64_t Ctx::getNowMilliseconds()
 	return milliseconds.count();
 }
 
+uint64_t Ctx::getNowSeconds()
+{
+	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+	auto duration = now.time_since_epoch();
+	auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
+	return seconds.count();
+}
+
+
 void Ctx::init(const std::string& configFile)
 {
 	char timebuf[64] = { '\0' };
@@ -186,28 +195,28 @@ void Ctx::init(const std::string& configFile)
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|BadFile exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|InvalidNode exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (YAML::BadConversion& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|BadConversion exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|Unexpected exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 }

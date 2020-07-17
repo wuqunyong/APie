@@ -8,7 +8,7 @@ enum OPCODE_ID {
 	OP_None = 0;
 	OP_RPC_REQUEST = 1;
 	OP_RPC_RESPONSE = 2;
-	OP_MSG_REQUEST_ADD_INSTANCE = 3;
+	OP_MSG_REQUEST_ADD_INSTANCE = 3;  //Discovery
 	OP_MSG_RESP_ADD_INSTANCE = 4;
 	OP_MSG_NOTICE_INSTANCE = 5;
 }
@@ -16,4 +16,8 @@ enum OPCODE_ID {
 
 enum StatusCode {
 	SC_Ok = 0;
+
+	SC_Rpc_Timeout = 1000;
+
+	SC_Discovery_AuthError = 2000;
 }

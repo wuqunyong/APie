@@ -46,7 +46,7 @@ namespace APie
 		void eventcb(short what);
 
 
-		void close(std::string sInfo);
+		void close(std::string sInfo, uint32_t iCode = 0, uint32_t iActive = 0);
         ~ServerConnection();
 
 	public:
@@ -55,7 +55,7 @@ namespace APie
 
 		static bool validProtocol(ProtocolType iType);
 	private:
-		void sendConnectionClose();
+		void sendConnectionClose(uint32_t iResult, const std::string& sInfo, uint32_t iActive);
 
 		void readHttp();
 		void readPB();

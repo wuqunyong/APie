@@ -62,9 +62,9 @@ bool ServerConnection::validProtocol(ProtocolType iType)
 	return valid;
 }
 
-void ServerConnection::close(std::string sInfo)
+void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive)
 {
-	this->sendConnectionClose();
+	this->sendConnectionClose(iCode, sInfo, iActive);
 
 	Event::DispatcherImpl::delConnection(this->iSerialNum);
 }
@@ -280,9 +280,16 @@ void ServerConnection::handleSend(const char *data, size_t size)
 	}
 }
 
-void ServerConnection::sendConnectionClose()
+void ServerConnection::sendConnectionClose(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
 {
-
+	Command cmd;
+	cmd.type = Command::server_peer_close;
+	cmd.args.server_peer_close.ptrData = new ServerPeerClose();
+	cmd.args.server_peer_close.ptrData->iResult = iResult;
+	cmd.args.server_peer_close.ptrData->iSerialNum = this->iSerialNum;
+	cmd.args.server_peer_close.ptrData->sInfo = sInfo;
+	cmd.args.server_peer_close.ptrData->iActive = iActive;
+	APie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 
 void ServerConnection::handleClose()

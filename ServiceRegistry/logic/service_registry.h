@@ -15,6 +15,13 @@
 
 namespace APie {
 
+	struct RegisteredEndPoint
+	{
+		uint64_t addTime = {0};
+		uint64_t modifyTime = {0};
+		::service_discovery::EndPointInstance instance;
+	};
+
 	class ServiceRegistry
 	{
 	public:
@@ -22,6 +29,12 @@ namespace APie {
 
 	public:
 		static void handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& response);
+
+	public:
+		void updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
+
+	public:
+		std::map<uint64_t, RegisteredEndPoint> m_registered;
 	};
 
 

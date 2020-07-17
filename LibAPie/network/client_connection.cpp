@@ -80,14 +80,14 @@ void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 
 void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
 {
-	//Command cmd;
-	//cmd.type = Command::peer_close;
-	//cmd.args.peer_close.ptrData = new PeerClose();
-	//cmd.args.peer_close.ptrData->iResult = iResult;
-	//cmd.args.peer_close.ptrData->iSerialNum = this->iSerialNum;
-	//cmd.args.peer_close.ptrData->sInfo = sInfo;
-	//cmd.args.peer_close.ptrData->iActive = iActive;
-	//this->getIOThread()->getCtx()->getLogicThread()->push(cmd);
+	Command cmd;
+	cmd.type = Command::peer_close;
+	cmd.args.peer_close.ptrData = new PeerClose();
+	cmd.args.peer_close.ptrData->iResult = iResult;
+	cmd.args.peer_close.ptrData->iSerialNum = this->iSerialNum;
+	cmd.args.peer_close.ptrData->sInfo = sInfo;
+	cmd.args.peer_close.ptrData->iActive = iActive;
+	APie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 
 void APie::ClientConnection::sendConnectResultCmd(uint32_t iResult)

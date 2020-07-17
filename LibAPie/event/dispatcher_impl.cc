@@ -267,6 +267,16 @@ void DispatcherImpl::handleCommand()
 			this->handleLogicCmd(cmd.args.logic_cmd.ptrData);
 			break;
 		}
+		case Command::peer_close:
+		{
+			this->handlePeerClose(cmd.args.peer_close.ptrData);
+			break;
+		}
+		case Command::server_peer_close:
+		{
+			this->handleServerPeerClose(cmd.args.server_peer_close.ptrData);
+			break;
+		}
 		case Command::logic_start:
 		{
 			this->handleLogicStart(cmd.args.logic_exit.iThreadId);
@@ -284,17 +294,14 @@ void DispatcherImpl::handleCommand()
 		}
 		case Command::recv_http_request:
 		{
-			
 			break;
 		}
 		case Command::send_http_response:
 		{
-
 			break;
 		}
 		case Command::recv_http_response:
 		{
-
 			break;
 		}
 		default:
@@ -517,6 +524,28 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
 }
 
+void DispatcherImpl::handlePeerClose(PeerClose* ptrCmd)
+{
+	::pubsub::PEER_CLOSE msg;
+	msg.set_serial_num(ptrCmd->iSerialNum);
+	msg.set_result(ptrCmd->iResult);
+	msg.set_info(ptrCmd->sInfo);
+	msg.set_active(ptrCmd->iActive);
+
+	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_PeerClose, msg);
+}
+
+void DispatcherImpl::handleServerPeerClose(ServerPeerClose* ptrCmd)
+{
+	::pubsub::SERVER_PEER_CLOSE msg;
+	msg.set_serial_num(ptrCmd->iSerialNum);
+	msg.set_result(ptrCmd->iResult);
+	msg.set_info(ptrCmd->sInfo);
+	msg.set_active(ptrCmd->iActive);
+
+	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_ServerPeerClose, msg);
+}
+
 void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 {
 	if (iThreadId != this->tid_)
@@ -532,14 +561,14 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 		std::stringstream ss;
 		ss << "InvalidNode exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "Unexpected exception: " << e.what();
 
-		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "fatalExit", ss.str().c_str());
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
 }

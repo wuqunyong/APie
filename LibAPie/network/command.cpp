@@ -78,6 +78,26 @@ void APie::deallocateCommand(Command* cmd)
 		break;
 	}
 
+	case Command::peer_close:
+	{
+		if (NULL != cmd->args.peer_close.ptrData)
+		{
+			delete cmd->args.peer_close.ptrData;
+			cmd->args.peer_close.ptrData = NULL;
+		}
+		break;
+	}
+
+	case Command::server_peer_close:
+	{
+		if (NULL != cmd->args.server_peer_close.ptrData)
+		{
+			delete cmd->args.server_peer_close.ptrData;
+			cmd->args.server_peer_close.ptrData = NULL;
+		}
+		break;
+	}
+
 	case Command::recv_http_request:
 	{
 		if (NULL != cmd->args.recv_http_request.ptrData)
