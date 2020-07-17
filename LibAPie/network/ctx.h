@@ -118,7 +118,9 @@ namespace APie
     };
     
 
-	typedef APie::ThreadSafeSingleton<Ctx> CtxSingleton;
+	//typedef APie::ThreadSafeSingleton<Ctx> CtxSingleton;
+
+	using CtxSingleton = ThreadSafeSingleton<Ctx>;
 
 	//usage: Envoy::CtxSingleton::get();
 }

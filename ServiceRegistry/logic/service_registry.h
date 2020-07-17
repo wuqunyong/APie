@@ -40,5 +40,7 @@ namespace APie {
 	};
 
 
-	typedef APie::ThreadSafeSingleton<ServiceRegistry> ServiceRegistrySingleton;
+	//typedef APie::ThreadSafeSingleton<ServiceRegistry> ServiceRegistrySingleton;
+
+	using ServiceRegistrySingleton = ThreadSafeSingleton<ServiceRegistry>;
 }
