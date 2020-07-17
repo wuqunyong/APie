@@ -21,7 +21,7 @@ namespace APie {
 		void init();
 
 	public:
-		static void handleRequestAddInstance(uint64_t iSerialNum, ::service_discovery::MSG_REQUEST_ADD_INSTANCE response);
+		static void handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& response);
 	};
 
 
