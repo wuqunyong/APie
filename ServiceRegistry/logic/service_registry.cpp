@@ -13,6 +13,18 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 {
 	auto curTime = APie::CtxSingleton::get().getNowSeconds();
 
+	EndPoint point;
+	point.type = instance.type();
+	point.id = instance.id();
+	auto findPoint = m_pointMap.find(point);
+	if (findPoint != m_pointMap.end())
+	{
+		m_registered.erase(findPoint->second);
+		m_pointMap.erase(findPoint);
+	}
+	m_pointMap[point] = iSerialNum;
+
+
 	auto findIte = m_registered.find(iSerialNum);
 	if (findIte == m_registered.end())
 	{
@@ -30,6 +42,20 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 	}
 }
 
+void ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
+{
+	auto findIte = m_registered.find(iSerialNum);
+	if (findIte != m_registered.end())
+	{
+		EndPoint point;
+		point.type = findIte->second.instance.type();
+		point.id = findIte->second.instance.id();
+
+		m_pointMap.erase(point);
+		m_registered.erase(findIte);
+	}
+}
+
 void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& request)
 {
 	ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
@@ -43,6 +69,9 @@ void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Mess
 {
 	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
 	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
+
+	uint64_t iSerialNum = refMsg.serial_num();
+	ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
 }
 
 }

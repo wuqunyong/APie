@@ -30,7 +30,7 @@ namespace APie
 		uint32_t type = 0;
 		uint32_t id = 0;
 
-		bool operator<(const EndPoint& other)
+		bool operator<(const EndPoint& other) const
 		{
 			if (type != other.type)
 			{

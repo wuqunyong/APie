@@ -31,8 +31,10 @@ namespace APie {
 		static void handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& response);
 
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+
 	public:
 		void updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
+		void deleteBySerialNum(uint64_t iSerialNum);
 
 	public:
 		std::map<uint64_t, RegisteredEndPoint> m_registered;
