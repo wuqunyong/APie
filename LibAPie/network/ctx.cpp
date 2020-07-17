@@ -88,7 +88,8 @@ private:
 Ctx::Ctx() :
 	logic_thread_(nullptr),
 	log_thread_(nullptr),
-	metrics_thread_(nullptr)
+	metrics_thread_(nullptr),
+	endpoint_(nullptr)
 {
 
 }
@@ -104,6 +105,11 @@ EndPoint Ctx::identify()
 	point.type = this->yamlAs<uint32_t>({ "identify","type" }, 0);
 	point.id = this->yamlAs<uint32_t>({ "identify","id" }, 0);
 	return point;
+}
+
+std::shared_ptr<SelfRegistration> Ctx::getEndpoint()
+{
+	return endpoint_;
 }
 
 uint64_t Ctx::getNowMilliseconds()
@@ -126,6 +132,8 @@ void Ctx::init(const std::string& configFile)
 	APie::Event::Libevent::Global::initialize();
 
 	this->handleSigProcMask();
+
+	endpoint_ = std::make_shared<SelfRegistration>();
 
 	try {
 		this->node_ = YAML::LoadFile(configFile);

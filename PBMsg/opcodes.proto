@@ -14,3 +14,6 @@ enum OPCODE_ID {
 }
 
 
+enum StatusCode {
+	SC_Ok = 0;
+}

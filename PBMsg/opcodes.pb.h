@@ -86,6 +86,30 @@ inline bool OPCODE_ID_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<OPCODE_ID>(
     OPCODE_ID_descriptor(), name, value);
 }
+enum StatusCode : int {
+  SC_Ok = 0,
+  StatusCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  StatusCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool StatusCode_IsValid(int value);
+constexpr StatusCode StatusCode_MIN = SC_Ok;
+constexpr StatusCode StatusCode_MAX = SC_Ok;
+constexpr int StatusCode_ARRAYSIZE = StatusCode_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor();
+template<typename T>
+inline const std::string& StatusCode_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, StatusCode>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function StatusCode_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    StatusCode_descriptor(), enum_t_value);
+}
+inline bool StatusCode_Parse(
+    const std::string& name, StatusCode* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<StatusCode>(
+    StatusCode_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -112,6 +136,11 @@ template <> struct is_proto_enum< ::opcodes::OPCODE_ID> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::opcodes::OPCODE_ID>() {
   return ::opcodes::OPCODE_ID_descriptor();
+}
+template <> struct is_proto_enum< ::opcodes::StatusCode> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::opcodes::StatusCode>() {
+  return ::opcodes::StatusCode_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

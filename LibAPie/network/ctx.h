@@ -10,6 +10,7 @@
 #include "../event/dispatched_thread.h"
 #include "../network/platform_impl.h"
 #include "../network/i_poll_events.hpp"
+#include "../network/end_point.h"
 
 #include "../../PBMsg/rpc_msg.pb.h"
 
@@ -27,6 +28,7 @@ namespace APie
 		~Ctx();
 
 		EndPoint identify();
+		std::shared_ptr<SelfRegistration> getEndpoint();
 		uint64_t getNowMilliseconds();
 
 		void init(const std::string& configFile);
@@ -105,6 +107,8 @@ namespace APie
 		std::atomic<uint32_t> tid_ = 0;
 		YAML::Node node_;
 		std::mutex node_sync_;
+
+		std::shared_ptr<SelfRegistration> endpoint_ = {nullptr};
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;

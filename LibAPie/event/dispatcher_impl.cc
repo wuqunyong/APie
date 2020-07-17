@@ -525,6 +525,7 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 	}
 
 	try {
+		CtxSingleton::get().getEndpoint()->init();
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
 	}
 	catch (YAML::InvalidNode& e) {

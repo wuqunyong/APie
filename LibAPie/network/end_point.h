@@ -8,15 +8,18 @@
 #include <optional>
 
 #include "../network/i_poll_events.hpp"
+#include "../network/client_proxy.h"
+
 #include "../singleton/threadsafe_singleton.h"
 
 #include "../../../PBMsg/service_discovery.pb.h"
 
 
 
+
 namespace APie
 {
-	class SelfRegistration
+	class SelfRegistration : public std::enable_shared_from_this<SelfRegistration>
 	{
 	public:
 		enum State
@@ -32,8 +35,14 @@ namespace APie
 		void unregisterEndpoint();
 		void heartbeat();
 
+		void setState(State state);
+
+	public:
+		static void handleRespAddInstance(uint64_t iSerialNum, ::service_discovery::MSG_RESP_ADD_INSTANCE response);
+
 	private:
 		State m_state = { Unregistered };
+		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
 	};
 
 
