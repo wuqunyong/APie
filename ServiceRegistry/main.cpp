@@ -1,5 +1,3 @@
-#include "apie.h"
-
 #include <cstdlib>
 #include <string>
 #include <iostream>
@@ -7,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include <tuple>
+
+#include "apie.h"
 
 #include "service_init.h"
 

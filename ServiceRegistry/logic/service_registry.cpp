@@ -1,7 +1,5 @@
 #include "service_registry.h"
 
-#include "apie.h"
-
 namespace APie {
 
 void ServiceRegistry::init()
