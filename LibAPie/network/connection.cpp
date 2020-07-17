@@ -180,7 +180,7 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 		return;
 	}
 
-	newMsg->PrintDebugString();
+	//newMsg->PrintDebugString();
 
 	PBRequest *itemObjPtr = new PBRequest;
 	itemObjPtr->type = ConnetionType::CT_SERVER;
