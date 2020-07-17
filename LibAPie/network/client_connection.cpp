@@ -212,7 +212,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 		return;
 	}
 
-	newMsg->PrintDebugString();
+	//newMsg->PrintDebugString();
 
 	PBRequest *itemObjPtr = new PBRequest;
 	itemObjPtr->type = ConnetionType::CT_CLIENT;
