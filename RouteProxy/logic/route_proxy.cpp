@@ -4,6 +4,7 @@ namespace APie {
 
 void RouteProxy::init()
 {
+
 }
 
 }

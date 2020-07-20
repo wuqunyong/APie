@@ -54,6 +54,11 @@ namespace APie
 		void unregisterEndpoint(EndPoint point);
 		std::optional<::service_discovery::EndPointInstance> findEndpoint(EndPoint point);
 
+		std::map<EndPoint, ::service_discovery::EndPointInstance>& getEndpoints();
+		std::vector<EndPoint> getEndpointsByType(uint32_t type);
+
+		void clear();
+
 	private:
 		std::map<EndPoint, ::service_discovery::EndPointInstance> m_endpoints;
 	};

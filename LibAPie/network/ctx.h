@@ -32,6 +32,8 @@ namespace APie
 		uint64_t getNowMilliseconds();
 		uint64_t getNowSeconds();
 
+		uint32_t generateHash(EndPoint point);
+
 		void init(const std::string& configFile);
 		void start();
 		void destroy();

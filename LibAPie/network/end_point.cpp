@@ -88,15 +88,55 @@ void SelfRegistration::setState(State state)
 
 int EndPointMgr::registerEndpoint(::service_discovery::EndPointInstance instance)
 {
+	EndPoint point;
+	point.type = instance.type();
+	point.id = instance.id();
+
+	m_endpoints[point] = instance;
+
 	return 0;
 }
 void EndPointMgr::unregisterEndpoint(EndPoint point)
 {
-
+	auto findIte = m_endpoints.find(point);
+	if (findIte != m_endpoints.end())
+	{
+		m_endpoints.erase(findIte);
+	}
 }
 std::optional<::service_discovery::EndPointInstance> EndPointMgr::findEndpoint(EndPoint point)
 {
+	auto findIte = m_endpoints.find(point);
+	if (findIte != m_endpoints.end())
+	{
+		return std::make_optional(findIte->second);
+	}
+
 	return std::nullopt;
+}
+
+std::map<EndPoint, ::service_discovery::EndPointInstance>& EndPointMgr::getEndpoints()
+{
+	return m_endpoints;
+}
+
+std::vector<EndPoint> EndPointMgr::getEndpointsByType(uint32_t type)
+{
+	std::vector<EndPoint> result;
+	for (const auto& items : m_endpoints)
+	{
+		if (items.first.type == type)
+		{
+			result.push_back(items.first);
+		}
+	}
+
+	return result;
+}
+
+void EndPointMgr::clear()
+{
+	this->m_endpoints.clear();
 }
 
 
@@ -115,6 +155,25 @@ void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::servic
 void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice)
 {
 	std::cout << "iSerialNum:" << iSerialNum << ",notice:" << notice.DebugString() << std::endl;
+
+	switch (notice.mode())
+	{
+	case service_discovery::UM_Full:
+	{
+		EndPointMgrSingleton::get().clear();
+		for (const auto& items : notice.add_instance())
+		{
+			EndPointMgrSingleton::get().registerEndpoint(items);
+		}
+		break;
+	}
+	case service_discovery::UM_Incremental:
+	{
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 }

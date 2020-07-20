@@ -128,6 +128,24 @@ uint64_t Ctx::getNowSeconds()
 	return seconds.count();
 }
 
+uint32_t Ctx::generateHash(EndPoint point)
+{
+	//Time33
+	//uint32_t hashValue = 5381;
+
+	uint32_t hashValue = 0;
+	std::vector<uint32_t> keys;
+	keys.push_back(point.type);
+	keys.push_back(point.id);
+
+	for (const auto& items : keys)
+	{
+		hashValue = ((hashValue << 5) + hashValue) + items;
+	}
+
+	return hashValue;
+}
+
 
 void Ctx::init(const std::string& configFile)
 {
