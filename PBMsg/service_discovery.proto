@@ -9,7 +9,7 @@ enum EndPointType
 	EPT_None = 0;
 	EPT_Service_Registry = 1;
 	EPT_Route_Proxy = 2;
-	EPT_Logic_Scene = 3;
+	EPT_Scene_Server = 3;
 	EPT_Max = 4;
 }
 

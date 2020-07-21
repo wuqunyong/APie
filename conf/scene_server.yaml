@@ -1,0 +1,29 @@
+identify:
+  type: 3
+  id: 1
+  auth: "hello"
+  ip: "127.0.0.1"
+  port: 13007
+  codec_type: 1
+io_threads: 2
+listeners:
+- address:
+    socket_address:
+      address: "127.0.0.1"
+      port_value: 13007
+      type: 1
+service_registry:
+  address: "127.0.0.1"
+  port_value: 5007
+  auth: "hello"
+  type: 1
+log:
+  merge: true
+  level: 0
+  show_pos: false
+  split_size: 128
+  backup: "D:/backup"
+metrics:
+  enable: true
+  ip: "127.0.0.1"
+  udp_port: 8089
