@@ -68,7 +68,6 @@ void SelfRegistration::registerEndpoint()
 	ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
 
 	auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
-		std::cout << "curTime:" << time(NULL) << std::endl;
 		ptrClient->addHeartbeatTimer(3000);
 	};
 	ptrClient->setHeartbeatCb(heartbeatCb);

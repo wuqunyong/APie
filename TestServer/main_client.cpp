@@ -115,7 +115,6 @@ std::tuple<uint32_t, std::string> startHook()
 		ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
 
 		auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
-			//std::cout << "curTime:" << time(NULL) << std::endl;
 			ptrClient->addHeartbeatTimer(30000);
 		};
 		ptrClient->setHeartbeatCb(heartbeatCb);
