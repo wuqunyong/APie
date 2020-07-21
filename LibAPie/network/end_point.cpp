@@ -4,9 +4,13 @@
 #include "client_proxy.h"
 
 #include "../../../PBMsg/opcodes.pb.h"
+#include "../../../PBMsg/pubsub.pb.h"
 
 #include "../api/pb_handler.h"
+#include "../api/pubsub.h"
+
 #include "output_stream.h"
+
 
 namespace APie{
 
@@ -15,8 +19,11 @@ void SelfRegistration::init()
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
 
-
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
+
+
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_PeerClose, SelfRegistration::onPeerClose);
+
 
 	this->registerEndpoint();
 }
@@ -59,7 +66,6 @@ void SelfRegistration::registerEndpoint()
 			request.mutable_instance()->set_port(port);
 			request.mutable_instance()->set_codec_type(codec_type);
 			self->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, request);
-			self->addReconnectTimer(3000);
 
 			ptrSelf->setState(APie::SelfRegistration::Registering);
 		}
@@ -72,6 +78,7 @@ void SelfRegistration::registerEndpoint()
 	};
 	ptrClient->setHeartbeatCb(heartbeatCb);
 	ptrClient->addHeartbeatTimer(1000);
+	ptrClient->addReconnectTimer(1000);
 	ptrClient.reset();
 }
 
@@ -242,6 +249,20 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_ROUTE, response);
 
 	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
+}
+
+void SelfRegistration::onPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& refMsg = dynamic_cast<::pubsub::PEER_CLOSE&>(msg);
+	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
+
+	uint64_t iSerialNum = refMsg.serial_num();
+	auto clientProxy = APie::ClientProxy::findClient(iSerialNum);
+	if (clientProxy)
+	{
+		clientProxy->setHadEstablished(ClientProxy::CONNECT_CLOSE);
+		clientProxy->onConnect(refMsg.result());
+	}
 }
 
 }

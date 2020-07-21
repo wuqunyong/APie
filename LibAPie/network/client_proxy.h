@@ -57,6 +57,7 @@ namespace APie
 		std::string getHosts();
 
 		bool isConnectted();
+		void setHadEstablished(uint32_t value);
 
 
 	private:

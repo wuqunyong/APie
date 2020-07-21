@@ -28,6 +28,7 @@ ClientProxy::ClientProxy()
 
 	auto timerCb = [this](){ 
 		this->reconnect(); 
+		this->addReconnectTimer(3000);
 	};
 	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 
@@ -142,6 +143,11 @@ std::string ClientProxy::getHosts()
 bool ClientProxy::isConnectted()
 {
 	return this->m_hadEstablished == CONNECT_ESTABLISHED;
+}
+
+void ClientProxy::setHadEstablished(uint32_t value)
+{
+	this->m_hadEstablished = value;
 }
 
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)

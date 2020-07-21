@@ -43,6 +43,10 @@ namespace APie
 		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
 		
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
+
+		static void onPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+		
+
 	private:
 		State m_state = { Unregistered };
 		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };

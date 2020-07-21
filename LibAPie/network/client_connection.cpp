@@ -70,12 +70,10 @@ void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 	//printf("close:%s:%d->%s:%d   reason:%s\n",this->sLocalAddress.c_str(),this->iLocalPort,this->sListenAddress.c_str(),this->iListenPort,sInfo.c_str());
 
 	integer_t iSerialNum = this->iSerialNum;
-	APie::Event::DispatcherImpl::delClientConnection(iSerialNum);
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
-	//todo
-
 	//delete this;
+	APie::Event::DispatcherImpl::delClientConnection(iSerialNum);
 }
 
 void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
@@ -271,6 +269,7 @@ void APie::ClientConnection::eventcb(short what)
 		ss << "passive|" << what << "|BEV_EVENT_ERROR" << "|Got an error on the connection|" << strerror(errno);
 		//printf("Got an error on the connection: %s\n",strerror(errno));/*XXX win32*/
 		this->close(ss.str(),BEV_EVENT_ERROR);
+
 	} 
 	else if (what & BEV_EVENT_CONNECTED) 
 	{
