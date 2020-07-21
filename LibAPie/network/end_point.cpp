@@ -4,7 +4,9 @@
 #include "client_proxy.h"
 
 #include "../../../PBMsg/opcodes.pb.h"
+
 #include "../api/pb_handler.h"
+#include "output_stream.h"
 
 namespace APie{
 
@@ -12,6 +14,9 @@ void SelfRegistration::init()
 {
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
+
+
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
 
 	this->registerEndpoint();
 }
@@ -134,9 +139,43 @@ std::vector<EndPoint> EndPointMgr::getEndpointsByType(uint32_t type)
 	return result;
 }
 
+std::vector<EndPoint> EndPointMgr::getEstablishedEndpointsByType(uint32_t type)
+{
+	std::vector<EndPoint> result;
+	for (const auto& items : m_establishedPoints)
+	{
+		if (items.first.type == type)
+		{
+			result.push_back(items.first);
+		}
+	}
+
+	return result;
+}
+
+std::optional<uint64_t> EndPointMgr::getSerialNum(EndPoint point)
+{
+	auto findIte = m_establishedPoints.find(point);
+	if (findIte != m_establishedPoints.end())
+	{
+		return std::make_optional(findIte->second.iSerialNum);
+	}
+
+	return std::nullopt;
+}
+
+void EndPointMgr::addRoute(const EndPoint& point, uint64_t iSerialNum)
+{
+	EstablishedState state;
+	state.iSerialNum = iSerialNum;
+
+	m_establishedPoints[point] = state;
+}
+
 void EndPointMgr::clear()
 {
 	this->m_endpoints.clear();
+	this->m_establishedPoints.clear();
 }
 
 
@@ -174,6 +213,36 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service
 	default:
 		break;
 	}
+}
+
+void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request)
+{
+	EndPoint point;
+	point.type = request.instance().type();
+	point.id = request.instance().id();
+
+	::route_register::MSG_RESP_ADD_ROUTE response;
+
+	auto findOpt = EndPointMgrSingleton::get().findEndpoint(point);
+	if (!findOpt.has_value())
+	{
+		response.set_status_code(opcodes::SC_Route_InvalidPoint);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_ROUTE, response);
+		return;
+	}
+
+	auto auth = findOpt.value().auth();
+	if (!auth.empty() && auth != request.instance().auth())
+	{
+		response.set_status_code(opcodes::SC_Route_AuthError);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_ROUTE, response);
+		return;
+	}
+
+	response.set_status_code(opcodes::SC_Ok);
+	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_ROUTE, response);
+
+	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
 }
 
 }

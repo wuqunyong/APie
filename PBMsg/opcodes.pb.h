@@ -61,15 +61,17 @@ enum OPCODE_ID : int {
   OP_None = 0,
   OP_RPC_REQUEST = 1,
   OP_RPC_RESPONSE = 2,
-  OP_MSG_REQUEST_ADD_INSTANCE = 3,
-  OP_MSG_RESP_ADD_INSTANCE = 4,
-  OP_MSG_NOTICE_INSTANCE = 5,
+  OP_MSG_REQUEST_ADD_INSTANCE = 101,
+  OP_MSG_RESP_ADD_INSTANCE = 102,
+  OP_MSG_NOTICE_INSTANCE = 103,
+  OP_MSG_REQUEST_ADD_ROUTE = 201,
+  OP_MSG_RESP_ADD_ROUTE = 202,
   OPCODE_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   OPCODE_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool OPCODE_ID_IsValid(int value);
 constexpr OPCODE_ID OPCODE_ID_MIN = OP_None;
-constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_NOTICE_INSTANCE;
+constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_RESP_ADD_ROUTE;
 constexpr int OPCODE_ID_ARRAYSIZE = OPCODE_ID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* OPCODE_ID_descriptor();
@@ -89,13 +91,19 @@ inline bool OPCODE_ID_Parse(
 enum StatusCode : int {
   SC_Ok = 0,
   SC_Rpc_Timeout = 1000,
+  SC_Rpc_RouteEmpty = 1001,
+  SC_Rpc_RouteEstablishedEmpty = 1002,
+  SC_RPC_RouteSerialNumInvalid = 1003,
+  SC_RPC_RouteSendError = 1004,
   SC_Discovery_AuthError = 2000,
+  SC_Route_InvalidPoint = 3000,
+  SC_Route_AuthError = 3001,
   StatusCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   StatusCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool StatusCode_IsValid(int value);
 constexpr StatusCode StatusCode_MIN = SC_Ok;
-constexpr StatusCode StatusCode_MAX = SC_Discovery_AuthError;
+constexpr StatusCode StatusCode_MAX = SC_Route_AuthError;
 constexpr int StatusCode_ARRAYSIZE = StatusCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor();

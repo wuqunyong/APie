@@ -81,7 +81,8 @@ enum EndPointType : int {
   EPT_None = 0,
   EPT_Service_Registry = 1,
   EPT_Route_Proxy = 2,
-  EPT_Max = 3,
+  EPT_Logic_Scene = 3,
+  EPT_Max = 4,
   EndPointType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   EndPointType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };

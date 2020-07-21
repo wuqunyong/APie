@@ -2,6 +2,8 @@
 
 #include <chrono>
 
+#include "../../network/logger.h"
+
 namespace APie {
 namespace RPC {
 
@@ -20,8 +22,68 @@ namespace RPC {
 		return true;
 	}
 
+	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
+	{
+		rpc_msg::STATUS status;
+		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::service_discovery::EPT_Route_Proxy);
+		if (routeList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route list empty|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_Rpc_RouteEmpty);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::service_discovery::EPT_Route_Proxy);
+		if (establishedList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route established empty|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_Rpc_RouteEstablishedEmpty);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		EndPoint target;
+		target.type = server.type();
+		target.id = server.id();
+		uint32_t iHash = CtxSingleton::get().generateHash(target);
+
+		uint32_t index = iHash % establishedList.size();
+		EndPoint route = establishedList[index];
+
+		auto serialOpt = EndPointMgrSingleton::get().getSerialNum(route);
+		if (!serialOpt.has_value())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		::rpc_msg::CONTROLLER cntl;
+		cntl.set_serial_num(serialOpt.value());
+		return this->call(cntl, server, opcodes, args, reply);
+	}
+
 	bool RpcClient::call(::rpc_msg::CONTROLLER cntl, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
+		rpc_msg::STATUS status;
+
 		m_iSeqId++;
 
 		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
@@ -55,10 +117,17 @@ namespace RPC {
 		bool bResult = APie::Network::OutputStream::sendMsg(cntl.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
 		if (!bResult)
 		{
-			//TODO
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d|args:%s", 
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_RPC_RouteSendError);
+			if (reply)
+			{
+				reply(status, "");
+			}
 		}
 
-		return true;
+		return bResult;
 	}
 
 	void RpcClient::handleTimeout()

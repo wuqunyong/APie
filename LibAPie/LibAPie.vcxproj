@@ -142,6 +142,7 @@
     <ClInclude Include="..\PBMsg\mysql_proxy_msg.pb.h" />
     <ClInclude Include="..\PBMsg\opcodes.pb.h" />
     <ClInclude Include="..\PBMsg\pubsub.pb.h" />
+    <ClInclude Include="..\PBMsg\route_register.pb.h" />
     <ClInclude Include="..\PBMsg\rpc_msg.pb.h" />
     <ClInclude Include="..\PBMsg\service_discovery.pb.h" />
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\opcodes.pb.cc" />
     <ClCompile Include="..\PBMsg\pubsub.pb.cc" />
+    <ClCompile Include="..\PBMsg\route_register.pb.cc" />
     <ClCompile Include="..\PBMsg\rpc_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\service_discovery.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />

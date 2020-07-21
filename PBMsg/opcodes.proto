@@ -8,9 +8,11 @@ enum OPCODE_ID {
 	OP_None = 0;
 	OP_RPC_REQUEST = 1;
 	OP_RPC_RESPONSE = 2;
-	OP_MSG_REQUEST_ADD_INSTANCE = 3;  //Discovery
-	OP_MSG_RESP_ADD_INSTANCE = 4;
-	OP_MSG_NOTICE_INSTANCE = 5;
+	OP_MSG_REQUEST_ADD_INSTANCE = 101;  //Discovery
+	OP_MSG_RESP_ADD_INSTANCE = 102;
+	OP_MSG_NOTICE_INSTANCE = 103;
+	OP_MSG_REQUEST_ADD_ROUTE = 201;
+    OP_MSG_RESP_ADD_ROUTE = 202;
 }
 
 
@@ -18,6 +20,15 @@ enum StatusCode {
 	SC_Ok = 0;
 
 	SC_Rpc_Timeout = 1000;
+	SC_Rpc_RouteEmpty = 1001;
+	SC_Rpc_RouteEstablishedEmpty = 1002;
+	SC_RPC_RouteSerialNumInvalid = 1003;
+	SC_RPC_RouteSendError = 1004;
+
 
 	SC_Discovery_AuthError = 2000;
+
+
+	SC_Route_InvalidPoint = 3000;
+	SC_Route_AuthError = 3001;
 }

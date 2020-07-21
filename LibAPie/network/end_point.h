@@ -13,6 +13,7 @@
 #include "../singleton/threadsafe_singleton.h"
 
 #include "../../../PBMsg/service_discovery.pb.h"
+#include "../../../PBMsg/route_register.pb.h"
 
 
 
@@ -41,11 +42,18 @@ namespace APie
 		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);
 		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
 		
+		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
 	private:
 		State m_state = { Unregistered };
 		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
 	};
 
+
+	struct EstablishedState
+	{
+		uint64_t iSerialNum = 0;
+		uint32_t iState = 0;
+	};
 
 	class EndPointMgr
 	{
@@ -56,14 +64,18 @@ namespace APie
 
 		std::map<EndPoint, ::service_discovery::EndPointInstance>& getEndpoints();
 		std::vector<EndPoint> getEndpointsByType(uint32_t type);
+		std::vector<EndPoint> getEstablishedEndpointsByType(uint32_t type);
+		std::optional<uint64_t> getSerialNum(EndPoint point);
+
+		void addRoute(const EndPoint& point, uint64_t iSerialNum);
 
 		void clear();
 
 	private:
 		std::map<EndPoint, ::service_discovery::EndPointInstance> m_endpoints;
+		std::map<EndPoint, EstablishedState> m_establishedPoints;
 	};
 
-
-	typedef ThreadSafeSingleton<EndPointMgr> EndPointMgrSingleton;
+	using EndPointMgrSingleton = ThreadSafeSingleton<EndPointMgr>;
 }    
 

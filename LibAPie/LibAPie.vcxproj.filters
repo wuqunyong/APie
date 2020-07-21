@@ -295,6 +295,9 @@
     <ClInclude Include="..\PBMsg\service_discovery.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\route_register.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -463,6 +466,9 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\PBMsg\service_discovery.pb.cc">
+      <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\route_register.pb.cc">
       <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
