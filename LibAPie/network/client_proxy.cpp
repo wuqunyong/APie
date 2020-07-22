@@ -11,6 +11,8 @@
 #include "output_stream.h"
 #include "../event/dispatcher_impl.h"
 
+#include "../../PBMsg/opcodes.pb.h"
+
 using namespace APie;
 
 std::mutex ClientProxy::m_sync;
@@ -28,6 +30,10 @@ ClientProxy::ClientProxy()
 
 	auto timerCb = [this](){ 
 		this->reconnect(); 
+		if (this->isConnectted())
+		{
+			return;
+		}
 		this->addReconnectTimer(3000);
 	};
 	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
@@ -58,7 +64,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 {
 	if (this->m_curSerialNum != 0)
 	{
-		return 1;
+		return opcodes::SC_ClientProxy_SerialNumNotEqualZero;
 	}
 
 	this->m_curSerialNum = generatorId();
@@ -77,12 +83,12 @@ int ClientProxy::reconnect()
 {
 	if (this->m_curSerialNum == 0)
 	{
-		return 10;
+		return opcodes::SC_ClientProxy_SerialNumEqualZero;
 	}
 
 	if (this->m_hadEstablished == CONNECT_ESTABLISHED)
 	{
-		return 11;
+		return opcodes::SC_ClientProxy_Established;
 	}
 
 	this->m_reconnectTimes++;
@@ -150,11 +156,16 @@ void ClientProxy::setHadEstablished(uint32_t value)
 	this->m_hadEstablished = value;
 }
 
+Event::TimerPtr& ClientProxy::reconnectTimer()
+{
+	return m_reconnectTimer;
+}
+
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	if (this->m_hadEstablished != CONNECT_ESTABLISHED)
 	{
-		return -1;
+		return opcodes::SC_ClientProxy_NotEstablished;
 	}
 
 	APie::Network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, APie::ConnetionType::CT_CLIENT);
@@ -213,7 +224,7 @@ int ClientProxy::sendConnect()
 	auto *ptr = new DialParameters;
 	if (NULL == ptr)
 	{
-		return 2;
+		return opcodes::SC_ClientProxy_BadAlloc;
 	}
 	ptr->sIp = this->m_ip;
 	ptr->iPort = this->m_port;
@@ -227,7 +238,7 @@ int ClientProxy::sendConnect()
 	auto ptrIOThread = APie::CtxSingleton::get().chooseIOThread();
 	if (ptrIOThread == NULL)
 	{
-		return 3;
+		return opcodes::SC_ClientProxy_NoIOThread;
 	}
 	ptrIOThread->push(cmd);
 

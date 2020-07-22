@@ -30,13 +30,18 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "NCE\020e\022\034\n\030OP_MSG_RESP_ADD_INSTANCE\020f\022\032\n\026O"
   "P_MSG_NOTICE_INSTANCE\020g\022\035\n\030OP_MSG_REQUES"
   "T_ADD_ROUTE\020\311\001\022\032\n\025OP_MSG_RESP_ADD_ROUTE\020"
-  "\312\001*\370\001\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\023\n\016SC_Rpc_T"
+  "\312\001*\316\003\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\023\n\016SC_Rpc_T"
   "imeout\020\350\007\022\026\n\021SC_Rpc_RouteEmpty\020\351\007\022!\n\034SC_"
   "Rpc_RouteEstablishedEmpty\020\352\007\022!\n\034SC_RPC_R"
   "outeSerialNumInvalid\020\353\007\022\032\n\025SC_RPC_RouteS"
   "endError\020\354\007\022\033\n\026SC_Discovery_AuthError\020\320\017"
   "\022\032\n\025SC_Route_InvalidPoint\020\270\027\022\027\n\022SC_Route"
-  "_AuthError\020\271\027b\006proto3"
+  "_AuthError\020\271\027\022&\n!SC_ClientProxy_SerialNu"
+  "mEqualZero\020\240\037\022)\n$SC_ClientProxy_SerialNu"
+  "mNotEqualZero\020\241\037\022\037\n\032SC_ClientProxy_Estab"
+  "lished\020\242\037\022\"\n\035SC_ClientProxy_NotEstablish"
+  "ed\020\243\037\022\034\n\027SC_ClientProxy_BadAlloc\020\244\037\022\036\n\031S"
+  "C_ClientProxy_NoIOThread\020\245\037b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -45,7 +50,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 501,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 715,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -89,6 +94,12 @@ bool StatusCode_IsValid(int value) {
     case 2000:
     case 3000:
     case 3001:
+    case 4000:
+    case 4001:
+    case 4002:
+    case 4003:
+    case 4004:
+    case 4005:
       return true;
     default:
       return false;

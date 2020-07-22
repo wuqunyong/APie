@@ -31,4 +31,13 @@ enum StatusCode {
 
 	SC_Route_InvalidPoint = 3000;
 	SC_Route_AuthError = 3001;
+
+
+	SC_ClientProxy_SerialNumEqualZero = 4000;
+	SC_ClientProxy_SerialNumNotEqualZero = 4001;
+	SC_ClientProxy_Established = 4002;
+	SC_ClientProxy_NotEstablished = 4003;
+	SC_ClientProxy_BadAlloc = 4004;
+	SC_ClientProxy_NoIOThread = 4005;
+
 }

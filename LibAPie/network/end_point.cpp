@@ -262,6 +262,11 @@ void SelfRegistration::onPeerClose(uint64_t topic, ::google::protobuf::Message& 
 	{
 		clientProxy->setHadEstablished(ClientProxy::CONNECT_CLOSE);
 		clientProxy->onConnect(refMsg.result());
+
+		if (!clientProxy->reconnectTimer()->enabled())
+		{
+			clientProxy->addReconnectTimer(3000);
+		}
 	}
 }
 

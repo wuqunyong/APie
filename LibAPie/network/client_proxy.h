@@ -59,6 +59,7 @@ namespace APie
 		bool isConnectted();
 		void setHadEstablished(uint32_t value);
 
+		Event::TimerPtr& reconnectTimer();
 
 	private:
 		void close();

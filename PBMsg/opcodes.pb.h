@@ -98,12 +98,18 @@ enum StatusCode : int {
   SC_Discovery_AuthError = 2000,
   SC_Route_InvalidPoint = 3000,
   SC_Route_AuthError = 3001,
+  SC_ClientProxy_SerialNumEqualZero = 4000,
+  SC_ClientProxy_SerialNumNotEqualZero = 4001,
+  SC_ClientProxy_Established = 4002,
+  SC_ClientProxy_NotEstablished = 4003,
+  SC_ClientProxy_BadAlloc = 4004,
+  SC_ClientProxy_NoIOThread = 4005,
   StatusCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   StatusCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool StatusCode_IsValid(int value);
 constexpr StatusCode StatusCode_MIN = SC_Ok;
-constexpr StatusCode StatusCode_MAX = SC_Route_AuthError;
+constexpr StatusCode StatusCode_MAX = SC_ClientProxy_NoIOThread;
 constexpr int StatusCode_ARRAYSIZE = StatusCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor();
