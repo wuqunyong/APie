@@ -22,9 +22,9 @@ void RouteClient::init()
 	auto connectCb = [ptrSelf](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
 		if (iResult == 0)
 		{
-			uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-			uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
-			std::string auth = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","auth" }, "");
+			uint32_t type = APie::CtxSingleton::get().identify().type;
+			uint32_t id = APie::CtxSingleton::get().identify().id;
+			std::string auth = APie::CtxSingleton::get().identify().auth;
 
 			::route_register::MSG_REQUEST_ADD_ROUTE request;
 			auto ptrAdd = request.mutable_instance();
