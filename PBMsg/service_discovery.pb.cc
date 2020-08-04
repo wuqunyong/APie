@@ -113,6 +113,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_REQUEST_ADD_INSTANCE, instance_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_REQUEST_ADD_INSTANCE, auth_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESP_ADD_INSTANCE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -132,8 +133,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
   { 11, -1, sizeof(::service_discovery::MSG_REQUEST_ADD_INSTANCE)},
-  { 17, -1, sizeof(::service_discovery::MSG_RESP_ADD_INSTANCE)},
-  { 23, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 18, -1, sizeof(::service_discovery::MSG_RESP_ADD_INSTANCE)},
+  { 24, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -148,21 +149,21 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   "very\"\211\001\n\020EndPointInstance\022-\n\004type\030\001 \001(\0162"
   "\037.service_discovery.EndPointType\022\n\n\002id\030\002"
   " \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port\030\005"
-  " \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"Q\n\030MSG_REQUEST_"
+  " \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"_\n\030MSG_REQUEST_"
   "ADD_INSTANCE\0225\n\010instance\030\001 \001(\0132#.service"
-  "_discovery.EndPointInstance\",\n\025MSG_RESP_"
-  "ADD_INSTANCE\022\023\n\013status_code\030\001 \001(\r\"\371\001\n\023MS"
-  "G_NOTICE_INSTANCE\022+\n\004mode\030\001 \001(\0162\035.servic"
-  "e_discovery.UpdateMode\0229\n\014add_instance\030\002"
-  " \003(\0132#.service_discovery.EndPointInstanc"
-  "e\022<\n\017delete_instance\030\003 \003(\0132#.service_dis"
-  "covery.EndPointInstance\022<\n\017update_instan"
-  "ce\030\004 \003(\0132#.service_discovery.EndPointIns"
-  "tance*n\n\014EndPointType\022\014\n\010EPT_None\020\000\022\030\n\024E"
-  "PT_Service_Registry\020\001\022\023\n\017EPT_Route_Proxy"
-  "\020\002\022\024\n\020EPT_Scene_Server\020\003\022\013\n\007EPT_Max\020\004*:\n"
-  "\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Full\020\001\022\022\n"
-  "\016UM_Incremental\020\002b\006proto3"
+  "_discovery.EndPointInstance\022\014\n\004auth\030\002 \001("
+  "\t\",\n\025MSG_RESP_ADD_INSTANCE\022\023\n\013status_cod"
+  "e\030\001 \001(\r\"\371\001\n\023MSG_NOTICE_INSTANCE\022+\n\004mode\030"
+  "\001 \001(\0162\035.service_discovery.UpdateMode\0229\n\014"
+  "add_instance\030\002 \003(\0132#.service_discovery.E"
+  "ndPointInstance\022<\n\017delete_instance\030\003 \003(\013"
+  "2#.service_discovery.EndPointInstance\022<\n"
+  "\017update_instance\030\004 \003(\0132#.service_discove"
+  "ry.EndPointInstance*n\n\014EndPointType\022\014\n\010E"
+  "PT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022\023\n\017E"
+  "PT_Route_Proxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022\013"
+  "\n\007EPT_Max\020\004*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013"
+  "\n\007UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
 };
@@ -175,7 +176,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 745,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 759,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 4, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -585,6 +586,10 @@ MSG_REQUEST_ADD_INSTANCE::MSG_REQUEST_ADD_INSTANCE(const MSG_REQUEST_ADD_INSTANC
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_auth().empty()) {
+    auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+  }
   if (from._internal_has_instance()) {
     instance_ = new ::service_discovery::EndPointInstance(*from.instance_);
   } else {
@@ -595,6 +600,7 @@ MSG_REQUEST_ADD_INSTANCE::MSG_REQUEST_ADD_INSTANCE(const MSG_REQUEST_ADD_INSTANC
 
 void MSG_REQUEST_ADD_INSTANCE::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_REQUEST_ADD_INSTANCE_service_5fdiscovery_2eproto.base);
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   instance_ = nullptr;
 }
 
@@ -604,6 +610,7 @@ MSG_REQUEST_ADD_INSTANCE::~MSG_REQUEST_ADD_INSTANCE() {
 }
 
 void MSG_REQUEST_ADD_INSTANCE::SharedDtor() {
+  auth_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete instance_;
 }
 
@@ -622,6 +629,7 @@ void MSG_REQUEST_ADD_INSTANCE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == nullptr && instance_ != nullptr) {
     delete instance_;
   }
@@ -640,6 +648,15 @@ const char* MSG_REQUEST_ADD_INSTANCE::_InternalParse(const char* ptr, ::PROTOBUF
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_instance(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string auth = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_auth();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.MSG_REQUEST_ADD_INSTANCE.auth"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -677,6 +694,16 @@ failure:
         1, _Internal::instance(this), target, stream);
   }
 
+  // string auth = 2;
+  if (this->auth().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_auth().data(), static_cast<int>(this->_internal_auth().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "service_discovery.MSG_REQUEST_ADD_INSTANCE.auth");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_auth(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -692,6 +719,13 @@ size_t MSG_REQUEST_ADD_INSTANCE::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string auth = 2;
+  if (this->auth().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_auth());
+  }
 
   // .service_discovery.EndPointInstance instance = 1;
   if (this->has_instance()) {
@@ -731,6 +765,10 @@ void MSG_REQUEST_ADD_INSTANCE::MergeFrom(const MSG_REQUEST_ADD_INSTANCE& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.auth().size() > 0) {
+
+    auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+  }
   if (from.has_instance()) {
     _internal_mutable_instance()->::service_discovery::EndPointInstance::MergeFrom(from._internal_instance());
   }
@@ -757,6 +795,8 @@ bool MSG_REQUEST_ADD_INSTANCE::IsInitialized() const {
 void MSG_REQUEST_ADD_INSTANCE::InternalSwap(MSG_REQUEST_ADD_INSTANCE* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
+  auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(instance_, other->instance_);
 }
 

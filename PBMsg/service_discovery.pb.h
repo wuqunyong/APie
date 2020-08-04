@@ -436,8 +436,25 @@ class MSG_REQUEST_ADD_INSTANCE :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kAuthFieldNumber = 2,
     kInstanceFieldNumber = 1,
   };
+  // string auth = 2;
+  void clear_auth();
+  const std::string& auth() const;
+  void set_auth(const std::string& value);
+  void set_auth(std::string&& value);
+  void set_auth(const char* value);
+  void set_auth(const char* value, size_t size);
+  std::string* mutable_auth();
+  std::string* release_auth();
+  void set_allocated_auth(std::string* auth);
+  private:
+  const std::string& _internal_auth() const;
+  void _internal_set_auth(const std::string& value);
+  std::string* _internal_mutable_auth();
+  public:
+
   // .service_discovery.EndPointInstance instance = 1;
   bool has_instance() const;
   private:
@@ -458,6 +475,7 @@ class MSG_REQUEST_ADD_INSTANCE :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
   ::service_discovery::EndPointInstance* instance_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
@@ -1051,6 +1069,66 @@ inline void MSG_REQUEST_ADD_INSTANCE::set_allocated_instance(::service_discovery
   }
   instance_ = instance;
   // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_ADD_INSTANCE.instance)
+}
+
+// string auth = 2;
+inline void MSG_REQUEST_ADD_INSTANCE::clear_auth() {
+  auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_REQUEST_ADD_INSTANCE::auth() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  return _internal_auth();
+}
+inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const std::string& value) {
+  _internal_set_auth(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+}
+inline std::string* MSG_REQUEST_ADD_INSTANCE::mutable_auth() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  return _internal_mutable_auth();
+}
+inline const std::string& MSG_REQUEST_ADD_INSTANCE::_internal_auth() const {
+  return auth_.GetNoArena();
+}
+inline void MSG_REQUEST_ADD_INSTANCE::_internal_set_auth(const std::string& value) {
+  
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_REQUEST_ADD_INSTANCE::set_auth(std::string&& value) {
+  
+  auth_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+}
+inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+}
+inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const char* value, size_t size) {
+  
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+}
+inline std::string* MSG_REQUEST_ADD_INSTANCE::_internal_mutable_auth() {
+  
+  return auth_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_REQUEST_ADD_INSTANCE::release_auth() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  
+  return auth_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_REQUEST_ADD_INSTANCE::set_allocated_auth(std::string* auth) {
+  if (auth != nullptr) {
+    
+  } else {
+    
+  }
+  auth_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), auth);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
 }
 
 // -------------------------------------------------------------------

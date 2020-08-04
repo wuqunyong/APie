@@ -76,9 +76,18 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 {
 	std::cout << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString() << std::endl;
 
-	ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
-
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
+
+	auto auth = APie::CtxSingleton::get().identify().auth;
+	if (!auth.empty() && auth != request.auth())
+	{
+		response.set_status_code(opcodes::SC_Discovery_AuthError);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_INSTANCE, response);
+		return;
+	}
+
+	ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
+	
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
 	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, response);
 

@@ -104,6 +104,7 @@ EndPoint Ctx::identify()
 	EndPoint point;
 	point.type = this->yamlAs<uint32_t>({ "identify","type" }, 0);
 	point.id = this->yamlAs<uint32_t>({ "identify","id" }, 0);
+	point.auth = this->yamlAs<std::string>({ "identify","auth" }, "");
 	return point;
 }
 

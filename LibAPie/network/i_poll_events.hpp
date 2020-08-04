@@ -29,6 +29,7 @@ namespace APie
 	{
 		uint32_t type = 0;
 		uint32_t id = 0;
+		std::string auth;
 
 		bool operator<(const EndPoint& other) const
 		{

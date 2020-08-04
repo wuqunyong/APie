@@ -43,12 +43,12 @@ void SelfRegistration::registerEndpoint()
 
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","address" }, "");
 	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","port_value" }, 0);
-	std::string auth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
+	std::string registryAuth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","type" }, 0);
 
 	auto ptrSelf = this->shared_from_this();
 	auto ptrClient = APie::ClientProxy::createClientProxy();
-	auto connectCb = [ptrSelf](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+	auto connectCb = [ptrSelf, registryAuth](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
 		if (iResult == 0)
 		{
 			uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
@@ -65,6 +65,7 @@ void SelfRegistration::registerEndpoint()
 			request.mutable_instance()->set_ip(ip);
 			request.mutable_instance()->set_port(port);
 			request.mutable_instance()->set_codec_type(codec_type);
+			request.set_auth(registryAuth);
 			self->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, request);
 
 			ptrSelf->setState(APie::SelfRegistration::Registering);
