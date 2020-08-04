@@ -30,13 +30,13 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "_MSG_NOTICE_INSTANCE\020g\022\035\n\030OP_MSG_REQUEST"
   "_ADD_ROUTE\020\311\001\022\032\n\025OP_MSG_RESP_ADD_ROUTE\020\312"
   "\001\022\023\n\016OP_RPC_REQUEST\020\255\002\022\024\n\017OP_RPC_RESPONS"
-  "E\020\256\002*\316\003\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\023\n\016SC_Rpc"
-  "_Timeout\020\350\007\022\026\n\021SC_Rpc_RouteEmpty\020\351\007\022!\n\034S"
-  "C_Rpc_RouteEstablishedEmpty\020\352\007\022!\n\034SC_RPC"
-  "_RouteSerialNumInvalid\020\353\007\022\032\n\025SC_RPC_Rout"
-  "eSendError\020\354\007\022\033\n\026SC_Discovery_AuthError\020"
-  "\320\017\022\032\n\025SC_Route_InvalidPoint\020\270\027\022\027\n\022SC_Rou"
-  "te_AuthError\020\271\027\022&\n!SC_ClientProxy_Serial"
+  "E\020\256\002*\316\003\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_Dis"
+  "covery_AuthError\020\350\007\022\032\n\025SC_Route_InvalidP"
+  "oint\020\320\017\022\027\n\022SC_Route_AuthError\020\321\017\022\023\n\016SC_R"
+  "pc_Timeout\020\270\027\022\026\n\021SC_Rpc_RouteEmpty\020\271\027\022!\n"
+  "\034SC_Rpc_RouteEstablishedEmpty\020\272\027\022!\n\034SC_R"
+  "PC_RouteSerialNumInvalid\020\273\027\022\032\n\025SC_RPC_Ro"
+  "uteSendError\020\274\027\022&\n!SC_ClientProxy_Serial"
   "NumEqualZero\020\240\037\022)\n$SC_ClientProxy_Serial"
   "NumNotEqualZero\020\241\037\022\037\n\032SC_ClientProxy_Est"
   "ablished\020\242\037\022\"\n\035SC_ClientProxy_NotEstabli"
@@ -87,13 +87,13 @@ bool StatusCode_IsValid(int value) {
   switch (value) {
     case 0:
     case 1000:
-    case 1001:
-    case 1002:
-    case 1003:
-    case 1004:
     case 2000:
+    case 2001:
     case 3000:
     case 3001:
+    case 3002:
+    case 3003:
+    case 3004:
     case 4000:
     case 4001:
     case 4002:

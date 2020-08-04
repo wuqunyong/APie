@@ -19,19 +19,16 @@ enum OPCODE_ID {
 enum StatusCode {
 	SC_Ok = 0;
 
-	SC_Rpc_Timeout = 1000;
-	SC_Rpc_RouteEmpty = 1001;
-	SC_Rpc_RouteEstablishedEmpty = 1002;
-	SC_RPC_RouteSerialNumInvalid = 1003;
-	SC_RPC_RouteSendError = 1004;
+	SC_Discovery_AuthError = 1000;
 
+	SC_Route_InvalidPoint = 2000;
+	SC_Route_AuthError = 2001;
 
-	SC_Discovery_AuthError = 2000;
-
-
-	SC_Route_InvalidPoint = 3000;
-	SC_Route_AuthError = 3001;
-
+	SC_Rpc_Timeout = 3000;
+	SC_Rpc_RouteEmpty = 3001;
+	SC_Rpc_RouteEstablishedEmpty = 3002;
+	SC_RPC_RouteSerialNumInvalid = 3003;
+	SC_RPC_RouteSendError = 3004;
 
 	SC_ClientProxy_SerialNumEqualZero = 4000;
 	SC_ClientProxy_SerialNumNotEqualZero = 4001;
