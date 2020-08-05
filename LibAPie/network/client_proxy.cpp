@@ -27,6 +27,7 @@ ClientProxy::ClientProxy()
 
 	this->m_hadEstablished = CONNECT_CLOSE;
 	this->m_reconnectTimes = 0;
+	this->m_tId = 0;
 
 	auto timerCb = [this](){ 
 		this->reconnect(); 
@@ -77,6 +78,13 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	ClientProxy::registerClient(ptrProxy);
 
 	return this->sendConnect();
+}
+
+void ClientProxy::resetConnect(const std::string& ip, uint16_t port, ProtocolType type)
+{
+	this->m_ip = ip;
+	this->m_port = port;
+	this->m_codecType = type;
 }
 
 int ClientProxy::reconnect()
@@ -219,6 +227,14 @@ void ClientProxy::onPassiveClose(uint32_t iResult, const std::string& sInfo, uin
 	this->close();
 }
 
+void ClientProxy::onActiveClose()
+{
+	this->sendClose();
+
+	this->m_hadEstablished = CONNECT_CLOSE;
+	this->close();
+}
+
 int ClientProxy::sendConnect()
 {
 	auto *ptr = new DialParameters;
@@ -235,11 +251,24 @@ int ClientProxy::sendConnect()
 	cmd.type = Command::dial;
 	cmd.args.dial.ptrData = ptr;
 
-	auto ptrIOThread = APie::CtxSingleton::get().chooseIOThread();
+	if (m_tId == 0)
+	{
+		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
+		if (ptrThread == NULL)
+		{
+			delete ptr;
+			return opcodes::SC_ClientProxy_NoIOThread;
+		}
+		m_tId = ptrThread->getTId();
+	}
+
+	auto ptrIOThread = APie::CtxSingleton::get().getThreadById(m_tId);
 	if (ptrIOThread == NULL)
 	{
+		delete ptr;
 		return opcodes::SC_ClientProxy_NoIOThread;
 	}
+
 	ptrIOThread->push(cmd);
 
 	std::stringstream ss;
@@ -252,9 +281,20 @@ int ClientProxy::sendConnect()
 
 void ClientProxy::sendClose()
 {
-	//APie::ClosePeerNode *itemPtr = new APie::ClosePeerNode;
-	//itemPtr->iSerialNum = this->m_curSerialNum;
-	//APie::IOThread::deliverCloseQueue(itemPtr);
+	APie::ClosePeerNode *ptr = new APie::ClosePeerNode;
+	ptr->iSerialNum = this->m_curSerialNum;
+
+	Command cmd;
+	cmd.type = Command::close_peer_node;
+	cmd.args.close_peer_node.ptrData = ptr;
+
+	auto ptrIOThread = APie::CtxSingleton::get().getThreadById(m_tId);
+	if (ptrIOThread == NULL)
+	{
+		delete ptr;
+		return;
+	}
+	ptrIOThread->push(cmd);
 }
 
 void ClientProxy::close()

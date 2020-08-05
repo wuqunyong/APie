@@ -55,8 +55,9 @@ static void InitDefaultsscc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto() {
   ::route_register::MSG_RESP_ADD_ROUTE::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto}, {
+      &scc_info_RouteInstance_route_5fregister_2eproto.base,}};
 
 static void InitDefaultsscc_info_RouteInstance_route_5fregister_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -96,6 +97,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_route_5fregister_2eproto::offs
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, target_),
+  PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, route_),
   PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, status_code_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -116,8 +119,11 @@ const char descriptor_table_protodef_route_5fregister_2eproto[] PROTOBUF_SECTION
   "\022-\n\004type\030\001 \001(\0162\037.service_discovery.EndPo"
   "intType\022\n\n\002id\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\"H\n\025MSG"
   "_REQUEST_ADD_ROUTE\022/\n\010instance\030\001 \001(\0132\035.r"
-  "oute_register.RouteInstance\")\n\022MSG_RESP_"
-  "ADD_ROUTE\022\023\n\013status_code\030\001 \001(\rb\006proto3"
+  "oute_register.RouteInstance\"\206\001\n\022MSG_RESP"
+  "_ADD_ROUTE\022-\n\006target\030\001 \001(\0132\035.route_regis"
+  "ter.RouteInstance\022,\n\005route\030\002 \001(\0132\035.route"
+  "_register.RouteInstance\022\023\n\013status_code\030\003"
+  " \001(\rb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_route_5fregister_2eproto_deps[1] = {
   &::descriptor_table_service_5fdiscovery_2eproto,
@@ -130,7 +136,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rou
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_route_5fregister_2eproto_once;
 static bool descriptor_table_route_5fregister_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_route_5fregister_2eproto = {
-  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 278,
+  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 372,
   &descriptor_table_route_5fregister_2eproto_once, descriptor_table_route_5fregister_2eproto_sccs, descriptor_table_route_5fregister_2eproto_deps, 3, 1,
   schemas, file_default_instances, TableStruct_route_5fregister_2eproto::offsets,
   file_level_metadata_route_5fregister_2eproto, 3, file_level_enum_descriptors_route_5fregister_2eproto, file_level_service_descriptors_route_5fregister_2eproto,
@@ -604,11 +610,25 @@ void MSG_REQUEST_ADD_ROUTE::InternalSwap(MSG_REQUEST_ADD_ROUTE* other) {
 // ===================================================================
 
 void MSG_RESP_ADD_ROUTE::InitAsDefaultInstance() {
+  ::route_register::_MSG_RESP_ADD_ROUTE_default_instance_._instance.get_mutable()->target_ = const_cast< ::route_register::RouteInstance*>(
+      ::route_register::RouteInstance::internal_default_instance());
+  ::route_register::_MSG_RESP_ADD_ROUTE_default_instance_._instance.get_mutable()->route_ = const_cast< ::route_register::RouteInstance*>(
+      ::route_register::RouteInstance::internal_default_instance());
 }
 class MSG_RESP_ADD_ROUTE::_Internal {
  public:
+  static const ::route_register::RouteInstance& target(const MSG_RESP_ADD_ROUTE* msg);
+  static const ::route_register::RouteInstance& route(const MSG_RESP_ADD_ROUTE* msg);
 };
 
+const ::route_register::RouteInstance&
+MSG_RESP_ADD_ROUTE::_Internal::target(const MSG_RESP_ADD_ROUTE* msg) {
+  return *msg->target_;
+}
+const ::route_register::RouteInstance&
+MSG_RESP_ADD_ROUTE::_Internal::route(const MSG_RESP_ADD_ROUTE* msg) {
+  return *msg->route_;
+}
 MSG_RESP_ADD_ROUTE::MSG_RESP_ADD_ROUTE()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -618,12 +638,25 @@ MSG_RESP_ADD_ROUTE::MSG_RESP_ADD_ROUTE(const MSG_RESP_ADD_ROUTE& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._internal_has_target()) {
+    target_ = new ::route_register::RouteInstance(*from.target_);
+  } else {
+    target_ = nullptr;
+  }
+  if (from._internal_has_route()) {
+    route_ = new ::route_register::RouteInstance(*from.route_);
+  } else {
+    route_ = nullptr;
+  }
   status_code_ = from.status_code_;
   // @@protoc_insertion_point(copy_constructor:route_register.MSG_RESP_ADD_ROUTE)
 }
 
 void MSG_RESP_ADD_ROUTE::SharedCtor() {
-  status_code_ = 0u;
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto.base);
+  ::memset(&target_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&status_code_) -
+      reinterpret_cast<char*>(&target_)) + sizeof(status_code_));
 }
 
 MSG_RESP_ADD_ROUTE::~MSG_RESP_ADD_ROUTE() {
@@ -632,6 +665,8 @@ MSG_RESP_ADD_ROUTE::~MSG_RESP_ADD_ROUTE() {
 }
 
 void MSG_RESP_ADD_ROUTE::SharedDtor() {
+  if (this != internal_default_instance()) delete target_;
+  if (this != internal_default_instance()) delete route_;
 }
 
 void MSG_RESP_ADD_ROUTE::SetCachedSize(int size) const {
@@ -649,6 +684,14 @@ void MSG_RESP_ADD_ROUTE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  if (GetArenaNoVirtual() == nullptr && target_ != nullptr) {
+    delete target_;
+  }
+  target_ = nullptr;
+  if (GetArenaNoVirtual() == nullptr && route_ != nullptr) {
+    delete route_;
+  }
+  route_ = nullptr;
   status_code_ = 0u;
   _internal_metadata_.Clear();
 }
@@ -660,9 +703,23 @@ const char* MSG_RESP_ADD_ROUTE::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // uint32 status_code = 1;
+      // .route_register.RouteInstance target = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_target(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .route_register.RouteInstance route = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_route(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 status_code = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -693,10 +750,26 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 status_code = 1;
+  // .route_register.RouteInstance target = 1;
+  if (this->has_target()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::target(this), target, stream);
+  }
+
+  // .route_register.RouteInstance route = 2;
+  if (this->has_route()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::route(this), target, stream);
+  }
+
+  // uint32 status_code = 3;
   if (this->status_code() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_status_code(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_status_code(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -715,7 +788,21 @@ size_t MSG_RESP_ADD_ROUTE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 status_code = 1;
+  // .route_register.RouteInstance target = 1;
+  if (this->has_target()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *target_);
+  }
+
+  // .route_register.RouteInstance route = 2;
+  if (this->has_route()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *route_);
+  }
+
+  // uint32 status_code = 3;
   if (this->status_code() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
@@ -753,6 +840,12 @@ void MSG_RESP_ADD_ROUTE::MergeFrom(const MSG_RESP_ADD_ROUTE& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.has_target()) {
+    _internal_mutable_target()->::route_register::RouteInstance::MergeFrom(from._internal_target());
+  }
+  if (from.has_route()) {
+    _internal_mutable_route()->::route_register::RouteInstance::MergeFrom(from._internal_route());
+  }
   if (from.status_code() != 0) {
     _internal_set_status_code(from._internal_status_code());
   }
@@ -779,6 +872,8 @@ bool MSG_RESP_ADD_ROUTE::IsInitialized() const {
 void MSG_RESP_ADD_ROUTE::InternalSwap(MSG_RESP_ADD_ROUTE* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(target_, other->target_);
+  swap(route_, other->route_);
   swap(status_code_, other->status_code_);
 }
 

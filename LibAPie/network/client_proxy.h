@@ -33,6 +33,7 @@ namespace APie
 		bool checkTag();
 
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
+		void resetConnect(const std::string& ip, uint16_t port, ProtocolType type);
 		int reconnect();
 
 		void addReconnectTimer(uint64_t interval);
@@ -45,6 +46,7 @@ namespace APie
 		uint32_t getReconnectTimes();
 		void onConnect(uint32_t iResult);
 		void onPassiveClose(uint32_t iResult, const std::string& sInfo, uint32_t iActiveClose);
+		void onActiveClose();
 
 		void onRecvPackage(uint64_t iSerialNum, ::google::protobuf::Message* ptrMsg);
 
@@ -92,6 +94,8 @@ namespace APie
 
 		Event::TimerPtr m_heartbeatTimer;
 		HeartbeatCB m_heartbeatCb;
+
+		uint32_t m_tId;
 
 		static std::mutex m_sync;
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;

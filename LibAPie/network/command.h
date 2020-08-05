@@ -88,6 +88,11 @@ namespace APie
 		std::map<std::string, double> field;
 	};
 
+	struct ClosePeerNode
+	{
+		uint64_t iSerialNum;
+	};
+
 	struct PeerClose
 	{
 		uint64_t iSerialNum;
@@ -136,6 +141,7 @@ namespace APie
 
 			logic_cmd,
 
+			close_peer_node,   //active(LogicThread -> IOThread | close dial)
 			peer_close,        //client: passive, active(IOThread -> LogicThread)
 			server_peer_close, //server: 
 
@@ -187,6 +193,10 @@ namespace APie
 			struct {
 				LogicCmd* ptrData;
 			} logic_cmd;
+
+			struct {
+				ClosePeerNode* ptrData;
+			} close_peer_node;
 
 			struct {
 				PeerClose* ptrData;

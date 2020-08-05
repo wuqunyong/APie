@@ -33,6 +33,7 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "service_discovery.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_pubsub_2eproto
@@ -48,7 +49,7 @@ struct TableStruct_pubsub_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,6 +57,9 @@ struct TableStruct_pubsub_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_pubsub_2eproto;
 namespace pubsub {
+class DISCOVERY_NOTICE;
+class DISCOVERY_NOTICEDefaultTypeInternal;
+extern DISCOVERY_NOTICEDefaultTypeInternal _DISCOVERY_NOTICE_default_instance_;
 class LOGIC_CMD;
 class LOGIC_CMDDefaultTypeInternal;
 extern LOGIC_CMDDefaultTypeInternal _LOGIC_CMD_default_instance_;
@@ -67,6 +71,7 @@ class SERVER_PEER_CLOSEDefaultTypeInternal;
 extern SERVER_PEER_CLOSEDefaultTypeInternal _SERVER_PEER_CLOSE_default_instance_;
 }  // namespace pubsub
 PROTOBUF_NAMESPACE_OPEN
+template<> ::pubsub::DISCOVERY_NOTICE* Arena::CreateMaybeMessage<::pubsub::DISCOVERY_NOTICE>(Arena*);
 template<> ::pubsub::LOGIC_CMD* Arena::CreateMaybeMessage<::pubsub::LOGIC_CMD>(Arena*);
 template<> ::pubsub::PEER_CLOSE* Arena::CreateMaybeMessage<::pubsub::PEER_CLOSE>(Arena*);
 template<> ::pubsub::SERVER_PEER_CLOSE* Arena::CreateMaybeMessage<::pubsub::SERVER_PEER_CLOSE>(Arena*);
@@ -75,15 +80,16 @@ namespace pubsub {
 
 enum PUB_TOPIC : int {
   PT_None = 0,
-  PT_LogicCmd = 1,
-  PT_PeerClose = 2,
-  PT_ServerPeerClose = 3,
+  PT_LogicCmd = 100,
+  PT_PeerClose = 200,
+  PT_ServerPeerClose = 201,
+  PT_DiscoveryNotice = 301,
   PUB_TOPIC_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   PUB_TOPIC_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool PUB_TOPIC_IsValid(int value);
 constexpr PUB_TOPIC PUB_TOPIC_MIN = PT_None;
-constexpr PUB_TOPIC PUB_TOPIC_MAX = PT_ServerPeerClose;
+constexpr PUB_TOPIC PUB_TOPIC_MAX = PT_DiscoveryNotice;
 constexpr int PUB_TOPIC_ARRAYSIZE = PUB_TOPIC_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PUB_TOPIC_descriptor();
@@ -597,6 +603,140 @@ class SERVER_PEER_CLOSE :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_pubsub_2eproto;
 };
+// -------------------------------------------------------------------
+
+class DISCOVERY_NOTICE :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pubsub.DISCOVERY_NOTICE) */ {
+ public:
+  DISCOVERY_NOTICE();
+  virtual ~DISCOVERY_NOTICE();
+
+  DISCOVERY_NOTICE(const DISCOVERY_NOTICE& from);
+  DISCOVERY_NOTICE(DISCOVERY_NOTICE&& from) noexcept
+    : DISCOVERY_NOTICE() {
+    *this = ::std::move(from);
+  }
+
+  inline DISCOVERY_NOTICE& operator=(const DISCOVERY_NOTICE& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DISCOVERY_NOTICE& operator=(DISCOVERY_NOTICE&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const DISCOVERY_NOTICE& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DISCOVERY_NOTICE* internal_default_instance() {
+    return reinterpret_cast<const DISCOVERY_NOTICE*>(
+               &_DISCOVERY_NOTICE_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(DISCOVERY_NOTICE& a, DISCOVERY_NOTICE& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DISCOVERY_NOTICE* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DISCOVERY_NOTICE* New() const final {
+    return CreateMaybeMessage<DISCOVERY_NOTICE>(nullptr);
+  }
+
+  DISCOVERY_NOTICE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<DISCOVERY_NOTICE>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const DISCOVERY_NOTICE& from);
+  void MergeFrom(const DISCOVERY_NOTICE& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DISCOVERY_NOTICE* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pubsub.DISCOVERY_NOTICE";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_pubsub_2eproto);
+    return ::descriptor_table_pubsub_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNoticeFieldNumber = 1,
+  };
+  // .service_discovery.MSG_NOTICE_INSTANCE notice = 1;
+  bool has_notice() const;
+  private:
+  bool _internal_has_notice() const;
+  public:
+  void clear_notice();
+  const ::service_discovery::MSG_NOTICE_INSTANCE& notice() const;
+  ::service_discovery::MSG_NOTICE_INSTANCE* release_notice();
+  ::service_discovery::MSG_NOTICE_INSTANCE* mutable_notice();
+  void set_allocated_notice(::service_discovery::MSG_NOTICE_INSTANCE* notice);
+  private:
+  const ::service_discovery::MSG_NOTICE_INSTANCE& _internal_notice() const;
+  ::service_discovery::MSG_NOTICE_INSTANCE* _internal_mutable_notice();
+  public:
+
+  // @@protoc_insertion_point(class_scope:pubsub.DISCOVERY_NOTICE)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::service_discovery::MSG_NOTICE_INSTANCE* notice_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_pubsub_2eproto;
+};
 // ===================================================================
 
 
@@ -990,9 +1130,69 @@ inline void SERVER_PEER_CLOSE::set_active(::PROTOBUF_NAMESPACE_ID::uint32 value)
   // @@protoc_insertion_point(field_set:pubsub.SERVER_PEER_CLOSE.active)
 }
 
+// -------------------------------------------------------------------
+
+// DISCOVERY_NOTICE
+
+// .service_discovery.MSG_NOTICE_INSTANCE notice = 1;
+inline bool DISCOVERY_NOTICE::_internal_has_notice() const {
+  return this != internal_default_instance() && notice_ != nullptr;
+}
+inline bool DISCOVERY_NOTICE::has_notice() const {
+  return _internal_has_notice();
+}
+inline const ::service_discovery::MSG_NOTICE_INSTANCE& DISCOVERY_NOTICE::_internal_notice() const {
+  const ::service_discovery::MSG_NOTICE_INSTANCE* p = notice_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::service_discovery::MSG_NOTICE_INSTANCE*>(
+      &::service_discovery::_MSG_NOTICE_INSTANCE_default_instance_);
+}
+inline const ::service_discovery::MSG_NOTICE_INSTANCE& DISCOVERY_NOTICE::notice() const {
+  // @@protoc_insertion_point(field_get:pubsub.DISCOVERY_NOTICE.notice)
+  return _internal_notice();
+}
+inline ::service_discovery::MSG_NOTICE_INSTANCE* DISCOVERY_NOTICE::release_notice() {
+  // @@protoc_insertion_point(field_release:pubsub.DISCOVERY_NOTICE.notice)
+  
+  ::service_discovery::MSG_NOTICE_INSTANCE* temp = notice_;
+  notice_ = nullptr;
+  return temp;
+}
+inline ::service_discovery::MSG_NOTICE_INSTANCE* DISCOVERY_NOTICE::_internal_mutable_notice() {
+  
+  if (notice_ == nullptr) {
+    auto* p = CreateMaybeMessage<::service_discovery::MSG_NOTICE_INSTANCE>(GetArenaNoVirtual());
+    notice_ = p;
+  }
+  return notice_;
+}
+inline ::service_discovery::MSG_NOTICE_INSTANCE* DISCOVERY_NOTICE::mutable_notice() {
+  // @@protoc_insertion_point(field_mutable:pubsub.DISCOVERY_NOTICE.notice)
+  return _internal_mutable_notice();
+}
+inline void DISCOVERY_NOTICE::set_allocated_notice(::service_discovery::MSG_NOTICE_INSTANCE* notice) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(notice_);
+  }
+  if (notice) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      notice = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, notice, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  notice_ = notice;
+  // @@protoc_insertion_point(field_set_allocated:pubsub.DISCOVERY_NOTICE.notice)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

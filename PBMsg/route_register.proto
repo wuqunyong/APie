@@ -20,5 +20,7 @@ message MSG_REQUEST_ADD_ROUTE
 
 message MSG_RESP_ADD_ROUTE
 {
-	uint32 status_code = 1;
+	RouteInstance target = 1;
+	RouteInstance route = 2;
+	uint32 status_code = 3;
 }

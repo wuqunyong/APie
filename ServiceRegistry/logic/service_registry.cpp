@@ -42,8 +42,9 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 	}
 }
 
-void ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
+bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 {
+	bool bResult = false;
 	auto findIte = m_registered.find(iSerialNum);
 	if (findIte != m_registered.end())
 	{
@@ -53,7 +54,11 @@ void ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 
 		m_pointMap.erase(point);
 		m_registered.erase(findIte);
+
+		bResult = true;
 	}
+
+	return bResult;
 }
 
 void ServiceRegistry::broadcast()
@@ -100,9 +105,11 @@ void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Mess
 	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
 
 	uint64_t iSerialNum = refMsg.serial_num();
-	ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
-
-	ServiceRegistrySingleton::get().broadcast();
+	bool bChanged = ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
+	if (bChanged)
+	{
+		ServiceRegistrySingleton::get().broadcast();
+	}
 }
 
 }

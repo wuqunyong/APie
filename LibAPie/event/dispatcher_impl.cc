@@ -267,6 +267,11 @@ void DispatcherImpl::handleCommand()
 			this->handleLogicCmd(cmd.args.logic_cmd.ptrData);
 			break;
 		}
+		case Command::close_peer_node:
+		{
+			this->handleClosePeerNode(cmd.args.close_peer_node.ptrData);
+			break;
+		}
 		case Command::peer_close:
 		{
 			this->handlePeerClose(cmd.args.peer_close.ptrData);
@@ -533,6 +538,11 @@ void DispatcherImpl::handlePeerClose(PeerClose* ptrCmd)
 	msg.set_active(ptrCmd->iActive);
 
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_PeerClose, msg);
+}
+
+void DispatcherImpl::handleClosePeerNode(ClosePeerNode* ptrCmd)
+{
+	APie::Event::DispatcherImpl::delClientConnection(ptrCmd->iSerialNum);
 }
 
 void DispatcherImpl::handleServerPeerClose(ServerPeerClose* ptrCmd)

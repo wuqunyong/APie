@@ -472,9 +472,41 @@ class MSG_RESP_ADD_ROUTE :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kStatusCodeFieldNumber = 1,
+    kTargetFieldNumber = 1,
+    kRouteFieldNumber = 2,
+    kStatusCodeFieldNumber = 3,
   };
-  // uint32 status_code = 1;
+  // .route_register.RouteInstance target = 1;
+  bool has_target() const;
+  private:
+  bool _internal_has_target() const;
+  public:
+  void clear_target();
+  const ::route_register::RouteInstance& target() const;
+  ::route_register::RouteInstance* release_target();
+  ::route_register::RouteInstance* mutable_target();
+  void set_allocated_target(::route_register::RouteInstance* target);
+  private:
+  const ::route_register::RouteInstance& _internal_target() const;
+  ::route_register::RouteInstance* _internal_mutable_target();
+  public:
+
+  // .route_register.RouteInstance route = 2;
+  bool has_route() const;
+  private:
+  bool _internal_has_route() const;
+  public:
+  void clear_route();
+  const ::route_register::RouteInstance& route() const;
+  ::route_register::RouteInstance* release_route();
+  ::route_register::RouteInstance* mutable_route();
+  void set_allocated_route(::route_register::RouteInstance* route);
+  private:
+  const ::route_register::RouteInstance& _internal_route() const;
+  ::route_register::RouteInstance* _internal_mutable_route();
+  public:
+
+  // uint32 status_code = 3;
   void clear_status_code();
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code() const;
   void set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -488,6 +520,8 @@ class MSG_RESP_ADD_ROUTE :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::route_register::RouteInstance* target_;
+  ::route_register::RouteInstance* route_;
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_route_5fregister_2eproto;
@@ -671,7 +705,127 @@ inline void MSG_REQUEST_ADD_ROUTE::set_allocated_instance(::route_register::Rout
 
 // MSG_RESP_ADD_ROUTE
 
-// uint32 status_code = 1;
+// .route_register.RouteInstance target = 1;
+inline bool MSG_RESP_ADD_ROUTE::_internal_has_target() const {
+  return this != internal_default_instance() && target_ != nullptr;
+}
+inline bool MSG_RESP_ADD_ROUTE::has_target() const {
+  return _internal_has_target();
+}
+inline void MSG_RESP_ADD_ROUTE::clear_target() {
+  if (GetArenaNoVirtual() == nullptr && target_ != nullptr) {
+    delete target_;
+  }
+  target_ = nullptr;
+}
+inline const ::route_register::RouteInstance& MSG_RESP_ADD_ROUTE::_internal_target() const {
+  const ::route_register::RouteInstance* p = target_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::route_register::RouteInstance*>(
+      &::route_register::_RouteInstance_default_instance_);
+}
+inline const ::route_register::RouteInstance& MSG_RESP_ADD_ROUTE::target() const {
+  // @@protoc_insertion_point(field_get:route_register.MSG_RESP_ADD_ROUTE.target)
+  return _internal_target();
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::release_target() {
+  // @@protoc_insertion_point(field_release:route_register.MSG_RESP_ADD_ROUTE.target)
+  
+  ::route_register::RouteInstance* temp = target_;
+  target_ = nullptr;
+  return temp;
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::_internal_mutable_target() {
+  
+  if (target_ == nullptr) {
+    auto* p = CreateMaybeMessage<::route_register::RouteInstance>(GetArenaNoVirtual());
+    target_ = p;
+  }
+  return target_;
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::mutable_target() {
+  // @@protoc_insertion_point(field_mutable:route_register.MSG_RESP_ADD_ROUTE.target)
+  return _internal_mutable_target();
+}
+inline void MSG_RESP_ADD_ROUTE::set_allocated_target(::route_register::RouteInstance* target) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete target_;
+  }
+  if (target) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, target, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  target_ = target;
+  // @@protoc_insertion_point(field_set_allocated:route_register.MSG_RESP_ADD_ROUTE.target)
+}
+
+// .route_register.RouteInstance route = 2;
+inline bool MSG_RESP_ADD_ROUTE::_internal_has_route() const {
+  return this != internal_default_instance() && route_ != nullptr;
+}
+inline bool MSG_RESP_ADD_ROUTE::has_route() const {
+  return _internal_has_route();
+}
+inline void MSG_RESP_ADD_ROUTE::clear_route() {
+  if (GetArenaNoVirtual() == nullptr && route_ != nullptr) {
+    delete route_;
+  }
+  route_ = nullptr;
+}
+inline const ::route_register::RouteInstance& MSG_RESP_ADD_ROUTE::_internal_route() const {
+  const ::route_register::RouteInstance* p = route_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::route_register::RouteInstance*>(
+      &::route_register::_RouteInstance_default_instance_);
+}
+inline const ::route_register::RouteInstance& MSG_RESP_ADD_ROUTE::route() const {
+  // @@protoc_insertion_point(field_get:route_register.MSG_RESP_ADD_ROUTE.route)
+  return _internal_route();
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::release_route() {
+  // @@protoc_insertion_point(field_release:route_register.MSG_RESP_ADD_ROUTE.route)
+  
+  ::route_register::RouteInstance* temp = route_;
+  route_ = nullptr;
+  return temp;
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::_internal_mutable_route() {
+  
+  if (route_ == nullptr) {
+    auto* p = CreateMaybeMessage<::route_register::RouteInstance>(GetArenaNoVirtual());
+    route_ = p;
+  }
+  return route_;
+}
+inline ::route_register::RouteInstance* MSG_RESP_ADD_ROUTE::mutable_route() {
+  // @@protoc_insertion_point(field_mutable:route_register.MSG_RESP_ADD_ROUTE.route)
+  return _internal_mutable_route();
+}
+inline void MSG_RESP_ADD_ROUTE::set_allocated_route(::route_register::RouteInstance* route) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete route_;
+  }
+  if (route) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      route = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, route, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  route_ = route;
+  // @@protoc_insertion_point(field_set_allocated:route_register.MSG_RESP_ADD_ROUTE.route)
+}
+
+// uint32 status_code = 3;
 inline void MSG_RESP_ADD_ROUTE::clear_status_code() {
   status_code_ = 0u;
 }

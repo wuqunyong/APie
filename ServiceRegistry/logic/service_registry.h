@@ -34,7 +34,7 @@ namespace APie {
 
 	public:
 		void updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
-		void deleteBySerialNum(uint64_t iSerialNum);
+		bool deleteBySerialNum(uint64_t iSerialNum);
 
 		void broadcast();
 

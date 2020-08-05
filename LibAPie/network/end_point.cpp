@@ -220,6 +220,10 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service
 	default:
 		break;
 	}
+
+	::pubsub::DISCOVERY_NOTICE msg;
+	*msg.mutable_notice() = notice;
+	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_DiscoveryNotice, msg);
 }
 
 void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request)
@@ -228,7 +232,13 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	point.type = request.instance().type();
 	point.id = request.instance().id();
 
+	auto identify = ::APie::CtxSingleton::get().identify();
+
 	::route_register::MSG_RESP_ADD_ROUTE response;
+	response.mutable_target()->set_type(static_cast<::service_discovery::EndPointType>(identify.type));
+	response.mutable_target()->set_id(identify.id);
+	response.mutable_target()->set_auth(identify.auth);
+	*response.mutable_route() = request.instance();
 
 	auto findOpt = EndPointMgrSingleton::get().findEndpoint(point);
 	if (!findOpt.has_value())
