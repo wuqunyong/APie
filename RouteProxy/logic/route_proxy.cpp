@@ -54,10 +54,6 @@ void RouteClient::init()
 			return true;
 		}
 
-		if (weakPtr.expired())
-		{
-			return false;
-		}
 		auto sharedPtr = weakPtr.lock();
 		if (!sharedPtr)
 		{
