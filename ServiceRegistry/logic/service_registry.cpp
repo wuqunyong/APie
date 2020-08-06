@@ -13,6 +13,7 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 {
 	auto curTime = APie::CtxSingleton::get().getNowSeconds();
 
+	//del
 	EndPoint point;
 	point.type = instance.type();
 	point.id = instance.id();
@@ -22,9 +23,9 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 		m_registered.erase(findPoint->second);
 		m_pointMap.erase(findPoint);
 	}
+
+	//add
 	m_pointMap[point] = iSerialNum;
-
-
 	auto findIte = m_registered.find(iSerialNum);
 	if (findIte == m_registered.end())
 	{

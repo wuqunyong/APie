@@ -2,24 +2,42 @@
 
 namespace APie {
 
+std::atomic<uint32_t> RouteClient::s_id(0);
+
 RouteClient::RouteClient(::service_discovery::EndPointInstance instance)
 {
 	m_point.type = instance.type();
 	m_point.id = instance.id();
 
 	m_instance = instance;
+
+	s_id++;
+	m_id = s_id;
+
+	std::stringstream ss;
+	ss << "construcotr|m_id:" << m_id;
+	ASYNC_PIE_LOG("RouteClient", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+}
+
+RouteClient::~RouteClient()
+{
+	std::stringstream ss;
+	ss << "destructor|m_id:" << m_id;
+	ASYNC_PIE_LOG("RouteClient", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 }
 
 void RouteClient::init()
 {
 	auto ptrSelf = this->shared_from_this();
 
+	std::weak_ptr<RouteClient> weakPtr(ptrSelf);
+
 	auto ip = m_instance.ip();
 	auto port = m_instance.port();
 	auto type = m_instance.codec_type();
 
 	m_clientProxy = APie::ClientProxy::createClientProxy();
-	auto connectCb = [ptrSelf](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+	auto connectCb = [weakPtr](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
 		if (iResult == 0)
 		{
 			uint32_t type = APie::CtxSingleton::get().identify().type;
@@ -36,7 +54,17 @@ void RouteClient::init()
 			return true;
 		}
 
-		auto instance = ptrSelf->getInstance();
+		if (weakPtr.expired())
+		{
+			return false;
+		}
+		auto sharedPtr = weakPtr.lock();
+		if (!sharedPtr)
+		{
+			return false;
+		}
+
+		auto instance = sharedPtr->getInstance();
 		auto ip = instance.ip();
 		auto port = instance.port();
 		auto type = instance.codec_type();
@@ -52,6 +80,11 @@ void RouteClient::init()
 	m_clientProxy->setHeartbeatCb(heartbeatCb);
 	m_clientProxy->addHeartbeatTimer(1000);
 	m_clientProxy->addReconnectTimer(1000);
+
+
+	std::stringstream ss;
+	ss << "init|m_id:" << m_id << "|iSerialNum:" << m_clientProxy->getSerialNum() << "|use_count:" << ptrSelf.use_count();
+	ASYNC_PIE_LOG("RouteClient", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 }
 
 void RouteClient::close()

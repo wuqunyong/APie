@@ -360,6 +360,23 @@ void DispatcherImpl::delConnection(uint64_t iSerialNum)
 
 void DispatcherImpl::addClientConnection(std::shared_ptr<ClientConnection> ptrConnection)
 {
+	std::shared_ptr<ClientConnection> delClient = nullptr;
+	
+	{
+		std::lock_guard<std::mutex> guard(connecton_sync_);
+		auto iSerialNum = ptrConnection->getSerialNum();
+		auto findIte = client_connection_map_.find(iSerialNum);
+		if (findIte != client_connection_map_.end())
+		{
+			delClient = findIte->second;
+		}
+	}
+
+	if (delClient)
+	{
+		delClient->close("duplicate add", 0, 0);
+	}
+
 	std::lock_guard<std::mutex> guard(connecton_sync_);
 	client_connection_map_[ptrConnection->getSerialNum()] = ptrConnection;
 }

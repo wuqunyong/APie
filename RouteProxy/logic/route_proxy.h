@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <tuple>
+#include <atomic>
 
 #include "apie.h"
 #include "../../PBMsg/service_discovery.pb.h"
@@ -18,12 +19,13 @@ namespace APie {
 	{		
 	public:
 		RouteClient(::service_discovery::EndPointInstance instance);
+		~RouteClient();
 
 		enum class State
 		{
 			Unregistered = 0,
 			Registering,
-			registered,
+			Registered,
 		};
 
 		void init();
@@ -33,9 +35,12 @@ namespace APie {
 		std::shared_ptr<ClientProxy> clientProxy();
 
 	private:
+		uint32_t m_id;
 		EndPoint m_point;
 		::service_discovery::EndPointInstance m_instance;
 		std::shared_ptr<ClientProxy> m_clientProxy;
+
+		static std::atomic<uint32_t> s_id;
 	};
 
 	class RouteProxy
