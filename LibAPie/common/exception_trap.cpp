@@ -313,7 +313,7 @@ namespace APie {
 #else
 
 namespace APie {
-	ExceptionTrap()
+	void ExceptionTrap()
 	{
 	}
 }

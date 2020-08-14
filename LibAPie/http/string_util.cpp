@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <algorithm>
 #include <functional>
+#include <cstring>
 
 #include <openssl/sha.h>
 #include <openssl/md5.h>
