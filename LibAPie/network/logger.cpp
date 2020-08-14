@@ -189,7 +189,7 @@ LogFile* openFile(std::string file, int cycle)
 	sFile.append("/");
 	sFile.append(file);
 #else
-	sFile = "/usr/local/poseidon-mgr/logs/";
+	sFile = "/usr/local/apie/logs/";
 	//bool bMerge = APie::Ctx::getConfigReader()->GetBoolean("log", "merge", true);
 	if (true)
 	{

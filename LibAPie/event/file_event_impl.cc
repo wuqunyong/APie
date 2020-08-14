@@ -31,20 +31,25 @@ void FileEventImpl::activate(uint32_t events) {
     libevent_events |= EV_WRITE;
   }
 
-  if (events & FileReadyType::Closed) {
-    libevent_events |= EV_CLOSED;
-  }
+  //if (events & FileReadyType::Closed) {
+  //  libevent_events |= EV_CLOSED;
+  //}
 
   assert(libevent_events);
   event_active(&raw_event_, libevent_events, 0);
 }
 
 void FileEventImpl::assignEvents(uint32_t events) {
+
+	//auto eventValue = EV_PERSIST | (trigger_ == FileTriggerType::Level ? 0 : EV_ET) |
+	//	(events & FileReadyType::Read ? EV_READ : 0) |
+	//	(events & FileReadyType::Write ? EV_WRITE : 0) |
+	//	(events & FileReadyType::Write ? EV_CLOSED : 0);
+
   event_assign(&raw_event_, base_, fd_,
                EV_PERSIST | (trigger_ == FileTriggerType::Level ? 0 : EV_ET) |
                    (events & FileReadyType::Read ? EV_READ : 0) |
-                   (events & FileReadyType::Write ? EV_WRITE : 0) |
-                   (events & FileReadyType::Closed ? EV_CLOSED : 0),
+                   (events & FileReadyType::Write ? EV_WRITE : 0),
                [](evutil_socket_t, short what, void* arg) -> void {
                  FileEventImpl* event = static_cast<FileEventImpl*>(arg);
                  uint32_t events = 0;
@@ -56,9 +61,9 @@ void FileEventImpl::assignEvents(uint32_t events) {
                    events |= FileReadyType::Write;
                  }
 
-                 if (what & EV_CLOSED) {
-                   events |= FileReadyType::Closed;
-                 }
+                 //if (what & EV_CLOSED) {
+                 //  events |= FileReadyType::Closed;
+                 //}
 
 				 assert(events);
                  event->cb_(events);
