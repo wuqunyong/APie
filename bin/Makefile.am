@@ -4,22 +4,22 @@ name=@PACKAGE_NAME@
 
 INCLUDES = -I /usr/local/include/ \
 			-I /usr/include/mysql/ \
+			-I /root/yaml-cpp-master/include \
+			-I /root/protobuf-3.11.4/src \
 			-I $(top_srcdir)/ThirdParty/http-parser \
 			-I $(top_srcdir)/ThirdParty/influxdb-cpp \
-			-I /root/yaml-cpp-master/include \
-			-I /root/APie/PBMsg \
-			-I /root/protobuf-3.11.4/src \
+			-I $(top_srcdir)/PBMsg \
 			-I $(top_srcdir)/LibAPie
 			
 
 apie_sources = \
-        /root/APie/PBMsg/login_msg.pb.cc \
-        /root/APie/PBMsg/mysql_proxy_msg.pb.cc \
-        /root/APie/PBMsg/opcodes.pb.cc \
-        /root/APie/PBMsg/pubsub.pb.cc \
-        /root/APie/PBMsg/route_register.pb.cc \
-        /root/APie/PBMsg/rpc_msg.pb.cc \
-        /root/APie/PBMsg/service_discovery.pb.cc \
+	$(top_srcdir)/PBMsg/login_msg.pb.cc \
+	$(top_srcdir)/PBMsg/mysql_proxy_msg.pb.cc \
+	$(top_srcdir)/PBMsg/opcodes.pb.cc \
+	$(top_srcdir)/PBMsg/pubsub.pb.cc \
+	$(top_srcdir)/PBMsg/route_register.pb.cc \
+	$(top_srcdir)/PBMsg/rpc_msg.pb.cc \
+	$(top_srcdir)/PBMsg/service_discovery.pb.cc \
 	$(top_srcdir)/ThirdParty/http-parser/http_parser.c  \
 	$(top_srcdir)/LibAPie/api/api_impl.cc  \
 	$(top_srcdir)/LibAPie/api/hook.cc  \
@@ -79,7 +79,7 @@ service_registry_sources = \
 lib_LTLIBRARIES = libapie.la
 libapie_la_SOURCES = $(apie_sources)
 libapie_la_LIBADD = -lmysqlclient
-libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/libs -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
 
 bin_PROGRAMS = service_registry
