@@ -71,6 +71,8 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/serialization/protocol_head.cpp
 
 
+APIE_MODULE_LDFLAGS = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+
 service_registry_sources = \
 	$(top_srcdir)/ServiceRegistry/main.cpp \
 	$(top_srcdir)/ServiceRegistry/service_init.cpp \
@@ -85,4 +87,4 @@ libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/lib -levent 
 bin_PROGRAMS = service_registry
 service_registry_SOURCES = $(service_registry_sources)
 service_registry_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-service_registry_LDFLAGS = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+service_registry_LDFLAGS = $(APIE_MODULE_LDFLAGS)
