@@ -4,6 +4,8 @@
 #include <array>
 #include <cstdint>
 #include <string>
+#include <memory>
+#include <cstring>
 
 #include "../network/address.h"
 #include "../network/windows_platform.h"

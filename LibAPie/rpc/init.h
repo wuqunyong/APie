@@ -7,8 +7,8 @@
 #include "../network/address.h"
 #include "../network/windows_platform.h"
 
-#include "../../../PBMsg/rpc_msg.pb.h"
-#include "../../../PBMsg/opcodes.pb.h"
+#include "../../PBMsg/rpc_msg.pb.h"
+#include "../../PBMsg/opcodes.pb.h"
 
 #include <event2/util.h>
 

@@ -303,15 +303,19 @@ LONG WINAPI ExceptionFilter(EXCEPTION_POINTERS* p)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
-void APie::ExceptionTrap()
-{
-	SetUnhandledExceptionFilter(ExceptionFilter);
+namespace APie {
+	void ExceptionTrap()
+	{
+		SetUnhandledExceptionFilter(ExceptionFilter);
+	}
 }
 
 #else
 
-void APie::ExceptionTrap()
-{
+namespace APie {
+	ExceptionTrap()
+	{
+	}
 }
 
 #endif

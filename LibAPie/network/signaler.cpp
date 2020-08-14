@@ -21,6 +21,7 @@
 #include "signaler.h"
 
 #include <assert.h>
+#include <cerrno>
 
 #if defined WIN32
 #include "../network/windows_platform.h"
@@ -33,6 +34,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #endif
+
+#include "logger.h"
 
 APie::Signaler::Signaler()
 {

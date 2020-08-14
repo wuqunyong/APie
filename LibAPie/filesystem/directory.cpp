@@ -11,6 +11,7 @@
 #include <errno.h>
 #endif
 #include <assert.h>
+#include <cstring>
 
 #ifdef WIN32
 #define ACCESS _access

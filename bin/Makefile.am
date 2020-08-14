@@ -1,27 +1,32 @@
-AM_CXXFLAGS = -Wall -std=c++11
+AM_CXXFLAGS = -Wall -std=c++17
 
 name=@PACKAGE_NAME@
 
 INCLUDES = -I /usr/local/include/ \
 			-I /usr/include/mysql/ \
-			-I /opt/libevent-2.0.22/include \
 			-I $(top_srcdir)/ThirdParty/http-parser \
-			-I $(top_srcdir)/ThirdParty/influxdb-cpp
+			-I $(top_srcdir)/ThirdParty/influxdb-cpp \
+			-I /root/yaml-cpp-master/include \
+			-I /root/APie/PBMsg \
+			-I /root/protobuf-3.11.4/src \
+			-I $(top_srcdir)/LibAPie
 			
 
 apie_sources = \
-	$(top_srcdir)/LibAPie/ThirdParty/http-parser/http_parser.c  \
-	$(top_srcdir)/LibAPie/ThirdParty/inih/ini.c  \
-	$(top_srcdir)/LibAPie/ThirdParty/inih/cpp/INIReader.cpp  \
-	$(top_srcdir)/LibAPie/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_writer.cpp  \
-	$(top_srcdir)/LibAPie/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_reader.cpp  \
-	$(top_srcdir)/LibAPie/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_value.cpp  \
+        /root/APie/PBMsg/login_msg.pb.cc \
+        /root/APie/PBMsg/mysql_proxy_msg.pb.cc \
+        /root/APie/PBMsg/opcodes.pb.cc \
+        /root/APie/PBMsg/pubsub.pb.cc \
+        /root/APie/PBMsg/route_register.pb.cc \
+        /root/APie/PBMsg/rpc_msg.pb.cc \
+        /root/APie/PBMsg/service_discovery.pb.cc \
+	$(top_srcdir)/ThirdParty/http-parser/http_parser.c  \
 	$(top_srcdir)/LibAPie/api/api_impl.cc  \
 	$(top_srcdir)/LibAPie/api/hook.cc  \
 	$(top_srcdir)/LibAPie/api/pb_handler.cc  \
 	$(top_srcdir)/LibAPie/api/pubsub.cc  \
 	$(top_srcdir)/LibAPie/common/exception_trap.cpp  \
-	$(top_srcdir)/LibAPie/common/file.cpp  \
+	$(top_srcdir)/LibAPie/common/file.cc  \
 	$(top_srcdir)/LibAPie/common/string_utils.cpp  \
 	$(top_srcdir)/LibAPie/common/utility.cc  \
 	$(top_srcdir)/LibAPie/crypto/crypto_utility.cc  \
@@ -66,8 +71,18 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/serialization/protocol_head.cpp
 
 
+service_registry_sources = \
+	$(top_srcdir)/ServiceRegistry/main.cpp \
+	$(top_srcdir)/ServiceRegistry/service_init.cpp \
+	$(top_srcdir)/ServiceRegistry/logic/service_registry.cpp 
 
-lib_LIBRARIES = libapie.a
-apie_a_SOURCES = $(apie_sources)
-apie_a_LIBADD = /usr/lib64/mysql/libmysqlclient.a
+lib_LTLIBRARIES = libapie.la
+libapie_la_SOURCES = $(apie_sources)
+libapie_la_LIBADD = -lmysqlclient
+libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/libs -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
+
+bin_PROGRAMS = service_registry
+service_registry_SOURCES = $(service_registry_sources)
+service_registry_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+service_registry_LDFLAGS = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl

@@ -12,8 +12,8 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
-#include "../../../PBMsg/service_discovery.pb.h"
-#include "../../../PBMsg/route_register.pb.h"
+#include "../../PBMsg/service_discovery.pb.h"
+#include "../../PBMsg/route_register.pb.h"
 
 
 

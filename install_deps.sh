@@ -25,3 +25,12 @@ make
 
 make test
 make install
+
+
+
+1. 升级GCC
+
+yum install centos-release-scl -y
+yum install devtoolset-8 -y
+scl enable devtoolset-8 bash
+gcc --version
