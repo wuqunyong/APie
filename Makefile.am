@@ -23,13 +23,15 @@ $(name).spec : $(name).spec.in FORCE
 	$< > $@
 
 EXTRA_DIST =  \
-	bootstrap.sh  \
-	$(name).spec.in \
-	LibAPie \
 	PBMsg \
+	LibAPie \
+	SceneServer \
+	RouteServer \
 	ServiceRegistry \
 	ThirdParty/http-parser \
-	ThirdParty/influxdb-cpp
+	ThirdParty/influxdb-cpp \
+	$(name).spec.in \
+	bootstrap.sh
 
 dist-hook:
 	echo $(distdir)
