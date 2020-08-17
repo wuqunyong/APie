@@ -13,13 +13,13 @@ INCLUDES = -I /usr/local/include/ \
 			
 
 apie_sources = \
-	$(top_srcdir)/PBMsg/login_msg.pb.cc \
-	$(top_srcdir)/PBMsg/mysql_proxy_msg.pb.cc \
-	$(top_srcdir)/PBMsg/opcodes.pb.cc \
-	$(top_srcdir)/PBMsg/pubsub.pb.cc \
-	$(top_srcdir)/PBMsg/route_register.pb.cc \
-	$(top_srcdir)/PBMsg/rpc_msg.pb.cc \
-	$(top_srcdir)/PBMsg/service_discovery.pb.cc \
+	$(top_srcdir)/PBMsg/login_msg.pb.cc  \
+	$(top_srcdir)/PBMsg/mysql_proxy_msg.pb.cc  \
+	$(top_srcdir)/PBMsg/opcodes.pb.cc  \
+	$(top_srcdir)/PBMsg/pubsub.pb.cc  \
+	$(top_srcdir)/PBMsg/route_register.pb.cc  \
+	$(top_srcdir)/PBMsg/rpc_msg.pb.cc  \
+	$(top_srcdir)/PBMsg/service_discovery.pb.cc  \
 	$(top_srcdir)/ThirdParty/http-parser/http_parser.c  \
 	$(top_srcdir)/LibAPie/api/api_impl.cc  \
 	$(top_srcdir)/LibAPie/api/hook.cc  \
