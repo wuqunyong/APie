@@ -28,8 +28,8 @@ EXTRA_DIST =  \
 	LibAPie \
 	PBMsg \
 	ServiceRegistry \
-	ThridParty/http-parser \
-	ThridParty/influxdb-cpp
+	ThirdParty/http-parser \
+	ThirdParty/influxdb-cpp
 
 dist-hook:
 	echo $(distdir)
