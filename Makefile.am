@@ -27,6 +27,7 @@ EXTRA_DIST =  \
 	$(name).spec.in \
 	LibAPie \
 	PBMsg \
+	ServiceRegistry \
 	ThridParty/http-parser \
 	ThridParty/influxdb-cpp
 
