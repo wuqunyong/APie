@@ -25,10 +25,10 @@ pwd
 
 %build
 pwd
-export CFLAGS="-O2 -g -std=c++17"
-export CXXFLAGS="-O2 -g -std=c++17"
-./configure --prefix=/usr/local/%{__name}/
-make -j4
+#export CFLAGS="-O2 -g -std=c++17"
+#export CXXFLAGS="-O2 -g -std=c++17"
+./configure
+make
 pwd
 
 %install
@@ -41,60 +41,21 @@ pwd
 %{__install} -d %{buildroot}/usr/local/%{name}/etc
 %{__install} -d %{buildroot}/usr/local/%{name}/conf
 %{__install} -d %{buildroot}/usr/local/%{name}/cron
-%{__install} -d %{buildroot}/usr/local/%{name}/libs
+%{__install} -d %{buildroot}/usr/local/%{name}/lib
 %{__install} -d %{buildroot}/usr/local/%{name}/logs
 %{__install} -d %{buildroot}/usr/local/%{name}/keepalived
-%{__install} -d %{buildroot}/etc/rc.d/init.d
-
-%{__install} -c -m 644 conf/poseidon_mgr.ini %{buildroot}/usr/local/%{name}/conf/poseidon_mgr.ini
-%{__install} -c -m 644 cron/poseidon_mgr_cron %{buildroot}/usr/local/%{name}/cron/poseidon_mgr_cron
-%{__install} -c -m 755 etc/monitor.sh %{buildroot}/usr/local/%{name}/etc/monitor.sh
-%{__install} -c -m 755 etc/keepalived_monitor.sh %{buildroot}/usr/local/%{name}/etc/keepalived_monitor.sh
-%{__install} -c -m 755 etc/poseidon_mgr.sh %{buildroot}/etc/rc.d/init.d/poseidon_mgr
-%{__install} -c -m 755 keepalived/poseidon-mgr-ha-check.sh  %{buildroot}/usr/local/%{name}/keepalived/poseidon-mgr-ha-check.sh
-%{__install} -c -m 755 keepalived/poseidon-mgr-ha-notify.sh  %{buildroot}/usr/local/%{name}/keepalived/poseidon-mgr-ha-notify.sh
 
 
-%{__install} -c -m 755 libs/libevent-2.0.so.5.1.9 %{buildroot}/usr/local/%{name}/libs/libevent-2.0.so.5.1.9
-%{__install} -c -m 755 libs/libevent_core-2.0.so.5.1.9 %{buildroot}/usr/local/%{name}/libs/libevent_core-2.0.so.5.1.9
-%{__install} -c -m 755 libs/libevent_extra-2.0.so.5.1.9 %{buildroot}/usr/local/%{name}/libs/libevent_extra-2.0.so.5.1.9
-%{__install} -c -m 755 libs/libevent_pthreads-2.0.so.5.1.9 %{buildroot}/usr/local/%{name}/libs/libevent_pthreads-2.0.so.5.1.9
 
 make DESTDIR=%{buildroot} install
 
 %clean
 
 %post
-/bin/ln -f -s /usr/local/%{name}/cron/poseidon_mgr_cron  /etc/cron.d/
-
-ln -sf /usr/local/%{name}/libs/libevent-2.0.so.5.1.9 /usr/local/%{name}/libs/libevent-2.0.so.5
-ln -sf /usr/local/%{name}/libs/libevent_core-2.0.so.5.1.9 /usr/local/%{name}/libs/libevent_core-2.0.so.5
-ln -sf /usr/local/%{name}/libs/libevent_extra-2.0.so.5.1.9 /usr/local/%{name}/libs/libevent_extra-2.0.so.5
-ln -sf /usr/local/%{name}/libs/libevent_pthreads-2.0.so.5.1.9 /usr/local/%{name}/libs/libevent_pthreads-2.0.so.5
 
 %preun
-if [ $1 = 0 ]; then
-	/bin/rm -f /usr/local/%{name}/libs/libevent-2.0.so.5.1.9
-	/bin/rm -f /usr/local/%{name}/libs/libevent-2.0.so.5
-	/bin/rm -f /usr/local/%{name}/libs/libevent_core-2.0.so.5.1.9
-	/bin/rm -f /usr/local/%{name}/libs/libevent_core-2.0.so.5
-	/bin/rm -f /usr/local/%{name}/libs/libevent_extra-2.0.so.5.1.9
-	/bin/rm -f /usr/local/%{name}/libs/libevent_extra-2.0.so.5
-	/bin/rm -f /usr/local/%{name}/libs/libevent_pthreads-2.0.so.5.1.9
-	/bin/rm -f /usr/local/%{name}/libs/libevent_pthreads-2.0.so.5
-fi
-
 
 %postun
-echo "postun $1"
-if [ $1 = 0 ]; then 
-	echo "remove cron /etc/cron.d/poseidon_mgr_cron"
-	/bin/rm -f /etc/cron.d/poseidon_mgr_cron
-	/bin/rm -f /usr/local/poseidon-mgr/conf/MASTER
-	killall  poseidon_mgr || echo
-	/bin/rm -f /var/lock/subsys/poseidon_mgr
-	echo "poseidon_mgr uninstalled, Thanks for using!"	
-fi
 
 
 %files
@@ -103,13 +64,9 @@ fi
 /usr/local/%{name}/etc
 /usr/local/%{name}/conf
 /usr/local/%{name}/cron
-/usr/local/%{name}/libs
+/usr/local/%{name}/lib
 /usr/local/%{name}/logs
 /usr/local/%{name}/keepalived
-/etc/rc.d/init.d
-%attr(0755,root,root) %config  %{_sysconfdir}/rc.d/init.d/poseidon_mgr
-%attr(0755,root,root) %config  /usr/local/%{name}/keepalived/poseidon-mgr-ha-check.sh
-%attr(0755,root,root) %config  /usr/local/%{name}/keepalived/poseidon-mgr-ha-notify.sh
 
 %changelog
 
