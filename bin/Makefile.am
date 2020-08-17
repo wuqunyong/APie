@@ -1,6 +1,6 @@
 AM_CXXFLAGS = -Wall -std=c++17
 
-name=@PACKAGE_NAME@
+# name=@PACKAGE_NAME@
 
 INCLUDES = -I /usr/local/include/ \
 			-I /usr/include/mysql/ \
