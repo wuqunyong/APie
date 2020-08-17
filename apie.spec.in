@@ -25,8 +25,8 @@ pwd
 
 %build
 pwd
-export CFLAGS="-O2 -g -std=c++11"
-export CXXFLAGS="-O2 -g -std=c++11"
+export CFLAGS="-O2 -g -std=c++17"
+export CXXFLAGS="-O2 -g -std=c++17"
 ./configure --prefix=/usr/local/%{__name}/
 make -j4
 pwd

@@ -25,8 +25,13 @@ $(name).spec : $(name).spec.in FORCE
 EXTRA_DIST =  \
 	bootstrap.sh  \
 	$(name).spec.in \
-	LibApie
+	LibAPie \
+	PBMsg \
+	ThridParty/http-parser \
+	ThridParty/influxdb-cpp
 
+dist-hook:
+	echo $(distdir)
 
 FORCE :
 
