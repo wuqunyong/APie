@@ -95,16 +95,16 @@ libapie_la_LIBADD = -lmysqlclient
 libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
 
-bin_PROGRAMS = route_proxy scene_server service_registry
+# bin_PROGRAMS = route_proxy scene_server service_registry
 
-route_proxy_SOURCES = $(route_proxy_sources)
-route_proxy_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-route_proxy_LDFLAGS = $(apie_module_ldflags)
+# route_proxy_SOURCES = $(route_proxy_sources)
+# route_proxy_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+# route_proxy_LDFLAGS = $(apie_module_ldflags)
 
-scene_server_SOURCES = $(scene_server_sources)
-scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-scene_server_LDFLAGS = $(apie_module_ldflags)
+# scene_server_SOURCES = $(scene_server_sources)
+# scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+# scene_server_LDFLAGS = $(apie_module_ldflags)
 
-service_registry_SOURCES = $(service_registry_sources)
-service_registry_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-service_registry_LDFLAGS = $(apie_module_ldflags)
+# service_registry_SOURCES = $(service_registry_sources)
+# service_registry_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+# service_registry_LDFLAGS = $(apie_module_ldflags)

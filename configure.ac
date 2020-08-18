@@ -38,6 +38,9 @@ AC_CHECK_FUNCS([clock_gettime gettimeofday memset socket strchr strstr strtol])
 
 AC_CONFIG_FILES([Makefile
 		bin/Makefile
+		RouteProxy/Makefile
+		SceneServer/Makefile
+		ServiceRegistry/Makefile
 		])
 
 AC_OUTPUT

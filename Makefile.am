@@ -1,4 +1,4 @@
-SUBDIRS = bin
+SUBDIRS = bin RouteProxy
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
@@ -25,8 +25,8 @@ $(name).spec : $(name).spec.in FORCE
 EXTRA_DIST =  \
 	PBMsg \
 	LibAPie \
+	RouteProxy \
 	SceneServer \
-	RouteServer \
 	ServiceRegistry \
 	ThirdParty/http-parser \
 	ThirdParty/influxdb-cpp \
