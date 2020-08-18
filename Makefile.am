@@ -1,4 +1,4 @@
-SUBDIRS = bin RouteProxy
+SUBDIRS = bin RouteProxy SceneServer ServiceRegistry
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
