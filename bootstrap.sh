@@ -3,7 +3,7 @@
 rm -f config.cache
 rm -f config.log
 
-/bin/mkdir -p /usr/local/apie/libs
+/bin/mkdir -p /usr/local/apie/lib
 
 # aclocal
 # autoheader
