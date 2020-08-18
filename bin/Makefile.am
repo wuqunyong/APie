@@ -71,28 +71,28 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/serialization/protocol_head.cpp
 
 
-apie_module_ldflags = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
-
-route_proxy_sources = \
-	$(top_srcdir)/RouteProxy/main.cpp \
-	$(top_srcdir)/RouteProxy/service_init.cpp \
-	$(top_srcdir)/RouteProxy/logic/route_proxy.cpp 
-
-scene_server_sources = \
-	$(top_srcdir)/SceneServer/main.cpp \
-	$(top_srcdir)/SceneServer/service_init.cpp \
-	$(top_srcdir)/SceneServer/logic/scene_mgr.cpp 
-
-service_registry_sources = \
-	$(top_srcdir)/ServiceRegistry/main.cpp \
-	$(top_srcdir)/ServiceRegistry/service_init.cpp \
-	$(top_srcdir)/ServiceRegistry/logic/service_registry.cpp 
-
-
 lib_LTLIBRARIES = libapie.la
 libapie_la_SOURCES = $(apie_sources)
 libapie_la_LIBADD = -lmysqlclient
 libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+
+
+# apie_module_ldflags = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+
+# route_proxy_sources = \
+# 	$(top_srcdir)/RouteProxy/main.cpp \
+# 	$(top_srcdir)/RouteProxy/service_init.cpp \
+# 	$(top_srcdir)/RouteProxy/logic/route_proxy.cpp 
+
+# scene_server_sources = \
+# 	$(top_srcdir)/SceneServer/main.cpp \
+# 	$(top_srcdir)/SceneServer/service_init.cpp \
+# 	$(top_srcdir)/SceneServer/logic/scene_mgr.cpp 
+
+# service_registry_sources = \
+# 	$(top_srcdir)/ServiceRegistry/main.cpp \
+# 	$(top_srcdir)/ServiceRegistry/service_init.cpp \
+# 	$(top_srcdir)/ServiceRegistry/logic/service_registry.cpp 
 
 
 # bin_PROGRAMS = route_proxy scene_server service_registry
