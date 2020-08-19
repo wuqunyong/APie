@@ -34,3 +34,12 @@ yum install centos-release-scl -y
 yum install devtoolset-8 -y
 scl enable devtoolset-8 bash
 gcc --version
+
+
+2. autoconf
+#debug options support
+#CFLAGS, CPPFLAGS
+AC_ARG_ENABLE([debug],
+ [AS_HELP_STRING([--enable-debug],[debug program(default is no)])],
+ [CFLAGS="${CFLAGS} -g -O0"],
+ [CFLAGS="-g -O2"]
