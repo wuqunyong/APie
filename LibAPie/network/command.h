@@ -93,7 +93,7 @@ namespace APie
 		uint64_t iSerialNum;
 	};
 
-	struct PeerClose
+	struct ClientPeerClose
 	{
 		uint64_t iSerialNum;
 		uint32_t iResult;
@@ -142,7 +142,7 @@ namespace APie
 			logic_cmd,
 
 			close_peer_node,   //active(LogicThread -> IOThread | close dial)
-			peer_close,        //client: passive, active(IOThread -> LogicThread)
+			client_peer_close, //client: passive, active(IOThread -> LogicThread)
 			server_peer_close, //server: 
 
 			recv_http_request,  //server:passive_connect
@@ -199,8 +199,8 @@ namespace APie
 			} close_peer_node;
 
 			struct {
-				PeerClose* ptrData;
-			} peer_close;
+				ClientPeerClose* ptrData;
+			} client_peer_close;
 
 			struct {
 				ServerPeerClose* ptrData;

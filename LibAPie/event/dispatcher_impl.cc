@@ -272,9 +272,9 @@ void DispatcherImpl::handleCommand()
 			this->handleClosePeerNode(cmd.args.close_peer_node.ptrData);
 			break;
 		}
-		case Command::peer_close:
+		case Command::client_peer_close:
 		{
-			this->handlePeerClose(cmd.args.peer_close.ptrData);
+			this->handlePeerClose(cmd.args.client_peer_close.ptrData);
 			break;
 		}
 		case Command::server_peer_close:
@@ -546,15 +546,15 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
 }
 
-void DispatcherImpl::handlePeerClose(PeerClose* ptrCmd)
+void DispatcherImpl::handlePeerClose(ClientPeerClose* ptrCmd)
 {
-	::pubsub::PEER_CLOSE msg;
+	::pubsub::CLIENT_PEER_CLOSE msg;
 	msg.set_serial_num(ptrCmd->iSerialNum);
 	msg.set_result(ptrCmd->iResult);
 	msg.set_info(ptrCmd->sInfo);
 	msg.set_active(ptrCmd->iActive);
 
-	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_PeerClose, msg);
+	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_ClientPeerClose, msg);
 }
 
 void DispatcherImpl::handleClosePeerNode(ClosePeerNode* ptrCmd)

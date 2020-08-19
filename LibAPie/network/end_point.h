@@ -44,7 +44,7 @@ namespace APie
 		
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
 
-		static void onPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 		
 
 	private:

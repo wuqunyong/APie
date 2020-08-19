@@ -82,7 +82,7 @@ private:
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
   void handleLogicCmd(LogicCmd* ptrCmd);
-  void handlePeerClose(PeerClose* ptrCmd);
+  void handlePeerClose(ClientPeerClose* ptrCmd);
   void handleClosePeerNode(ClosePeerNode* ptrCmd);
   void handleServerPeerClose(ServerPeerClose* ptrCmd);
 

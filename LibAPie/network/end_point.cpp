@@ -22,7 +22,7 @@ void SelfRegistration::init()
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
 
 
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_PeerClose, SelfRegistration::onPeerClose);
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
 
 
 	this->registerEndpoint();
@@ -262,9 +262,9 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
 }
 
-void SelfRegistration::onPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
 {
-	auto& refMsg = dynamic_cast<::pubsub::PEER_CLOSE&>(msg);
+	auto& refMsg = dynamic_cast<::pubsub::CLIENT_PEER_CLOSE&>(msg);
 	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
 
 	uint64_t iSerialNum = refMsg.serial_num();

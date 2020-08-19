@@ -57,23 +57,23 @@ struct TableStruct_pubsub_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_pubsub_2eproto;
 namespace pubsub {
+class CLIENT_PEER_CLOSE;
+class CLIENT_PEER_CLOSEDefaultTypeInternal;
+extern CLIENT_PEER_CLOSEDefaultTypeInternal _CLIENT_PEER_CLOSE_default_instance_;
 class DISCOVERY_NOTICE;
 class DISCOVERY_NOTICEDefaultTypeInternal;
 extern DISCOVERY_NOTICEDefaultTypeInternal _DISCOVERY_NOTICE_default_instance_;
 class LOGIC_CMD;
 class LOGIC_CMDDefaultTypeInternal;
 extern LOGIC_CMDDefaultTypeInternal _LOGIC_CMD_default_instance_;
-class PEER_CLOSE;
-class PEER_CLOSEDefaultTypeInternal;
-extern PEER_CLOSEDefaultTypeInternal _PEER_CLOSE_default_instance_;
 class SERVER_PEER_CLOSE;
 class SERVER_PEER_CLOSEDefaultTypeInternal;
 extern SERVER_PEER_CLOSEDefaultTypeInternal _SERVER_PEER_CLOSE_default_instance_;
 }  // namespace pubsub
 PROTOBUF_NAMESPACE_OPEN
+template<> ::pubsub::CLIENT_PEER_CLOSE* Arena::CreateMaybeMessage<::pubsub::CLIENT_PEER_CLOSE>(Arena*);
 template<> ::pubsub::DISCOVERY_NOTICE* Arena::CreateMaybeMessage<::pubsub::DISCOVERY_NOTICE>(Arena*);
 template<> ::pubsub::LOGIC_CMD* Arena::CreateMaybeMessage<::pubsub::LOGIC_CMD>(Arena*);
-template<> ::pubsub::PEER_CLOSE* Arena::CreateMaybeMessage<::pubsub::PEER_CLOSE>(Arena*);
 template<> ::pubsub::SERVER_PEER_CLOSE* Arena::CreateMaybeMessage<::pubsub::SERVER_PEER_CLOSE>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace pubsub {
@@ -81,7 +81,7 @@ namespace pubsub {
 enum PUB_TOPIC : int {
   PT_None = 0,
   PT_LogicCmd = 100,
-  PT_PeerClose = 200,
+  PT_ClientPeerClose = 200,
   PT_ServerPeerClose = 201,
   PT_DiscoveryNotice = 301,
   PUB_TOPIC_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
@@ -269,23 +269,23 @@ class LOGIC_CMD :
 };
 // -------------------------------------------------------------------
 
-class PEER_CLOSE :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pubsub.PEER_CLOSE) */ {
+class CLIENT_PEER_CLOSE :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pubsub.CLIENT_PEER_CLOSE) */ {
  public:
-  PEER_CLOSE();
-  virtual ~PEER_CLOSE();
+  CLIENT_PEER_CLOSE();
+  virtual ~CLIENT_PEER_CLOSE();
 
-  PEER_CLOSE(const PEER_CLOSE& from);
-  PEER_CLOSE(PEER_CLOSE&& from) noexcept
-    : PEER_CLOSE() {
+  CLIENT_PEER_CLOSE(const CLIENT_PEER_CLOSE& from);
+  CLIENT_PEER_CLOSE(CLIENT_PEER_CLOSE&& from) noexcept
+    : CLIENT_PEER_CLOSE() {
     *this = ::std::move(from);
   }
 
-  inline PEER_CLOSE& operator=(const PEER_CLOSE& from) {
+  inline CLIENT_PEER_CLOSE& operator=(const CLIENT_PEER_CLOSE& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PEER_CLOSE& operator=(PEER_CLOSE&& from) noexcept {
+  inline CLIENT_PEER_CLOSE& operator=(CLIENT_PEER_CLOSE&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -303,37 +303,37 @@ class PEER_CLOSE :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const PEER_CLOSE& default_instance();
+  static const CLIENT_PEER_CLOSE& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PEER_CLOSE* internal_default_instance() {
-    return reinterpret_cast<const PEER_CLOSE*>(
-               &_PEER_CLOSE_default_instance_);
+  static inline const CLIENT_PEER_CLOSE* internal_default_instance() {
+    return reinterpret_cast<const CLIENT_PEER_CLOSE*>(
+               &_CLIENT_PEER_CLOSE_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(PEER_CLOSE& a, PEER_CLOSE& b) {
+  friend void swap(CLIENT_PEER_CLOSE& a, CLIENT_PEER_CLOSE& b) {
     a.Swap(&b);
   }
-  inline void Swap(PEER_CLOSE* other) {
+  inline void Swap(CLIENT_PEER_CLOSE* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PEER_CLOSE* New() const final {
-    return CreateMaybeMessage<PEER_CLOSE>(nullptr);
+  inline CLIENT_PEER_CLOSE* New() const final {
+    return CreateMaybeMessage<CLIENT_PEER_CLOSE>(nullptr);
   }
 
-  PEER_CLOSE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<PEER_CLOSE>(arena);
+  CLIENT_PEER_CLOSE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CLIENT_PEER_CLOSE>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const PEER_CLOSE& from);
-  void MergeFrom(const PEER_CLOSE& from);
+  void CopyFrom(const CLIENT_PEER_CLOSE& from);
+  void MergeFrom(const CLIENT_PEER_CLOSE& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -347,10 +347,10 @@ class PEER_CLOSE :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(PEER_CLOSE* other);
+  void InternalSwap(CLIENT_PEER_CLOSE* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "pubsub.PEER_CLOSE";
+    return "pubsub.CLIENT_PEER_CLOSE";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -423,7 +423,7 @@ class PEER_CLOSE :
   void _internal_set_active(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:pubsub.PEER_CLOSE)
+  // @@protoc_insertion_point(class_scope:pubsub.CLIENT_PEER_CLOSE)
  private:
   class _Internal;
 
@@ -884,126 +884,126 @@ LOGIC_CMD::mutable_params() {
 
 // -------------------------------------------------------------------
 
-// PEER_CLOSE
+// CLIENT_PEER_CLOSE
 
 // uint64 serial_num = 1;
-inline void PEER_CLOSE::clear_serial_num() {
+inline void CLIENT_PEER_CLOSE::clear_serial_num() {
   serial_num_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 PEER_CLOSE::_internal_serial_num() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CLIENT_PEER_CLOSE::_internal_serial_num() const {
   return serial_num_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 PEER_CLOSE::serial_num() const {
-  // @@protoc_insertion_point(field_get:pubsub.PEER_CLOSE.serial_num)
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CLIENT_PEER_CLOSE::serial_num() const {
+  // @@protoc_insertion_point(field_get:pubsub.CLIENT_PEER_CLOSE.serial_num)
   return _internal_serial_num();
 }
-inline void PEER_CLOSE::_internal_set_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void CLIENT_PEER_CLOSE::_internal_set_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   serial_num_ = value;
 }
-inline void PEER_CLOSE::set_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void CLIENT_PEER_CLOSE::set_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_serial_num(value);
-  // @@protoc_insertion_point(field_set:pubsub.PEER_CLOSE.serial_num)
+  // @@protoc_insertion_point(field_set:pubsub.CLIENT_PEER_CLOSE.serial_num)
 }
 
 // uint32 result = 2;
-inline void PEER_CLOSE::clear_result() {
+inline void CLIENT_PEER_CLOSE::clear_result() {
   result_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 PEER_CLOSE::_internal_result() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 CLIENT_PEER_CLOSE::_internal_result() const {
   return result_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 PEER_CLOSE::result() const {
-  // @@protoc_insertion_point(field_get:pubsub.PEER_CLOSE.result)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 CLIENT_PEER_CLOSE::result() const {
+  // @@protoc_insertion_point(field_get:pubsub.CLIENT_PEER_CLOSE.result)
   return _internal_result();
 }
-inline void PEER_CLOSE::_internal_set_result(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void CLIENT_PEER_CLOSE::_internal_set_result(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   result_ = value;
 }
-inline void PEER_CLOSE::set_result(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void CLIENT_PEER_CLOSE::set_result(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_result(value);
-  // @@protoc_insertion_point(field_set:pubsub.PEER_CLOSE.result)
+  // @@protoc_insertion_point(field_set:pubsub.CLIENT_PEER_CLOSE.result)
 }
 
 // string info = 3;
-inline void PEER_CLOSE::clear_info() {
+inline void CLIENT_PEER_CLOSE::clear_info() {
   info_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline const std::string& PEER_CLOSE::info() const {
-  // @@protoc_insertion_point(field_get:pubsub.PEER_CLOSE.info)
+inline const std::string& CLIENT_PEER_CLOSE::info() const {
+  // @@protoc_insertion_point(field_get:pubsub.CLIENT_PEER_CLOSE.info)
   return _internal_info();
 }
-inline void PEER_CLOSE::set_info(const std::string& value) {
+inline void CLIENT_PEER_CLOSE::set_info(const std::string& value) {
   _internal_set_info(value);
-  // @@protoc_insertion_point(field_set:pubsub.PEER_CLOSE.info)
+  // @@protoc_insertion_point(field_set:pubsub.CLIENT_PEER_CLOSE.info)
 }
-inline std::string* PEER_CLOSE::mutable_info() {
-  // @@protoc_insertion_point(field_mutable:pubsub.PEER_CLOSE.info)
+inline std::string* CLIENT_PEER_CLOSE::mutable_info() {
+  // @@protoc_insertion_point(field_mutable:pubsub.CLIENT_PEER_CLOSE.info)
   return _internal_mutable_info();
 }
-inline const std::string& PEER_CLOSE::_internal_info() const {
+inline const std::string& CLIENT_PEER_CLOSE::_internal_info() const {
   return info_.GetNoArena();
 }
-inline void PEER_CLOSE::_internal_set_info(const std::string& value) {
+inline void CLIENT_PEER_CLOSE::_internal_set_info(const std::string& value) {
   
   info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
-inline void PEER_CLOSE::set_info(std::string&& value) {
+inline void CLIENT_PEER_CLOSE::set_info(std::string&& value) {
   
   info_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pubsub.PEER_CLOSE.info)
+  // @@protoc_insertion_point(field_set_rvalue:pubsub.CLIENT_PEER_CLOSE.info)
 }
-inline void PEER_CLOSE::set_info(const char* value) {
+inline void CLIENT_PEER_CLOSE::set_info(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pubsub.PEER_CLOSE.info)
+  // @@protoc_insertion_point(field_set_char:pubsub.CLIENT_PEER_CLOSE.info)
 }
-inline void PEER_CLOSE::set_info(const char* value, size_t size) {
+inline void CLIENT_PEER_CLOSE::set_info(const char* value, size_t size) {
   
   info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pubsub.PEER_CLOSE.info)
+  // @@protoc_insertion_point(field_set_pointer:pubsub.CLIENT_PEER_CLOSE.info)
 }
-inline std::string* PEER_CLOSE::_internal_mutable_info() {
+inline std::string* CLIENT_PEER_CLOSE::_internal_mutable_info() {
   
   return info_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* PEER_CLOSE::release_info() {
-  // @@protoc_insertion_point(field_release:pubsub.PEER_CLOSE.info)
+inline std::string* CLIENT_PEER_CLOSE::release_info() {
+  // @@protoc_insertion_point(field_release:pubsub.CLIENT_PEER_CLOSE.info)
   
   return info_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void PEER_CLOSE::set_allocated_info(std::string* info) {
+inline void CLIENT_PEER_CLOSE::set_allocated_info(std::string* info) {
   if (info != nullptr) {
     
   } else {
     
   }
   info_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), info);
-  // @@protoc_insertion_point(field_set_allocated:pubsub.PEER_CLOSE.info)
+  // @@protoc_insertion_point(field_set_allocated:pubsub.CLIENT_PEER_CLOSE.info)
 }
 
 // uint32 active = 4;
-inline void PEER_CLOSE::clear_active() {
+inline void CLIENT_PEER_CLOSE::clear_active() {
   active_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 PEER_CLOSE::_internal_active() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 CLIENT_PEER_CLOSE::_internal_active() const {
   return active_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 PEER_CLOSE::active() const {
-  // @@protoc_insertion_point(field_get:pubsub.PEER_CLOSE.active)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 CLIENT_PEER_CLOSE::active() const {
+  // @@protoc_insertion_point(field_get:pubsub.CLIENT_PEER_CLOSE.active)
   return _internal_active();
 }
-inline void PEER_CLOSE::_internal_set_active(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void CLIENT_PEER_CLOSE::_internal_set_active(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   active_ = value;
 }
-inline void PEER_CLOSE::set_active(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void CLIENT_PEER_CLOSE::set_active(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_active(value);
-  // @@protoc_insertion_point(field_set:pubsub.PEER_CLOSE.active)
+  // @@protoc_insertion_point(field_set:pubsub.CLIENT_PEER_CLOSE.active)
 }
 
 // -------------------------------------------------------------------
