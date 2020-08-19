@@ -330,7 +330,7 @@ void Ctx::handleSigProcMask()
 #else
 	sigemptyset(&g_SigSet);
 	sigaddset(&g_SigSet, SIGTERM);
-	//sigaddset(&g_SigSet, SIGINT);
+	sigaddset(&g_SigSet, SIGINT);
 	sigaddset(&g_SigSet, SIGHUP);
 	sigaddset(&g_SigSet, SIGQUIT);
 
