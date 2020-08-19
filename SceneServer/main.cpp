@@ -27,5 +27,6 @@ int main(int argc, char **argv)
 	APie::CtxSingleton::get().init(configFile);
 	APie::CtxSingleton::get().start();
 	APie::CtxSingleton::get().waitForShutdown();
+
     return 0;
 }
