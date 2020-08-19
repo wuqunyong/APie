@@ -67,7 +67,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-	
 	case Command::logic_cmd:
 	{
 		if (NULL != cmd->args.logic_cmd.ptrData)
@@ -77,7 +76,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::close_local_client:
 	{
 		if (NULL != cmd->args.close_local_client.ptrData)
@@ -87,7 +85,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::client_peer_close:
 	{
 		if (NULL != cmd->args.client_peer_close.ptrData)
@@ -97,7 +94,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::server_peer_close:
 	{
 		if (NULL != cmd->args.server_peer_close.ptrData)
@@ -107,7 +103,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::recv_http_request:
 	{
 		if (NULL != cmd->args.recv_http_request.ptrData)
@@ -117,7 +112,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::send_http_response:
 	{
 		if (NULL != cmd->args.send_http_response.ptrData)
@@ -127,7 +121,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	case Command::recv_http_response:
 	{
 		if (NULL != cmd->args.recv_http_response.ptrData)
@@ -137,7 +130,6 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
-
 	default:
 		/*  noop  */;
 	}

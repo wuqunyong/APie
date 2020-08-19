@@ -123,9 +123,6 @@ namespace APie
 			type = invalid_type;
 		}
 
-		//  Object to process the command.
-		//class Object *destination;
-
 		enum type_t
 		{
 			invalid_type = 0,
