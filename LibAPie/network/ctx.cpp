@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 
 #define SLEEP_MS(ms) usleep((ms) * 1000)
 
@@ -333,7 +334,12 @@ void Ctx::handleSigProcMask()
 	sigaddset(&g_SigSet, SIGHUP);
 	sigaddset(&g_SigSet, SIGQUIT);
 
-	sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
+	//sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
+	int rc = pthread_sigmask(SIG_BLOCK, &g_SigSet, NULL);
+	if ( rc != 0)
+	{
+		fatalExit("pthread_sigmask");
+	}
 #endif
 }
 
@@ -398,7 +404,6 @@ void Ctx::waitForShutdown()
 			actualSignal, strsignal(actualSignal));
 
 		switch (actualSignal) {
-		case SIGQUIT:
 		case SIGTERM:
 		case SIGHUP:
 			quitFlag = true;
