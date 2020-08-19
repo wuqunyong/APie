@@ -281,12 +281,12 @@ int ClientProxy::sendConnect()
 
 void ClientProxy::sendClose()
 {
-	APie::ClosePeerNode *ptr = new APie::ClosePeerNode;
+	APie::CloseLocalClient *ptr = new APie::CloseLocalClient;
 	ptr->iSerialNum = this->m_curSerialNum;
 
 	Command cmd;
-	cmd.type = Command::close_peer_node;
-	cmd.args.close_peer_node.ptrData = ptr;
+	cmd.type = Command::close_local_client;
+	cmd.args.close_local_client.ptrData = ptr;
 
 	auto ptrIOThread = APie::CtxSingleton::get().getThreadById(m_tId);
 	if (ptrIOThread == NULL)

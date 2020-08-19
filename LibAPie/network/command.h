@@ -88,7 +88,7 @@ namespace APie
 		std::map<std::string, double> field;
 	};
 
-	struct ClosePeerNode
+	struct CloseLocalClient
 	{
 		uint64_t iSerialNum;
 	};
@@ -141,9 +141,9 @@ namespace APie
 
 			logic_cmd,
 
-			close_peer_node,   //active(LogicThread -> IOThread | close dial)
-			client_peer_close, //client: passive, active(IOThread -> LogicThread)
-			server_peer_close, //server: 
+			close_local_client, //active(LogicThread -> IOThread | ClientProxy::sendClose)
+			client_peer_close,  //client: passive(IOThread -> LogicThread)
+			server_peer_close,  //server: passive(IOThread -> LogicThread)
 
 			recv_http_request,  //server:passive_connect
 			send_http_response, //server:passive_connect
@@ -195,8 +195,8 @@ namespace APie
 			} logic_cmd;
 
 			struct {
-				ClosePeerNode* ptrData;
-			} close_peer_node;
+				CloseLocalClient* ptrData;
+			} close_local_client;
 
 			struct {
 				ClientPeerClose* ptrData;
