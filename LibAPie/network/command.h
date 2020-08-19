@@ -28,7 +28,7 @@
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
-#include "../network/connection.h"
+#include "../network/server_connection.h"
 
 #include "../http/http_request.h"
 #include "../http/http_response.h"

@@ -200,7 +200,7 @@
     <ClInclude Include="network\client_connection.h" />
     <ClInclude Include="network\client_proxy.h" />
     <ClInclude Include="network\command.h" />
-    <ClInclude Include="network\connection.h" />
+    <ClInclude Include="network\server_connection.h" />
     <ClInclude Include="network\ctx.h" />
     <ClInclude Include="network\end_point.h" />
     <ClInclude Include="network\i_poll_events.hpp" />
@@ -267,7 +267,7 @@
     <ClCompile Include="network\client_connection.cpp" />
     <ClCompile Include="network\client_proxy.cpp" />
     <ClCompile Include="network\command.cpp" />
-    <ClCompile Include="network\connection.cpp" />
+    <ClCompile Include="network\server_connection.cpp" />
     <ClCompile Include="network\ctx.cpp" />
     <ClCompile Include="network\end_point.cpp" />
     <ClCompile Include="network\listener_impl.cc" />

@@ -6,7 +6,7 @@
 #include "http_parser_impl.h"
 #include "http_request.h"
 
-#include "../network/connection.h"
+#include "../network/server_connection.h"
 #include "../network/command.h"
 #include "../network/ctx.h"
 #include "../network/logger.h"

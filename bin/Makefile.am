@@ -57,13 +57,13 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/network/client_connection.cpp  \
 	$(top_srcdir)/LibAPie/network/client_proxy.cpp  \
 	$(top_srcdir)/LibAPie/network/command.cpp  \
-	$(top_srcdir)/LibAPie/network/connection.cpp  \
 	$(top_srcdir)/LibAPie/network/ctx.cpp  \
 	$(top_srcdir)/LibAPie/network/end_point.cpp  \
 	$(top_srcdir)/LibAPie/network/listener_impl.cc  \
 	$(top_srcdir)/LibAPie/network/logger.cpp  \
 	$(top_srcdir)/LibAPie/network/object.cpp  \
 	$(top_srcdir)/LibAPie/network/output_stream.cc  \
+	$(top_srcdir)/LibAPie/network/server_connection.cpp  \
 	$(top_srcdir)/LibAPie/network/signaler.cpp  \
 	$(top_srcdir)/LibAPie/rpc/client/rpc_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/server/rpc_server.cpp  \

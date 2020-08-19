@@ -15,7 +15,7 @@
 
 #include "../network/listener.h"
 #include "../network/listener_impl.h"
-#include "../network/connection.h"
+#include "../network/server_connection.h"
 #include "../network/ctx.h"
 #include "../network/i_poll_events.hpp"
 #include "../network/client_proxy.h"

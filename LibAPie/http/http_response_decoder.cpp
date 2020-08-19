@@ -1,7 +1,7 @@
 #include "http_response_decoder.h"
 
 
-#include "../network/connection.h"
+#include "../network/server_connection.h"
 #include "../network/command.h"
 #include "../network/ctx.h"
 #include "../network/logger.h"

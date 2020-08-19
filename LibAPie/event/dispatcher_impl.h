@@ -18,7 +18,7 @@
 #include "../network/object.hpp"
 #include "../network/mailbox.h"
 #include "../network/command.h"
-#include "../network/connection.h"
+#include "../network/server_connection.h"
 #include "../network/client_connection.h"
 #include "../network/listener.h"
 
