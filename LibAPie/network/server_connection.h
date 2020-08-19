@@ -55,7 +55,7 @@ namespace APie
 
 		static bool validProtocol(ProtocolType iType);
 	private:
-		void sendConnectionClose(uint32_t iResult, const std::string& sInfo, uint32_t iActive);
+		void sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive);
 
 		void readHttp();
 		void readPB();

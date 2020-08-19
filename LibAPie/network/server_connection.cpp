@@ -64,7 +64,11 @@ bool ServerConnection::validProtocol(ProtocolType iType)
 
 void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive)
 {
-	this->sendConnectionClose(iCode, sInfo, iActive);
+	std::stringstream ss;
+	ss << "close|iSerialNum:" << this->iSerialNum;
+	ASYNC_PIE_LOG("ServerConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+
+	this->sendCloseCmd(iCode, sInfo, iActive);
 
 	Event::DispatcherImpl::delConnection(this->iSerialNum);
 }
@@ -280,7 +284,7 @@ void ServerConnection::handleSend(const char *data, size_t size)
 	}
 }
 
-void ServerConnection::sendConnectionClose(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
+void ServerConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
 {
 	Command cmd;
 	cmd.type = Command::server_peer_close;

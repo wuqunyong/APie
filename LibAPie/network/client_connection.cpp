@@ -63,17 +63,14 @@ uint32_t APie::ClientConnection::getTId()
 void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 {
 	std::stringstream ss;
-	ss << "close:" << this->sLocalAddress << ":" << this->iLocalPort << "->" 
-		<< this->sListenAddress << ":" << this->iListenPort << "|reason:" << sInfo;
+	ss << "close|iSerialNum:" << this->iSerialNum 
+		<< "|address:" << this->sLocalAddress << ":" << this->iLocalPort << "->" << this->sListenAddress << ":" << this->iListenPort 
+		<< "|reason:" << sInfo;
 	ASYNC_PIE_LOG("ClientConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
-	//printf("close:%s:%d->%s:%d   reason:%s\n",this->sLocalAddress.c_str(),this->iLocalPort,this->sListenAddress.c_str(),this->iListenPort,sInfo.c_str());
-
-	integer_t iSerialNum = this->iSerialNum;
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
-	//delete this;
-	APie::Event::DispatcherImpl::delClientConnection(iSerialNum);
+	APie::Event::DispatcherImpl::delClientConnection(this->iSerialNum);
 }
 
 void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
