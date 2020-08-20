@@ -95,6 +95,9 @@ namespace APie
 		std::string launchTime();
 
     private:
+		void daemonize();
+		bool adjustOpenFilesLimit();
+		void enableCoreFiles();
 		void handleSigProcMask();
 
 		typedef std::vector<std::shared_ptr<Event::DispatchedThreadImpl>> ThreadVec;

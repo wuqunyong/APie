@@ -30,6 +30,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <execinfo.h>
+#include <signal.h>
+#include <dirent.h>
+#include <libgen.h>
+#include <ifaddrs.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 
 #define SLEEP_MS(ms) usleep((ms) * 1000)
 
@@ -160,12 +167,19 @@ void Ctx::init(const std::string& configFile)
 
 	APie::Event::Libevent::Global::initialize();
 
-	this->handleSigProcMask();
-
 	endpoint_ = std::make_shared<SelfRegistration>();
 
 	try {
 		this->node_ = YAML::LoadFile(configFile);
+
+		bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({"daemon"}, true);
+		if (bDaemon)
+		{
+			this->daemonize();
+		}
+
+		adjustOpenFilesLimit();
+		enableCoreFiles();
 
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
@@ -239,6 +253,8 @@ void Ctx::init(const std::string& configFile)
 		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
+
+	this->handleSigProcMask();
 }
 
 void Ctx::start()
@@ -322,6 +338,88 @@ void Ctx::destroy()
 	logic_thread_.reset();
 	log_thread_.reset();
 	metrics_thread_.reset();
+}
+
+void Ctx::daemonize()
+{
+#ifdef WIN32
+#else
+	int fd;
+
+	umask(0);
+
+	if (fork() != 0) exit(0); /* parent exits */
+	setsid(); /* create a new session */
+
+	/* Every output goes to /dev/null. If Redis is daemonized but
+	 * the 'logfile' is set to 'stdout' in the configuration file
+	 * it will not log at all. */
+	if ((fd = open("/dev/null", O_RDWR, 0)) != -1) {
+		dup2(fd, STDIN_FILENO);
+		dup2(fd, STDOUT_FILENO);
+		dup2(fd, STDERR_FILENO);
+		if (fd > STDERR_FILENO) close(fd);
+	}
+#endif
+}
+
+bool Ctx::adjustOpenFilesLimit()
+{
+#ifdef WIN32
+	return false;
+#else
+	int maxlimit = MAX_OPEN_FILE;
+
+	bool ret = false;
+	struct rlimit limit;
+	memset(&limit, 0, sizeof(limit));
+	int e = getrlimit(RLIMIT_NOFILE, &limit);
+	if (e < 0)
+		return ret;
+	struct rlimit newlimit;
+	memset(&newlimit, 0, sizeof(newlimit));
+	newlimit.rlim_cur = maxlimit;
+	newlimit.rlim_max = maxlimit;
+	if ((e = setrlimit(RLIMIT_NOFILE, &newlimit)) < 0)
+	{
+		setrlimit(RLIMIT_NOFILE, &limit);
+	}
+	else
+	{
+		ret = true;
+	}
+	return ret;
+#endif
+}
+
+void Ctx::enableCoreFiles()
+{
+#ifdef WIN32
+#else
+	struct rlimit rlim, rlim_new;
+	if (getrlimit(RLIMIT_CORE, &rlim) == 0)
+	{
+		rlim_new.rlim_cur = rlim_new.rlim_max = RLIM_INFINITY;
+		if (setrlimit(RLIMIT_CORE, &rlim_new) != 0)
+		{
+			/* failed. try raising just to the old max */
+			rlim_new.rlim_cur = rlim_new.rlim_max = rlim.rlim_max;
+			if (setrlimit(RLIMIT_CORE, &rlim_new) != 0)
+			{
+				printf("set core limit error\n");
+			}
+			else
+			{
+				printf("raising set core limit ok\n");
+			}
+
+}
+		else
+		{
+			printf("original set core limit ok\n");
+		}
+	}
+#endif
 }
 
 void Ctx::handleSigProcMask()
