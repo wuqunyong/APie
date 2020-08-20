@@ -313,8 +313,61 @@ namespace APie {
 #else
 
 namespace APie {
+	std::string generateBackTrace()
+	{
+		int maxFrames = 64;
+		void* frames[64] = { '\0' };
+		int numFrames = backtrace(frames, maxFrames);
+		char** symbols = backtrace_symbols(frames, numFrames);
+		if (!symbols)
+		{
+			return "";
+		}
+
+		std::ostringstream ss;
+		ss << "Stack:\n";
+		for (int i = 1; i < numFrames; ++i) {
+			ss << symbols[i] << '\n';
+		}
+		free(symbols);
+
+		return ss.str();
+	}
+
+	void sigsegvHandler(int sig, siginfo_t *info, void *secret)
+	{
+		/* Log the stack trace */
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "\n------ STACK TRACE BEGIN ------\n");
+		std::string traceStr = generateBackTrace();
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "%s", traceStr.c_str());
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "\n------ STACK TRACE END ------\n");
+
+		/* Make sure we exit with the right signal at the end. So for instance
+		* the core will be dumped if enabled. */
+		struct sigaction act;
+		sigemptyset(&act.sa_mask);
+		act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND;
+		act.sa_handler = SIG_DFL;
+		sigaction(sig, &act, NULL);
+		kill(getpid(), sig);
+	}
+
+	void setupSignalHandlers(void)
+	{
+		struct sigaction act;
+		sigemptyset(&act.sa_mask);
+		act.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+		act.sa_sigaction = sigsegvHandler;
+		sigaction(SIGINT, &act, NULL);
+		sigaction(SIGSEGV, &act, NULL);
+		sigaction(SIGBUS, &act, NULL);
+		sigaction(SIGFPE, &act, NULL);
+		sigaction(SIGILL, &act, NULL);
+	}
+
 	void ExceptionTrap()
 	{
+		setupSignalHandlers();
 	}
 }
 

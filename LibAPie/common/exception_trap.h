@@ -5,6 +5,17 @@
 #else
 #include <unistd.h>
 #include <pthread.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <strings.h>
+#include <execinfo.h>
+#include <dirent.h>
+#include <libgen.h>
+#include <ifaddrs.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 #endif
 
 
