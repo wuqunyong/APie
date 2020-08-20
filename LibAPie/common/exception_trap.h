@@ -3,6 +3,10 @@
 #ifdef WIN32
 #include "../network/windows_platform.h"
 #else
+#include <string>
+#include <cstddef>
+#include <sstream>
+
 #include <unistd.h>
 #include <pthread.h>
 #include <signal.h>

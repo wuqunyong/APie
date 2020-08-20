@@ -1,4 +1,7 @@
+#include "exception_trap.h"
+
 #include "../network/windows_platform.h"
+#include "../network/logger.h"
 
 #ifdef WIN32
 #include "../apie.h"
@@ -315,8 +318,8 @@ namespace APie {
 namespace APie {
 	std::string generateBackTrace()
 	{
-		int maxFrames = 64;
-		void* frames[64] = { '\0' };
+		int maxFrames = 128;
+		void* frames[128];
 		int numFrames = backtrace(frames, maxFrames);
 		char** symbols = backtrace_symbols(frames, numFrames);
 		if (!symbols)
@@ -337,10 +340,10 @@ namespace APie {
 	void sigsegvHandler(int sig, siginfo_t *info, void *secret)
 	{
 		/* Log the stack trace */
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "\n------ STACK TRACE BEGIN ------\n");
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE BEGIN ------\n");
 		std::string traceStr = generateBackTrace();
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "%s", traceStr.c_str());
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "\n------ STACK TRACE END ------\n");
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "sigaction: Got signal %d|%s|bt:", sig, strsignal(sig), traceStr.c_str());
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE END ------\n");
 
 		/* Make sure we exit with the right signal at the end. So for instance
 		* the core will be dumped if enabled. */
