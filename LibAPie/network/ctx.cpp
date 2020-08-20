@@ -368,7 +368,7 @@ bool Ctx::adjustOpenFilesLimit()
 #ifdef WIN32
 	return false;
 #else
-	int maxlimit = MAX_OPEN_FILE;
+	int maxlimit = 1024 * 10;
 
 	bool ret = false;
 	struct rlimit limit;
