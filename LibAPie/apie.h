@@ -17,6 +17,7 @@
 #include "api/pb_handler.h"
 #include "api/hook.h"
 #include "api/pubsub.h"
+#include "api/os_sys_calls.h"
 
 #include "network/platform_impl.h"
 #include "network/ctx.h"

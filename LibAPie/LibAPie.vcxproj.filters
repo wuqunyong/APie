@@ -298,6 +298,9 @@
     <ClInclude Include="network\server_connection.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="api\os_sys_calls.h">
+      <Filter>api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -470,6 +473,9 @@
     </ClCompile>
     <ClCompile Include="network\server_connection.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="api\os_sys_calls.cc">
+      <Filter>api</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

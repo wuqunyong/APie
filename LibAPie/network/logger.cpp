@@ -80,21 +80,26 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 
 	bool bMergeFlag = false;
 
+	std::string logFileName;
+
 	LogFile* ptrFile = NULL;
-	//bool bMerge = APie::Ctx::getConfigReader()->GetBoolean("log", "merge", true);
+	bool bMerge = APie::CtxSingleton::get().yamlAs<bool>({"log","merge"}, true); 
 	if (true)
 	{
 		bMergeFlag = true;
-		ptrFile = getCacheFile("apie.log", PIE_CYCLE_DAY);
+		logFileName = APie::Ctx::logName() + "-" + APie::Ctx::logPostfix();
+		ptrFile = getCacheFile(logFileName, PIE_CYCLE_DAY);
 	}
 	else
 	{
-		ptrFile = getCacheFile(file, cycle);
+		std::string tmpFile(file);
+		logFileName = tmpFile + "-" + APie::Ctx::logPostfix();
+		ptrFile = getCacheFile(logFileName, cycle);
 	}
 		
 	if (!ptrFile)
 	{
-		printf("getCacheFile %s error!",file);
+		printf("getCacheFile %s error!", logFileName.c_str());
 		return;
 	}
 	
@@ -180,25 +185,14 @@ LogFile* openFile(std::string file, int cycle)
 	std::string sCurPath = APie::Filesystem::Directory::getCWD();
 	
 	//TODO
-	std::string sLogPrefix = "app";
+	//std::string sLogPrefix = "app";
 
 #ifdef WIN32
 	sFile = sCurPath;
-	sFile.append("/Log/");
-	sFile.append(sLogPrefix);
-	sFile.append("/");
+	sFile.append("/logs/");
 	sFile.append(file);
 #else
 	sFile = "/usr/local/apie/logs/";
-	//bool bMerge = APie::Ctx::getConfigReader()->GetBoolean("log", "merge", true);
-	if (true)
-	{
-		//nothing
-	}
-	else
-	{
-		sFile.append("agent/");
-	}
 	sFile.append(file);
 #endif
 	

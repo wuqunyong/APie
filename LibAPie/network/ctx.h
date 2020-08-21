@@ -94,6 +94,9 @@ namespace APie
 
 		std::string launchTime();
 
+		static std::string logName();
+		static std::string logPostfix();
+
     private:
 		void daemonize();
 		bool adjustOpenFilesLimit();
@@ -120,6 +123,8 @@ namespace APie
         const Ctx &operator = (const Ctx&) = delete;
 
 		static PlatformImpl s_platform;
+		static std::string s_log_name;
+		static std::string s_log_postfix;
     };
     
 

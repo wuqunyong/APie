@@ -29,6 +29,7 @@ log:
   level: 0
   show_pos: false
   split_size: 128
+  name: "service_registry"
   backup: "D:/backup"
 metrics:
   enable: true

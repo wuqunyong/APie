@@ -35,6 +35,7 @@ log:
   show_pos: false
   split_size: 128
   backup: "D:/backup"
+  name: "apie"
 metrics:
   enable: true
   ip: "127.0.0.1"

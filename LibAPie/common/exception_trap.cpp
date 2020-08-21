@@ -340,10 +340,10 @@ namespace APie {
 	void sigsegvHandler(int sig, siginfo_t *info, void *secret)
 	{
 		/* Log the stack trace */
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE BEGIN ------\n");
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE BEGIN ------");
 		std::string traceStr = generateBackTrace();
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "sigaction: Got signal %d|%s|bt:", sig, strsignal(sig), traceStr.c_str());
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE END ------\n");
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "sigaction: Got signal %d|%s|bt:%s", sig, strsignal(sig), traceStr.c_str());
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "------ STACK TRACE END ------");
 
 		/* Make sure we exit with the right signal at the end. So for instance
 		* the core will be dumped if enabled. */

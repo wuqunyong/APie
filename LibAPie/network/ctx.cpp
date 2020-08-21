@@ -46,12 +46,15 @@ sigset_t g_SigSet;
 #include "logger.h"
 #include "i_poll_events.hpp"
 #include "../common/string_utils.h"
+#include "../api/os_sys_calls.h"
 
 
 
 namespace APie {
 
 PlatformImpl Ctx::s_platform;
+std::string Ctx::s_log_name;
+std::string Ctx::s_log_postfix;
 
 class PortCb : public Network::ListenerCallbacks
 {
@@ -158,10 +161,13 @@ uint32_t Ctx::generateHash(EndPoint point)
 
 void Ctx::init(const std::string& configFile)
 {
-	char timebuf[64] = { '\0' };
+	char timebuf[128] = { '\0' };
 	time_t now = time(NULL);
-	strftime(timebuf, sizeof(timebuf), "%Y%m%d_%H%M%S", localtime(&now));
+	strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
 	m_launchTime = timebuf;
+
+	memset(timebuf, 0, sizeof(timebuf));
+
 
 	APie::ExceptionTrap();
 
@@ -177,6 +183,14 @@ void Ctx::init(const std::string& configFile)
 		{
 			this->daemonize();
 		}
+
+		s_log_name = APie::CtxSingleton::get().yamlAs<std::string>({ "log", "name" }, "apie");
+
+		uint32_t pid = APie::Api::OsSysCallsSingleton::get().getCurProcessId();
+		snprintf(timebuf, sizeof(timebuf), "%d-%s", pid, m_launchTime.c_str());
+		s_log_postfix = timebuf;
+
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "config:%s", configFile.c_str());
 
 		adjustOpenFilesLimit();
 		enableCoreFiles();
@@ -541,6 +555,16 @@ YAML::Node& Ctx::yamlNode()
 std::string Ctx::launchTime()
 {
 	return m_launchTime;
+}
+
+std::string Ctx::logName()
+{
+	return s_log_name;
+}
+
+std::string Ctx::logPostfix()
+{
+	return s_log_postfix;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()
