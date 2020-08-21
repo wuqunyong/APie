@@ -84,7 +84,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 
 	LogFile* ptrFile = NULL;
 	bool bMerge = APie::CtxSingleton::get().yamlAs<bool>({"log","merge"}, true); 
-	if (true)
+	if (bMerge)
 	{
 		bMergeFlag = true;
 		logFileName = APie::Ctx::logName() + "-" + APie::Ctx::logPostfix();
@@ -260,7 +260,7 @@ void moveFile(std::string from, std::string to)
 
 	std::string baseName = APie::Filesystem::Directory::basename(from.c_str());
 	char filePostfix[64] = { '\0' };
-	strftime(filePostfix, sizeof(filePostfix), "%Y%m%d-%H%M", localtime(&now));
+	strftime(filePostfix, sizeof(filePostfix), "backup-%Y%m%d-%H%M", localtime(&now));
 	std::string sNewFileName;
 	sNewFileName = baseName;
 	sNewFileName.append(".");
@@ -298,7 +298,7 @@ void checkRotate()
 			++ite;
 			cacheMap.erase(o);
 
-			std::string toDir = APie::CtxSingleton::get().yamlAs<std::string>({ "log","backup" }, ".");
+			std::string toDir = APie::CtxSingleton::get().yamlAs<std::string>({"log","backup"}, "");
 			moveFile(fromFile, toDir);
 			continue;
 		}
@@ -350,7 +350,7 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	if (0 == fstat(fileFd, &statInfo))
 	{
 		int32_t iSize = APie::CtxSingleton::get().yamlAs<int>({ "log","split_size" }, 128);
-		if (statInfo.st_size > 1024 * 1024 * iSize)
+		if (statInfo.st_size >  iSize)
 		{
 			return true;
 		}
