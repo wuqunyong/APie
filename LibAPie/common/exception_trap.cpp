@@ -330,7 +330,12 @@ namespace APie {
 		std::ostringstream ss;
 		ss << "Stack:\n";
 		for (int i = 1; i < numFrames; ++i) {
-			ss << symbols[i] << '\n';
+			//ss << symbols[i] << '\n';
+			ss << symbols[i];
+			if (i + 1 < numFrames)
+			{
+				ss << '\n';
+			}
 		}
 		free(symbols);
 
