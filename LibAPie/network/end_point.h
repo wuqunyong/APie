@@ -45,7 +45,7 @@ namespace APie
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
 
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
-		
+		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
 	private:
 		State m_state = { Unregistered };
@@ -57,6 +57,7 @@ namespace APie
 	{
 		uint64_t iSerialNum = 0;
 		uint32_t iState = 0;
+		time_t iLastHeartbeat = 0;
 	};
 
 	class EndPointMgr
@@ -72,12 +73,14 @@ namespace APie
 		std::optional<uint64_t> getSerialNum(EndPoint point);
 
 		void addRoute(const EndPoint& point, uint64_t iSerialNum);
+		void delRoute(uint64_t iSerialNum);
 
 		void clear();
 
 	private:
 		std::map<EndPoint, ::service_discovery::EndPointInstance> m_endpoints;
 		std::map<EndPoint, EstablishedState> m_establishedPoints;
+		std::map<uint64_t, EndPoint> m_reversePoints; 
 	};
 
 	using EndPointMgrSingleton = ThreadSafeSingleton<EndPointMgr>;

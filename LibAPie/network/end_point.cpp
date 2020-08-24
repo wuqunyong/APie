@@ -10,7 +10,7 @@
 #include "../api/pubsub.h"
 
 #include "output_stream.h"
-
+#include <sstream>
 
 namespace APie{
 
@@ -23,7 +23,7 @@ void SelfRegistration::init()
 
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
-
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, SelfRegistration::onServerPeerClose);
 
 	this->registerEndpoint();
 }
@@ -175,20 +175,36 @@ void EndPointMgr::addRoute(const EndPoint& point, uint64_t iSerialNum)
 {
 	EstablishedState state;
 	state.iSerialNum = iSerialNum;
+	state.iLastHeartbeat = time(NULL);
 
 	m_establishedPoints[point] = state;
+	m_reversePoints[iSerialNum] = point;
+}
+
+void EndPointMgr::delRoute(uint64_t iSerialNum)
+{
+	auto findIte = m_reversePoints.find(iSerialNum);
+	if (findIte == m_reversePoints.end())
+	{
+		return;
+	}
+
+	m_establishedPoints.erase(findIte->second);
+	m_reversePoints.erase(findIte);
 }
 
 void EndPointMgr::clear()
 {
 	this->m_endpoints.clear();
-	this->m_establishedPoints.clear();
+	//this->m_establishedPoints.clear();
 }
 
 
 void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response)
 {
-	std::cout << "iSerialNum:" << iSerialNum << ",response:" << response.DebugString() << std::endl;
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << ",response:" << response.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/handleRespAddInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	if (response.status_code() != opcodes::StatusCode::SC_Ok)
 	{
@@ -200,7 +216,9 @@ void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::servic
 
 void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice)
 {
-	std::cout << "iSerialNum:" << iSerialNum << ",notice:" << notice.DebugString() << std::endl;
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/handleNoticeInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	switch (notice.mode())
 	{
@@ -264,8 +282,10 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 
 void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
 {
+	std::stringstream ss;
 	auto& refMsg = dynamic_cast<::pubsub::CLIENT_PEER_CLOSE&>(msg);
-	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
+	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();
 	auto clientProxy = APie::ClientProxy::findClient(iSerialNum);
@@ -279,6 +299,18 @@ void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Mes
 			clientProxy->addReconnectTimer(3000);
 		}
 	}
+}
+
+void SelfRegistration::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	std::stringstream ss;
+
+	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
+	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+	uint64_t iSerialNum = refMsg.serial_num();
+	EndPointMgrSingleton::get().delRoute(iSerialNum);
 }
 
 }

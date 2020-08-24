@@ -80,7 +80,9 @@ void ServiceRegistry::broadcast()
 
 void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& request)
 {
-	std::cout << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString() << std::endl;
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
 
@@ -102,8 +104,10 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 
 void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
 {
+	std::stringstream ss;
 	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	std::cout << "topic:" << topic << ",refMsg:" << refMsg.DebugString() << std::endl;
+	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();
 	bool bChanged = ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);

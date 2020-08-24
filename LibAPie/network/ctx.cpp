@@ -66,8 +66,6 @@ public:
 
 	void onAccept(evutil_socket_t fd)
 	{
-		//std::cout << fd << std::endl;
-
 		std::string ip;
 		auto ptrAddr = Network::addressFromFd(fd);
 		if (ptrAddr != nullptr)

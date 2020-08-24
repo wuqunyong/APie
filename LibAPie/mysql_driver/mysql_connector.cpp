@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <string>
+#include "../network/logger.h"
 
 
 MySQLConnector::MySQLConnector()
@@ -37,9 +38,8 @@ bool MySQLConnector::connect(void)
 	if (!mysql_con)
 	{
 		std::stringstream ss;
-		ss << "Could not init MySQL Connector to database " << this->options_.db << std::endl;
-		
-		//ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ss << "Could not init MySQL Connector to database " << this->options_.db;
+		ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
 		return false;
 	}
@@ -70,9 +70,9 @@ bool MySQLConnector::connect(void)
 	else
 	{
 		std::stringstream ss;
-		ss << "sql: Connector failed. Reason was " << mysql_error(mysql_con) << std::endl;
+		ss << "sql: Connector failed. Reason was " << mysql_error(mysql_con);
 		
-		//ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
 		mysql_close(mysql_con);
 		return false;
@@ -240,9 +240,9 @@ bool MySQLConnector::query(const char *q, unsigned long length, std::shared_ptr<
 				else // mysql_store_result() should have returned data
 				{
 					std::stringstream ss;
-					ss << "Error: " << mysql_error(this->mysql_) << std::endl;
+					ss << "Error: " << mysql_error(this->mysql_);
 					
-					//ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+					ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
 					return false;
 				}
