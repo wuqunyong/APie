@@ -269,12 +269,17 @@ void DispatcherImpl::handleCommand()
 		}
 		case Command::close_local_client:
 		{
-			this->handleClosePeerNode(cmd.args.close_local_client.ptrData);
+			this->handleCloseLocalClient(cmd.args.close_local_client.ptrData);
+			break;
+		}
+		case Command::close_local_server:
+		{
+			this->handleCloseLocalClient(cmd.args.close_local_client.ptrData);
 			break;
 		}
 		case Command::client_peer_close:
 		{
-			this->handlePeerClose(cmd.args.client_peer_close.ptrData);
+			this->handleClientPeerClose(cmd.args.client_peer_close.ptrData);
 			break;
 		}
 		case Command::server_peer_close:
@@ -546,7 +551,7 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
 }
 
-void DispatcherImpl::handlePeerClose(ClientPeerClose* ptrCmd)
+void DispatcherImpl::handleClientPeerClose(ClientPeerClose* ptrCmd)
 {
 	::pubsub::CLIENT_PEER_CLOSE msg;
 	msg.set_serial_num(ptrCmd->iSerialNum);
@@ -557,9 +562,14 @@ void DispatcherImpl::handlePeerClose(ClientPeerClose* ptrCmd)
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_ClientPeerClose, msg);
 }
 
-void DispatcherImpl::handleClosePeerNode(CloseLocalClient* ptrCmd)
+void DispatcherImpl::handleCloseLocalClient(CloseLocalClient* ptrCmd)
 {
 	APie::Event::DispatcherImpl::delClientConnection(ptrCmd->iSerialNum);
+}
+
+void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
+{
+	APie::Event::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
 }
 
 void DispatcherImpl::handleServerPeerClose(ServerPeerClose* ptrCmd)

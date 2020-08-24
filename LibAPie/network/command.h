@@ -93,6 +93,11 @@ namespace APie
 		uint64_t iSerialNum;
 	};
 
+	struct CloseLocalServer
+	{
+		uint64_t iSerialNum;
+	};
+
 	struct ClientPeerClose
 	{
 		uint64_t iSerialNum;
@@ -139,6 +144,7 @@ namespace APie
 			logic_cmd,
 
 			close_local_client, //active(LogicThread -> IOThread | ClientProxy::sendClose)
+			close_local_server,
 			client_peer_close,  //client: passive(IOThread -> LogicThread)
 			server_peer_close,  //server: passive(IOThread -> LogicThread)
 
@@ -194,6 +200,10 @@ namespace APie
 			struct {
 				CloseLocalClient* ptrData;
 			} close_local_client;
+
+			struct {
+				CloseLocalServer* ptrData;
+			} close_local_server;
 
 			struct {
 				ClientPeerClose* ptrData;

@@ -303,4 +303,31 @@ void ServerConnection::handleClose()
 	this->close(ss.str());
 }
 
+void ServerConnection::sendCloseLocalServer(uint64_t iSerialNum)
+{
+	APie::CloseLocalServer *ptr = new APie::CloseLocalServer;
+	ptr->iSerialNum = iSerialNum;
+
+	Command cmd;
+	cmd.type = Command::close_local_server;
+	cmd.args.close_local_server.ptrData = ptr;
+
+	auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+	if (ptrConnection == nullptr)
+	{
+		delete ptr;
+		return;
+	}
+
+	uint32_t iThreadId = ptrConnection->getTId();
+	auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
+	if (ptrThread == nullptr)
+	{
+		delete ptr;
+		return;
+	}
+
+	ptrThread->push(cmd);
+}
+
 }

@@ -82,8 +82,9 @@ private:
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
   void handleLogicCmd(LogicCmd* ptrCmd);
-  void handlePeerClose(ClientPeerClose* ptrCmd);
-  void handleClosePeerNode(CloseLocalClient* ptrCmd);
+  void handleCloseLocalClient(CloseLocalClient* ptrCmd);
+  void handleCloseLocalServer(CloseLocalServer* ptrCmd);
+  void handleClientPeerClose(ClientPeerClose* ptrCmd);
   void handleServerPeerClose(ServerPeerClose* ptrCmd);
 
   void handleLogicStart(uint32_t iThreadId);

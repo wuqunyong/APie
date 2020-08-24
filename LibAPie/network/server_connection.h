@@ -54,6 +54,7 @@ namespace APie
 		void handleClose();
 
 		static bool validProtocol(ProtocolType iType);
+		static void sendCloseLocalServer(uint64_t iSerialNum);
 	private:
 		void sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive);
 
