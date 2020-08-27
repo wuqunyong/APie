@@ -14,6 +14,11 @@ set -x   # activate debugging from here
 BASE_DIR="$(cd "$(dirname -- "$0")" ; pwd)"
 echo "CurDir: $BASE_DIR"
 
+cmake:
+  ./bootstrap
+  make
+  make install
+
 
 yaml:
 
@@ -43,3 +48,13 @@ AC_ARG_ENABLE([debug],
  [AS_HELP_STRING([--enable-debug],[debug program(default is no)])],
  [CFLAGS="${CFLAGS} -g -O0"],
  [CFLAGS="-g -O2"]
+
+
+
+3.redis
+
+tar -zxvf redis-3.0.0.tar.gz 
+cd /usr/local/redis-3.0.0
+make
+make install
+

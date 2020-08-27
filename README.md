@@ -81,3 +81,7 @@ std::wstring to_wstring(std::string str)
 
 jps
 https://movingai.com/GPPC/code.html
+
+
+available
+unavailable
