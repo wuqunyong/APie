@@ -41,6 +41,10 @@ protobuf:
  sudo make install
  sudo ldconfig # refresh shared library cache.
 
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
+
+
 1. 升级GCC
 
 yum install centos-release-scl -y
