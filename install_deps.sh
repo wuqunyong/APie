@@ -32,6 +32,14 @@ make test
 make install
 
 
+protobuf:
+./autogen.sh
+
+ ./configure
+ make
+ make check
+ sudo make install
+ sudo ldconfig # refresh shared library cache.
 
 1. 升级GCC
 
