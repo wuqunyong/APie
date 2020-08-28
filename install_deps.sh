@@ -74,3 +74,8 @@ cd /usr/local/redis-3.0.0
 make
 make install
 
+
+strings  /etc/ld.so.cache
+
+
+ readelf -d demo
