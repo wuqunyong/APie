@@ -9,7 +9,7 @@ INCLUDES = -I /usr/local/include/ \
 			-I $(top_srcdir)/PBMsg \
 			-I $(top_srcdir)/LibAPie
 			
-apie_module_ldflags = -L/usr/lib64/mysql/ -L/usr/local/lib -L/usr/local/protobuf/lib/ -L/root/yaml-cpp-master/build -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+apie_module_ldflags = -L/usr/lib64/mysql/ -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib/ -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
 route_proxy_sources = \
 	$(top_srcdir)/RouteProxy/main.cpp \

@@ -75,7 +75,7 @@ apie_sources = \
 lib_LTLIBRARIES = libapie.la
 libapie_la_SOURCES = $(apie_sources)
 libapie_la_LIBADD = -lmysqlclient
-libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -L/usr/local/lib/ -L/usr/local/protobuf/lib/ -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+libapie_la_LDFLAGS = -L/usr/lib64/mysql/ -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib/ -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
 
 # apie_module_ldflags = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
