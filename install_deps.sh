@@ -35,14 +35,18 @@ make install
 protobuf:
 ./autogen.sh
 
- ./configure
+ ./configure --prefix=/usr/local/protobuf
  make
  make check
  sudo make install
  sudo ldconfig # refresh shared library cache.
 
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/protobuf/lib/
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/protobuf/lib/
+export PATH=$PATH:/usr/local/protobuf/bin/
+
+export PKG_CONFIG_PATH=/usr/local/protobuf/lib/pkgconfig/
 
 
 1. 升级GCC
