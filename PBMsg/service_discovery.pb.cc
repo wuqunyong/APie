@@ -159,11 +159,13 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   "ndPointInstance\022<\n\017delete_instance\030\003 \003(\013"
   "2#.service_discovery.EndPointInstance\022<\n"
   "\017update_instance\030\004 \003(\0132#.service_discove"
-  "ry.EndPointInstance*n\n\014EndPointType\022\014\n\010E"
-  "PT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022\023\n\017E"
-  "PT_Route_Proxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022\013"
-  "\n\007EPT_Max\020\004*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013"
-  "\n\007UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
+  "ry.EndPointInstance*\230\001\n\014EndPointType\022\014\n\010"
+  "EPT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022\023\n\017"
+  "EPT_Route_Proxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022"
+  "\026\n\022EPT_Gateway_Server\020\004\022\020\n\014EPT_DB_Proxy\020"
+  "\005\022\013\n\007EPT_Max\020\006*:\n\nUpdateMode\022\013\n\007UM_None\020"
+  "\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006prot"
+  "o3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
 };
@@ -176,7 +178,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 759,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 802,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 4, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -196,6 +198,8 @@ bool EndPointType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;

@@ -10,7 +10,9 @@ enum EndPointType
 	EPT_Service_Registry = 1;
 	EPT_Route_Proxy = 2;
 	EPT_Scene_Server = 3;
-	EPT_Max = 4;
+	EPT_Gateway_Server = 4;
+	EPT_DB_Proxy = 5;
+	EPT_Max = 6;
 }
 
 enum UpdateMode
