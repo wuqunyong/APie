@@ -1,4 +1,4 @@
-SUBDIRS = bin GatewayServer RouteProxy SceneServer ServiceRegistry
+SUBDIRS = bin DBProxy GatewayServer RouteProxy SceneServer ServiceRegistry
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
@@ -23,6 +23,7 @@ $(name).spec : $(name).spec.in FORCE
 	$< > $@
 
 EXTRA_DIST =  \
+	DBProxy \
 	GatewayServer \
 	LibAPie \
 	PBMsg \

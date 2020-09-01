@@ -1,16 +1,16 @@
 identify:
-  type: 3
+  type: 2
   id: 1
   auth: "hello"
   ip: "127.0.0.1"
-  port: 14007
+  port: 15007
   codec_type: 1
 io_threads: 2
 listeners:
 - address:
     socket_address:
       address: "127.0.0.1"
-      port_value: 14007
+      port_value: 15007
       type: 1
 service_registry:
   address: "127.0.0.1"
@@ -23,7 +23,7 @@ log:
   show_pos: false
   split_size: 128
   backup: "D:/backup"
-  name: "gateway_server"
+  name: "db_proxy"
 metrics:
   enable: true
   ip: "127.0.0.1"
