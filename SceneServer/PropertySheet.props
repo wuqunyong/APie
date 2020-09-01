@@ -11,6 +11,7 @@
       <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>LibAPie.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>

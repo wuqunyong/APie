@@ -23,6 +23,7 @@ log:
   show_pos: false
   split_size: 128
   backup: "D:/backup"
+  name: "scene_server"
 metrics:
   enable: true
   ip: "127.0.0.1"

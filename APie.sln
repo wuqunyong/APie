@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RouteProxy", "RouteProxy\Ro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneServer", "SceneServer\SceneServer.vcxproj", "{44CFB77A-F146-4DE4-8421-F6055566E75C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GatewayServer", "GatewayServer\GatewayServer.vcxproj", "{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Release|x64.Build.0 = Release|x64
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Release|x86.ActiveCfg = Release|Win32
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Release|x86.Build.0 = Release|Win32
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Debug|x64.ActiveCfg = Debug|x64
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Debug|x64.Build.0 = Debug|x64
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Debug|x86.ActiveCfg = Debug|Win32
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Debug|x86.Build.0 = Debug|Win32
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Release|x64.ActiveCfg = Release|x64
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Release|x64.Build.0 = Release|x64
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Release|x86.ActiveCfg = Release|Win32
+		{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
