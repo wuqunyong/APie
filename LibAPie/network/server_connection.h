@@ -45,6 +45,7 @@ namespace APie
 		void writecb();
 		void eventcb(short what);
 
+		void setIp(std::string ip, std::string peerIp);
 
 		void close(std::string sInfo, uint32_t iCode = 0, uint32_t iActive = 0);
         ~ServerConnection();
@@ -69,6 +70,8 @@ namespace APie
 		bufferevent *bev;
 
 		HttpRequestDecoder decoder;
+		std::string sIp;
+		std::string sPeerIp;
 
 		ServerConnection(const ServerConnection&) = delete;
         const ServerConnection &operator = (const ServerConnection&) = delete;

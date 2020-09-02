@@ -446,6 +446,7 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 		bufferevent_free(bev);
 		return;
 	}
+	ptrConnection->setIp(itemPtr->sIp, itemPtr->sPeerIp);
 
 	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
 	bufferevent_enable(bev, EV_READ | EV_WRITE);

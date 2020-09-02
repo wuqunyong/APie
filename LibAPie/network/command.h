@@ -42,6 +42,7 @@ namespace APie
 		evutil_socket_t iFd;
 		ProtocolType iType;
 		std::string sIp;
+		std::string sPeerIp;
 	};
 
 	struct PBRequest

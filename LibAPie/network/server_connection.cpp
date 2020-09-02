@@ -68,7 +68,8 @@ void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive
 	ss << "close|iSerialNum:" << this->iSerialNum
 		<< ",info:" << sInfo
 		<< ",code:" << iCode
-		<< ",active:" << iActive;
+		<< ",active:" << iActive
+		<< ",address:" << this->sIp << "->" << this->sPeerIp;
 	ASYNC_PIE_LOG("ServerConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	this->sendCloseCmd(iCode, sInfo, iActive);
@@ -274,6 +275,11 @@ void ServerConnection::eventcb(short what)
 
 }
 
+void ServerConnection::setIp(std::string ip, std::string peerIp)
+{
+	this->sIp = ip;
+	this->sPeerIp = peerIp;
+}
 
 void ServerConnection::handleSend(const char *data, size_t size)
 {

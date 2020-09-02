@@ -55,7 +55,11 @@ std::string makeFriendlyAddress(sockaddr_in addr) {
 		return "";
 	}
 
-	return ptr;
+	std::string ip(ptr);
+	uint16_t port = ntohs(addr.sin_port);
+	ip = ip + ":" + std::to_string(port);
+
+	return ip;
 }
 
 int getInAddr(struct in_addr * dst, const char *address)

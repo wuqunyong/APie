@@ -3,7 +3,7 @@ call :startfunc DBProxy.exe ../../conf/db_proxy.yaml
 call :startfunc GatewayServer.exe ../../conf/gateway_server.yaml
 call :startfunc RouteProxy.exe ../../conf/route_proxy.yaml
 call :startfunc SceneServer.exe ../../conf/scene_server.yaml
-rem call :startfunc ServiceRegistry.exe ../../conf/service_registry.yaml
+call :startfunc ServiceRegistry.exe ../../conf/service_registry.yaml
 
 goto end
 

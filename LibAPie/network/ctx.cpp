@@ -67,16 +67,25 @@ public:
 	void onAccept(evutil_socket_t fd)
 	{
 		std::string ip;
+		std::string peerIp;
 		auto ptrAddr = Network::addressFromFd(fd);
 		if (ptrAddr != nullptr)
 		{
 			ip = Network::makeFriendlyAddress(*ptrAddr);
 		}
 
+		auto ptrPeerAddr = Network::peerAddressFromFd(fd);
+		if (ptrPeerAddr != nullptr)
+		{
+			peerIp = Network::makeFriendlyAddress(*ptrPeerAddr);
+		}
+
+
 		PassiveConnect *itemObjPtr = new PassiveConnect;
 		itemObjPtr->iFd = fd;
 		itemObjPtr->iType = m_type;
 		itemObjPtr->sIp = ip;
+		itemObjPtr->sPeerIp = peerIp;
 
 		Command command;
 		command.type = Command::passive_connect;
