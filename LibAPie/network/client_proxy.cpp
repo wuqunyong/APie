@@ -315,7 +315,7 @@ uint64_t ClientProxy::generatorId()
 void ClientProxy::onRecvPackage(uint64_t iSerialNum, ::google::protobuf::Message* ptrMsg)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",Message:" << ptrMsg->DebugString();
+	ss << "iSerialNum:" << iSerialNum << ",Message:" << ptrMsg->ShortDebugString();
 	ASYNC_PIE_LOG("ClientProxy/onRecvPackage", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 }
 

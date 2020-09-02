@@ -158,7 +158,7 @@ std::map<EndPoint, std::shared_ptr<RouteClient>>& RouteProxy::connectedPool()
 void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register::MSG_RESP_ADD_ROUTE& response)
 {
 	std::stringstream ss;
-	ss << "handleRespAddRoute|" << "iSerialNum:" << iSerialNum << ",response:" << response.DebugString();
+	ss << "handleRespAddRoute|" << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
 	ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
@@ -167,7 +167,7 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 	std::stringstream ss;
 
 	auto& refMsg = dynamic_cast<::pubsub::DISCOVERY_NOTICE&>(msg);
-	ss << "onDiscoveryNotice|" << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ss << "onDiscoveryNotice|" << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
 	ASYNC_PIE_LOG("RouteProxy/onDiscoveryNotice", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	switch (refMsg.notice().mode())

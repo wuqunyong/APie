@@ -83,7 +83,7 @@ void ServiceRegistry::broadcast()
 void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_ADD_INSTANCE& request)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString();
+	ss << "iSerialNum:" << iSerialNum << ",request:" << request.ShortDebugString();
 
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
 
@@ -121,7 +121,7 @@ void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Mess
 {
 	std::stringstream ss;
 	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();

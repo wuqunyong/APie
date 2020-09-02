@@ -33,7 +33,7 @@ std::tuple<uint32_t, std::string> initHook()
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
 
 	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
-		std::cout << "serialNum:" << serialNum << ",msg:" << msg.DebugString() << std::endl;
+		std::cout << "serialNum:" << serialNum << ",msg:" << msg.ShortDebugString() << std::endl;
 
 		auto ptrClint = APie::ClientProxy::findClient(serialNum);
 		if (ptrClint == nullptr)
@@ -125,11 +125,11 @@ std::tuple<uint32_t, std::string> startHook()
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg1 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-		std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.DebugString() << std::endl;
+		std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.ShortDebugString() << std::endl;
 	});
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
 		auto& refMsg2 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-		std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.DebugString() << std::endl;
+		std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.ShortDebugString() << std::endl;
 	});
 
 	return std::make_tuple(0, "");
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 
 	//auto ptrTest1 = [](uint64_t topic, ::google::protobuf::Message& msg) {
 	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-	//	std::cout << "sub:" << refMsg.DebugString();
+	//	std::cout << "sub:" << refMsg.ShortDebugString();
 
 	//	auto userId = refMsg.user_id() + 111;
 	//	refMsg.set_user_id(userId);
@@ -159,7 +159,7 @@ int main(int argc, char **argv)
 
 	//auto ptrTest2 = [](uint64_t topic, ::google::protobuf::Message& msg) {
 	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
-	//	std::cout << "sub:" << refMsg.DebugString();
+	//	std::cout << "sub:" << refMsg.ShortDebugString();
 	//};
 	//APie::PubSubSingleton::get().subscribe(1, ptrTest2);
 	//uint64_t id = APie::PubSubSingleton::get().subscribe(1, ptrTest2);

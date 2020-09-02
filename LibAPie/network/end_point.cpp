@@ -225,7 +225,7 @@ void EndPointMgr::clear()
 void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",response:" << response.DebugString();
+	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
 
 	if (response.status_code() != opcodes::StatusCode::SC_Ok)
 	{
@@ -242,7 +242,7 @@ void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::servic
 void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice.DebugString();
+	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice.ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/handleNoticeInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	switch (notice.mode())
@@ -309,7 +309,7 @@ void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Mes
 {
 	std::stringstream ss;
 	auto& refMsg = dynamic_cast<::pubsub::CLIENT_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();
@@ -331,7 +331,7 @@ void SelfRegistration::onServerPeerClose(uint64_t topic, ::google::protobuf::Mes
 	std::stringstream ss;
 
 	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.DebugString();
+	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();
