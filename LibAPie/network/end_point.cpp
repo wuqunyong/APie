@@ -18,6 +18,7 @@ void SelfRegistration::init()
 {
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat, ::service_discovery::MSG_RESP_HEARTBEAT::default_instance());
 
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
 
@@ -68,7 +69,7 @@ void SelfRegistration::registerEndpoint()
 		}
 		else
 		{
-			ptrSelf->sendHeartbeat();
+			ptrSelf->sendHeartbeat(ptrClient);
 		}
 	};
 	ptrClient->setHeartbeatCb(heartbeatCb);
@@ -103,9 +104,11 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, request);
 }
 
-void SelfRegistration::sendHeartbeat()
+void SelfRegistration::sendHeartbeat(APie::ClientProxy* ptrClient)
 {
+	::service_discovery::MSG_REQUEST_HEARTBEAT request;
 
+	ptrClient->sendMsg(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, request);
 }
 
 
@@ -267,6 +270,13 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service
 	::pubsub::DISCOVERY_NOTICE msg;
 	*msg.mutable_notice() = notice;
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_DiscoveryNotice, msg);
+}
+
+void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_HEARTBEAT& response)
+{
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
+	ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
 void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request)

@@ -5,14 +5,44 @@ namespace APie {
 void ServiceRegistry::init()
 {
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, ServiceRegistry::handleRequestAddInstance, ::service_discovery::MSG_REQUEST_ADD_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat, ::service_discovery::MSG_REQUEST_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
+}
+
+void ServiceRegistry::start()
+{
+	auto timerCb = [this]() {
+		this->update();
+		this->addUpdateTimer(1000);
+	};
+	this->m_updateTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+	this->addUpdateTimer(1000);
+}
+
+void ServiceRegistry::exit()
+{
+	this->disableUpdateTimer();
+}
+
+void ServiceRegistry::addUpdateTimer(uint64_t interval)
+{
+	this->m_updateTimer->enableTimer(std::chrono::milliseconds(interval));
+}
+
+void ServiceRegistry::disableUpdateTimer()
+{
+	this->m_updateTimer->disableTimer();
+}
+
+void ServiceRegistry::update()
+{
+	this->checkTimeout();
 }
 
 bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
 {
 	auto curTime = APie::CtxSingleton::get().getNowSeconds();
-
 
 	EndPoint point;
 	point.type = instance.type();
@@ -45,6 +75,22 @@ bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 	return true;
 }
 
+
+bool ServiceRegistry::updateHeartbeat(uint64_t iSerialNum)
+{
+	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+
+	auto findIte = m_registered.find(iSerialNum);
+	if (findIte != m_registered.end())
+	{
+		findIte->second.modifyTime = curTime;
+
+		return true;
+	}
+
+	return false;
+}
+
 bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 {
 	bool bResult = false;
@@ -62,6 +108,35 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 	}
 
 	return bResult;
+}
+
+void ServiceRegistry::checkTimeout()
+{
+	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+	std::vector<uint64_t> delSerial;
+	for (const auto& items : m_registered)
+	{
+		if (curTime > items.second.modifyTime + 60)
+		{
+			delSerial.push_back(items.first);
+		}
+	}
+
+	bool bChanged = false;
+	for (const auto& items : delSerial)
+	{
+		ServerConnection::sendCloseLocalServer(items);
+		bool bTemp = ServiceRegistrySingleton::get().deleteBySerialNum(items);
+		if (bTemp)
+		{
+			bChanged = true;
+		}
+	}
+
+	if (bChanged)
+	{
+		ServiceRegistrySingleton::get().broadcast();
+	}
 }
 
 void ServiceRegistry::broadcast()
@@ -116,6 +191,29 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 
 	ServiceRegistrySingleton::get().broadcast();
 }
+
+void ServiceRegistry::handleRequestHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_HEARTBEAT& request)
+{
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << ",request:" << request.ShortDebugString();
+
+	::service_discovery::MSG_RESP_HEARTBEAT response;
+	response.set_status_code(opcodes::SC_Ok);
+
+	bool bResult = ServiceRegistrySingleton::get().updateHeartbeat(iSerialNum);
+	if (!bResult)
+	{
+		response.set_status_code(opcodes::SC_Discovery_Unregistered);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, response);
+
+		ss << ",node:Unregistered";
+		ASYNC_PIE_LOG("SelfRegistration/handleRequestHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		return;
+	}
+
+	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, response);
+}
+
 
 void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
 {

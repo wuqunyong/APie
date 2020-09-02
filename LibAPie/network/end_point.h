@@ -39,12 +39,14 @@ namespace APie
 		State state();
 
 		void sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth);
-		void sendHeartbeat();
+		void sendHeartbeat(APie::ClientProxy* ptrClient);
 
 	public:
 		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);
 		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
+		static void handleRespHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_HEARTBEAT& response);
 		
+
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
 
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);

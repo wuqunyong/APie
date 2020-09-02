@@ -32,6 +32,14 @@ class MSG_NOTICE_INSTANCEDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_NOTICE_INSTANCE> _instance;
 } _MSG_NOTICE_INSTANCE_default_instance_;
+class MSG_REQUEST_HEARTBEATDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_REQUEST_HEARTBEAT> _instance;
+} _MSG_REQUEST_HEARTBEAT_default_instance_;
+class MSG_RESP_HEARTBEATDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RESP_HEARTBEAT> _instance;
+} _MSG_RESP_HEARTBEAT_default_instance_;
 }  // namespace service_discovery
 static void InitDefaultsscc_info_EndPointInstance_service_5fdiscovery_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -77,6 +85,20 @@ static void InitDefaultsscc_info_MSG_REQUEST_ADD_INSTANCE_service_5fdiscovery_2e
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MSG_REQUEST_ADD_INSTANCE_service_5fdiscovery_2eproto}, {
       &scc_info_EndPointInstance_service_5fdiscovery_2eproto.base,}};
 
+static void InitDefaultsscc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::service_discovery::_MSG_REQUEST_HEARTBEAT_default_instance_;
+    new (ptr) ::service_discovery::MSG_REQUEST_HEARTBEAT();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::service_discovery::MSG_REQUEST_HEARTBEAT::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto}, {}};
+
 static void InitDefaultsscc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -91,7 +113,21 @@ static void InitDefaultsscc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2epro
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[4];
+static void InitDefaultsscc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::service_discovery::_MSG_RESP_HEARTBEAT_default_instance_;
+    new (ptr) ::service_discovery::MSG_RESP_HEARTBEAT();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::service_discovery::MSG_RESP_HEARTBEAT::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto}, {}};
+
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[6];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_service_5fdiscovery_2eproto = nullptr;
 
@@ -129,12 +165,25 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, add_instance_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, delete_instance_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, update_instance_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_REQUEST_HEARTBEAT, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESP_HEARTBEAT, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESP_HEARTBEAT, status_code_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
   { 11, -1, sizeof(::service_discovery::MSG_REQUEST_ADD_INSTANCE)},
   { 18, -1, sizeof(::service_discovery::MSG_RESP_ADD_INSTANCE)},
   { 24, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 33, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
+  { 38, -1, sizeof(::service_discovery::MSG_RESP_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -142,6 +191,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_REQUEST_ADD_INSTANCE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_RESP_ADD_INSTANCE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_NOTICE_INSTANCE_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_REQUEST_HEARTBEAT_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_RESP_HEARTBEAT_default_instance_),
 };
 
 const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -159,29 +210,32 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   "ndPointInstance\022<\n\017delete_instance\030\003 \003(\013"
   "2#.service_discovery.EndPointInstance\022<\n"
   "\017update_instance\030\004 \003(\0132#.service_discove"
-  "ry.EndPointInstance*\230\001\n\014EndPointType\022\014\n\010"
-  "EPT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022\023\n\017"
-  "EPT_Route_Proxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022"
-  "\026\n\022EPT_Gateway_Server\020\004\022\020\n\014EPT_DB_Proxy\020"
-  "\005\022\013\n\007EPT_Max\020\006*:\n\nUpdateMode\022\013\n\007UM_None\020"
-  "\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006prot"
-  "o3"
+  "ry.EndPointInstance\"\027\n\025MSG_REQUEST_HEART"
+  "BEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013status_cod"
+  "e\030\001 \001(\r*\230\001\n\014EndPointType\022\014\n\010EPT_None\020\000\022\030"
+  "\n\024EPT_Service_Registry\020\001\022\023\n\017EPT_Route_Pr"
+  "oxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022\026\n\022EPT_Gatew"
+  "ay_Server\020\004\022\020\n\014EPT_DB_Proxy\020\005\022\013\n\007EPT_Max"
+  "\020\006*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Full"
+  "\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_service_5fdiscovery_2eproto_sccs[4] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_service_5fdiscovery_2eproto_sccs[6] = {
   &scc_info_EndPointInstance_service_5fdiscovery_2eproto.base,
   &scc_info_MSG_NOTICE_INSTANCE_service_5fdiscovery_2eproto.base,
   &scc_info_MSG_REQUEST_ADD_INSTANCE_service_5fdiscovery_2eproto.base,
+  &scc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto.base,
   &scc_info_MSG_RESP_ADD_INSTANCE_service_5fdiscovery_2eproto.base,
+  &scc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 802,
-  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 4, 0,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 870,
+  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 0,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
-  file_level_metadata_service_5fdiscovery_2eproto, 4, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
+  file_level_metadata_service_5fdiscovery_2eproto, 6, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1276,6 +1330,346 @@ void MSG_NOTICE_INSTANCE::InternalSwap(MSG_NOTICE_INSTANCE* other) {
 }
 
 
+// ===================================================================
+
+void MSG_REQUEST_HEARTBEAT::InitAsDefaultInstance() {
+}
+class MSG_REQUEST_HEARTBEAT::_Internal {
+ public:
+};
+
+MSG_REQUEST_HEARTBEAT::MSG_REQUEST_HEARTBEAT()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:service_discovery.MSG_REQUEST_HEARTBEAT)
+}
+MSG_REQUEST_HEARTBEAT::MSG_REQUEST_HEARTBEAT(const MSG_REQUEST_HEARTBEAT& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:service_discovery.MSG_REQUEST_HEARTBEAT)
+}
+
+void MSG_REQUEST_HEARTBEAT::SharedCtor() {
+}
+
+MSG_REQUEST_HEARTBEAT::~MSG_REQUEST_HEARTBEAT() {
+  // @@protoc_insertion_point(destructor:service_discovery.MSG_REQUEST_HEARTBEAT)
+  SharedDtor();
+}
+
+void MSG_REQUEST_HEARTBEAT::SharedDtor() {
+}
+
+void MSG_REQUEST_HEARTBEAT::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_REQUEST_HEARTBEAT& MSG_REQUEST_HEARTBEAT::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_REQUEST_HEARTBEAT::Clear() {
+// @@protoc_insertion_point(message_clear_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_REQUEST_HEARTBEAT::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_REQUEST_HEARTBEAT::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:service_discovery.MSG_REQUEST_HEARTBEAT)
+  return target;
+}
+
+size_t MSG_REQUEST_HEARTBEAT::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_REQUEST_HEARTBEAT::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_REQUEST_HEARTBEAT* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_REQUEST_HEARTBEAT>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:service_discovery.MSG_REQUEST_HEARTBEAT)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:service_discovery.MSG_REQUEST_HEARTBEAT)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_REQUEST_HEARTBEAT::MergeFrom(const MSG_REQUEST_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void MSG_REQUEST_HEARTBEAT::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_REQUEST_HEARTBEAT::CopyFrom(const MSG_REQUEST_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:service_discovery.MSG_REQUEST_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_REQUEST_HEARTBEAT::IsInitialized() const {
+  return true;
+}
+
+void MSG_REQUEST_HEARTBEAT::InternalSwap(MSG_REQUEST_HEARTBEAT* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_REQUEST_HEARTBEAT::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MSG_RESP_HEARTBEAT::InitAsDefaultInstance() {
+}
+class MSG_RESP_HEARTBEAT::_Internal {
+ public:
+};
+
+MSG_RESP_HEARTBEAT::MSG_RESP_HEARTBEAT()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:service_discovery.MSG_RESP_HEARTBEAT)
+}
+MSG_RESP_HEARTBEAT::MSG_RESP_HEARTBEAT(const MSG_RESP_HEARTBEAT& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  status_code_ = from.status_code_;
+  // @@protoc_insertion_point(copy_constructor:service_discovery.MSG_RESP_HEARTBEAT)
+}
+
+void MSG_RESP_HEARTBEAT::SharedCtor() {
+  status_code_ = 0u;
+}
+
+MSG_RESP_HEARTBEAT::~MSG_RESP_HEARTBEAT() {
+  // @@protoc_insertion_point(destructor:service_discovery.MSG_RESP_HEARTBEAT)
+  SharedDtor();
+}
+
+void MSG_RESP_HEARTBEAT::SharedDtor() {
+}
+
+void MSG_RESP_HEARTBEAT::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_RESP_HEARTBEAT& MSG_RESP_HEARTBEAT::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_RESP_HEARTBEAT::Clear() {
+// @@protoc_insertion_point(message_clear_start:service_discovery.MSG_RESP_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  status_code_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_RESP_HEARTBEAT::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint32 status_code = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_RESP_HEARTBEAT::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:service_discovery.MSG_RESP_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 status_code = 1;
+  if (this->status_code() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_status_code(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:service_discovery.MSG_RESP_HEARTBEAT)
+  return target;
+}
+
+size_t MSG_RESP_HEARTBEAT::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:service_discovery.MSG_RESP_HEARTBEAT)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 status_code = 1;
+  if (this->status_code() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_status_code());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_RESP_HEARTBEAT::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:service_discovery.MSG_RESP_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_RESP_HEARTBEAT* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_RESP_HEARTBEAT>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:service_discovery.MSG_RESP_HEARTBEAT)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:service_discovery.MSG_RESP_HEARTBEAT)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_RESP_HEARTBEAT::MergeFrom(const MSG_RESP_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:service_discovery.MSG_RESP_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.status_code() != 0) {
+    _internal_set_status_code(from._internal_status_code());
+  }
+}
+
+void MSG_RESP_HEARTBEAT::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:service_discovery.MSG_RESP_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_RESP_HEARTBEAT::CopyFrom(const MSG_RESP_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:service_discovery.MSG_RESP_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_RESP_HEARTBEAT::IsInitialized() const {
+  return true;
+}
+
+void MSG_RESP_HEARTBEAT::InternalSwap(MSG_RESP_HEARTBEAT* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(status_code_, other->status_code_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_RESP_HEARTBEAT::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace service_discovery
 PROTOBUF_NAMESPACE_OPEN
@@ -1290,6 +1684,12 @@ template<> PROTOBUF_NOINLINE ::service_discovery::MSG_RESP_ADD_INSTANCE* Arena::
 }
 template<> PROTOBUF_NOINLINE ::service_discovery::MSG_NOTICE_INSTANCE* Arena::CreateMaybeMessage< ::service_discovery::MSG_NOTICE_INSTANCE >(Arena* arena) {
   return Arena::CreateInternal< ::service_discovery::MSG_NOTICE_INSTANCE >(arena);
+}
+template<> PROTOBUF_NOINLINE ::service_discovery::MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage< ::service_discovery::MSG_REQUEST_HEARTBEAT >(Arena* arena) {
+  return Arena::CreateInternal< ::service_discovery::MSG_REQUEST_HEARTBEAT >(arena);
+}
+template<> PROTOBUF_NOINLINE ::service_discovery::MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage< ::service_discovery::MSG_RESP_HEARTBEAT >(Arena* arena) {
+  return Arena::CreateInternal< ::service_discovery::MSG_RESP_HEARTBEAT >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

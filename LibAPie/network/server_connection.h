@@ -46,6 +46,8 @@ namespace APie
 		void eventcb(short what);
 
 		void setIp(std::string ip, std::string peerIp);
+		std::string ip();
+		std::string peerIp();
 
 		void close(std::string sInfo, uint32_t iCode = 0, uint32_t iActive = 0);
         ~ServerConnection();

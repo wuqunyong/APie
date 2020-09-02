@@ -281,6 +281,16 @@ void ServerConnection::setIp(std::string ip, std::string peerIp)
 	this->sPeerIp = peerIp;
 }
 
+std::string ServerConnection::ip()
+{
+	return this->sIp;
+}
+
+std::string ServerConnection::peerIp()
+{
+	return this->sPeerIp;
+}
+
 void ServerConnection::handleSend(const char *data, size_t size)
 {
 	if (NULL != this->bev)

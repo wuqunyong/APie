@@ -13,11 +13,13 @@ std::tuple<uint32_t, std::string> initHook()
 
 std::tuple<uint32_t, std::string> startHook()
 {
+	ServiceRegistrySingleton::get().start();
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 std::tuple<uint32_t, std::string> exitHook()
 {
+	ServiceRegistrySingleton::get().exit();
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 

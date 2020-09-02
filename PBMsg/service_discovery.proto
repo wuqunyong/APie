@@ -56,3 +56,13 @@ message MSG_NOTICE_INSTANCE
 	repeated EndPointInstance update_instance = 4;
 	// map<uint32, ClientNode> network_topology = 5;
 }
+
+
+message MSG_REQUEST_HEARTBEAT
+{
+}
+
+message MSG_RESP_HEARTBEAT
+{
+	uint32 status_code = 1;
+}

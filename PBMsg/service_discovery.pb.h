@@ -48,7 +48,7 @@ struct TableStruct_service_5fdiscovery_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -65,15 +65,23 @@ extern MSG_NOTICE_INSTANCEDefaultTypeInternal _MSG_NOTICE_INSTANCE_default_insta
 class MSG_REQUEST_ADD_INSTANCE;
 class MSG_REQUEST_ADD_INSTANCEDefaultTypeInternal;
 extern MSG_REQUEST_ADD_INSTANCEDefaultTypeInternal _MSG_REQUEST_ADD_INSTANCE_default_instance_;
+class MSG_REQUEST_HEARTBEAT;
+class MSG_REQUEST_HEARTBEATDefaultTypeInternal;
+extern MSG_REQUEST_HEARTBEATDefaultTypeInternal _MSG_REQUEST_HEARTBEAT_default_instance_;
 class MSG_RESP_ADD_INSTANCE;
 class MSG_RESP_ADD_INSTANCEDefaultTypeInternal;
 extern MSG_RESP_ADD_INSTANCEDefaultTypeInternal _MSG_RESP_ADD_INSTANCE_default_instance_;
+class MSG_RESP_HEARTBEAT;
+class MSG_RESP_HEARTBEATDefaultTypeInternal;
+extern MSG_RESP_HEARTBEATDefaultTypeInternal _MSG_RESP_HEARTBEAT_default_instance_;
 }  // namespace service_discovery
 PROTOBUF_NAMESPACE_OPEN
 template<> ::service_discovery::EndPointInstance* Arena::CreateMaybeMessage<::service_discovery::EndPointInstance>(Arena*);
 template<> ::service_discovery::MSG_NOTICE_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_NOTICE_INSTANCE>(Arena*);
 template<> ::service_discovery::MSG_REQUEST_ADD_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_REQUEST_ADD_INSTANCE>(Arena*);
+template<> ::service_discovery::MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage<::service_discovery::MSG_REQUEST_HEARTBEAT>(Arena*);
 template<> ::service_discovery::MSG_RESP_ADD_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_RESP_ADD_INSTANCE>(Arena*);
+template<> ::service_discovery::MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage<::service_discovery::MSG_RESP_HEARTBEAT>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace service_discovery {
 
@@ -798,6 +806,249 @@ class MSG_NOTICE_INSTANCE :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MSG_REQUEST_HEARTBEAT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_REQUEST_HEARTBEAT) */ {
+ public:
+  MSG_REQUEST_HEARTBEAT();
+  virtual ~MSG_REQUEST_HEARTBEAT();
+
+  MSG_REQUEST_HEARTBEAT(const MSG_REQUEST_HEARTBEAT& from);
+  MSG_REQUEST_HEARTBEAT(MSG_REQUEST_HEARTBEAT&& from) noexcept
+    : MSG_REQUEST_HEARTBEAT() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_REQUEST_HEARTBEAT& operator=(const MSG_REQUEST_HEARTBEAT& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_REQUEST_HEARTBEAT& operator=(MSG_REQUEST_HEARTBEAT&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_REQUEST_HEARTBEAT& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_REQUEST_HEARTBEAT* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_HEARTBEAT*>(
+               &_MSG_REQUEST_HEARTBEAT_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(MSG_REQUEST_HEARTBEAT& a, MSG_REQUEST_HEARTBEAT& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_REQUEST_HEARTBEAT* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_REQUEST_HEARTBEAT* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_HEARTBEAT>(nullptr);
+  }
+
+  MSG_REQUEST_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_HEARTBEAT>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_REQUEST_HEARTBEAT& from);
+  void MergeFrom(const MSG_REQUEST_HEARTBEAT& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_REQUEST_HEARTBEAT* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "service_discovery.MSG_REQUEST_HEARTBEAT";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_service_5fdiscovery_2eproto);
+    return ::descriptor_table_service_5fdiscovery_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:service_discovery.MSG_REQUEST_HEARTBEAT)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_service_5fdiscovery_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MSG_RESP_HEARTBEAT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_RESP_HEARTBEAT) */ {
+ public:
+  MSG_RESP_HEARTBEAT();
+  virtual ~MSG_RESP_HEARTBEAT();
+
+  MSG_RESP_HEARTBEAT(const MSG_RESP_HEARTBEAT& from);
+  MSG_RESP_HEARTBEAT(MSG_RESP_HEARTBEAT&& from) noexcept
+    : MSG_RESP_HEARTBEAT() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_RESP_HEARTBEAT& operator=(const MSG_RESP_HEARTBEAT& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_RESP_HEARTBEAT& operator=(MSG_RESP_HEARTBEAT&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_RESP_HEARTBEAT& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_RESP_HEARTBEAT* internal_default_instance() {
+    return reinterpret_cast<const MSG_RESP_HEARTBEAT*>(
+               &_MSG_RESP_HEARTBEAT_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(MSG_RESP_HEARTBEAT& a, MSG_RESP_HEARTBEAT& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_RESP_HEARTBEAT* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_RESP_HEARTBEAT* New() const final {
+    return CreateMaybeMessage<MSG_RESP_HEARTBEAT>(nullptr);
+  }
+
+  MSG_RESP_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_RESP_HEARTBEAT>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_RESP_HEARTBEAT& from);
+  void MergeFrom(const MSG_RESP_HEARTBEAT& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_RESP_HEARTBEAT* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "service_discovery.MSG_RESP_HEARTBEAT";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_service_5fdiscovery_2eproto);
+    return ::descriptor_table_service_5fdiscovery_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStatusCodeFieldNumber = 1,
+  };
+  // uint32 status_code = 1;
+  void clear_status_code();
+  ::PROTOBUF_NAMESPACE_ID::uint32 status_code() const;
+  void set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_status_code() const;
+  void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:service_discovery.MSG_RESP_HEARTBEAT)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 status_code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_service_5fdiscovery_2eproto;
+};
 // ===================================================================
 
 
@@ -1298,9 +1549,41 @@ MSG_NOTICE_INSTANCE::update_instance() const {
   return update_instance_;
 }
 
+// -------------------------------------------------------------------
+
+// MSG_REQUEST_HEARTBEAT
+
+// -------------------------------------------------------------------
+
+// MSG_RESP_HEARTBEAT
+
+// uint32 status_code = 1;
+inline void MSG_RESP_HEARTBEAT::clear_status_code() {
+  status_code_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_HEARTBEAT::_internal_status_code() const {
+  return status_code_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_HEARTBEAT::status_code() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESP_HEARTBEAT.status_code)
+  return _internal_status_code();
+}
+inline void MSG_RESP_HEARTBEAT::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  status_code_ = value;
+}
+inline void MSG_RESP_HEARTBEAT::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_status_code(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESP_HEARTBEAT.status_code)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

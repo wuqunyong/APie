@@ -274,7 +274,7 @@ void DispatcherImpl::handleCommand()
 		}
 		case Command::close_local_server:
 		{
-			this->handleCloseLocalClient(cmd.args.close_local_client.ptrData);
+			this->handleCloseLocalServer(cmd.args.close_local_server.ptrData);
 			break;
 		}
 		case Command::client_peer_close:
@@ -570,6 +570,14 @@ void DispatcherImpl::handleCloseLocalClient(CloseLocalClient* ptrCmd)
 
 void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
 {
+	auto ptrServer = APie::Event::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
+	if (ptrServer != nullptr)
+	{
+		std::stringstream ss;
+		ss << "active close|iSerialNum:" << ptrCmd->iSerialNum
+			<< ",address:" << ptrServer->ip() << "->" << ptrServer->peerIp();
+		ASYNC_PIE_LOG("DispatcherImpl/handleCloseLocalServer", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	}
 	APie::Event::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
 }
 
