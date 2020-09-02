@@ -19,7 +19,7 @@ namespace APie
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
-		using HandleConnectCB = std::function<bool(std::shared_ptr<ClientProxy>, uint32_t iResult)>;
+		using HandleConnectCB = std::function<bool(APie::ClientProxy* ptrClient, uint32_t iResult)>;
 		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
 
 		enum CONNECT_STATE

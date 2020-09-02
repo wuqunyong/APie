@@ -34,9 +34,12 @@ namespace APie
 
 		void registerEndpoint();
 		void unregisterEndpoint();
-		void heartbeat();
 
 		void setState(State state);
+		State state();
+
+		void sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth);
+		void sendHeartbeat();
 
 	public:
 		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);

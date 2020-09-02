@@ -43,10 +43,16 @@ message MSG_RESP_ADD_INSTANCE
 	uint32 status_code = 1;
 }
 
+// message ClientNode
+// {
+// 	repeated uint32 node_type = 1;
+// }
+
 message MSG_NOTICE_INSTANCE
 {
 	UpdateMode mode = 1;
 	repeated EndPointInstance add_instance = 2;
 	repeated EndPointInstance delete_instance = 3;
 	repeated EndPointInstance update_instance = 4;
+	// map<uint32, ClientNode> network_topology = 5;
 }

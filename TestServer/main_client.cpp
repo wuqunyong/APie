@@ -100,15 +100,15 @@ std::tuple<uint32_t, std::string> startHook()
 		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
 
 		auto ptrClient = APie::ClientProxy::createClientProxy();
-		auto connectCb = [](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+		auto connectCb = [](APie::ClientProxy* ptrClient, uint32_t iResult) {
 			if (iResult == 0)
 			{
 				::login_msg::MSG_CLIENT_LOGINTOL msg;
 				msg.set_user_id(100);
 				msg.set_session_key("hello");
 
-				self->sendMsg(1100, msg);
-				self->addReconnectTimer(30000);
+				ptrClient->sendMsg(1100, msg);
+				ptrClient->addReconnectTimer(30000);
 			}
 			return true;
 		};

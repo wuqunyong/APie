@@ -9,19 +9,19 @@ void ServiceRegistry::init()
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 }
 
-void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
+bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
 {
 	auto curTime = APie::CtxSingleton::get().getNowSeconds();
 
-	//del
+
 	EndPoint point;
 	point.type = instance.type();
 	point.id = instance.id();
+
 	auto findPoint = m_pointMap.find(point);
 	if (findPoint != m_pointMap.end())
 	{
-		m_registered.erase(findPoint->second);
-		m_pointMap.erase(findPoint);
+		return false;
 	}
 
 	//add
@@ -41,6 +41,8 @@ void ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 		findIte->second.modifyTime = curTime;
 		findIte->second.instance = instance;
 	}
+
+	return true;
 }
 
 bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
@@ -82,7 +84,6 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << ",request:" << request.DebugString();
-	ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	::service_discovery::MSG_RESP_ADD_INSTANCE response;
 
@@ -91,11 +92,25 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 	{
 		response.set_status_code(opcodes::SC_Discovery_AuthError);
 		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_INSTANCE, response);
+
+		ss << ",auth:error";
+		ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 		return;
 	}
 
-	ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
+	bool bResult = ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
+	if (!bResult)
+	{
+		response.set_status_code(opcodes::SC_Discovery_DuplicateNode);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_INSTANCE, response);
+
+		ss << ",node:duplicate";
+		ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		return;
+	}
 	
+	ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
 	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, response);
 

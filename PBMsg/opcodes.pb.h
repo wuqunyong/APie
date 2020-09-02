@@ -91,6 +91,7 @@ inline bool OPCODE_ID_Parse(
 enum StatusCode : int {
   SC_Ok = 0,
   SC_Discovery_AuthError = 1000,
+  SC_Discovery_DuplicateNode = 1001,
   SC_Route_InvalidPoint = 2000,
   SC_Route_AuthError = 2001,
   SC_Rpc_Timeout = 3000,

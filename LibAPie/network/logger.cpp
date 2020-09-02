@@ -350,7 +350,7 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	if (0 == fstat(fileFd, &statInfo))
 	{
 		int32_t iSize = APie::CtxSingleton::get().yamlAs<int>({ "log","split_size" }, 128);
-		if (statInfo.st_size >  iSize)
+		if (statInfo.st_size > iSize *1240 * 1240)
 		{
 			return true;
 		}
@@ -395,5 +395,6 @@ void fatalExit(const char* message)
 	fprintf(stderr, "%s: %s\n", "fatalExit", message);
 	pieLog("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", message);
 
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
+	abort();
 }

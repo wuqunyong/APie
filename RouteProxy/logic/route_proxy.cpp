@@ -37,7 +37,7 @@ void RouteClient::init()
 	auto type = m_instance.codec_type();
 
 	m_clientProxy = APie::ClientProxy::createClientProxy();
-	auto connectCb = [weakPtr](std::shared_ptr<APie::ClientProxy> self, uint32_t iResult) {
+	auto connectCb = [weakPtr](APie::ClientProxy* ptrClient, uint32_t iResult) {
 		if (iResult == 0)
 		{
 			uint32_t type = APie::CtxSingleton::get().identify().type;
@@ -49,7 +49,7 @@ void RouteClient::init()
 			ptrAdd->set_type(static_cast<::service_discovery::EndPointType>(type));
 			ptrAdd->set_id(id);
 			ptrAdd->set_auth(auth);
-			self->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);
+			ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);
 
 			return true;
 		}
@@ -64,7 +64,7 @@ void RouteClient::init()
 		auto ip = instance.ip();
 		auto port = instance.port();
 		auto type = instance.codec_type();
-		self->resetConnect(ip, port, static_cast<APie::ProtocolType>(type));
+		ptrClient->resetConnect(ip, port, static_cast<APie::ProtocolType>(type));
 
 		return true;
 	};

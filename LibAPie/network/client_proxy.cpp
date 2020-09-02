@@ -201,7 +201,7 @@ void ClientProxy::onConnect(uint32_t iResult)
 	bool bContinue = false;
 	if (m_cb)
 	{
-		bContinue = m_cb(shared_from_this(), iResult);
+		bContinue = m_cb(this, iResult);
 	}
 
 	if (iResult != 0)

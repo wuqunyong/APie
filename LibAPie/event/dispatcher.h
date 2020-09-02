@@ -25,6 +25,7 @@ namespace Event {
 		TT_Listen,
 		TT_IO,
 		TT_Logic,
+		TT_DB,
 		TT_Log,
 		TT_Metrics,
 	};

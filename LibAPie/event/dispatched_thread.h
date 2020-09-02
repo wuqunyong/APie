@@ -11,6 +11,7 @@
 #include "../event/dispatcher_impl.h"
 #include "../network/listener.h"
 #include "../network/command.h"
+#include "../mysql_driver/mysql_connector.h"
 
 namespace APie {
 namespace Event {
@@ -69,6 +70,8 @@ namespace Event {
 		void start(void);
 		void stop();
 
+		void initMysql(MySQLConnectOptions& options);
+
 		DTState state();
 		uint32_t getTId();
 
@@ -91,6 +94,8 @@ namespace Event {
 		DispatcherPtr dispatcher_;
 		std::thread thread_;
 		std::vector<std::shared_ptr<Network::Listener>> listener_;
+
+		MySQLConnector mysqlConnector_;
 	};
 
 } // namespace Event

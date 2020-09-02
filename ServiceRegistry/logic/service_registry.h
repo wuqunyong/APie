@@ -33,7 +33,7 @@ namespace APie {
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
 	public:
-		void updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
+		bool updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
 		bool deleteBySerialNum(uint64_t iSerialNum);
 
 		void broadcast();

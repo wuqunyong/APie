@@ -98,7 +98,8 @@ Ctx::Ctx() :
 	logic_thread_(nullptr),
 	log_thread_(nullptr),
 	metrics_thread_(nullptr),
-	endpoint_(nullptr)
+	endpoint_(nullptr),
+	db_thread_(nullptr)
 {
 
 }
@@ -236,6 +237,26 @@ void Ctx::init(const std::string& configFile)
 		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
 		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
 		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
+
+		bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "mysql","enable" }, false);
+		if (enable)
+		{
+			std::string host = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","host" }, "");
+			std::string user = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","user" }, "");
+			std::string passwd = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","passwd" }, "");
+			std::string db = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","db" }, "");
+			uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "mysql","port" }, 0);
+
+			MySQLConnectOptions options;
+			options.host = host;
+			options.user = user;
+			options.passwd = passwd;
+			options.db = db;
+			options.port = port;
+
+			db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
+			db_thread_->initMysql(options);
+		}
 	}
 	catch (YAML::BadFile& e) {
 		std::stringstream ss;
@@ -300,6 +321,12 @@ void Ctx::start()
 		metrics_thread_->start();
 		thread_id_[metrics_thread_->getTId()] = metrics_thread_;
 	}
+
+	if (db_thread_ != nullptr && db_thread_->state() == Event::DTState::DTS_Ready)
+	{
+		db_thread_->start();
+		thread_id_[db_thread_->getTId()] = db_thread_;
+	}
 	
 
 	Command command;
@@ -350,6 +377,11 @@ void Ctx::destroy()
 	logic_thread_.reset();
 	log_thread_.reset();
 	metrics_thread_.reset();
+
+	if (db_thread_ != nullptr)
+	{
+		db_thread_.reset();
+	}
 }
 
 void Ctx::daemonize()
@@ -594,6 +626,11 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogThread()
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getMetricsThread()
 {
 	return metrics_thread_;
+}
+
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getDBThread()
+{
+	return db_thread_;
 }
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)

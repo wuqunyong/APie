@@ -20,7 +20,7 @@ service_registry:
 log:
   merge: true
   level: 0
-  show_pos: false
+  show_pos: true
   split_size: 128
   backup: "D:/backup"
   name: "route_proxy"

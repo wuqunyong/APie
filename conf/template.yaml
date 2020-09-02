@@ -29,6 +29,9 @@ service_registry:
   port_value: 5007
   auth: "hello"
   type: 1
+topology:
+  1: [2,3,4]
+  2: [3,4]
 log:
   merge: true
   level: 0
@@ -40,3 +43,10 @@ metrics:
   enable: true
   ip: "127.0.0.1"
   udp_port: 8089
+mysql:
+  enable: true
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  passwd: "root"
+  db: "apie"  

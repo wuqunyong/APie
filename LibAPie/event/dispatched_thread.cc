@@ -5,6 +5,7 @@
 
 #include "../common/time.h"
 #include "../event/dispatcher.h"
+#include "../network/logger.h"
 
 
 namespace APie {
@@ -18,6 +19,18 @@ void DispatchedThreadImpl::start(void) {
 void DispatchedThreadImpl::stop()
 {
 	this->sendStop();
+}
+
+void DispatchedThreadImpl::initMysql(MySQLConnectOptions& options)
+{
+	this->mysqlConnector_.init(options);
+	bool bResult = this->mysqlConnector_.connect();
+	if (!bResult)
+	{
+		std::stringstream ss;
+		ss << "DbThread::init mysql_connector connect error, " << options.host << ":" << options.user << ":" << options.passwd << ":" << options.db << ":" << options.port;
+		fatalExit(ss.str().c_str());
+	}
 }
 
 DTState DispatchedThreadImpl::state()
