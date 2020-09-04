@@ -5,6 +5,7 @@
 
 #include "../../PBMsg/opcodes.pb.h"
 #include "../../PBMsg/pubsub.pb.h"
+#include "../../PBMsg/common.pb.h"
 
 #include "../api/pb_handler.h"
 #include "../api/pubsub.h"
@@ -32,7 +33,7 @@ void SelfRegistration::init()
 void SelfRegistration::registerEndpoint()
 {
 	auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-	if (identityType == ::service_discovery::EndPointType::EPT_Service_Registry)
+	if (identityType == ::common::EndPointType::EPT_Service_Registry)
 	{
 		return;
 	}
@@ -93,7 +94,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
 
 	::service_discovery::MSG_REQUEST_ADD_INSTANCE request;
-	request.mutable_instance()->set_type(static_cast<::service_discovery::EndPointType>(type));
+	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
 	request.mutable_instance()->set_id(id);
 	request.mutable_instance()->set_auth(auth);
 	request.mutable_instance()->set_ip(ip);
@@ -306,7 +307,7 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	auto identify = ::APie::CtxSingleton::get().identify();
 
 	::route_register::MSG_RESP_ADD_ROUTE response;
-	response.mutable_target()->set_type(static_cast<::service_discovery::EndPointType>(identify.type));
+	response.mutable_target()->set_type(static_cast<::common::EndPointType>(identify.type));
 	response.mutable_target()->set_id(identify.id);
 	response.mutable_target()->set_auth(identify.auth);
 	*response.mutable_route() = request.instance();

@@ -141,7 +141,7 @@ void RouteClient::sendAddRoute(APie::ClientProxy* ptrClient)
 
 	::route_register::MSG_REQUEST_ADD_ROUTE request;
 	auto ptrAdd = request.mutable_instance();
-	ptrAdd->set_type(static_cast<::service_discovery::EndPointType>(type));
+	ptrAdd->set_type(static_cast<::common::EndPointType>(type));
 	ptrAdd->set_id(id);
 	ptrAdd->set_auth(auth);
 	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);

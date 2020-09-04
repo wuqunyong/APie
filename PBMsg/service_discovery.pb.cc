@@ -128,7 +128,7 @@ static void InitDefaultsscc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto(
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESP_HEARTBEAT_service_5fdiscovery_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[6];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[2];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_service_5fdiscovery_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -197,29 +197,26 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\027service_discovery.proto\022\021service_disco"
-  "very\"\211\001\n\020EndPointInstance\022-\n\004type\030\001 \001(\0162"
-  "\037.service_discovery.EndPointType\022\n\n\002id\030\002"
-  " \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port\030\005"
-  " \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"_\n\030MSG_REQUEST_"
-  "ADD_INSTANCE\0225\n\010instance\030\001 \001(\0132#.service"
-  "_discovery.EndPointInstance\022\014\n\004auth\030\002 \001("
-  "\t\",\n\025MSG_RESP_ADD_INSTANCE\022\023\n\013status_cod"
-  "e\030\001 \001(\r\"\371\001\n\023MSG_NOTICE_INSTANCE\022+\n\004mode\030"
-  "\001 \001(\0162\035.service_discovery.UpdateMode\0229\n\014"
-  "add_instance\030\002 \003(\0132#.service_discovery.E"
-  "ndPointInstance\022<\n\017delete_instance\030\003 \003(\013"
-  "2#.service_discovery.EndPointInstance\022<\n"
-  "\017update_instance\030\004 \003(\0132#.service_discove"
-  "ry.EndPointInstance\"\027\n\025MSG_REQUEST_HEART"
-  "BEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013status_cod"
-  "e\030\001 \001(\r*\230\001\n\014EndPointType\022\014\n\010EPT_None\020\000\022\030"
-  "\n\024EPT_Service_Registry\020\001\022\023\n\017EPT_Route_Pr"
-  "oxy\020\002\022\024\n\020EPT_Scene_Server\020\003\022\026\n\022EPT_Gatew"
-  "ay_Server\020\004\022\020\n\014EPT_DB_Proxy\020\005\022\013\n\007EPT_Max"
-  "\020\006*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Full"
-  "\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
+  "very\032\014common.proto\"~\n\020EndPointInstance\022\""
+  "\n\004type\030\001 \001(\0162\024.common.EndPointType\022\n\n\002id"
+  "\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port"
+  "\030\005 \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"_\n\030MSG_REQUES"
+  "T_ADD_INSTANCE\0225\n\010instance\030\001 \001(\0132#.servi"
+  "ce_discovery.EndPointInstance\022\014\n\004auth\030\002 "
+  "\001(\t\",\n\025MSG_RESP_ADD_INSTANCE\022\023\n\013status_c"
+  "ode\030\001 \001(\r\"\371\001\n\023MSG_NOTICE_INSTANCE\022+\n\004mod"
+  "e\030\001 \001(\0162\035.service_discovery.UpdateMode\0229"
+  "\n\014add_instance\030\002 \003(\0132#.service_discovery"
+  ".EndPointInstance\022<\n\017delete_instance\030\003 \003"
+  "(\0132#.service_discovery.EndPointInstance\022"
+  "<\n\017update_instance\030\004 \003(\0132#.service_disco"
+  "very.EndPointInstance\"\027\n\025MSG_REQUEST_HEA"
+  "RTBEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013status_c"
+  "ode\030\001 \001(\r*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007"
+  "UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
+  &::descriptor_table_common_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_service_5fdiscovery_2eproto_sccs[6] = {
   &scc_info_EndPointInstance_service_5fdiscovery_2eproto.base,
@@ -232,8 +229,8 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 870,
-  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 0,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 717,
+  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 1,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 6, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
 };
@@ -241,28 +238,9 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_servic
 // Force running AddDescriptors() at dynamic initialization time.
 static bool dynamic_init_dummy_service_5fdiscovery_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_service_5fdiscovery_2eproto), true);
 namespace service_discovery {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EndPointType_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_service_5fdiscovery_2eproto);
-  return file_level_enum_descriptors_service_5fdiscovery_2eproto[0];
-}
-bool EndPointType_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-      return true;
-    default:
-      return false;
-  }
-}
-
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* UpdateMode_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_service_5fdiscovery_2eproto);
-  return file_level_enum_descriptors_service_5fdiscovery_2eproto[1];
+  return file_level_enum_descriptors_service_5fdiscovery_2eproto[0];
 }
 bool UpdateMode_IsValid(int value) {
   switch (value) {
@@ -356,12 +334,12 @@ const char* EndPointInstance::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .service_discovery.EndPointType type = 1;
+      // .common.EndPointType type = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
-          _internal_set_type(static_cast<::service_discovery::EndPointType>(val));
+          _internal_set_type(static_cast<::common::EndPointType>(val));
         } else goto handle_unusual;
         continue;
       // uint32 id = 2;
@@ -429,7 +407,7 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -504,7 +482,7 @@ size_t EndPointInstance::ByteSizeLong() const {
         this->_internal_ip());
   }
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());

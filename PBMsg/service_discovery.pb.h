@@ -33,6 +33,7 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "common.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_service_5fdiscovery_2eproto
@@ -85,36 +86,6 @@ template<> ::service_discovery::MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage<::
 PROTOBUF_NAMESPACE_CLOSE
 namespace service_discovery {
 
-enum EndPointType : int {
-  EPT_None = 0,
-  EPT_Service_Registry = 1,
-  EPT_Route_Proxy = 2,
-  EPT_Scene_Server = 3,
-  EPT_Gateway_Server = 4,
-  EPT_DB_Proxy = 5,
-  EPT_Max = 6,
-  EndPointType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  EndPointType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool EndPointType_IsValid(int value);
-constexpr EndPointType EndPointType_MIN = EPT_None;
-constexpr EndPointType EndPointType_MAX = EPT_Max;
-constexpr int EndPointType_ARRAYSIZE = EndPointType_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EndPointType_descriptor();
-template<typename T>
-inline const std::string& EndPointType_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, EndPointType>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function EndPointType_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    EndPointType_descriptor(), enum_t_value);
-}
-inline bool EndPointType_Parse(
-    const std::string& name, EndPointType* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EndPointType>(
-    EndPointType_descriptor(), name, value);
-}
 enum UpdateMode : int {
   UM_None = 0,
   UM_Full = 1,
@@ -288,13 +259,13 @@ class EndPointInstance :
   std::string* _internal_mutable_ip();
   public:
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   void clear_type();
-  ::service_discovery::EndPointType type() const;
-  void set_type(::service_discovery::EndPointType value);
+  ::common::EndPointType type() const;
+  void set_type(::common::EndPointType value);
   private:
-  ::service_discovery::EndPointType _internal_type() const;
-  void _internal_set_type(::service_discovery::EndPointType value);
+  ::common::EndPointType _internal_type() const;
+  void _internal_set_type(::common::EndPointType value);
   public:
 
   // uint32 id = 2;
@@ -1060,22 +1031,22 @@ class MSG_RESP_HEARTBEAT :
 #endif  // __GNUC__
 // EndPointInstance
 
-// .service_discovery.EndPointType type = 1;
+// .common.EndPointType type = 1;
 inline void EndPointInstance::clear_type() {
   type_ = 0;
 }
-inline ::service_discovery::EndPointType EndPointInstance::_internal_type() const {
-  return static_cast< ::service_discovery::EndPointType >(type_);
+inline ::common::EndPointType EndPointInstance::_internal_type() const {
+  return static_cast< ::common::EndPointType >(type_);
 }
-inline ::service_discovery::EndPointType EndPointInstance::type() const {
+inline ::common::EndPointType EndPointInstance::type() const {
   // @@protoc_insertion_point(field_get:service_discovery.EndPointInstance.type)
   return _internal_type();
 }
-inline void EndPointInstance::_internal_set_type(::service_discovery::EndPointType value) {
+inline void EndPointInstance::_internal_set_type(::common::EndPointType value) {
   
   type_ = value;
 }
-inline void EndPointInstance::set_type(::service_discovery::EndPointType value) {
+inline void EndPointInstance::set_type(::common::EndPointType value) {
   _internal_set_type(value);
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.type)
 }
@@ -1597,11 +1568,6 @@ inline void MSG_RESP_HEARTBEAT::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::service_discovery::EndPointType> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::EndPointType>() {
-  return ::service_discovery::EndPointType_descriptor();
-}
 template <> struct is_proto_enum< ::service_discovery::UpdateMode> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::UpdateMode>() {

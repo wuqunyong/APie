@@ -32,7 +32,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
-#include "service_discovery.pb.h"
+#include "common.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_route_5fregister_2eproto
@@ -209,13 +209,13 @@ class RouteInstance :
   std::string* _internal_mutable_auth();
   public:
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   void clear_type();
-  ::service_discovery::EndPointType type() const;
-  void set_type(::service_discovery::EndPointType value);
+  ::common::EndPointType type() const;
+  void set_type(::common::EndPointType value);
   private:
-  ::service_discovery::EndPointType _internal_type() const;
-  void _internal_set_type(::service_discovery::EndPointType value);
+  ::common::EndPointType _internal_type() const;
+  void _internal_set_type(::common::EndPointType value);
   public:
 
   // uint32 id = 2;
@@ -788,22 +788,22 @@ class ROUTE_MSG_RESP_HEARTBEAT :
 #endif  // __GNUC__
 // RouteInstance
 
-// .service_discovery.EndPointType type = 1;
+// .common.EndPointType type = 1;
 inline void RouteInstance::clear_type() {
   type_ = 0;
 }
-inline ::service_discovery::EndPointType RouteInstance::_internal_type() const {
-  return static_cast< ::service_discovery::EndPointType >(type_);
+inline ::common::EndPointType RouteInstance::_internal_type() const {
+  return static_cast< ::common::EndPointType >(type_);
 }
-inline ::service_discovery::EndPointType RouteInstance::type() const {
+inline ::common::EndPointType RouteInstance::type() const {
   // @@protoc_insertion_point(field_get:route_register.RouteInstance.type)
   return _internal_type();
 }
-inline void RouteInstance::_internal_set_type(::service_discovery::EndPointType value) {
+inline void RouteInstance::_internal_set_type(::common::EndPointType value) {
   
   type_ = value;
 }
-inline void RouteInstance::set_type(::service_discovery::EndPointType value) {
+inline void RouteInstance::set_type(::common::EndPointType value) {
   _internal_set_type(value);
   // @@protoc_insertion_point(field_set:route_register.RouteInstance.type)
 }

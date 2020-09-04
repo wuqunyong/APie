@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\PBMsg\common.pb.h" />
     <ClInclude Include="..\PBMsg\login_msg.pb.h" />
     <ClInclude Include="..\PBMsg\mysql_proxy_msg.pb.h" />
     <ClInclude Include="..\PBMsg\opcodes.pb.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="singleton\threadsafe_singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\PBMsg\common.pb.cc" />
     <ClCompile Include="..\PBMsg\login_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\mysql_proxy_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\opcodes.pb.cc" />

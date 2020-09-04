@@ -1,19 +1,8 @@
 syntax = "proto3";
 
 package service_discovery;
+import "common.proto";
 
-//--------------------------
-
-enum EndPointType 
-{
-	EPT_None = 0;
-	EPT_Service_Registry = 1;
-	EPT_Route_Proxy = 2;
-	EPT_Scene_Server = 3;
-	EPT_Gateway_Server = 4;
-	EPT_DB_Proxy = 5;
-	EPT_Max = 6;
-}
 
 enum UpdateMode
 {
@@ -24,7 +13,7 @@ enum UpdateMode
 
 message EndPointInstance
 {
-	EndPointType type = 1;
+	common.EndPointType type = 1;
 	uint32 id = 2;
 	string auth = 3;
 	string ip = 4;

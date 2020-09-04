@@ -165,21 +165,20 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_route_5fregister_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\024route_register.proto\022\016route_register\032\027"
-  "service_discovery.proto\"X\n\rRouteInstance"
-  "\022-\n\004type\030\001 \001(\0162\037.service_discovery.EndPo"
-  "intType\022\n\n\002id\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\"H\n\025MSG"
-  "_REQUEST_ADD_ROUTE\022/\n\010instance\030\001 \001(\0132\035.r"
-  "oute_register.RouteInstance\"\206\001\n\022MSG_RESP"
-  "_ADD_ROUTE\022-\n\006target\030\001 \001(\0132\035.route_regis"
-  "ter.RouteInstance\022,\n\005route\030\002 \001(\0132\035.route"
-  "_register.RouteInstance\022\023\n\013status_code\030\003"
-  " \001(\r\"\035\n\033ROUTE_MSG_REQUEST_HEARTBEAT\"/\n\030R"
-  "OUTE_MSG_RESP_HEARTBEAT\022\023\n\013status_code\030\001"
-  " \001(\rb\006proto3"
+  "\n\024route_register.proto\022\016route_register\032\014"
+  "common.proto\"M\n\rRouteInstance\022\"\n\004type\030\001 "
+  "\001(\0162\024.common.EndPointType\022\n\n\002id\030\002 \001(\r\022\014\n"
+  "\004auth\030\003 \001(\t\"H\n\025MSG_REQUEST_ADD_ROUTE\022/\n\010"
+  "instance\030\001 \001(\0132\035.route_register.RouteIns"
+  "tance\"\206\001\n\022MSG_RESP_ADD_ROUTE\022-\n\006target\030\001"
+  " \001(\0132\035.route_register.RouteInstance\022,\n\005r"
+  "oute\030\002 \001(\0132\035.route_register.RouteInstanc"
+  "e\022\023\n\013status_code\030\003 \001(\r\"\035\n\033ROUTE_MSG_REQU"
+  "EST_HEARTBEAT\"/\n\030ROUTE_MSG_RESP_HEARTBEA"
+  "T\022\023\n\013status_code\030\001 \001(\rb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_route_5fregister_2eproto_deps[1] = {
-  &::descriptor_table_service_5fdiscovery_2eproto,
+  &::descriptor_table_common_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_route_5fregister_2eproto_sccs[5] = {
   &scc_info_MSG_REQUEST_ADD_ROUTE_route_5fregister_2eproto.base,
@@ -191,7 +190,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rou
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_route_5fregister_2eproto_once;
 static bool descriptor_table_route_5fregister_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_route_5fregister_2eproto = {
-  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 452,
+  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 430,
   &descriptor_table_route_5fregister_2eproto_once, descriptor_table_route_5fregister_2eproto_sccs, descriptor_table_route_5fregister_2eproto_deps, 5, 1,
   schemas, file_default_instances, TableStruct_route_5fregister_2eproto::offsets,
   file_level_metadata_route_5fregister_2eproto, 5, file_level_enum_descriptors_route_5fregister_2eproto, file_level_service_descriptors_route_5fregister_2eproto,
@@ -274,12 +273,12 @@ const char* RouteInstance::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .service_discovery.EndPointType type = 1;
+      // .common.EndPointType type = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
-          _internal_set_type(static_cast<::service_discovery::EndPointType>(val));
+          _internal_set_type(static_cast<::common::EndPointType>(val));
         } else goto handle_unusual;
         continue;
       // uint32 id = 2;
@@ -324,7 +323,7 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -370,7 +369,7 @@ size_t RouteInstance::ByteSizeLong() const {
         this->_internal_auth());
   }
 
-  // .service_discovery.EndPointType type = 1;
+  // .common.EndPointType type = 1;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());

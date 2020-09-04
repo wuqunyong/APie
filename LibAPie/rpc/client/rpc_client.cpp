@@ -25,7 +25,7 @@ namespace RPC {
 	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
 		rpc_msg::STATUS status;
-		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::service_discovery::EPT_Route_Proxy);
+		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route list empty|server:%s|opcodes:%d|args:%s",
@@ -39,7 +39,7 @@ namespace RPC {
 			return false;
 		}
 
-		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::service_discovery::EPT_Route_Proxy);
+		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::common::EPT_Route_Proxy);
 		if (establishedList.empty())
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route established empty|server:%s|opcodes:%d|args:%s",

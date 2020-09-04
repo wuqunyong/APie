@@ -301,6 +301,9 @@
     <ClInclude Include="api\os_sys_calls.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\common.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -476,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="api\os_sys_calls.cc">
       <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\common.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

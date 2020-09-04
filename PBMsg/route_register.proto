@@ -1,14 +1,14 @@
 syntax = "proto3";
 
 package route_register;
-import "service_discovery.proto";
+import "common.proto";
 
 //--------------------------
 
 
 message RouteInstance
 {
-	service_discovery.EndPointType type = 1;
+	common.EndPointType type = 1;
 	uint32 id = 2;
 	string auth = 3;
 }
