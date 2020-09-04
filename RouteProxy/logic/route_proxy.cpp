@@ -226,10 +226,11 @@ void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register:
 	std::stringstream ss;
 	ss << "handleRespAddRoute|" << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
 
-	std::shared_ptr<RouteClient> ptrRouteClient = RouteProxySingleton::get().findRouteClient(iSerialNum);
 	if (response.status_code() == opcodes::StatusCode::SC_Ok)
 	{
 		ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+		std::shared_ptr<RouteClient> ptrRouteClient = RouteProxySingleton::get().findRouteClient(iSerialNum);
 		if (ptrRouteClient)
 		{
 			ptrRouteClient->setState(APie::RouteClient::Registered);
@@ -248,7 +249,7 @@ void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register
 
 	if (response.status_code() == opcodes::StatusCode::SC_Ok)
 	{
-		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 	}
 	else
 	{
