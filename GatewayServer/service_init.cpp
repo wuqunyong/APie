@@ -13,11 +13,13 @@ std::tuple<uint32_t, std::string> initHook()
 
 std::tuple<uint32_t, std::string> startHook()
 {
+	GatewayMgrSingleton::get().start();
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 std::tuple<uint32_t, std::string> exitHook()
 {
+	GatewayMgrSingleton::get().exit();
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 

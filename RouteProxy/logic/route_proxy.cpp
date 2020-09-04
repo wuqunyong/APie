@@ -163,6 +163,16 @@ void RouteProxy::init()
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_DiscoveryNotice, RouteProxy::onDiscoveryNotice);
 }
 
+void RouteProxy::start()
+{
+
+}
+
+void RouteProxy::exit()
+{
+
+}
+
 std::shared_ptr<RouteClient> RouteProxy::findRouteClient(EndPoint point)
 {
 	auto findIte = m_connectedPool.find(point);

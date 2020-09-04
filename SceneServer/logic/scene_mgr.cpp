@@ -7,5 +7,15 @@ void SceneMgr::init()
 
 }
 
+void SceneMgr::start()
+{
+
+}
+
+void SceneMgr::exit()
+{
+
+}
+
 }
 

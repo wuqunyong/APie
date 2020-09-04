@@ -56,6 +56,8 @@ namespace APie {
 	{
 	public:
 		void init();
+		void start();
+		void exit();
 
 		std::shared_ptr<RouteClient> findRouteClient(EndPoint point);
 		std::shared_ptr<RouteClient> findRouteClient(uint64_t iSerialNum);

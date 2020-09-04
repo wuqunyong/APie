@@ -7,5 +7,15 @@ void GatewayMgr::init()
 
 }
 
+void GatewayMgr::start()
+{
+
+}
+
+void GatewayMgr::exit()
+{
+
+}
+
 }
 
