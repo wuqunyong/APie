@@ -238,13 +238,15 @@ void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register:
 
 	if (response.status_code() == opcodes::StatusCode::SC_Ok)
 	{
-		ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-
 		std::shared_ptr<RouteClient> ptrRouteClient = RouteProxySingleton::get().findRouteClient(iSerialNum);
 		if (ptrRouteClient)
 		{
 			ptrRouteClient->setState(APie::RouteClient::Registered);
+			
+			ss << ",state:" << ptrRouteClient->state();
 		}
+
+		ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 	}
 	else
 	{
