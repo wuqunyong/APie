@@ -38,26 +38,17 @@ void RouteClient::init()
 
 	m_clientProxy = APie::ClientProxy::createClientProxy();
 	auto connectCb = [weakPtr](APie::ClientProxy* ptrClient, uint32_t iResult) {
-		if (iResult == 0)
-		{
-			uint32_t type = APie::CtxSingleton::get().identify().type;
-			uint32_t id = APie::CtxSingleton::get().identify().id;
-			std::string auth = APie::CtxSingleton::get().identify().auth;
-
-			::route_register::MSG_REQUEST_ADD_ROUTE request;
-			auto ptrAdd = request.mutable_instance();
-			ptrAdd->set_type(static_cast<::service_discovery::EndPointType>(type));
-			ptrAdd->set_id(id);
-			ptrAdd->set_auth(auth);
-			ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);
-
-			return true;
-		}
-
 		auto sharedPtr = weakPtr.lock();
 		if (!sharedPtr)
 		{
 			return false;
+		}
+
+		if (iResult == 0)
+		{
+			sharedPtr->sendAddRoute(ptrClient);
+			sharedPtr->setState(RouteClient::Registering);
+			return true;
 		}
 
 		auto instance = sharedPtr->getInstance();
@@ -70,8 +61,23 @@ void RouteClient::init()
 	};
 	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
 
-	auto heartbeatCb = [](APie::ClientProxy *ptrClient) {
+	auto heartbeatCb = [weakPtr](APie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);
+
+		auto sharedPtr = weakPtr.lock();
+		if (!sharedPtr)
+		{
+			return;
+		}
+
+		if (sharedPtr->state() != APie::RouteClient::Registered)
+		{
+			sharedPtr->sendAddRoute(ptrClient);
+		}
+		else
+		{
+			sharedPtr->sendHeartbeat(ptrClient);
+		}
 	};
 	m_clientProxy->setHeartbeatCb(heartbeatCb);
 	m_clientProxy->addHeartbeatTimer(1000);
@@ -106,9 +112,53 @@ std::shared_ptr<ClientProxy> RouteClient::clientProxy()
 	return m_clientProxy;
 }
 
+uint64_t RouteClient::getSerialNum()
+{
+	uint64_t iSerialNum = 0;
+	if (m_clientProxy)
+	{
+		iSerialNum = m_clientProxy->getSerialNum();
+	}
+
+	return iSerialNum;
+}
+
+RouteClient::State RouteClient::state()
+{
+	return m_state;
+}
+
+void RouteClient::setState(State value)
+{
+	m_state = value;
+}
+
+void RouteClient::sendAddRoute(APie::ClientProxy* ptrClient)
+{
+	uint32_t type = APie::CtxSingleton::get().identify().type;
+	uint32_t id = APie::CtxSingleton::get().identify().id;
+	std::string auth = APie::CtxSingleton::get().identify().auth;
+
+	::route_register::MSG_REQUEST_ADD_ROUTE request;
+	auto ptrAdd = request.mutable_instance();
+	ptrAdd->set_type(static_cast<::service_discovery::EndPointType>(type));
+	ptrAdd->set_id(id);
+	ptrAdd->set_auth(auth);
+	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);
+}
+
+void RouteClient::sendHeartbeat(APie::ClientProxy* ptrClient)
+{
+	::route_register::ROUTE_MSG_REQUEST_HEARTBEAT request;
+
+	ptrClient->sendMsg(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, request);
+}
+
+
 void RouteProxy::init()
 {
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_ROUTE, RouteProxy::handleRespAddRoute, ::route_register::MSG_RESP_ADD_ROUTE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::ROUTE_MSG_RESP_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_DiscoveryNotice, RouteProxy::onDiscoveryNotice);
 }
@@ -124,6 +174,18 @@ std::shared_ptr<RouteClient> RouteProxy::findRouteClient(EndPoint point)
 	return findIte->second;
 }
 
+std::shared_ptr<RouteClient> RouteProxy::findRouteClient(uint64_t iSerialNum)
+{
+	auto findIte = m_reverseMap.find(iSerialNum);
+	if (findIte == m_reverseMap.end())
+	{
+		return nullptr;
+	}
+
+	return findRouteClient(findIte->second);
+}
+
+
 bool RouteProxy::addRouteClient(const ::service_discovery::EndPointInstance& instance)
 {
 	auto ptrClient = std::make_shared<RouteClient>(instance);
@@ -134,6 +196,7 @@ bool RouteProxy::addRouteClient(const ::service_discovery::EndPointInstance& ins
 	point.id = instance.id();
 
 	m_connectedPool[point] = ptrClient;
+	m_reverseMap[ptrClient->getSerialNum()] = point;
 	
 	return true;
 }
@@ -144,7 +207,10 @@ bool RouteProxy::delRouteClient(EndPoint point)
 	if (findIte != m_connectedPool.end())
 	{
 		findIte->second->close();
+
+		auto iSerialNum = findIte->second->getSerialNum();
 		m_connectedPool.erase(findIte);
+		m_reverseMap.erase(iSerialNum);
 	}
 
 	return true;
@@ -159,7 +225,35 @@ void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register:
 {
 	std::stringstream ss;
 	ss << "handleRespAddRoute|" << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
-	ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+	std::shared_ptr<RouteClient> ptrRouteClient = RouteProxySingleton::get().findRouteClient(iSerialNum);
+	if (response.status_code() == opcodes::StatusCode::SC_Ok)
+	{
+		ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		if (ptrRouteClient)
+		{
+			ptrRouteClient->setState(APie::RouteClient::Registered);
+		}
+	}
+	else
+	{
+		ASYNC_PIE_LOG("RouteProxy/handleRespAddRoute", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	}
+}
+
+void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_RESP_HEARTBEAT& response)
+{
+	std::stringstream ss;
+	ss << "handleRespHeartbeat|" << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
+
+	if (response.status_code() == opcodes::StatusCode::SC_Ok)
+	{
+		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	}
+	else
+	{
+		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	}
 }
 
 void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg)
@@ -191,7 +285,19 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 			}
 			else
 			{
-				ptrClient->setInstance(items);
+				bool bChange = false;
+				if (items.ip() != ptrClient->getInstance().ip()
+					|| items.port() != ptrClient->getInstance().port())
+				{
+					bChange = true;
+				}
+
+				if (bChange)
+				{
+					RouteProxySingleton::get().delRouteClient(point);
+					RouteProxySingleton::get().addRouteClient(items);
+				}
+				//ptrClient->setInstance(items);
 			}
 		}
 

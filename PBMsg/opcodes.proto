@@ -14,6 +14,9 @@ enum OPCODE_ID {
 
 	OP_MSG_REQUEST_ADD_ROUTE = 201;
 	OP_MSG_RESP_ADD_ROUTE = 202;
+	OP_ROUTE_MSG_REQUEST_HEARTBEAT = 203;
+	OP_ROUTE_MSG_RESP_HEARTBEAT = 204;
+
 	OP_RPC_REQUEST = 301;
 	OP_RPC_RESPONSE = 302;
 }
@@ -28,6 +31,7 @@ enum StatusCode {
 
 	SC_Route_InvalidPoint = 2000;
 	SC_Route_AuthError = 2001;
+	SC_Route_Unregistered = 2002;
 
 	SC_Rpc_Timeout = 3000;
 	SC_Rpc_RouteEmpty = 3001;

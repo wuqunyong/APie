@@ -24,3 +24,12 @@ message MSG_RESP_ADD_ROUTE
 	RouteInstance route = 2;
 	uint32 status_code = 3;
 }
+
+message ROUTE_MSG_REQUEST_HEARTBEAT
+{
+}
+
+message ROUTE_MSG_RESP_HEARTBEAT
+{
+	uint32 status_code = 1;
+}

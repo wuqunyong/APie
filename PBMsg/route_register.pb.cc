@@ -28,6 +28,14 @@ class MSG_RESP_ADD_ROUTEDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RESP_ADD_ROUTE> _instance;
 } _MSG_RESP_ADD_ROUTE_default_instance_;
+class ROUTE_MSG_REQUEST_HEARTBEATDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ROUTE_MSG_REQUEST_HEARTBEAT> _instance;
+} _ROUTE_MSG_REQUEST_HEARTBEAT_default_instance_;
+class ROUTE_MSG_RESP_HEARTBEATDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ROUTE_MSG_RESP_HEARTBEAT> _instance;
+} _ROUTE_MSG_RESP_HEARTBEAT_default_instance_;
 }  // namespace route_register
 static void InitDefaultsscc_info_MSG_REQUEST_ADD_ROUTE_route_5fregister_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -59,6 +67,34 @@ static void InitDefaultsscc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto}, {
       &scc_info_RouteInstance_route_5fregister_2eproto.base,}};
 
+static void InitDefaultsscc_info_ROUTE_MSG_REQUEST_HEARTBEAT_route_5fregister_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::route_register::_ROUTE_MSG_REQUEST_HEARTBEAT_default_instance_;
+    new (ptr) ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ROUTE_MSG_REQUEST_HEARTBEAT_route_5fregister_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ROUTE_MSG_REQUEST_HEARTBEAT_route_5fregister_2eproto}, {}};
+
+static void InitDefaultsscc_info_ROUTE_MSG_RESP_HEARTBEAT_route_5fregister_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::route_register::_ROUTE_MSG_RESP_HEARTBEAT_default_instance_;
+    new (ptr) ::route_register::ROUTE_MSG_RESP_HEARTBEAT();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::route_register::ROUTE_MSG_RESP_HEARTBEAT::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ROUTE_MSG_RESP_HEARTBEAT_route_5fregister_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ROUTE_MSG_RESP_HEARTBEAT_route_5fregister_2eproto}, {}};
+
 static void InitDefaultsscc_info_RouteInstance_route_5fregister_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -73,7 +109,7 @@ static void InitDefaultsscc_info_RouteInstance_route_5fregister_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RouteInstance_route_5fregister_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RouteInstance_route_5fregister_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_route_5fregister_2eproto[3];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_route_5fregister_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_route_5fregister_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_route_5fregister_2eproto = nullptr;
 
@@ -100,17 +136,32 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_route_5fregister_2eproto::offs
   PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, target_),
   PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, route_),
   PROTOBUF_FIELD_OFFSET(::route_register::MSG_RESP_ADD_ROUTE, status_code_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::route_register::ROUTE_MSG_REQUEST_HEARTBEAT, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::route_register::ROUTE_MSG_RESP_HEARTBEAT, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::route_register::ROUTE_MSG_RESP_HEARTBEAT, status_code_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::route_register::RouteInstance)},
   { 8, -1, sizeof(::route_register::MSG_REQUEST_ADD_ROUTE)},
   { 14, -1, sizeof(::route_register::MSG_RESP_ADD_ROUTE)},
+  { 22, -1, sizeof(::route_register::ROUTE_MSG_REQUEST_HEARTBEAT)},
+  { 27, -1, sizeof(::route_register::ROUTE_MSG_RESP_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::route_register::_RouteInstance_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::route_register::_MSG_REQUEST_ADD_ROUTE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::route_register::_MSG_RESP_ADD_ROUTE_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::route_register::_ROUTE_MSG_REQUEST_HEARTBEAT_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::route_register::_ROUTE_MSG_RESP_HEARTBEAT_default_instance_),
 };
 
 const char descriptor_table_protodef_route_5fregister_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -123,23 +174,27 @@ const char descriptor_table_protodef_route_5fregister_2eproto[] PROTOBUF_SECTION
   "_ADD_ROUTE\022-\n\006target\030\001 \001(\0132\035.route_regis"
   "ter.RouteInstance\022,\n\005route\030\002 \001(\0132\035.route"
   "_register.RouteInstance\022\023\n\013status_code\030\003"
+  " \001(\r\"\035\n\033ROUTE_MSG_REQUEST_HEARTBEAT\"/\n\030R"
+  "OUTE_MSG_RESP_HEARTBEAT\022\023\n\013status_code\030\001"
   " \001(\rb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_route_5fregister_2eproto_deps[1] = {
   &::descriptor_table_service_5fdiscovery_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_route_5fregister_2eproto_sccs[3] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_route_5fregister_2eproto_sccs[5] = {
   &scc_info_MSG_REQUEST_ADD_ROUTE_route_5fregister_2eproto.base,
   &scc_info_MSG_RESP_ADD_ROUTE_route_5fregister_2eproto.base,
+  &scc_info_ROUTE_MSG_REQUEST_HEARTBEAT_route_5fregister_2eproto.base,
+  &scc_info_ROUTE_MSG_RESP_HEARTBEAT_route_5fregister_2eproto.base,
   &scc_info_RouteInstance_route_5fregister_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_route_5fregister_2eproto_once;
 static bool descriptor_table_route_5fregister_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_route_5fregister_2eproto = {
-  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 372,
-  &descriptor_table_route_5fregister_2eproto_once, descriptor_table_route_5fregister_2eproto_sccs, descriptor_table_route_5fregister_2eproto_deps, 3, 1,
+  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 452,
+  &descriptor_table_route_5fregister_2eproto_once, descriptor_table_route_5fregister_2eproto_sccs, descriptor_table_route_5fregister_2eproto_deps, 5, 1,
   schemas, file_default_instances, TableStruct_route_5fregister_2eproto::offsets,
-  file_level_metadata_route_5fregister_2eproto, 3, file_level_enum_descriptors_route_5fregister_2eproto, file_level_service_descriptors_route_5fregister_2eproto,
+  file_level_metadata_route_5fregister_2eproto, 5, file_level_enum_descriptors_route_5fregister_2eproto, file_level_service_descriptors_route_5fregister_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -882,6 +937,346 @@ void MSG_RESP_ADD_ROUTE::InternalSwap(MSG_RESP_ADD_ROUTE* other) {
 }
 
 
+// ===================================================================
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::InitAsDefaultInstance() {
+}
+class ROUTE_MSG_REQUEST_HEARTBEAT::_Internal {
+ public:
+};
+
+ROUTE_MSG_REQUEST_HEARTBEAT::ROUTE_MSG_REQUEST_HEARTBEAT()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+}
+ROUTE_MSG_REQUEST_HEARTBEAT::ROUTE_MSG_REQUEST_HEARTBEAT(const ROUTE_MSG_REQUEST_HEARTBEAT& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::SharedCtor() {
+}
+
+ROUTE_MSG_REQUEST_HEARTBEAT::~ROUTE_MSG_REQUEST_HEARTBEAT() {
+  // @@protoc_insertion_point(destructor:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  SharedDtor();
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::SharedDtor() {
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ROUTE_MSG_REQUEST_HEARTBEAT& ROUTE_MSG_REQUEST_HEARTBEAT::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ROUTE_MSG_REQUEST_HEARTBEAT_route_5fregister_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::Clear() {
+// @@protoc_insertion_point(message_clear_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+const char* ROUTE_MSG_REQUEST_HEARTBEAT::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* ROUTE_MSG_REQUEST_HEARTBEAT::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  return target;
+}
+
+size_t ROUTE_MSG_REQUEST_HEARTBEAT::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ROUTE_MSG_REQUEST_HEARTBEAT* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ROUTE_MSG_REQUEST_HEARTBEAT>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+    MergeFrom(*source);
+  }
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::MergeFrom(const ROUTE_MSG_REQUEST_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::CopyFrom(const ROUTE_MSG_REQUEST_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ROUTE_MSG_REQUEST_HEARTBEAT::IsInitialized() const {
+  return true;
+}
+
+void ROUTE_MSG_REQUEST_HEARTBEAT::InternalSwap(ROUTE_MSG_REQUEST_HEARTBEAT* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ROUTE_MSG_REQUEST_HEARTBEAT::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void ROUTE_MSG_RESP_HEARTBEAT::InitAsDefaultInstance() {
+}
+class ROUTE_MSG_RESP_HEARTBEAT::_Internal {
+ public:
+};
+
+ROUTE_MSG_RESP_HEARTBEAT::ROUTE_MSG_RESP_HEARTBEAT()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+}
+ROUTE_MSG_RESP_HEARTBEAT::ROUTE_MSG_RESP_HEARTBEAT(const ROUTE_MSG_RESP_HEARTBEAT& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  status_code_ = from.status_code_;
+  // @@protoc_insertion_point(copy_constructor:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::SharedCtor() {
+  status_code_ = 0u;
+}
+
+ROUTE_MSG_RESP_HEARTBEAT::~ROUTE_MSG_RESP_HEARTBEAT() {
+  // @@protoc_insertion_point(destructor:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  SharedDtor();
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::SharedDtor() {
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ROUTE_MSG_RESP_HEARTBEAT& ROUTE_MSG_RESP_HEARTBEAT::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ROUTE_MSG_RESP_HEARTBEAT_route_5fregister_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void ROUTE_MSG_RESP_HEARTBEAT::Clear() {
+// @@protoc_insertion_point(message_clear_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  status_code_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+const char* ROUTE_MSG_RESP_HEARTBEAT::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint32 status_code = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* ROUTE_MSG_RESP_HEARTBEAT::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 status_code = 1;
+  if (this->status_code() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_status_code(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  return target;
+}
+
+size_t ROUTE_MSG_RESP_HEARTBEAT::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 status_code = 1;
+  if (this->status_code() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_status_code());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ROUTE_MSG_RESP_HEARTBEAT* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ROUTE_MSG_RESP_HEARTBEAT>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+    MergeFrom(*source);
+  }
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::MergeFrom(const ROUTE_MSG_RESP_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.status_code() != 0) {
+    _internal_set_status_code(from._internal_status_code());
+  }
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::CopyFrom(const ROUTE_MSG_RESP_HEARTBEAT& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ROUTE_MSG_RESP_HEARTBEAT::IsInitialized() const {
+  return true;
+}
+
+void ROUTE_MSG_RESP_HEARTBEAT::InternalSwap(ROUTE_MSG_RESP_HEARTBEAT* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(status_code_, other->status_code_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ROUTE_MSG_RESP_HEARTBEAT::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace route_register
 PROTOBUF_NAMESPACE_OPEN
@@ -893,6 +1288,12 @@ template<> PROTOBUF_NOINLINE ::route_register::MSG_REQUEST_ADD_ROUTE* Arena::Cre
 }
 template<> PROTOBUF_NOINLINE ::route_register::MSG_RESP_ADD_ROUTE* Arena::CreateMaybeMessage< ::route_register::MSG_RESP_ADD_ROUTE >(Arena* arena) {
   return Arena::CreateInternal< ::route_register::MSG_RESP_ADD_ROUTE >(arena);
+}
+template<> PROTOBUF_NOINLINE ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage< ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT >(Arena* arena) {
+  return Arena::CreateInternal< ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT >(arena);
+}
+template<> PROTOBUF_NOINLINE ::route_register::ROUTE_MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage< ::route_register::ROUTE_MSG_RESP_HEARTBEAT >(Arena* arena) {
+  return Arena::CreateInternal< ::route_register::ROUTE_MSG_RESP_HEARTBEAT >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

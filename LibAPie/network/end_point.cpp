@@ -21,7 +21,7 @@ void SelfRegistration::init()
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat, ::service_discovery::MSG_RESP_HEARTBEAT::default_instance());
 
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
-
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, SelfRegistration::handleRouteHeartbeat, ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, SelfRegistration::onServerPeerClose);
@@ -218,6 +218,17 @@ void EndPointMgr::delRoute(uint64_t iSerialNum)
 	m_reversePoints.erase(findIte);
 }
 
+std::optional<EndPoint> EndPointMgr::findRoute(uint64_t iSerialNum)
+{
+	auto findIte = m_reversePoints.find(iSerialNum);
+	if (findIte == m_reversePoints.end())
+	{
+		return std::nullopt;
+	}
+
+	return std::make_optional(findIte->second);
+}
+
 void EndPointMgr::clear()
 {
 	this->m_endpoints.clear();
@@ -276,7 +287,14 @@ void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const ::service_
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	if (response.status_code() == opcodes::StatusCode::SC_Ok)
+	{
+		//ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	}
+	else
+	{
+		ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	}
 }
 
 void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request)
@@ -313,6 +331,22 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESP_ADD_ROUTE, response);
 
 	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
+}
+
+void SelfRegistration::handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT& request)
+{
+	auto optPoint = EndPointMgrSingleton::get().findRoute(iSerialNum);
+
+	::route_register::ROUTE_MSG_RESP_HEARTBEAT response;
+	if (optPoint)
+	{
+		response.set_status_code(opcodes::SC_Ok);
+	}
+	else
+	{
+		response.set_status_code(opcodes::SC_Route_Unregistered);
+	}
+	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, response);
 }
 
 void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)

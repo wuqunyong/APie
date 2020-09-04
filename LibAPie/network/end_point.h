@@ -48,6 +48,8 @@ namespace APie
 		
 
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
+		static void handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT& request);
+		
 
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
@@ -79,6 +81,7 @@ namespace APie
 
 		void addRoute(const EndPoint& point, uint64_t iSerialNum);
 		void delRoute(uint64_t iSerialNum);
+		std::optional<EndPoint> findRoute(uint64_t iSerialNum);
 
 		void clear();
 
