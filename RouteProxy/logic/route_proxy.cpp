@@ -291,6 +291,11 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 
 			allInstance.insert(point);
 
+			if (point.type == ::common::EndPointType::EPT_Route_Proxy)
+			{
+				continue;
+			}
+
 			auto ptrClient = RouteProxySingleton::get().findRouteClient(point);
 			if (ptrClient == nullptr)
 			{
