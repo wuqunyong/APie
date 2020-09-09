@@ -80,7 +80,7 @@ namespace RPC {
 		return this->call(cntl, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::call(::rpc_msg::CONTROLLER cntl, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
+	bool RpcClient::call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
 		rpc_msg::STATUS status;
 
@@ -89,9 +89,9 @@ namespace RPC {
 		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
 
 		uint64_t iExpireAt = curTime + TIMEOUT_DURATION;
-		if (cntl.timeout_ms() != 0)
+		if (controller.timeout_ms() != 0)
 		{
-			iExpireAt = curTime + cntl.timeout_ms();
+			iExpireAt = curTime + controller.timeout_ms();
 		}
 
 		::rpc_msg::CHANNEL client;
@@ -114,7 +114,7 @@ namespace RPC {
 			m_expireAt[m_iSeqId] = iExpireAt;
 		}
 
-		bool bResult = APie::Network::OutputStream::sendMsg(cntl.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+		bool bResult = APie::Network::OutputStream::sendMsg(controller.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
 		if (!bResult)
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d|args:%s", 
