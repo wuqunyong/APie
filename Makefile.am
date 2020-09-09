@@ -1,4 +1,4 @@
-SUBDIRS = bin DBProxy GatewayServer RouteProxy SceneServer ServiceRegistry
+SUBDIRS = bin DBProxy GatewayServer LoginServer RouteProxy SceneServer ServiceRegistry
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
@@ -26,6 +26,7 @@ EXTRA_DIST =  \
 	DBProxy \
 	GatewayServer \
 	LibAPie \
+	LoginServer \
 	PBMsg \
 	RouteProxy \
 	SceneServer \

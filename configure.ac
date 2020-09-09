@@ -40,6 +40,7 @@ AC_CONFIG_FILES([Makefile
 		bin/Makefile
 		DBProxy/Makefile
 		GatewayServer/Makefile
+		LoginServer/Makefile
 		RouteProxy/Makefile
 		SceneServer/Makefile
 		ServiceRegistry/Makefile
