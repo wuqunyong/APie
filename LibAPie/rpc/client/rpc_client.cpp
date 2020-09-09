@@ -75,9 +75,9 @@ namespace RPC {
 			return false;
 		}
 
-		::rpc_msg::CONTROLLER cntl;
-		cntl.set_serial_num(serialOpt.value());
-		return this->call(cntl, server, opcodes, args, reply);
+		::rpc_msg::CONTROLLER controller;
+		controller.set_serial_num(serialOpt.value());
+		return this->call(controller, server, opcodes, args, reply);
 	}
 
 	bool RpcClient::call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
