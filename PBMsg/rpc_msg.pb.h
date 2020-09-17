@@ -540,6 +540,7 @@ class CLIENT_IDENTIFIER :
 
   enum : int {
     kStubFieldNumber = 1,
+    kRouterFieldNumber = 4,
     kSeqIdFieldNumber = 2,
     kRequiredReplyFieldNumber = 3,
   };
@@ -556,6 +557,21 @@ class CLIENT_IDENTIFIER :
   private:
   const ::rpc_msg::CHANNEL& _internal_stub() const;
   ::rpc_msg::CHANNEL* _internal_mutable_stub();
+  public:
+
+  // .rpc_msg.CHANNEL router = 4;
+  bool has_router() const;
+  private:
+  bool _internal_has_router() const;
+  public:
+  void clear_router();
+  const ::rpc_msg::CHANNEL& router() const;
+  ::rpc_msg::CHANNEL* release_router();
+  ::rpc_msg::CHANNEL* mutable_router();
+  void set_allocated_router(::rpc_msg::CHANNEL* router);
+  private:
+  const ::rpc_msg::CHANNEL& _internal_router() const;
+  ::rpc_msg::CHANNEL* _internal_mutable_router();
   public:
 
   // uint64 seq_id = 2;
@@ -582,6 +598,7 @@ class CLIENT_IDENTIFIER :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::rpc_msg::CHANNEL* stub_;
+  ::rpc_msg::CHANNEL* router_;
   ::PROTOBUF_NAMESPACE_ID::uint64 seq_id_;
   bool required_reply_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -829,13 +846,12 @@ class RPC_REQUEST :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kArgsDataFieldNumber = 5,
+    kArgsDataFieldNumber = 4,
     kClientFieldNumber = 1,
     kServerFieldNumber = 2,
-    kRouterFieldNumber = 3,
-    kOpcodesFieldNumber = 4,
+    kOpcodesFieldNumber = 3,
   };
-  // bytes args_data = 5;
+  // bytes args_data = 4;
   void clear_args_data();
   const std::string& args_data() const;
   void set_args_data(const std::string& value);
@@ -881,22 +897,7 @@ class RPC_REQUEST :
   ::rpc_msg::SERVER_IDENTIFIER* _internal_mutable_server();
   public:
 
-  // .rpc_msg.CHANNEL router = 3;
-  bool has_router() const;
-  private:
-  bool _internal_has_router() const;
-  public:
-  void clear_router();
-  const ::rpc_msg::CHANNEL& router() const;
-  ::rpc_msg::CHANNEL* release_router();
-  ::rpc_msg::CHANNEL* mutable_router();
-  void set_allocated_router(::rpc_msg::CHANNEL* router);
-  private:
-  const ::rpc_msg::CHANNEL& _internal_router() const;
-  ::rpc_msg::CHANNEL* _internal_mutable_router();
-  public:
-
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // .rpc_msg.RPC_OPCODES opcodes = 3;
   void clear_opcodes();
   ::rpc_msg::RPC_OPCODES opcodes() const;
   void set_opcodes(::rpc_msg::RPC_OPCODES value);
@@ -913,7 +914,6 @@ class RPC_REQUEST :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr args_data_;
   ::rpc_msg::CLIENT_IDENTIFIER* client_;
   ::rpc_msg::SERVER_IDENTIFIER* server_;
-  ::rpc_msg::CHANNEL* router_;
   int opcodes_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -1172,13 +1172,12 @@ class RPC_RESPONSE :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kResultDataFieldNumber = 5,
+    kResultDataFieldNumber = 4,
     kClientFieldNumber = 1,
     kServerFieldNumber = 2,
-    kRouterFieldNumber = 3,
-    kStatusFieldNumber = 4,
+    kStatusFieldNumber = 3,
   };
-  // bytes result_data = 5;
+  // bytes result_data = 4;
   void clear_result_data();
   const std::string& result_data() const;
   void set_result_data(const std::string& value);
@@ -1224,22 +1223,7 @@ class RPC_RESPONSE :
   ::rpc_msg::SERVER_IDENTIFIER* _internal_mutable_server();
   public:
 
-  // .rpc_msg.CHANNEL router = 3;
-  bool has_router() const;
-  private:
-  bool _internal_has_router() const;
-  public:
-  void clear_router();
-  const ::rpc_msg::CHANNEL& router() const;
-  ::rpc_msg::CHANNEL* release_router();
-  ::rpc_msg::CHANNEL* mutable_router();
-  void set_allocated_router(::rpc_msg::CHANNEL* router);
-  private:
-  const ::rpc_msg::CHANNEL& _internal_router() const;
-  ::rpc_msg::CHANNEL* _internal_mutable_router();
-  public:
-
-  // .rpc_msg.STATUS status = 4;
+  // .rpc_msg.STATUS status = 3;
   bool has_status() const;
   private:
   bool _internal_has_status() const;
@@ -1262,7 +1246,6 @@ class RPC_RESPONSE :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr result_data_;
   ::rpc_msg::CLIENT_IDENTIFIER* client_;
   ::rpc_msg::SERVER_IDENTIFIER* server_;
-  ::rpc_msg::CHANNEL* router_;
   ::rpc_msg::STATUS* status_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -1768,6 +1751,66 @@ inline void CLIENT_IDENTIFIER::set_required_reply(bool value) {
   // @@protoc_insertion_point(field_set:rpc_msg.CLIENT_IDENTIFIER.required_reply)
 }
 
+// .rpc_msg.CHANNEL router = 4;
+inline bool CLIENT_IDENTIFIER::_internal_has_router() const {
+  return this != internal_default_instance() && router_ != nullptr;
+}
+inline bool CLIENT_IDENTIFIER::has_router() const {
+  return _internal_has_router();
+}
+inline void CLIENT_IDENTIFIER::clear_router() {
+  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
+    delete router_;
+  }
+  router_ = nullptr;
+}
+inline const ::rpc_msg::CHANNEL& CLIENT_IDENTIFIER::_internal_router() const {
+  const ::rpc_msg::CHANNEL* p = router_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::CHANNEL*>(
+      &::rpc_msg::_CHANNEL_default_instance_);
+}
+inline const ::rpc_msg::CHANNEL& CLIENT_IDENTIFIER::router() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CLIENT_IDENTIFIER.router)
+  return _internal_router();
+}
+inline ::rpc_msg::CHANNEL* CLIENT_IDENTIFIER::release_router() {
+  // @@protoc_insertion_point(field_release:rpc_msg.CLIENT_IDENTIFIER.router)
+  
+  ::rpc_msg::CHANNEL* temp = router_;
+  router_ = nullptr;
+  return temp;
+}
+inline ::rpc_msg::CHANNEL* CLIENT_IDENTIFIER::_internal_mutable_router() {
+  
+  if (router_ == nullptr) {
+    auto* p = CreateMaybeMessage<::rpc_msg::CHANNEL>(GetArenaNoVirtual());
+    router_ = p;
+  }
+  return router_;
+}
+inline ::rpc_msg::CHANNEL* CLIENT_IDENTIFIER::mutable_router() {
+  // @@protoc_insertion_point(field_mutable:rpc_msg.CLIENT_IDENTIFIER.router)
+  return _internal_mutable_router();
+}
+inline void CLIENT_IDENTIFIER::set_allocated_router(::rpc_msg::CHANNEL* router) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete router_;
+  }
+  if (router) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      router = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, router, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  router_ = router;
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.CLIENT_IDENTIFIER.router)
+}
+
 // -------------------------------------------------------------------
 
 // SERVER_IDENTIFIER
@@ -1956,67 +1999,7 @@ inline void RPC_REQUEST::set_allocated_server(::rpc_msg::SERVER_IDENTIFIER* serv
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_REQUEST.server)
 }
 
-// .rpc_msg.CHANNEL router = 3;
-inline bool RPC_REQUEST::_internal_has_router() const {
-  return this != internal_default_instance() && router_ != nullptr;
-}
-inline bool RPC_REQUEST::has_router() const {
-  return _internal_has_router();
-}
-inline void RPC_REQUEST::clear_router() {
-  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
-    delete router_;
-  }
-  router_ = nullptr;
-}
-inline const ::rpc_msg::CHANNEL& RPC_REQUEST::_internal_router() const {
-  const ::rpc_msg::CHANNEL* p = router_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::CHANNEL*>(
-      &::rpc_msg::_CHANNEL_default_instance_);
-}
-inline const ::rpc_msg::CHANNEL& RPC_REQUEST::router() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.RPC_REQUEST.router)
-  return _internal_router();
-}
-inline ::rpc_msg::CHANNEL* RPC_REQUEST::release_router() {
-  // @@protoc_insertion_point(field_release:rpc_msg.RPC_REQUEST.router)
-  
-  ::rpc_msg::CHANNEL* temp = router_;
-  router_ = nullptr;
-  return temp;
-}
-inline ::rpc_msg::CHANNEL* RPC_REQUEST::_internal_mutable_router() {
-  
-  if (router_ == nullptr) {
-    auto* p = CreateMaybeMessage<::rpc_msg::CHANNEL>(GetArenaNoVirtual());
-    router_ = p;
-  }
-  return router_;
-}
-inline ::rpc_msg::CHANNEL* RPC_REQUEST::mutable_router() {
-  // @@protoc_insertion_point(field_mutable:rpc_msg.RPC_REQUEST.router)
-  return _internal_mutable_router();
-}
-inline void RPC_REQUEST::set_allocated_router(::rpc_msg::CHANNEL* router) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == nullptr) {
-    delete router_;
-  }
-  if (router) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
-    if (message_arena != submessage_arena) {
-      router = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, router, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  router_ = router;
-  // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_REQUEST.router)
-}
-
-// .rpc_msg.RPC_OPCODES opcodes = 4;
+// .rpc_msg.RPC_OPCODES opcodes = 3;
 inline void RPC_REQUEST::clear_opcodes() {
   opcodes_ = 0;
 }
@@ -2036,7 +2019,7 @@ inline void RPC_REQUEST::set_opcodes(::rpc_msg::RPC_OPCODES value) {
   // @@protoc_insertion_point(field_set:rpc_msg.RPC_REQUEST.opcodes)
 }
 
-// bytes args_data = 5;
+// bytes args_data = 4;
 inline void RPC_REQUEST::clear_args_data() {
   args_data_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -2304,67 +2287,7 @@ inline void RPC_RESPONSE::set_allocated_server(::rpc_msg::SERVER_IDENTIFIER* ser
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_RESPONSE.server)
 }
 
-// .rpc_msg.CHANNEL router = 3;
-inline bool RPC_RESPONSE::_internal_has_router() const {
-  return this != internal_default_instance() && router_ != nullptr;
-}
-inline bool RPC_RESPONSE::has_router() const {
-  return _internal_has_router();
-}
-inline void RPC_RESPONSE::clear_router() {
-  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
-    delete router_;
-  }
-  router_ = nullptr;
-}
-inline const ::rpc_msg::CHANNEL& RPC_RESPONSE::_internal_router() const {
-  const ::rpc_msg::CHANNEL* p = router_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::CHANNEL*>(
-      &::rpc_msg::_CHANNEL_default_instance_);
-}
-inline const ::rpc_msg::CHANNEL& RPC_RESPONSE::router() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.RPC_RESPONSE.router)
-  return _internal_router();
-}
-inline ::rpc_msg::CHANNEL* RPC_RESPONSE::release_router() {
-  // @@protoc_insertion_point(field_release:rpc_msg.RPC_RESPONSE.router)
-  
-  ::rpc_msg::CHANNEL* temp = router_;
-  router_ = nullptr;
-  return temp;
-}
-inline ::rpc_msg::CHANNEL* RPC_RESPONSE::_internal_mutable_router() {
-  
-  if (router_ == nullptr) {
-    auto* p = CreateMaybeMessage<::rpc_msg::CHANNEL>(GetArenaNoVirtual());
-    router_ = p;
-  }
-  return router_;
-}
-inline ::rpc_msg::CHANNEL* RPC_RESPONSE::mutable_router() {
-  // @@protoc_insertion_point(field_mutable:rpc_msg.RPC_RESPONSE.router)
-  return _internal_mutable_router();
-}
-inline void RPC_RESPONSE::set_allocated_router(::rpc_msg::CHANNEL* router) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == nullptr) {
-    delete router_;
-  }
-  if (router) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
-    if (message_arena != submessage_arena) {
-      router = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, router, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  router_ = router;
-  // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_RESPONSE.router)
-}
-
-// .rpc_msg.STATUS status = 4;
+// .rpc_msg.STATUS status = 3;
 inline bool RPC_RESPONSE::_internal_has_status() const {
   return this != internal_default_instance() && status_ != nullptr;
 }
@@ -2424,7 +2347,7 @@ inline void RPC_RESPONSE::set_allocated_status(::rpc_msg::STATUS* status) {
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_RESPONSE.status)
 }
 
-// bytes result_data = 5;
+// bytes result_data = 4;
 inline void RPC_RESPONSE::clear_result_data() {
   result_data_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }

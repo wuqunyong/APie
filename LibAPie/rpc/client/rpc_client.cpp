@@ -198,7 +198,7 @@ namespace RPC {
 				return;
 			}
 
-			if (response.router().type() != common::EPT_Route_Proxy)
+			if (response.client().router().type() != common::EPT_Route_Proxy)
 			{
 				// TODO
 				return;

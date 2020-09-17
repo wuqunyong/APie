@@ -126,11 +126,10 @@ static void InitDefaultsscc_info_RPC_REQUEST_rpc_5fmsg_2eproto() {
   ::rpc_msg::RPC_REQUEST::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_RPC_REQUEST_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 3, 0, InitDefaultsscc_info_RPC_REQUEST_rpc_5fmsg_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_RPC_REQUEST_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_RPC_REQUEST_rpc_5fmsg_2eproto}, {
       &scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto.base,
-      &scc_info_SERVER_IDENTIFIER_rpc_5fmsg_2eproto.base,
-      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,}};
+      &scc_info_SERVER_IDENTIFIER_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_RPC_RESPONSE_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -143,11 +142,10 @@ static void InitDefaultsscc_info_RPC_RESPONSE_rpc_5fmsg_2eproto() {
   ::rpc_msg::RPC_RESPONSE::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_RPC_RESPONSE_rpc_5fmsg_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 3, 0, InitDefaultsscc_info_RPC_RESPONSE_rpc_5fmsg_2eproto}, {
       &scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto.base,
       &scc_info_SERVER_IDENTIFIER_rpc_5fmsg_2eproto.base,
-      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,
       &scc_info_STATUS_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_RoleIdentifier_rpc_5fmsg_2eproto() {
@@ -220,6 +218,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, stub_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, seq_id_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, required_reply_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, router_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::SERVER_IDENTIFIER, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -233,7 +232,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, client_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, server_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, router_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, opcodes_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, args_data_),
   ~0u,  // no _has_bits_
@@ -250,7 +248,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, client_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, server_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, router_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, status_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, result_data_),
   ~0u,  // no _has_bits_
@@ -273,12 +270,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
   { 7, -1, sizeof(::rpc_msg::CONTROLLER)},
   { 14, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 22, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 28, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 23, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 29, -1, sizeof(::rpc_msg::RPC_REQUEST)},
   { 38, -1, sizeof(::rpc_msg::STATUS)},
   { 45, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 55, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 62, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
+  { 54, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 61, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -296,32 +293,31 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rrpc_msg.proto\022\007rpc_msg\"#\n\007CHANNEL\022\014\n\004t"
   "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"4\n\nCONTROLLER\022\022\n\ns"
-  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\"[\n\021C"
+  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\"}\n\021C"
   "LIENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg"
   ".CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_rep"
-  "ly\030\003 \001(\010\"3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 "
-  "\001(\0132\020.rpc_msg.CHANNEL\"\301\001\n\013RPC_REQUEST\022*\n"
-  "\006client\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIE"
-  "R\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SERVER_IDENT"
-  "IFIER\022 \n\006router\030\003 \001(\0132\020.rpc_msg.CHANNEL\022"
-  "%\n\007opcodes\030\004 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021"
-  "\n\targs_data\030\005 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001("
-  "\r\022\013\n\003msg\030\002 \001(\t\"\276\001\n\014RPC_RESPONSE\022*\n\006clien"
+  "ly\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANN"
+  "EL\"3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020."
+  "rpc_msg.CHANNEL\"\237\001\n\013RPC_REQUEST\022*\n\006clien"
   "t\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006s"
   "erver\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022"
-  " \n\006router\030\003 \001(\0132\020.rpc_msg.CHANNEL\022\037\n\006sta"
-  "tus\030\004 \001(\0132\017.rpc_msg.STATUS\022\023\n\013result_dat"
-  "a\030\005 \001(\014\"0\n\016RoleIdentifier\022\017\n\007user_id\030\001 \001"
-  "(\004\022\r\n\005gw_id\030\002 \001(\r\"k\n\034PRC_Multiplexer_For"
-  "ward_Args\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg.Rol"
-  "eIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg"
-  "\030\003 \001(\014*8\n\013RPC_OPCODES\022\014\n\010PRC_None\020\000\022\033\n\027P"
-  "RC_Multiplexer_Forward\020\001*\300\001\n\010RPC_CODE\022\013\n"
-  "\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Ti"
-  "meout\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_Par"
-  "seError\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031C"
-  "ODE_RouteNotLinkToServer\020h\022\037\n\033CODE_Route"
-  "SendToServerError\020ib\006proto3"
+  "%\n\007opcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021"
+  "\n\targs_data\030\004 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001("
+  "\r\022\013\n\003msg\030\002 \001(\t\"\234\001\n\014RPC_RESPONSE\022*\n\006clien"
+  "t\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006s"
+  "erver\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022"
+  "\037\n\006status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013resu"
+  "lt_data\030\004 \001(\014\"0\n\016RoleIdentifier\022\017\n\007user_"
+  "id\030\001 \001(\004\022\r\n\005gw_id\030\002 \001(\r\"k\n\034PRC_Multiplex"
+  "er_Forward_Args\022(\n\007role_id\030\001 \001(\0132\027.rpc_m"
+  "sg.RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010bo"
+  "dy_msg\030\003 \001(\014*8\n\013RPC_OPCODES\022\014\n\010PRC_None\020"
+  "\000\022\033\n\027PRC_Multiplexer_Forward\020\001*\300\001\n\010RPC_C"
+  "ODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014C"
+  "ODE_Timeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CO"
+  "DE_ParseError\020f\022\030\n\024CODE_ErrorServerPost\020"
+  "g\022\035\n\031CODE_RouteNotLinkToServer\020h\022\037\n\033CODE"
+  "_RouteSendToServerError\020ib\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -339,7 +335,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1107,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1073,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -820,15 +816,22 @@ void CONTROLLER::InternalSwap(CONTROLLER* other) {
 void CLIENT_IDENTIFIER::InitAsDefaultInstance() {
   ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->stub_ = const_cast< ::rpc_msg::CHANNEL*>(
       ::rpc_msg::CHANNEL::internal_default_instance());
+  ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->router_ = const_cast< ::rpc_msg::CHANNEL*>(
+      ::rpc_msg::CHANNEL::internal_default_instance());
 }
 class CLIENT_IDENTIFIER::_Internal {
  public:
   static const ::rpc_msg::CHANNEL& stub(const CLIENT_IDENTIFIER* msg);
+  static const ::rpc_msg::CHANNEL& router(const CLIENT_IDENTIFIER* msg);
 };
 
 const ::rpc_msg::CHANNEL&
 CLIENT_IDENTIFIER::_Internal::stub(const CLIENT_IDENTIFIER* msg) {
   return *msg->stub_;
+}
+const ::rpc_msg::CHANNEL&
+CLIENT_IDENTIFIER::_Internal::router(const CLIENT_IDENTIFIER* msg) {
+  return *msg->router_;
 }
 CLIENT_IDENTIFIER::CLIENT_IDENTIFIER()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -843,6 +846,11 @@ CLIENT_IDENTIFIER::CLIENT_IDENTIFIER(const CLIENT_IDENTIFIER& from)
     stub_ = new ::rpc_msg::CHANNEL(*from.stub_);
   } else {
     stub_ = nullptr;
+  }
+  if (from._internal_has_router()) {
+    router_ = new ::rpc_msg::CHANNEL(*from.router_);
+  } else {
+    router_ = nullptr;
   }
   ::memcpy(&seq_id_, &from.seq_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&required_reply_) -
@@ -864,6 +872,7 @@ CLIENT_IDENTIFIER::~CLIENT_IDENTIFIER() {
 
 void CLIENT_IDENTIFIER::SharedDtor() {
   if (this != internal_default_instance()) delete stub_;
+  if (this != internal_default_instance()) delete router_;
 }
 
 void CLIENT_IDENTIFIER::SetCachedSize(int size) const {
@@ -885,6 +894,10 @@ void CLIENT_IDENTIFIER::Clear() {
     delete stub_;
   }
   stub_ = nullptr;
+  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
+    delete router_;
+  }
+  router_ = nullptr;
   ::memset(&seq_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&required_reply_) -
       reinterpret_cast<char*>(&seq_id_)) + sizeof(required_reply_));
@@ -916,6 +929,13 @@ const char* CLIENT_IDENTIFIER::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           required_reply_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .rpc_msg.CHANNEL router = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_router(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -965,6 +985,14 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_required_reply(), target);
   }
 
+  // .rpc_msg.CHANNEL router = 4;
+  if (this->has_router()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::router(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -986,6 +1014,13 @@ size_t CLIENT_IDENTIFIER::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *stub_);
+  }
+
+  // .rpc_msg.CHANNEL router = 4;
+  if (this->has_router()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *router_);
   }
 
   // uint64 seq_id = 2;
@@ -1034,6 +1069,9 @@ void CLIENT_IDENTIFIER::MergeFrom(const CLIENT_IDENTIFIER& from) {
   if (from.has_stub()) {
     _internal_mutable_stub()->::rpc_msg::CHANNEL::MergeFrom(from._internal_stub());
   }
+  if (from.has_router()) {
+    _internal_mutable_router()->::rpc_msg::CHANNEL::MergeFrom(from._internal_router());
+  }
   if (from.seq_id() != 0) {
     _internal_set_seq_id(from._internal_seq_id());
   }
@@ -1064,6 +1102,7 @@ void CLIENT_IDENTIFIER::InternalSwap(CLIENT_IDENTIFIER* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(stub_, other->stub_);
+  swap(router_, other->router_);
   swap(seq_id_, other->seq_id_);
   swap(required_reply_, other->required_reply_);
 }
@@ -1284,14 +1323,11 @@ void RPC_REQUEST::InitAsDefaultInstance() {
       ::rpc_msg::CLIENT_IDENTIFIER::internal_default_instance());
   ::rpc_msg::_RPC_REQUEST_default_instance_._instance.get_mutable()->server_ = const_cast< ::rpc_msg::SERVER_IDENTIFIER*>(
       ::rpc_msg::SERVER_IDENTIFIER::internal_default_instance());
-  ::rpc_msg::_RPC_REQUEST_default_instance_._instance.get_mutable()->router_ = const_cast< ::rpc_msg::CHANNEL*>(
-      ::rpc_msg::CHANNEL::internal_default_instance());
 }
 class RPC_REQUEST::_Internal {
  public:
   static const ::rpc_msg::CLIENT_IDENTIFIER& client(const RPC_REQUEST* msg);
   static const ::rpc_msg::SERVER_IDENTIFIER& server(const RPC_REQUEST* msg);
-  static const ::rpc_msg::CHANNEL& router(const RPC_REQUEST* msg);
 };
 
 const ::rpc_msg::CLIENT_IDENTIFIER&
@@ -1301,10 +1337,6 @@ RPC_REQUEST::_Internal::client(const RPC_REQUEST* msg) {
 const ::rpc_msg::SERVER_IDENTIFIER&
 RPC_REQUEST::_Internal::server(const RPC_REQUEST* msg) {
   return *msg->server_;
-}
-const ::rpc_msg::CHANNEL&
-RPC_REQUEST::_Internal::router(const RPC_REQUEST* msg) {
-  return *msg->router_;
 }
 RPC_REQUEST::RPC_REQUEST()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -1329,11 +1361,6 @@ RPC_REQUEST::RPC_REQUEST(const RPC_REQUEST& from)
   } else {
     server_ = nullptr;
   }
-  if (from._internal_has_router()) {
-    router_ = new ::rpc_msg::CHANNEL(*from.router_);
-  } else {
-    router_ = nullptr;
-  }
   opcodes_ = from.opcodes_;
   // @@protoc_insertion_point(copy_constructor:rpc_msg.RPC_REQUEST)
 }
@@ -1355,7 +1382,6 @@ void RPC_REQUEST::SharedDtor() {
   args_data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete client_;
   if (this != internal_default_instance()) delete server_;
-  if (this != internal_default_instance()) delete router_;
 }
 
 void RPC_REQUEST::SetCachedSize(int size) const {
@@ -1382,10 +1408,6 @@ void RPC_REQUEST::Clear() {
     delete server_;
   }
   server_ = nullptr;
-  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
-    delete router_;
-  }
-  router_ = nullptr;
   opcodes_ = 0;
   _internal_metadata_.Clear();
 }
@@ -1411,24 +1433,17 @@ const char* RPC_REQUEST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .rpc_msg.CHANNEL router = 3;
+      // .rpc_msg.RPC_OPCODES opcodes = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_router(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .rpc_msg.RPC_OPCODES opcodes = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
           _internal_set_opcodes(static_cast<::rpc_msg::RPC_OPCODES>(val));
         } else goto handle_unusual;
         continue;
-      // bytes args_data = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+      // bytes args_data = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_args_data();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -1476,25 +1491,17 @@ failure:
         2, _Internal::server(this), target, stream);
   }
 
-  // .rpc_msg.CHANNEL router = 3;
-  if (this->has_router()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        3, _Internal::router(this), target, stream);
-  }
-
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // .rpc_msg.RPC_OPCODES opcodes = 3;
   if (this->opcodes() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_opcodes(), target);
+      3, this->_internal_opcodes(), target);
   }
 
-  // bytes args_data = 5;
+  // bytes args_data = 4;
   if (this->args_data().size() > 0) {
     target = stream->WriteBytesMaybeAliased(
-        5, this->_internal_args_data(), target);
+        4, this->_internal_args_data(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1513,7 +1520,7 @@ size_t RPC_REQUEST::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes args_data = 5;
+  // bytes args_data = 4;
   if (this->args_data().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
@@ -1534,14 +1541,7 @@ size_t RPC_REQUEST::ByteSizeLong() const {
         *server_);
   }
 
-  // .rpc_msg.CHANNEL router = 3;
-  if (this->has_router()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *router_);
-  }
-
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // .rpc_msg.RPC_OPCODES opcodes = 3;
   if (this->opcodes() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_opcodes());
@@ -1588,9 +1588,6 @@ void RPC_REQUEST::MergeFrom(const RPC_REQUEST& from) {
   if (from.has_server()) {
     _internal_mutable_server()->::rpc_msg::SERVER_IDENTIFIER::MergeFrom(from._internal_server());
   }
-  if (from.has_router()) {
-    _internal_mutable_router()->::rpc_msg::CHANNEL::MergeFrom(from._internal_router());
-  }
   if (from.opcodes() != 0) {
     _internal_set_opcodes(from._internal_opcodes());
   }
@@ -1621,7 +1618,6 @@ void RPC_REQUEST::InternalSwap(RPC_REQUEST* other) {
     GetArenaNoVirtual());
   swap(client_, other->client_);
   swap(server_, other->server_);
-  swap(router_, other->router_);
   swap(opcodes_, other->opcodes_);
 }
 
@@ -1863,8 +1859,6 @@ void RPC_RESPONSE::InitAsDefaultInstance() {
       ::rpc_msg::CLIENT_IDENTIFIER::internal_default_instance());
   ::rpc_msg::_RPC_RESPONSE_default_instance_._instance.get_mutable()->server_ = const_cast< ::rpc_msg::SERVER_IDENTIFIER*>(
       ::rpc_msg::SERVER_IDENTIFIER::internal_default_instance());
-  ::rpc_msg::_RPC_RESPONSE_default_instance_._instance.get_mutable()->router_ = const_cast< ::rpc_msg::CHANNEL*>(
-      ::rpc_msg::CHANNEL::internal_default_instance());
   ::rpc_msg::_RPC_RESPONSE_default_instance_._instance.get_mutable()->status_ = const_cast< ::rpc_msg::STATUS*>(
       ::rpc_msg::STATUS::internal_default_instance());
 }
@@ -1872,7 +1866,6 @@ class RPC_RESPONSE::_Internal {
  public:
   static const ::rpc_msg::CLIENT_IDENTIFIER& client(const RPC_RESPONSE* msg);
   static const ::rpc_msg::SERVER_IDENTIFIER& server(const RPC_RESPONSE* msg);
-  static const ::rpc_msg::CHANNEL& router(const RPC_RESPONSE* msg);
   static const ::rpc_msg::STATUS& status(const RPC_RESPONSE* msg);
 };
 
@@ -1883,10 +1876,6 @@ RPC_RESPONSE::_Internal::client(const RPC_RESPONSE* msg) {
 const ::rpc_msg::SERVER_IDENTIFIER&
 RPC_RESPONSE::_Internal::server(const RPC_RESPONSE* msg) {
   return *msg->server_;
-}
-const ::rpc_msg::CHANNEL&
-RPC_RESPONSE::_Internal::router(const RPC_RESPONSE* msg) {
-  return *msg->router_;
 }
 const ::rpc_msg::STATUS&
 RPC_RESPONSE::_Internal::status(const RPC_RESPONSE* msg) {
@@ -1915,11 +1904,6 @@ RPC_RESPONSE::RPC_RESPONSE(const RPC_RESPONSE& from)
   } else {
     server_ = nullptr;
   }
-  if (from._internal_has_router()) {
-    router_ = new ::rpc_msg::CHANNEL(*from.router_);
-  } else {
-    router_ = nullptr;
-  }
   if (from._internal_has_status()) {
     status_ = new ::rpc_msg::STATUS(*from.status_);
   } else {
@@ -1945,7 +1929,6 @@ void RPC_RESPONSE::SharedDtor() {
   result_data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete client_;
   if (this != internal_default_instance()) delete server_;
-  if (this != internal_default_instance()) delete router_;
   if (this != internal_default_instance()) delete status_;
 }
 
@@ -1973,10 +1956,6 @@ void RPC_RESPONSE::Clear() {
     delete server_;
   }
   server_ = nullptr;
-  if (GetArenaNoVirtual() == nullptr && router_ != nullptr) {
-    delete router_;
-  }
-  router_ = nullptr;
   if (GetArenaNoVirtual() == nullptr && status_ != nullptr) {
     delete status_;
   }
@@ -2005,23 +1984,16 @@ const char* RPC_RESPONSE::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .rpc_msg.CHANNEL router = 3;
+      // .rpc_msg.STATUS status = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_router(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .rpc_msg.STATUS status = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_status(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bytes result_data = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+      // bytes result_data = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_result_data();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -2069,26 +2041,18 @@ failure:
         2, _Internal::server(this), target, stream);
   }
 
-  // .rpc_msg.CHANNEL router = 3;
-  if (this->has_router()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        3, _Internal::router(this), target, stream);
-  }
-
-  // .rpc_msg.STATUS status = 4;
+  // .rpc_msg.STATUS status = 3;
   if (this->has_status()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        4, _Internal::status(this), target, stream);
+        3, _Internal::status(this), target, stream);
   }
 
-  // bytes result_data = 5;
+  // bytes result_data = 4;
   if (this->result_data().size() > 0) {
     target = stream->WriteBytesMaybeAliased(
-        5, this->_internal_result_data(), target);
+        4, this->_internal_result_data(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2107,7 +2071,7 @@ size_t RPC_RESPONSE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes result_data = 5;
+  // bytes result_data = 4;
   if (this->result_data().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
@@ -2128,14 +2092,7 @@ size_t RPC_RESPONSE::ByteSizeLong() const {
         *server_);
   }
 
-  // .rpc_msg.CHANNEL router = 3;
-  if (this->has_router()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *router_);
-  }
-
-  // .rpc_msg.STATUS status = 4;
+  // .rpc_msg.STATUS status = 3;
   if (this->has_status()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -2183,9 +2140,6 @@ void RPC_RESPONSE::MergeFrom(const RPC_RESPONSE& from) {
   if (from.has_server()) {
     _internal_mutable_server()->::rpc_msg::SERVER_IDENTIFIER::MergeFrom(from._internal_server());
   }
-  if (from.has_router()) {
-    _internal_mutable_router()->::rpc_msg::CHANNEL::MergeFrom(from._internal_router());
-  }
   if (from.has_status()) {
     _internal_mutable_status()->::rpc_msg::STATUS::MergeFrom(from._internal_status());
   }
@@ -2216,7 +2170,6 @@ void RPC_RESPONSE::InternalSwap(RPC_RESPONSE* other) {
     GetArenaNoVirtual());
   swap(client_, other->client_);
   swap(server_, other->server_);
-  swap(router_, other->router_);
   swap(status_, other->status_);
 }
 

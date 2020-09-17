@@ -51,7 +51,6 @@ namespace RPC {
 
 		::rpc_msg::RPC_RESPONSE response;
 		*response.mutable_client() = request.client();
-		*response.mutable_router() = request.router();
 		*response.mutable_server()->mutable_stub() = server;
 
 		if (request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
@@ -75,8 +74,8 @@ namespace RPC {
 					return;
 				}
 
-				request.mutable_router()->set_type(server.type());
-				request.mutable_router()->set_id(server.id());
+				request.mutable_client()->mutable_router()->set_type(server.type());
+				request.mutable_client()->mutable_router()->set_id(server.id());
 				bool bResult = APie::Network::OutputStream::sendMsg(serialOpt.value(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
 				if (!bResult)
 				{

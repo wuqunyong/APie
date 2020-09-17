@@ -39,6 +39,7 @@ message CLIENT_IDENTIFIER
 	CHANNEL stub = 1;
 	uint64 seq_id = 2;
 	bool required_reply = 3;
+	CHANNEL router = 4;
 }
 
 message SERVER_IDENTIFIER
@@ -50,9 +51,8 @@ message RPC_REQUEST
 {
 	CLIENT_IDENTIFIER client = 1;
 	SERVER_IDENTIFIER server = 2;
-	CHANNEL router = 3;
-	RPC_OPCODES opcodes = 4;
-	bytes args_data = 5;
+	RPC_OPCODES opcodes = 3;
+	bytes args_data = 4;
 }
 
 message STATUS
@@ -65,9 +65,8 @@ message RPC_RESPONSE
 {
 	CLIENT_IDENTIFIER client = 1;
 	SERVER_IDENTIFIER server = 2;
-	CHANNEL router = 3;
-	STATUS status = 4;
-	bytes result_data = 5;
+	STATUS status = 3;
+	bytes result_data = 4;
 }
 
 message RoleIdentifier
