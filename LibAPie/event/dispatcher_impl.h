@@ -72,6 +72,7 @@ private:
 
   void handleNewConnect(PassiveConnect *itemPtr);
   void handlePBRequest(PBRequest *itemPtr);
+  void handlePBForward(PBForward *itemPtr);
   void handleSendData(SendData *itemPtr);
 
   void handleAsyncLog(LogCmd* ptrCmd);

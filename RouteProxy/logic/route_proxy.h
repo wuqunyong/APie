@@ -8,9 +8,11 @@
 #include <algorithm>
 #include <tuple>
 #include <atomic>
+#include <optional>
 
 #include "apie.h"
 #include "../../PBMsg/service_discovery.pb.h"
+
 
 
 namespace APie {
@@ -61,11 +63,13 @@ namespace APie {
 
 		std::shared_ptr<RouteClient> findRouteClient(EndPoint point);
 		std::shared_ptr<RouteClient> findRouteClient(uint64_t iSerialNum);
+		std::optional<EndPoint> findEndPoint(uint64_t iSerialNum);
 
 		bool addRouteClient(const ::service_discovery::EndPointInstance& instance);
 		bool delRouteClient(EndPoint point);
 
 		std::map<EndPoint, std::shared_ptr<RouteClient>>& connectedPool();
+		
 
 	public:
 		static void handleRespAddRoute(uint64_t iSerialNum, const ::route_register::MSG_RESP_ADD_ROUTE& response);

@@ -6,13 +6,13 @@ listeners:
 - address:
     socket_address:
       address: "*"
-      port_value: 5007
+      port_value: 35007
       type: 1
 clients:
 - address:
     socket_address:
       address: "127.0.0.1"
-      port_value: 5007
+      port_value: 14007
       type: 1
 log:
   merge: true

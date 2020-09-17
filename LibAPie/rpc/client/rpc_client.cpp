@@ -22,7 +22,7 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
+	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply, ::rpc_msg::CONTROLLER controller)
 	{
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
@@ -75,7 +75,6 @@ namespace RPC {
 			return false;
 		}
 
-		::rpc_msg::CONTROLLER controller;
 		controller.set_serial_num(serialOpt.value());
 		return this->call(controller, server, opcodes, args, reply);
 	}
@@ -187,6 +186,45 @@ namespace RPC {
 
 	void RpcClient::handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response)
 	{
+		::rpc_msg::CHANNEL server;
+		server.set_type(APie::CtxSingleton::get().identify().type);
+		server.set_id(APie::CtxSingleton::get().identify().id);
+
+		if (response.client().stub().type() != server.type() || response.client().stub().id() != server.id())
+		{
+			if (server.type() != common::EPT_Route_Proxy)
+			{
+				// TODO
+				return;
+			}
+
+			if (response.router().type() != common::EPT_Route_Proxy)
+			{
+				// TODO
+				return;
+			}
+			else
+			{
+				EndPoint sendTarget;
+				sendTarget.type = response.client().stub().type();
+				sendTarget.id = response.client().stub().id();
+				auto serialOpt = EndPointMgrSingleton::get().getSerialNum(sendTarget);
+				if (!serialOpt.has_value())
+				{
+					// TODO
+					return;
+				}
+
+
+				bool bResult = APie::Network::OutputStream::sendMsg(serialOpt.value(), ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+				if (!bResult)
+				{
+					// TODO
+				}
+				return;
+			}
+		}
+
 		uint64_t seqId = response.client().seq_id();
 		auto replyCb = RpcClientSingleton::get().find(seqId);
 		if (replyCb == nullptr)

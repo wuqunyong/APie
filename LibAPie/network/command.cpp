@@ -22,6 +22,15 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::pb_forward:
+	{
+		if (NULL != cmd->args.pb_forward.ptrData)
+		{
+			delete cmd->args.pb_forward.ptrData;
+			cmd->args.pb_forward.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::send_data:
 	{
 		if (NULL != cmd->args.send_data.ptrData)

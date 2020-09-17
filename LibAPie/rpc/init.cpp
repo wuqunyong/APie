@@ -6,7 +6,7 @@
 namespace APie {
 namespace RPC {
 
-	void init()
+	void rpcInit()
 	{
 		RpcClientSingleton::get().init();
 		RpcServerSingleton::get().init();

@@ -16,7 +16,7 @@
 namespace APie {
 namespace RPC {
 
-	void init();
+	void rpcInit();
 
 } // namespace Network
 } // namespace RPC

@@ -6,6 +6,7 @@ package rpc_msg;
 
 enum RPC_OPCODES {
 	PRC_None = 0;
+	PRC_Multiplexer_Forward = 1;
 }
 
 enum RPC_CODE {
@@ -14,6 +15,10 @@ enum RPC_CODE {
 
 	CODE_Timeout = 100;
 	CODE_Unregister = 101;
+	CODE_ParseError = 102;
+	CODE_ErrorServerPost = 103; 
+	CODE_RouteNotLinkToServer = 104;
+	CODE_RouteSendToServerError = 105;
 }
 
 
@@ -45,8 +50,9 @@ message RPC_REQUEST
 {
 	CLIENT_IDENTIFIER client = 1;
 	SERVER_IDENTIFIER server = 2;
-	RPC_OPCODES opcodes = 3;
-	bytes args_data = 4;
+	CHANNEL router = 3;
+	RPC_OPCODES opcodes = 4;
+	bytes args_data = 5;
 }
 
 message STATUS
@@ -59,7 +65,20 @@ message RPC_RESPONSE
 {
 	CLIENT_IDENTIFIER client = 1;
 	SERVER_IDENTIFIER server = 2;
-	STATUS status = 3;
-	bytes result_data = 4;
+	CHANNEL router = 3;
+	STATUS status = 4;
+	bytes result_data = 5;
 }
 
+message RoleIdentifier
+{
+	uint64 user_id = 1;
+	uint32 gw_id = 2;
+}
+
+message PRC_Multiplexer_Forward_Args
+{
+	RoleIdentifier role_id = 1;
+	uint32 opcodes = 2;
+	bytes body_msg = 3;
+}

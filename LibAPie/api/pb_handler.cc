@@ -45,5 +45,15 @@ google::protobuf::Message* PBHandler::createMessage(const std::string& typeName)
 	return message;
 }
 
+PBHandler::HandleMuxFunction& PBHandler::getDefaultFunc()
+{
+	return default_func_;
+}
+
+void PBHandler::setDefaultFunc(HandleMuxFunction func)
+{
+	default_func_ = func;
+}
+
 } // namespace Api
 } // namespace Envoy

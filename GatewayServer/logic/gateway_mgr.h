@@ -23,6 +23,7 @@ namespace APie {
 	public:
 
 	private:
+		std::map<uint64_t, uint64_t> m_serialNumRoleId;
 	};
 
 	using GatewayMgrSingleton = ThreadSafeSingleton<GatewayMgr>;

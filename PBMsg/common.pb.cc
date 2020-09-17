@@ -24,11 +24,12 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_common_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014common.proto\022\006common*\230\001\n\014EndPointType\022"
+  "\n\014common.proto\022\006common*\256\001\n\014EndPointType\022"
   "\014\n\010EPT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022"
   "\023\n\017EPT_Route_Proxy\020\002\022\024\n\020EPT_Scene_Server"
   "\020\003\022\026\n\022EPT_Gateway_Server\020\004\022\020\n\014EPT_DB_Pro"
-  "xy\020\005\022\013\n\007EPT_Max\020\006b\006proto3"
+  "xy\020\005\022\024\n\020EPT_Login_Server\020\006\022\013\n\007EPT_Max\020\007b"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_common_2eproto_deps[1] = {
 };
@@ -37,7 +38,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_com
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_common_2eproto_once;
 static bool descriptor_table_common_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_common_2eproto = {
-  &descriptor_table_common_2eproto_initialized, descriptor_table_protodef_common_2eproto, "common.proto", 185,
+  &descriptor_table_common_2eproto_initialized, descriptor_table_protodef_common_2eproto, "common.proto", 207,
   &descriptor_table_common_2eproto_once, descriptor_table_common_2eproto_sccs, descriptor_table_common_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_common_2eproto::offsets,
   file_level_metadata_common_2eproto, 0, file_level_enum_descriptors_common_2eproto, file_level_service_descriptors_common_2eproto,
@@ -59,6 +60,7 @@ bool EndPointType_IsValid(int value) {
     case 4:
     case 5:
     case 6:
+    case 7:
       return true;
     default:
       return false;

@@ -157,6 +157,8 @@ void RouteClient::sendHeartbeat(APie::ClientProxy* ptrClient)
 
 void RouteProxy::init()
 {
+	APie::RPC::rpcInit();
+
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_ROUTE, RouteProxy::handleRespAddRoute, ::route_register::MSG_RESP_ADD_ROUTE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::ROUTE_MSG_RESP_HEARTBEAT::default_instance());
 
@@ -193,6 +195,17 @@ std::shared_ptr<RouteClient> RouteProxy::findRouteClient(uint64_t iSerialNum)
 	}
 
 	return findRouteClient(findIte->second);
+}
+
+std::optional<EndPoint> RouteProxy::findEndPoint(uint64_t iSerialNum)
+{
+	auto findIte = m_reverseMap.find(iSerialNum);
+	if (findIte == m_reverseMap.end())
+	{
+		return std::nullopt;
+	}
+
+	return std::make_optional(findIte->second);
 }
 
 
@@ -243,6 +256,12 @@ void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register:
 		{
 			ptrRouteClient->setState(APie::RouteClient::Registered);
 			
+			auto optPoint = RouteProxySingleton::get().findEndPoint(iSerialNum);
+			if (optPoint)
+			{
+				EndPointMgrSingleton::get().addRoute(optPoint.value(), iSerialNum);
+			}
+
 			ss << ",state:" << ptrRouteClient->state();
 		}
 

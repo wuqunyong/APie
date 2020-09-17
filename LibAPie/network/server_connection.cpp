@@ -171,6 +171,22 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	auto optionalData = Api::OpcodeHandlerSingleton::get().server.getType(iOpcode);
 	if (!optionalData)
 	{
+		PBForward *itemObjPtr = new PBForward;
+		itemObjPtr->type = ConnetionType::CT_SERVER;
+		itemObjPtr->iSerialNum = this->iSerialNum;
+		itemObjPtr->iOpcode = iOpcode;
+		itemObjPtr->sMsg = requestStr;
+
+		Command command;
+		command.type = Command::pb_forward;
+		command.args.pb_forward.ptrData = itemObjPtr;
+
+		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+		if (ptrLogic == nullptr)
+		{
+			return;
+		}
+		ptrLogic->push(command);
 		return;
 	}
 

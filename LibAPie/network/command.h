@@ -53,6 +53,14 @@ namespace APie
 		std::shared_ptr<::google::protobuf::Message> ptrMsg;
 	};
 
+	struct PBForward
+	{
+		ConnetionType type;
+		uint64_t iSerialNum;
+		uint32_t iOpcode;
+		std::string sMsg;
+	};
+
 	struct SendData
 	{
 		ConnetionType type;
@@ -135,6 +143,7 @@ namespace APie
 
 			passive_connect,
 			pb_reqeust,
+			pb_forward,
 			send_data,
 			dial,
 			dial_result,
@@ -173,6 +182,10 @@ namespace APie
 			struct {
 				PBRequest* ptrData;
 			} pb_reqeust;
+
+			struct {
+				PBForward* ptrData;
+			} pb_forward;
 
 			struct {
 				SendData* ptrData;

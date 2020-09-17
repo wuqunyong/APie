@@ -16,7 +16,7 @@ namespace Api {
 class PBHandler {
 public:
 	using HandleFunction = std::function<void(uint64_t serialNum, ::google::protobuf::Message* ptrMsg)>;
-
+	using HandleMuxFunction = std::function<void(uint64_t serialNum, uint32_t opcodes, const std::string& msg)>;
 
 	template <typename F, typename Params, typename std::enable_if<
 		std::is_base_of<google::protobuf::Message, Params>::value, int>::type = 0 >
@@ -56,10 +56,13 @@ public:
 	std::optional<HandleFunction> getFunction(uint64_t opcode);
 
 	google::protobuf::Message* createMessage(const std::string& typeName);
+	HandleMuxFunction& getDefaultFunc();
+	void setDefaultFunc(HandleMuxFunction func);
 
 private:
 	std::map<uint64_t, HandleFunction> funcs_;
 	std::map<uint64_t, std::string> types_;
+	HandleMuxFunction default_func_;
 };
 
 class OpcodeHandler 

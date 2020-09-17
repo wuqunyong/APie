@@ -61,7 +61,7 @@ std::tuple<uint32_t, std::string> initHook()
 				return;
 			}
 		};
-		APie::RPC::RpcClientSingleton::get().call(cntl, server, ::rpc_msg::PRC_None, request, rpcCB);
+		//APie::RPC::RpcClientSingleton::get().call(cntl, server, ::rpc_msg::PRC_None, request, rpcCB);
 	};
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
 
@@ -75,7 +75,7 @@ std::tuple<uint32_t, std::string> initHook1()
 
 std::tuple<uint32_t, std::string> initHook2()
 {
-	APie::RPC::init();
+	APie::RPC::rpcInit();
 
 	auto rpcCB = [](const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args) -> std::tuple<uint32_t, std::string> {
 		::login_msg::MSG_CLIENT_LOGINTOL request;
@@ -175,8 +175,8 @@ int main(int argc, char **argv)
 	std::string configFile = argv[1];
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook1, 1);
-	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
-	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook2, 2);
+	//APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
+	//APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook2, 2);
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
 

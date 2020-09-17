@@ -4,6 +4,8 @@ namespace APie {
 
 void ServiceRegistry::init()
 {
+	APie::RPC::rpcInit();
+
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, ServiceRegistry::handleRequestAddInstance, ::service_discovery::MSG_REQUEST_ADD_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat, ::service_discovery::MSG_REQUEST_HEARTBEAT::default_instance());
 

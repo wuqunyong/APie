@@ -4,7 +4,7 @@ namespace APie {
 
 void LoginMgr::init()
 {
-
+	APie::RPC::rpcInit();
 }
 
 void LoginMgr::start()

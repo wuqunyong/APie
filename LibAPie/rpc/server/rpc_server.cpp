@@ -43,7 +43,7 @@ namespace RPC {
 		return true;
 	}
 
-	void RpcServer::handleRequest(uint64_t iSerialNum, const ::rpc_msg::RPC_REQUEST& request)
+	void RpcServer::handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST& request)
 	{
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
@@ -51,7 +51,41 @@ namespace RPC {
 
 		::rpc_msg::RPC_RESPONSE response;
 		*response.mutable_client() = request.client();
+		*response.mutable_router() = request.router();
 		*response.mutable_server()->mutable_stub() = server;
+
+		if (request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
+		{
+			if (server.type() != common::EPT_Route_Proxy)
+			{
+				response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_ErrorServerPost);
+				APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+				return;
+			}
+			else
+			{
+				EndPoint sendTarget;
+				sendTarget.type = request.server().stub().type();
+				sendTarget.id = request.server().stub().id();
+				auto serialOpt = EndPointMgrSingleton::get().getSerialNum(sendTarget);
+				if (!serialOpt.has_value())
+				{
+					response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_RouteNotLinkToServer);
+					APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+					return;
+				}
+
+				request.mutable_router()->set_type(server.type());
+				request.mutable_router()->set_id(server.id());
+				bool bResult = APie::Network::OutputStream::sendMsg(serialOpt.value(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+				if (!bResult)
+				{
+					response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_RouteSendToServerError);
+					APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+				}
+				return;
+			}
+		}
 
 		auto cb = RpcServerSingleton::get().find(request.opcodes());
 		if (cb == nullptr)

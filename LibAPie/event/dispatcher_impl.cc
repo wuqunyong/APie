@@ -236,6 +236,11 @@ void DispatcherImpl::handleCommand()
 			this->handlePBRequest(cmd.args.pb_reqeust.ptrData);
 			break;
 		}
+		case Command::pb_forward:
+		{
+			this->handlePBForward(cmd.args.pb_forward.ptrData);
+			break;
+		}
 		case Command::send_data:
 		{
 			this->handleSendData(cmd.args.send_data.ptrData);
@@ -478,6 +483,30 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 		}
 
 		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void DispatcherImpl::handlePBForward(PBForward *itemPtr)
+{
+	switch (itemPtr->type)
+	{
+	case APie::ConnetionType::CT_SERVER:
+	{
+		auto defaultHandler = Api::OpcodeHandlerSingleton::get().server.getDefaultFunc();
+		if (!defaultHandler)
+		{
+			return;
+		}
+
+		defaultHandler(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->sMsg);
+		break;
+	}
+	case APie::ConnetionType::CT_CLIENT:
+	{
 		break;
 	}
 	default:

@@ -27,8 +27,7 @@ namespace RPC {
 	{
 	public:
 		bool init();
-		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
-		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
+		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 
 		void handleTimeout();
 
@@ -36,6 +35,8 @@ namespace RPC {
 		static void handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response);
 
 	private:
+		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
+
 		RpcReplyCb find(uint64_t seqId);
 		void del(uint64_t seqId);
 
