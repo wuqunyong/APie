@@ -102,12 +102,13 @@ enum RPC_OPCODES : int {
   RPC_Multiplexer_Forward = 1,
   RPC_DeMultiplexer_Forward = 2,
   RPC_MysqlDescTable = 401,
+  RPC_MysqlQuery = 402,
   RPC_OPCODES_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_OPCODES_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RPC_OPCODES_IsValid(int value);
 constexpr RPC_OPCODES RPC_OPCODES_MIN = RPC_None;
-constexpr RPC_OPCODES RPC_OPCODES_MAX = RPC_MysqlDescTable;
+constexpr RPC_OPCODES RPC_OPCODES_MAX = RPC_MysqlQuery;
 constexpr int RPC_OPCODES_ARRAYSIZE = RPC_OPCODES_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_OPCODES_descriptor();

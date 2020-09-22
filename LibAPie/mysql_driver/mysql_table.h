@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../network/windows_platform.h"
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -24,11 +26,15 @@ public:
 	std::string getTable();
 	std::vector<MysqlField>& getFields();
 	std::optional<uint32_t> getIndexByName(const std::string& name);
+	std::optional<std::string> getNameByIndex(uint32_t index);
+
+	bool generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql);
 
 private:
 	std::string m_db;
 	std::string m_table;
 	std::vector<MysqlField> m_fields;
 	std::map<std::string, uint32_t> m_nameIndex;
+	std::map<uint32_t, std::string> m_indexName;
 };
 

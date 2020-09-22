@@ -72,6 +72,34 @@ std::string DeclarativeBase::query()
 	return ss.str();
 };
 
+mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
+{
+	mysql_proxy_msg::MysqlQueryRequest queryRequest;
+	queryRequest.set_db_name(m_table.getDb());
+	queryRequest.set_table_name(m_table.getTable());
+
+	for (auto& items : m_table.getFields())
+	{
+		bool bResult = items.is_primary_key();
+		if (bResult)
+		{
+			auto ptrAdd = queryRequest.add_primary_key();
+
+			std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+			if (!field.has_value())
+			{
+				std::stringstream ss;
+				ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+				throw std::invalid_argument(ss.str());
+			}
+			ptrAdd->set_index(items.getIndex());
+			*ptrAdd->mutable_value() = field.value();
+		}
+	}
+
+	return queryRequest;
+}
+
 bool DeclarativeBase::checkInvalid()
 {
 	if (m_table.getFields().size() != this->columNums())
@@ -139,7 +167,7 @@ uint32_t DeclarativeBase::fieldSize(uint32_t index)
 	return m_table.getFields()[index].getSize();
 }
 
-std::string DeclarativeBase::toString(::mysql_proxy_msg::MysqlValue& value)
+std::string DeclarativeBase::toString(const ::mysql_proxy_msg::MysqlValue& value)
 {
 	std::string quotes("'");
 
@@ -434,4 +462,35 @@ void DeclarativeBase::markDirty(const std::vector<uint8_t>& index)
 			m_dirtyFlags.set(items);
 		}
 	}
+}
+
+MysqlTable DeclarativeBase::convertFrom(::mysql_proxy_msg::MysqlDescTable& desc)
+{
+	MysqlTable table;
+
+	if (!desc.result())
+	{
+		return table;
+	}
+
+	table.setDb(desc.db_name());
+	table.setTable(desc.table_name());
+	table.getFields().reserve(desc.fields().size());
+
+	uint32_t iOffset = 0;
+	for (const auto& item : desc.fields())
+	{
+		MysqlField field;
+		field.setIndex(item.index());
+		field.setName(item.name());
+		field.setFlags(item.flags());
+		field.setType(item.type());
+
+		field.setOffset(item.offset());
+		iOffset += field.getSize();
+
+		table.appendField(field);
+	}
+
+	return table;
 }

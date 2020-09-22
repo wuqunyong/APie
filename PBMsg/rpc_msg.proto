@@ -10,6 +10,7 @@ enum RPC_OPCODES {
 	RPC_DeMultiplexer_Forward = 2;
 
 	RPC_MysqlDescTable = 401;
+	RPC_MysqlQuery = 402;
 }
 
 enum RPC_CODE {

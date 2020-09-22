@@ -125,10 +125,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="logic\dbproxy_mgr.h" />
+    <ClInclude Include="logic\table_cache_mgr.h" />
+    <ClInclude Include="logic\table_records_cache_mgr.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="logic\dbproxy_mgr.cpp" />
+    <ClCompile Include="logic\table_cache_mgr.cpp" />
+    <ClCompile Include="logic\table_records_cache_mgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
   </ItemGroup>

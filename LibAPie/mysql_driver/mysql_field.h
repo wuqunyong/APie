@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../network/platform_impl.h"
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -39,6 +41,7 @@ public:
 
 	void setIndex(uint32_t index);
 	void setName(char * ptrName, uint32_t len);
+	void setName(const std::string& name);
 	void setType(uint32_t type);
 	void setSize(uint32_t size);
 	void setFlags(uint32_t flags);
@@ -50,6 +53,9 @@ public:
 	uint32_t getSize();
 	uint32_t getFlags();
 	uint32_t getOffset();
+
+	::mysql_proxy_msg::MysqlValue getValue();
+	void setValue(::mysql_proxy_msg::MysqlValue value);
 
 	::mysql_proxy_msg::MysqlScalarValueTypes convertToPbType();
 	DB_FIELD_TYPE convertToDbType();

@@ -11,6 +11,11 @@ void MysqlField::setName(char * ptrName, uint32_t len)
 	this->m_name = std::string(ptrName, len);
 }
 
+void MysqlField::setName(const std::string& name)
+{
+	this->m_name = name;
+}
+
 void MysqlField::setType(uint32_t type)
 {
 	this->m_type = type;
@@ -61,6 +66,16 @@ uint32_t MysqlField::getFlags()
 uint32_t MysqlField::getOffset()
 {
 	return this->m_offset;
+}
+
+::mysql_proxy_msg::MysqlValue MysqlField::getValue()
+{
+	return this->m_value;
+}
+
+void MysqlField::setValue(::mysql_proxy_msg::MysqlValue value)
+{
+	this->m_value = value;
 }
 
 MysqlField::DB_FIELD_TYPE MysqlField::convertToDbType()

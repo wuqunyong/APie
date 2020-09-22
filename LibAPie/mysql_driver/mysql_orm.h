@@ -51,7 +51,6 @@ public:
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
-	std::string toString(::mysql_proxy_msg::MysqlValue& value);
 
 	bool checkInvalid();
 
@@ -61,6 +60,12 @@ public:
 
 	std::string query();
 	void markDirty(const std::vector<uint8_t>& index);
+
+	mysql_proxy_msg::MysqlQueryRequest generateQuery();
+
+public:
+	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
+	static std::string toString(const ::mysql_proxy_msg::MysqlValue& value);
 
 private:
 	MysqlTable m_table;

@@ -126,10 +126,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="logic\gateway_mgr.h" />
+    <ClInclude Include="logic\model_user.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="logic\gateway_mgr.cpp" />
+    <ClCompile Include="logic\model_user.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
   </ItemGroup>

@@ -5,11 +5,17 @@
     <ClInclude Include="logic\gateway_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\model_user.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\gateway_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\model_user.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
