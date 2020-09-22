@@ -66,6 +66,7 @@ public:
 public:
 	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
 	static std::string toString(const ::mysql_proxy_msg::MysqlValue& value);
+	static mysql_proxy_msg::MysqlQueryResponse convertFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
 
 private:
 	MysqlTable m_table;

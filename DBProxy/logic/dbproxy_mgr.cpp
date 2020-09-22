@@ -109,7 +109,12 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-
+	response = DeclarativeBase::convertFrom(*sharedTable, recordSet);
+	response.set_result(bResult);
+	if (!bResult)
+	{
+		response.set_error_info(sSQL);
+	}
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 

@@ -331,6 +331,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mysql_5fproxy_5fmsg_2eproto::o
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryResponse, result_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryResponse, error_info_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryResponse, table_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -387,16 +388,17 @@ const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECT
   "sql_proxy_msg.MysqlDescTable:\0028\001\"j\n\021Mysq"
   "lQueryRequest\022\017\n\007db_name\030\001 \001(\t\022\022\n\ntable_"
   "name\030\002 \001(\t\0220\n\013primary_key\030\003 \003(\0132\033.mysql_"
-  "proxy_msg.MysqlField\"P\n\022MysqlQueryRespon"
-  "se\022\016\n\006result\030\001 \001(\010\022*\n\005table\030\002 \001(\0132\033.mysq"
-  "l_proxy_msg.MysqlTable*\252\001\n\025MysqlScalarVa"
-  "lueTypes\022\r\n\tMSVT_None\020\000\022\016\n\nMSVT_INT32\020\001\022"
-  "\016\n\nMSVT_INT64\020\002\022\017\n\013MSVT_UINT32\020\003\022\017\n\013MSVT"
-  "_UINT64\020\004\022\017\n\013MSVT_STRING\020\005\022\016\n\nMSVT_BYTES"
-  "\020\006\022\016\n\nMSVT_FLOAT\020\007\022\017\n\013MSVT_DOUBLE\020\010*e\n\025M"
-  "ysqlDataManipulation\022\014\n\010MDM_None\020\000\022\016\n\nMD"
-  "M_SELECT\020\001\022\016\n\nMDM_UPDATE\020\002\022\016\n\nMDM_DELETE"
-  "\020\003\022\016\n\nMDM_INSERT\020\004b\006proto3"
+  "proxy_msg.MysqlField\"d\n\022MysqlQueryRespon"
+  "se\022\016\n\006result\030\001 \001(\010\022\022\n\nerror_info\030\002 \001(\t\022*"
+  "\n\005table\030\003 \001(\0132\033.mysql_proxy_msg.MysqlTab"
+  "le*\252\001\n\025MysqlScalarValueTypes\022\r\n\tMSVT_Non"
+  "e\020\000\022\016\n\nMSVT_INT32\020\001\022\016\n\nMSVT_INT64\020\002\022\017\n\013M"
+  "SVT_UINT32\020\003\022\017\n\013MSVT_UINT64\020\004\022\017\n\013MSVT_ST"
+  "RING\020\005\022\016\n\nMSVT_BYTES\020\006\022\016\n\nMSVT_FLOAT\020\007\022\017"
+  "\n\013MSVT_DOUBLE\020\010*e\n\025MysqlDataManipulation"
+  "\022\014\n\010MDM_None\020\000\022\016\n\nMDM_SELECT\020\001\022\016\n\nMDM_UP"
+  "DATE\020\002\022\016\n\nMDM_DELETE\020\003\022\016\n\nMDM_INSERT\020\004b\006"
+  "proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps[1] = {
 };
@@ -416,7 +418,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mys
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_mysql_5fproxy_5fmsg_2eproto_once;
 static bool descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5fproxy_5fmsg_2eproto = {
-  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 1386,
+  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 1406,
   &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs, descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps, 11, 0,
   schemas, file_default_instances, TableStruct_mysql_5fproxy_5fmsg_2eproto::offsets,
   file_level_metadata_mysql_5fproxy_5fmsg_2eproto, 11, file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto, file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto,
@@ -2977,6 +2979,10 @@ MysqlQueryResponse::MysqlQueryResponse(const MysqlQueryResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  error_info_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_error_info().empty()) {
+    error_info_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.error_info_);
+  }
   if (from._internal_has_table()) {
     table_ = new ::mysql_proxy_msg::MysqlTable(*from.table_);
   } else {
@@ -2988,6 +2994,7 @@ MysqlQueryResponse::MysqlQueryResponse(const MysqlQueryResponse& from)
 
 void MysqlQueryResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlQueryResponse_mysql_5fproxy_5fmsg_2eproto.base);
+  error_info_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&table_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&result_) -
       reinterpret_cast<char*>(&table_)) + sizeof(result_));
@@ -2999,6 +3006,7 @@ MysqlQueryResponse::~MysqlQueryResponse() {
 }
 
 void MysqlQueryResponse::SharedDtor() {
+  error_info_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete table_;
 }
 
@@ -3017,6 +3025,7 @@ void MysqlQueryResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  error_info_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == nullptr && table_ != nullptr) {
     delete table_;
   }
@@ -3039,9 +3048,18 @@ const char* MysqlQueryResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .mysql_proxy_msg.MysqlTable table = 2;
+      // string error_info = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_error_info();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mysql_proxy_msg.MysqlQueryResponse.error_info"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .mysql_proxy_msg.MysqlTable table = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_table(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -3078,12 +3096,22 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_result(), target);
   }
 
-  // .mysql_proxy_msg.MysqlTable table = 2;
+  // string error_info = 2;
+  if (this->error_info().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_error_info().data(), static_cast<int>(this->_internal_error_info().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlQueryResponse.error_info");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_error_info(), target);
+  }
+
+  // .mysql_proxy_msg.MysqlTable table = 3;
   if (this->has_table()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        2, _Internal::table(this), target, stream);
+        3, _Internal::table(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3102,7 +3130,14 @@ size_t MysqlQueryResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .mysql_proxy_msg.MysqlTable table = 2;
+  // string error_info = 2;
+  if (this->error_info().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_error_info());
+  }
+
+  // .mysql_proxy_msg.MysqlTable table = 3;
   if (this->has_table()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -3145,6 +3180,10 @@ void MysqlQueryResponse::MergeFrom(const MysqlQueryResponse& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.error_info().size() > 0) {
+
+    error_info_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.error_info_);
+  }
   if (from.has_table()) {
     _internal_mutable_table()->::mysql_proxy_msg::MysqlTable::MergeFrom(from._internal_table());
   }
@@ -3174,6 +3213,8 @@ bool MysqlQueryResponse::IsInitialized() const {
 void MysqlQueryResponse::InternalSwap(MysqlQueryResponse* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
+  error_info_.Swap(&other->error_info_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(table_, other->table_);
   swap(result_, other->result_);
 }

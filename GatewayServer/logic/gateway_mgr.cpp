@@ -103,6 +103,16 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 				{
 					return;
 				}
+
+				::mysql_proxy_msg::MysqlQueryResponse response;
+				if (!response.ParseFromString(replyData))
+				{
+					return;
+				}
+
+				std::stringstream ss;
+				ss << response.ShortDebugString();
+				ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 		};

@@ -95,5 +95,6 @@ message MysqlQueryRequest
 message MysqlQueryResponse
 {
 	bool result = 1;
-	MysqlTable table = 2;
+	string error_info = 2;
+	MysqlTable table = 3;
 }
