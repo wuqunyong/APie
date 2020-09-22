@@ -32,6 +32,7 @@ public:
 		std::string match_info;
 		std::string global_mails_info;
 		std::string treasure_info;
+		std::string feats_info;
 	});
 
 	virtual void* blockAddress() override
@@ -61,6 +62,7 @@ public:
 			offsetof(db_fields, match_info),
 			offsetof(db_fields, global_mails_info),
 			offsetof(db_fields, treasure_info),
+			offsetof(db_fields, feats_info),
 		};
 
 		return layout;
@@ -117,7 +119,7 @@ int main()
 		std::string sql("SELECT * FROM role_base WHERE FALSE;");
 
 		MysqlTable table;
-		bool bSQL = mysqlConnector.describeTable("role_base_copy", table);
+		bool bSQL = mysqlConnector.describeTable("role_base", table);
 		MySQLData data;
 		data.initMetaData(table);
 		bResult = data.checkInvalid();

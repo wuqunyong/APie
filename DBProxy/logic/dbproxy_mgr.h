@@ -17,6 +17,8 @@ namespace APie {
 	{
 	public:
 		void init();
+		void start();
+		void exit();
 
 	public:
 

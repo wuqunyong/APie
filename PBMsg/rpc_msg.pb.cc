@@ -15,7 +15,7 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CHANNEL_rpc_5fmsg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoleIdentifier_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_SERVER_IDENTIFIER_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_STATUS_rpc_5fmsg_2eproto;
@@ -28,6 +28,10 @@ class CONTROLLERDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CONTROLLER> _instance;
 } _CONTROLLER_default_instance_;
+class RoleIdentifierDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RoleIdentifier> _instance;
+} _RoleIdentifier_default_instance_;
 class CLIENT_IDENTIFIERDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CLIENT_IDENTIFIER> _instance;
@@ -48,10 +52,6 @@ class RPC_RESPONSEDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RPC_RESPONSE> _instance;
 } _RPC_RESPONSE_default_instance_;
-class RoleIdentifierDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RoleIdentifier> _instance;
-} _RoleIdentifier_default_instance_;
 class PRC_Multiplexer_Forward_ArgsDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PRC_Multiplexer_Forward_Args> _instance;
@@ -82,9 +82,10 @@ static void InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto() {
   ::rpc_msg::CLIENT_IDENTIFIER::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto}, {
-      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto}, {
+      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,
+      &scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_CONTROLLER_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -211,6 +212,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, serial_num_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, timeout_ms_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, user_id_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, gw_id_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, channel_serial_num_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -219,6 +228,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, seq_id_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, required_reply_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, router_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, channel_serial_num_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, role_identifier_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::SERVER_IDENTIFIER, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -251,13 +262,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, status_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, result_data_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, user_id_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, gw_id_),
-  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_Multiplexer_Forward_Args, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -269,55 +273,61 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
   { 7, -1, sizeof(::rpc_msg::CONTROLLER)},
-  { 14, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 23, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 29, -1, sizeof(::rpc_msg::RPC_REQUEST)},
-  { 38, -1, sizeof(::rpc_msg::STATUS)},
-  { 45, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 54, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 61, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
+  { 14, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 22, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
+  { 33, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 39, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 48, -1, sizeof(::rpc_msg::STATUS)},
+  { 55, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
+  { 64, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_CHANNEL_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_CONTROLLER_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RoleIdentifier_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_CLIENT_IDENTIFIER_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_SERVER_IDENTIFIER_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_REQUEST_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_STATUS_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_RESPONSE_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RoleIdentifier_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_PRC_Multiplexer_Forward_Args_default_instance_),
 };
 
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rrpc_msg.proto\022\007rpc_msg\"#\n\007CHANNEL\022\014\n\004t"
   "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"4\n\nCONTROLLER\022\022\n\ns"
-  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\"}\n\021C"
-  "LIENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg"
-  ".CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_rep"
-  "ly\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANN"
-  "EL\"3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020."
-  "rpc_msg.CHANNEL\"\237\001\n\013RPC_REQUEST\022*\n\006clien"
-  "t\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006s"
-  "erver\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022"
-  "%\n\007opcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021"
-  "\n\targs_data\030\004 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001("
-  "\r\022\013\n\003msg\030\002 \001(\t\"\234\001\n\014RPC_RESPONSE\022*\n\006clien"
-  "t\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006s"
-  "erver\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022"
-  "\037\n\006status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013resu"
-  "lt_data\030\004 \001(\014\"0\n\016RoleIdentifier\022\017\n\007user_"
-  "id\030\001 \001(\004\022\r\n\005gw_id\030\002 \001(\r\"k\n\034PRC_Multiplex"
-  "er_Forward_Args\022(\n\007role_id\030\001 \001(\0132\027.rpc_m"
-  "sg.RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010bo"
-  "dy_msg\030\003 \001(\014*8\n\013RPC_OPCODES\022\014\n\010PRC_None\020"
-  "\000\022\033\n\027PRC_Multiplexer_Forward\020\001*\300\001\n\010RPC_C"
-  "ODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014C"
-  "ODE_Timeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CO"
-  "DE_ParseError\020f\022\030\n\024CODE_ErrorServerPost\020"
-  "g\022\035\n\031CODE_RouteNotLinkToServer\020h\022\037\n\033CODE"
-  "_RouteSendToServerError\020ib\006proto3"
+  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\"L\n\016R"
+  "oleIdentifier\022\017\n\007user_id\030\001 \001(\004\022\r\n\005gw_id\030"
+  "\002 \001(\r\022\032\n\022channel_serial_num\030\003 \001(\004\"\313\001\n\021CL"
+  "IENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg."
+  "CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_repl"
+  "y\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANNE"
+  "L\022\032\n\022channel_serial_num\030\005 \001(\004\0220\n\017role_id"
+  "entifier\030\006 \001(\0132\027.rpc_msg.RoleIdentifier\""
+  "3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc"
+  "_msg.CHANNEL\"\237\001\n\013RPC_REQUEST\022*\n\006client\030\001"
+  " \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serv"
+  "er\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022%\n\007"
+  "opcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021\n\ta"
+  "rgs_data\030\004 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001(\r\022\013"
+  "\n\003msg\030\002 \001(\t\"\234\001\n\014RPC_RESPONSE\022*\n\006client\030\001"
+  " \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serv"
+  "er\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\037\n\006"
+  "status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013result_"
+  "data\030\004 \001(\014\"k\n\034PRC_Multiplexer_Forward_Ar"
+  "gs\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdenti"
+  "fier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*"
+  "p\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Mult"
+  "iplexer_Forward\020\001\022\035\n\031RPC_DeMultiplexer_F"
+  "orward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003*\364\001\n\010RP"
+  "C_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020"
+  "\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n"
+  "\017CODE_ParseError\020f\022\030\n\024CODE_ErrorServerPo"
+  "st\020g\022\035\n\031CODE_RouteNotLinkToServer\020h\022\037\n\033C"
+  "ODE_RouteSendToServerError\020i\022\031\n\025CODE_Opc"
+  "odeUnregister\020j\022\027\n\023CODE_CreateMsgError\020k"
+  "b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -335,7 +345,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1073,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1288,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -352,6 +362,8 @@ bool RPC_OPCODES_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
+    case 401:
       return true;
     default:
       return false;
@@ -372,6 +384,8 @@ bool RPC_CODE_IsValid(int value) {
     case 103:
     case 104:
     case 105:
+    case 106:
+    case 107:
       return true;
     default:
       return false;
@@ -813,16 +827,259 @@ void CONTROLLER::InternalSwap(CONTROLLER* other) {
 
 // ===================================================================
 
+void RoleIdentifier::InitAsDefaultInstance() {
+}
+class RoleIdentifier::_Internal {
+ public:
+};
+
+RoleIdentifier::RoleIdentifier()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.RoleIdentifier)
+}
+RoleIdentifier::RoleIdentifier(const RoleIdentifier& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&gw_id_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.RoleIdentifier)
+}
+
+void RoleIdentifier::SharedCtor() {
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&gw_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
+}
+
+RoleIdentifier::~RoleIdentifier() {
+  // @@protoc_insertion_point(destructor:rpc_msg.RoleIdentifier)
+  SharedDtor();
+}
+
+void RoleIdentifier::SharedDtor() {
+}
+
+void RoleIdentifier::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const RoleIdentifier& RoleIdentifier::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void RoleIdentifier::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.RoleIdentifier)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&gw_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
+  _internal_metadata_.Clear();
+}
+
+const char* RoleIdentifier::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint64 user_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 gw_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          gw_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint64 channel_serial_num = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          channel_serial_num_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* RoleIdentifier::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.RoleIdentifier)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 user_id = 1;
+  if (this->user_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_user_id(), target);
+  }
+
+  // uint32 gw_id = 2;
+  if (this->gw_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_gw_id(), target);
+  }
+
+  // uint64 channel_serial_num = 3;
+  if (this->channel_serial_num() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_channel_serial_num(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.RoleIdentifier)
+  return target;
+}
+
+size_t RoleIdentifier::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.RoleIdentifier)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint64 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_user_id());
+  }
+
+  // uint64 channel_serial_num = 3;
+  if (this->channel_serial_num() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_channel_serial_num());
+  }
+
+  // uint32 gw_id = 2;
+  if (this->gw_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_gw_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void RoleIdentifier::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.RoleIdentifier)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RoleIdentifier* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RoleIdentifier>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.RoleIdentifier)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.RoleIdentifier)
+    MergeFrom(*source);
+  }
+}
+
+void RoleIdentifier::MergeFrom(const RoleIdentifier& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.RoleIdentifier)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.user_id() != 0) {
+    _internal_set_user_id(from._internal_user_id());
+  }
+  if (from.channel_serial_num() != 0) {
+    _internal_set_channel_serial_num(from._internal_channel_serial_num());
+  }
+  if (from.gw_id() != 0) {
+    _internal_set_gw_id(from._internal_gw_id());
+  }
+}
+
+void RoleIdentifier::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.RoleIdentifier)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RoleIdentifier::CopyFrom(const RoleIdentifier& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.RoleIdentifier)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RoleIdentifier::IsInitialized() const {
+  return true;
+}
+
+void RoleIdentifier::InternalSwap(RoleIdentifier* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(user_id_, other->user_id_);
+  swap(channel_serial_num_, other->channel_serial_num_);
+  swap(gw_id_, other->gw_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata RoleIdentifier::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 void CLIENT_IDENTIFIER::InitAsDefaultInstance() {
   ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->stub_ = const_cast< ::rpc_msg::CHANNEL*>(
       ::rpc_msg::CHANNEL::internal_default_instance());
   ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->router_ = const_cast< ::rpc_msg::CHANNEL*>(
       ::rpc_msg::CHANNEL::internal_default_instance());
+  ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->role_identifier_ = const_cast< ::rpc_msg::RoleIdentifier*>(
+      ::rpc_msg::RoleIdentifier::internal_default_instance());
 }
 class CLIENT_IDENTIFIER::_Internal {
  public:
   static const ::rpc_msg::CHANNEL& stub(const CLIENT_IDENTIFIER* msg);
   static const ::rpc_msg::CHANNEL& router(const CLIENT_IDENTIFIER* msg);
+  static const ::rpc_msg::RoleIdentifier& role_identifier(const CLIENT_IDENTIFIER* msg);
 };
 
 const ::rpc_msg::CHANNEL&
@@ -832,6 +1089,10 @@ CLIENT_IDENTIFIER::_Internal::stub(const CLIENT_IDENTIFIER* msg) {
 const ::rpc_msg::CHANNEL&
 CLIENT_IDENTIFIER::_Internal::router(const CLIENT_IDENTIFIER* msg) {
   return *msg->router_;
+}
+const ::rpc_msg::RoleIdentifier&
+CLIENT_IDENTIFIER::_Internal::role_identifier(const CLIENT_IDENTIFIER* msg) {
+  return *msg->role_identifier_;
 }
 CLIENT_IDENTIFIER::CLIENT_IDENTIFIER()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -851,6 +1112,11 @@ CLIENT_IDENTIFIER::CLIENT_IDENTIFIER(const CLIENT_IDENTIFIER& from)
     router_ = new ::rpc_msg::CHANNEL(*from.router_);
   } else {
     router_ = nullptr;
+  }
+  if (from._internal_has_role_identifier()) {
+    role_identifier_ = new ::rpc_msg::RoleIdentifier(*from.role_identifier_);
+  } else {
+    role_identifier_ = nullptr;
   }
   ::memcpy(&seq_id_, &from.seq_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&required_reply_) -
@@ -873,6 +1139,7 @@ CLIENT_IDENTIFIER::~CLIENT_IDENTIFIER() {
 void CLIENT_IDENTIFIER::SharedDtor() {
   if (this != internal_default_instance()) delete stub_;
   if (this != internal_default_instance()) delete router_;
+  if (this != internal_default_instance()) delete role_identifier_;
 }
 
 void CLIENT_IDENTIFIER::SetCachedSize(int size) const {
@@ -898,6 +1165,10 @@ void CLIENT_IDENTIFIER::Clear() {
     delete router_;
   }
   router_ = nullptr;
+  if (GetArenaNoVirtual() == nullptr && role_identifier_ != nullptr) {
+    delete role_identifier_;
+  }
+  role_identifier_ = nullptr;
   ::memset(&seq_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&required_reply_) -
       reinterpret_cast<char*>(&seq_id_)) + sizeof(required_reply_));
@@ -936,6 +1207,20 @@ const char* CLIENT_IDENTIFIER::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_router(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint64 channel_serial_num = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          channel_serial_num_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .rpc_msg.RoleIdentifier role_identifier = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_role_identifier(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -993,6 +1278,20 @@ failure:
         4, _Internal::router(this), target, stream);
   }
 
+  // uint64 channel_serial_num = 5;
+  if (this->channel_serial_num() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_channel_serial_num(), target);
+  }
+
+  // .rpc_msg.RoleIdentifier role_identifier = 6;
+  if (this->has_role_identifier()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        6, _Internal::role_identifier(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -1023,11 +1322,25 @@ size_t CLIENT_IDENTIFIER::ByteSizeLong() const {
         *router_);
   }
 
+  // .rpc_msg.RoleIdentifier role_identifier = 6;
+  if (this->has_role_identifier()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *role_identifier_);
+  }
+
   // uint64 seq_id = 2;
   if (this->seq_id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_seq_id());
+  }
+
+  // uint64 channel_serial_num = 5;
+  if (this->channel_serial_num() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_channel_serial_num());
   }
 
   // bool required_reply = 3;
@@ -1072,8 +1385,14 @@ void CLIENT_IDENTIFIER::MergeFrom(const CLIENT_IDENTIFIER& from) {
   if (from.has_router()) {
     _internal_mutable_router()->::rpc_msg::CHANNEL::MergeFrom(from._internal_router());
   }
+  if (from.has_role_identifier()) {
+    _internal_mutable_role_identifier()->::rpc_msg::RoleIdentifier::MergeFrom(from._internal_role_identifier());
+  }
   if (from.seq_id() != 0) {
     _internal_set_seq_id(from._internal_seq_id());
+  }
+  if (from.channel_serial_num() != 0) {
+    _internal_set_channel_serial_num(from._internal_channel_serial_num());
   }
   if (from.required_reply() != 0) {
     _internal_set_required_reply(from._internal_required_reply());
@@ -1103,7 +1422,9 @@ void CLIENT_IDENTIFIER::InternalSwap(CLIENT_IDENTIFIER* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(stub_, other->stub_);
   swap(router_, other->router_);
+  swap(role_identifier_, other->role_identifier_);
   swap(seq_id_, other->seq_id_);
+  swap(channel_serial_num_, other->channel_serial_num_);
   swap(required_reply_, other->required_reply_);
 }
 
@@ -2180,222 +2501,6 @@ void RPC_RESPONSE::InternalSwap(RPC_RESPONSE* other) {
 
 // ===================================================================
 
-void RoleIdentifier::InitAsDefaultInstance() {
-}
-class RoleIdentifier::_Internal {
- public:
-};
-
-RoleIdentifier::RoleIdentifier()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:rpc_msg.RoleIdentifier)
-}
-RoleIdentifier::RoleIdentifier(const RoleIdentifier& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&user_id_, &from.user_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&gw_id_) -
-    reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
-  // @@protoc_insertion_point(copy_constructor:rpc_msg.RoleIdentifier)
-}
-
-void RoleIdentifier::SharedCtor() {
-  ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&gw_id_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
-}
-
-RoleIdentifier::~RoleIdentifier() {
-  // @@protoc_insertion_point(destructor:rpc_msg.RoleIdentifier)
-  SharedDtor();
-}
-
-void RoleIdentifier::SharedDtor() {
-}
-
-void RoleIdentifier::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const RoleIdentifier& RoleIdentifier::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base);
-  return *internal_default_instance();
-}
-
-
-void RoleIdentifier::Clear() {
-// @@protoc_insertion_point(message_clear_start:rpc_msg.RoleIdentifier)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&gw_id_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(gw_id_));
-  _internal_metadata_.Clear();
-}
-
-const char* RoleIdentifier::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
-    switch (tag >> 3) {
-      // uint64 user_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // uint32 gw_id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          gw_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
-    }  // switch
-  }  // while
-success:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto success;
-#undef CHK_
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* RoleIdentifier::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.RoleIdentifier)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint64 user_id = 1;
-  if (this->user_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_user_id(), target);
-  }
-
-  // uint32 gw_id = 2;
-  if (this->gw_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_gw_id(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.RoleIdentifier)
-  return target;
-}
-
-size_t RoleIdentifier::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rpc_msg.RoleIdentifier)
-  size_t total_size = 0;
-
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // uint64 user_id = 1;
-  if (this->user_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_user_id());
-  }
-
-  // uint32 gw_id = 2;
-  if (this->gw_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_gw_id());
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void RoleIdentifier::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.RoleIdentifier)
-  GOOGLE_DCHECK_NE(&from, this);
-  const RoleIdentifier* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RoleIdentifier>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.RoleIdentifier)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.RoleIdentifier)
-    MergeFrom(*source);
-  }
-}
-
-void RoleIdentifier::MergeFrom(const RoleIdentifier& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.RoleIdentifier)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.user_id() != 0) {
-    _internal_set_user_id(from._internal_user_id());
-  }
-  if (from.gw_id() != 0) {
-    _internal_set_gw_id(from._internal_gw_id());
-  }
-}
-
-void RoleIdentifier::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.RoleIdentifier)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void RoleIdentifier::CopyFrom(const RoleIdentifier& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.RoleIdentifier)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool RoleIdentifier::IsInitialized() const {
-  return true;
-}
-
-void RoleIdentifier::InternalSwap(RoleIdentifier* other) {
-  using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(user_id_, other->user_id_);
-  swap(gw_id_, other->gw_id_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata RoleIdentifier::GetMetadata() const {
-  return GetMetadataStatic();
-}
-
-
-// ===================================================================
-
 void PRC_Multiplexer_Forward_Args::InitAsDefaultInstance() {
   ::rpc_msg::_PRC_Multiplexer_Forward_Args_default_instance_._instance.get_mutable()->role_id_ = const_cast< ::rpc_msg::RoleIdentifier*>(
       ::rpc_msg::RoleIdentifier::internal_default_instance());
@@ -2669,6 +2774,9 @@ template<> PROTOBUF_NOINLINE ::rpc_msg::CHANNEL* Arena::CreateMaybeMessage< ::rp
 template<> PROTOBUF_NOINLINE ::rpc_msg::CONTROLLER* Arena::CreateMaybeMessage< ::rpc_msg::CONTROLLER >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::CONTROLLER >(arena);
 }
+template<> PROTOBUF_NOINLINE ::rpc_msg::RoleIdentifier* Arena::CreateMaybeMessage< ::rpc_msg::RoleIdentifier >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::RoleIdentifier >(arena);
+}
 template<> PROTOBUF_NOINLINE ::rpc_msg::CLIENT_IDENTIFIER* Arena::CreateMaybeMessage< ::rpc_msg::CLIENT_IDENTIFIER >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::CLIENT_IDENTIFIER >(arena);
 }
@@ -2683,9 +2791,6 @@ template<> PROTOBUF_NOINLINE ::rpc_msg::STATUS* Arena::CreateMaybeMessage< ::rpc
 }
 template<> PROTOBUF_NOINLINE ::rpc_msg::RPC_RESPONSE* Arena::CreateMaybeMessage< ::rpc_msg::RPC_RESPONSE >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::RPC_RESPONSE >(arena);
-}
-template<> PROTOBUF_NOINLINE ::rpc_msg::RoleIdentifier* Arena::CreateMaybeMessage< ::rpc_msg::RoleIdentifier >(Arena* arena) {
-  return Arena::CreateInternal< ::rpc_msg::RoleIdentifier >(arena);
 }
 template<> PROTOBUF_NOINLINE ::rpc_msg::PRC_Multiplexer_Forward_Args* Arena::CreateMaybeMessage< ::rpc_msg::PRC_Multiplexer_Forward_Args >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::PRC_Multiplexer_Forward_Args >(arena);

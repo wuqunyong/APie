@@ -55,12 +55,12 @@ struct TableStruct_login_5fmsg_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fmsg_2eproto;
 namespace login_msg {
-class MSG_CLIENT_LOGINTOL;
-class MSG_CLIENT_LOGINTOLDefaultTypeInternal;
-extern MSG_CLIENT_LOGINTOLDefaultTypeInternal _MSG_CLIENT_LOGINTOL_default_instance_;
 class MSG_LOGINSERVER_VALIDATE;
 class MSG_LOGINSERVER_VALIDATEDefaultTypeInternal;
 extern MSG_LOGINSERVER_VALIDATEDefaultTypeInternal _MSG_LOGINSERVER_VALIDATE_default_instance_;
+class MSG_REQUEST_CLIENT_LOGIN;
+class MSG_REQUEST_CLIENT_LOGINDefaultTypeInternal;
+extern MSG_REQUEST_CLIENT_LOGINDefaultTypeInternal _MSG_REQUEST_CLIENT_LOGIN_default_instance_;
 class MSG_Test1;
 class MSG_Test1DefaultTypeInternal;
 extern MSG_Test1DefaultTypeInternal _MSG_Test1_default_instance_;
@@ -78,8 +78,8 @@ class MSG_Test5DefaultTypeInternal;
 extern MSG_Test5DefaultTypeInternal _MSG_Test5_default_instance_;
 }  // namespace login_msg
 PROTOBUF_NAMESPACE_OPEN
-template<> ::login_msg::MSG_CLIENT_LOGINTOL* Arena::CreateMaybeMessage<::login_msg::MSG_CLIENT_LOGINTOL>(Arena*);
 template<> ::login_msg::MSG_LOGINSERVER_VALIDATE* Arena::CreateMaybeMessage<::login_msg::MSG_LOGINSERVER_VALIDATE>(Arena*);
+template<> ::login_msg::MSG_REQUEST_CLIENT_LOGIN* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_CLIENT_LOGIN>(Arena*);
 template<> ::login_msg::MSG_Test1* Arena::CreateMaybeMessage<::login_msg::MSG_Test1>(Arena*);
 template<> ::login_msg::MSG_Test2* Arena::CreateMaybeMessage<::login_msg::MSG_Test2>(Arena*);
 template<> ::login_msg::MSG_Test3* Arena::CreateMaybeMessage<::login_msg::MSG_Test3>(Arena*);
@@ -90,23 +90,23 @@ namespace login_msg {
 
 // ===================================================================
 
-class MSG_CLIENT_LOGINTOL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_CLIENT_LOGINTOL) */ {
+class MSG_REQUEST_CLIENT_LOGIN :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_REQUEST_CLIENT_LOGIN) */ {
  public:
-  MSG_CLIENT_LOGINTOL();
-  virtual ~MSG_CLIENT_LOGINTOL();
+  MSG_REQUEST_CLIENT_LOGIN();
+  virtual ~MSG_REQUEST_CLIENT_LOGIN();
 
-  MSG_CLIENT_LOGINTOL(const MSG_CLIENT_LOGINTOL& from);
-  MSG_CLIENT_LOGINTOL(MSG_CLIENT_LOGINTOL&& from) noexcept
-    : MSG_CLIENT_LOGINTOL() {
+  MSG_REQUEST_CLIENT_LOGIN(const MSG_REQUEST_CLIENT_LOGIN& from);
+  MSG_REQUEST_CLIENT_LOGIN(MSG_REQUEST_CLIENT_LOGIN&& from) noexcept
+    : MSG_REQUEST_CLIENT_LOGIN() {
     *this = ::std::move(from);
   }
 
-  inline MSG_CLIENT_LOGINTOL& operator=(const MSG_CLIENT_LOGINTOL& from) {
+  inline MSG_REQUEST_CLIENT_LOGIN& operator=(const MSG_REQUEST_CLIENT_LOGIN& from) {
     CopyFrom(from);
     return *this;
   }
-  inline MSG_CLIENT_LOGINTOL& operator=(MSG_CLIENT_LOGINTOL&& from) noexcept {
+  inline MSG_REQUEST_CLIENT_LOGIN& operator=(MSG_REQUEST_CLIENT_LOGIN&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -124,37 +124,37 @@ class MSG_CLIENT_LOGINTOL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const MSG_CLIENT_LOGINTOL& default_instance();
+  static const MSG_REQUEST_CLIENT_LOGIN& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MSG_CLIENT_LOGINTOL* internal_default_instance() {
-    return reinterpret_cast<const MSG_CLIENT_LOGINTOL*>(
-               &_MSG_CLIENT_LOGINTOL_default_instance_);
+  static inline const MSG_REQUEST_CLIENT_LOGIN* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_CLIENT_LOGIN*>(
+               &_MSG_REQUEST_CLIENT_LOGIN_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(MSG_CLIENT_LOGINTOL& a, MSG_CLIENT_LOGINTOL& b) {
+  friend void swap(MSG_REQUEST_CLIENT_LOGIN& a, MSG_REQUEST_CLIENT_LOGIN& b) {
     a.Swap(&b);
   }
-  inline void Swap(MSG_CLIENT_LOGINTOL* other) {
+  inline void Swap(MSG_REQUEST_CLIENT_LOGIN* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MSG_CLIENT_LOGINTOL* New() const final {
-    return CreateMaybeMessage<MSG_CLIENT_LOGINTOL>(nullptr);
+  inline MSG_REQUEST_CLIENT_LOGIN* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_CLIENT_LOGIN>(nullptr);
   }
 
-  MSG_CLIENT_LOGINTOL* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<MSG_CLIENT_LOGINTOL>(arena);
+  MSG_REQUEST_CLIENT_LOGIN* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_CLIENT_LOGIN>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const MSG_CLIENT_LOGINTOL& from);
-  void MergeFrom(const MSG_CLIENT_LOGINTOL& from);
+  void CopyFrom(const MSG_REQUEST_CLIENT_LOGIN& from);
+  void MergeFrom(const MSG_REQUEST_CLIENT_LOGIN& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -168,10 +168,10 @@ class MSG_CLIENT_LOGINTOL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MSG_CLIENT_LOGINTOL* other);
+  void InternalSwap(MSG_REQUEST_CLIENT_LOGIN* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "login_msg.MSG_CLIENT_LOGINTOL";
+    return "login_msg.MSG_REQUEST_CLIENT_LOGIN";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -234,7 +234,7 @@ class MSG_CLIENT_LOGINTOL :
   void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:login_msg.MSG_CLIENT_LOGINTOL)
+  // @@protoc_insertion_point(class_scope:login_msg.MSG_REQUEST_CLIENT_LOGIN)
  private:
   class _Internal;
 
@@ -1170,106 +1170,106 @@ class MSG_Test5 :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// MSG_CLIENT_LOGINTOL
+// MSG_REQUEST_CLIENT_LOGIN
 
 // uint64 user_id = 1;
-inline void MSG_CLIENT_LOGINTOL::clear_user_id() {
+inline void MSG_REQUEST_CLIENT_LOGIN::clear_user_id() {
   user_id_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_CLIENT_LOGINTOL::_internal_user_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_REQUEST_CLIENT_LOGIN::_internal_user_id() const {
   return user_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_CLIENT_LOGINTOL::user_id() const {
-  // @@protoc_insertion_point(field_get:login_msg.MSG_CLIENT_LOGINTOL.user_id)
+inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_REQUEST_CLIENT_LOGIN::user_id() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_CLIENT_LOGIN.user_id)
   return _internal_user_id();
 }
-inline void MSG_CLIENT_LOGINTOL::_internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::_internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   user_id_ = value;
 }
-inline void MSG_CLIENT_LOGINTOL::set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_user_id(value);
-  // @@protoc_insertion_point(field_set:login_msg.MSG_CLIENT_LOGINTOL.user_id)
+  // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_CLIENT_LOGIN.user_id)
 }
 
 // int32 version = 2;
-inline void MSG_CLIENT_LOGINTOL::clear_version() {
+inline void MSG_REQUEST_CLIENT_LOGIN::clear_version() {
   version_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_CLIENT_LOGINTOL::_internal_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_REQUEST_CLIENT_LOGIN::_internal_version() const {
   return version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_CLIENT_LOGINTOL::version() const {
-  // @@protoc_insertion_point(field_get:login_msg.MSG_CLIENT_LOGINTOL.version)
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_REQUEST_CLIENT_LOGIN::version() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_CLIENT_LOGIN.version)
   return _internal_version();
 }
-inline void MSG_CLIENT_LOGINTOL::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   version_ = value;
 }
-inline void MSG_CLIENT_LOGINTOL::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_version(value);
-  // @@protoc_insertion_point(field_set:login_msg.MSG_CLIENT_LOGINTOL.version)
+  // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_CLIENT_LOGIN.version)
 }
 
 // bytes session_key = 3;
-inline void MSG_CLIENT_LOGINTOL::clear_session_key() {
+inline void MSG_REQUEST_CLIENT_LOGIN::clear_session_key() {
   session_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline const std::string& MSG_CLIENT_LOGINTOL::session_key() const {
-  // @@protoc_insertion_point(field_get:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+inline const std::string& MSG_REQUEST_CLIENT_LOGIN::session_key() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
   return _internal_session_key();
 }
-inline void MSG_CLIENT_LOGINTOL::set_session_key(const std::string& value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const std::string& value) {
   _internal_set_session_key(value);
-  // @@protoc_insertion_point(field_set:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+  // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
-inline std::string* MSG_CLIENT_LOGINTOL::mutable_session_key() {
-  // @@protoc_insertion_point(field_mutable:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+inline std::string* MSG_REQUEST_CLIENT_LOGIN::mutable_session_key() {
+  // @@protoc_insertion_point(field_mutable:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
   return _internal_mutable_session_key();
 }
-inline const std::string& MSG_CLIENT_LOGINTOL::_internal_session_key() const {
+inline const std::string& MSG_REQUEST_CLIENT_LOGIN::_internal_session_key() const {
   return session_key_.GetNoArena();
 }
-inline void MSG_CLIENT_LOGINTOL::_internal_set_session_key(const std::string& value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::_internal_set_session_key(const std::string& value) {
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
-inline void MSG_CLIENT_LOGINTOL::set_session_key(std::string&& value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(std::string&& value) {
   
   session_key_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
-inline void MSG_CLIENT_LOGINTOL::set_session_key(const char* value) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+  // @@protoc_insertion_point(field_set_char:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
-inline void MSG_CLIENT_LOGINTOL::set_session_key(const void* value, size_t size) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const void* value, size_t size) {
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
-inline std::string* MSG_CLIENT_LOGINTOL::_internal_mutable_session_key() {
+inline std::string* MSG_REQUEST_CLIENT_LOGIN::_internal_mutable_session_key() {
   
   return session_key_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* MSG_CLIENT_LOGINTOL::release_session_key() {
-  // @@protoc_insertion_point(field_release:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+inline std::string* MSG_REQUEST_CLIENT_LOGIN::release_session_key() {
+  // @@protoc_insertion_point(field_release:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
   
   return session_key_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void MSG_CLIENT_LOGINTOL::set_allocated_session_key(std::string* session_key) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_allocated_session_key(std::string* session_key) {
   if (session_key != nullptr) {
     
   } else {
     
   }
   session_key_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), session_key);
-  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_CLIENT_LOGINTOL.session_key)
+  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
 
 // -------------------------------------------------------------------

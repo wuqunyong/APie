@@ -31,6 +31,9 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/map.h>  // IWYU pragma: export
+#include <google/protobuf/map_entry.h>
+#include <google/protobuf/map_field_inl.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
@@ -48,7 +51,7 @@ struct TableStruct_mysql_5fproxy_5fmsg_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,6 +59,21 @@ struct TableStruct_mysql_5fproxy_5fmsg_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5fproxy_5fmsg_2eproto;
 namespace mysql_proxy_msg {
+class MysqlDescField;
+class MysqlDescFieldDefaultTypeInternal;
+extern MysqlDescFieldDefaultTypeInternal _MysqlDescField_default_instance_;
+class MysqlDescTable;
+class MysqlDescTableDefaultTypeInternal;
+extern MysqlDescTableDefaultTypeInternal _MysqlDescTable_default_instance_;
+class MysqlDescribeRequest;
+class MysqlDescribeRequestDefaultTypeInternal;
+extern MysqlDescribeRequestDefaultTypeInternal _MysqlDescribeRequest_default_instance_;
+class MysqlDescribeResponse;
+class MysqlDescribeResponseDefaultTypeInternal;
+extern MysqlDescribeResponseDefaultTypeInternal _MysqlDescribeResponse_default_instance_;
+class MysqlDescribeResponse_TablesEntry_DoNotUse;
+class MysqlDescribeResponse_TablesEntry_DoNotUseDefaultTypeInternal;
+extern MysqlDescribeResponse_TablesEntry_DoNotUseDefaultTypeInternal _MysqlDescribeResponse_TablesEntry_DoNotUse_default_instance_;
 class MysqlField;
 class MysqlFieldDefaultTypeInternal;
 extern MysqlFieldDefaultTypeInternal _MysqlField_default_instance_;
@@ -70,6 +88,11 @@ class MysqlValueDefaultTypeInternal;
 extern MysqlValueDefaultTypeInternal _MysqlValue_default_instance_;
 }  // namespace mysql_proxy_msg
 PROTOBUF_NAMESPACE_OPEN
+template<> ::mysql_proxy_msg::MysqlDescField* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlDescField>(Arena*);
+template<> ::mysql_proxy_msg::MysqlDescTable* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlDescTable>(Arena*);
+template<> ::mysql_proxy_msg::MysqlDescribeRequest* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlDescribeRequest>(Arena*);
+template<> ::mysql_proxy_msg::MysqlDescribeResponse* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlDescribeResponse>(Arena*);
+template<> ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse>(Arena*);
 template<> ::mysql_proxy_msg::MysqlField* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlField>(Arena*);
 template<> ::mysql_proxy_msg::MysqlRow* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlRow>(Arena*);
 template<> ::mysql_proxy_msg::MysqlTable* Arena::CreateMaybeMessage<::mysql_proxy_msg::MysqlTable>(Arena*);
@@ -876,6 +899,686 @@ class MysqlTable :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MysqlDescribeRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mysql_proxy_msg.MysqlDescribeRequest) */ {
+ public:
+  MysqlDescribeRequest();
+  virtual ~MysqlDescribeRequest();
+
+  MysqlDescribeRequest(const MysqlDescribeRequest& from);
+  MysqlDescribeRequest(MysqlDescribeRequest&& from) noexcept
+    : MysqlDescribeRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline MysqlDescribeRequest& operator=(const MysqlDescribeRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MysqlDescribeRequest& operator=(MysqlDescribeRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MysqlDescribeRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MysqlDescribeRequest* internal_default_instance() {
+    return reinterpret_cast<const MysqlDescribeRequest*>(
+               &_MysqlDescribeRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(MysqlDescribeRequest& a, MysqlDescribeRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MysqlDescribeRequest* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MysqlDescribeRequest* New() const final {
+    return CreateMaybeMessage<MysqlDescribeRequest>(nullptr);
+  }
+
+  MysqlDescribeRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MysqlDescribeRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MysqlDescribeRequest& from);
+  void MergeFrom(const MysqlDescribeRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MysqlDescribeRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mysql_proxy_msg.MysqlDescribeRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_mysql_5fproxy_5fmsg_2eproto);
+    return ::descriptor_table_mysql_5fproxy_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNamesFieldNumber = 1,
+  };
+  // repeated string names = 1;
+  int names_size() const;
+  private:
+  int _internal_names_size() const;
+  public:
+  void clear_names();
+  const std::string& names(int index) const;
+  std::string* mutable_names(int index);
+  void set_names(int index, const std::string& value);
+  void set_names(int index, std::string&& value);
+  void set_names(int index, const char* value);
+  void set_names(int index, const char* value, size_t size);
+  std::string* add_names();
+  void add_names(const std::string& value);
+  void add_names(std::string&& value);
+  void add_names(const char* value);
+  void add_names(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& names() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_names();
+  private:
+  const std::string& _internal_names(int index) const;
+  std::string* _internal_add_names();
+  public:
+
+  // @@protoc_insertion_point(class_scope:mysql_proxy_msg.MysqlDescribeRequest)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> names_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MysqlDescField :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mysql_proxy_msg.MysqlDescField) */ {
+ public:
+  MysqlDescField();
+  virtual ~MysqlDescField();
+
+  MysqlDescField(const MysqlDescField& from);
+  MysqlDescField(MysqlDescField&& from) noexcept
+    : MysqlDescField() {
+    *this = ::std::move(from);
+  }
+
+  inline MysqlDescField& operator=(const MysqlDescField& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MysqlDescField& operator=(MysqlDescField&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MysqlDescField& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MysqlDescField* internal_default_instance() {
+    return reinterpret_cast<const MysqlDescField*>(
+               &_MysqlDescField_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(MysqlDescField& a, MysqlDescField& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MysqlDescField* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MysqlDescField* New() const final {
+    return CreateMaybeMessage<MysqlDescField>(nullptr);
+  }
+
+  MysqlDescField* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MysqlDescField>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MysqlDescField& from);
+  void MergeFrom(const MysqlDescField& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MysqlDescField* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mysql_proxy_msg.MysqlDescField";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_mysql_5fproxy_5fmsg_2eproto);
+    return ::descriptor_table_mysql_5fproxy_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 2,
+    kIndexFieldNumber = 1,
+    kFlagsFieldNumber = 3,
+    kTypeFieldNumber = 4,
+    kOffsetFieldNumber = 5,
+  };
+  // string name = 2;
+  void clear_name();
+  const std::string& name() const;
+  void set_name(const std::string& value);
+  void set_name(std::string&& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  std::string* mutable_name();
+  std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // uint32 index = 1;
+  void clear_index();
+  ::PROTOBUF_NAMESPACE_ID::uint32 index() const;
+  void set_index(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_index() const;
+  void _internal_set_index(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 flags = 3;
+  void clear_flags();
+  ::PROTOBUF_NAMESPACE_ID::uint32 flags() const;
+  void set_flags(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_flags() const;
+  void _internal_set_flags(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 type = 4;
+  void clear_type();
+  ::PROTOBUF_NAMESPACE_ID::uint32 type() const;
+  void set_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_type() const;
+  void _internal_set_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 offset = 5;
+  void clear_offset();
+  ::PROTOBUF_NAMESPACE_ID::uint32 offset() const;
+  void set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_offset() const;
+  void _internal_set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mysql_proxy_msg.MysqlDescField)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 index_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 flags_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 type_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 offset_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MysqlDescTable :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mysql_proxy_msg.MysqlDescTable) */ {
+ public:
+  MysqlDescTable();
+  virtual ~MysqlDescTable();
+
+  MysqlDescTable(const MysqlDescTable& from);
+  MysqlDescTable(MysqlDescTable&& from) noexcept
+    : MysqlDescTable() {
+    *this = ::std::move(from);
+  }
+
+  inline MysqlDescTable& operator=(const MysqlDescTable& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MysqlDescTable& operator=(MysqlDescTable&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MysqlDescTable& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MysqlDescTable* internal_default_instance() {
+    return reinterpret_cast<const MysqlDescTable*>(
+               &_MysqlDescTable_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(MysqlDescTable& a, MysqlDescTable& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MysqlDescTable* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MysqlDescTable* New() const final {
+    return CreateMaybeMessage<MysqlDescTable>(nullptr);
+  }
+
+  MysqlDescTable* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MysqlDescTable>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MysqlDescTable& from);
+  void MergeFrom(const MysqlDescTable& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MysqlDescTable* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mysql_proxy_msg.MysqlDescTable";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_mysql_5fproxy_5fmsg_2eproto);
+    return ::descriptor_table_mysql_5fproxy_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFieldsFieldNumber = 3,
+    kDbNameFieldNumber = 1,
+    kTableNameFieldNumber = 2,
+    kResultFieldNumber = 4,
+  };
+  // repeated .mysql_proxy_msg.MysqlDescField fields = 3;
+  int fields_size() const;
+  private:
+  int _internal_fields_size() const;
+  public:
+  void clear_fields();
+  ::mysql_proxy_msg::MysqlDescField* mutable_fields(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mysql_proxy_msg::MysqlDescField >*
+      mutable_fields();
+  private:
+  const ::mysql_proxy_msg::MysqlDescField& _internal_fields(int index) const;
+  ::mysql_proxy_msg::MysqlDescField* _internal_add_fields();
+  public:
+  const ::mysql_proxy_msg::MysqlDescField& fields(int index) const;
+  ::mysql_proxy_msg::MysqlDescField* add_fields();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mysql_proxy_msg::MysqlDescField >&
+      fields() const;
+
+  // string db_name = 1;
+  void clear_db_name();
+  const std::string& db_name() const;
+  void set_db_name(const std::string& value);
+  void set_db_name(std::string&& value);
+  void set_db_name(const char* value);
+  void set_db_name(const char* value, size_t size);
+  std::string* mutable_db_name();
+  std::string* release_db_name();
+  void set_allocated_db_name(std::string* db_name);
+  private:
+  const std::string& _internal_db_name() const;
+  void _internal_set_db_name(const std::string& value);
+  std::string* _internal_mutable_db_name();
+  public:
+
+  // string table_name = 2;
+  void clear_table_name();
+  const std::string& table_name() const;
+  void set_table_name(const std::string& value);
+  void set_table_name(std::string&& value);
+  void set_table_name(const char* value);
+  void set_table_name(const char* value, size_t size);
+  std::string* mutable_table_name();
+  std::string* release_table_name();
+  void set_allocated_table_name(std::string* table_name);
+  private:
+  const std::string& _internal_table_name() const;
+  void _internal_set_table_name(const std::string& value);
+  std::string* _internal_mutable_table_name();
+  public:
+
+  // bool result = 4;
+  void clear_result();
+  bool result() const;
+  void set_result(bool value);
+  private:
+  bool _internal_result() const;
+  void _internal_set_result(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mysql_proxy_msg.MysqlDescTable)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mysql_proxy_msg::MysqlDescField > fields_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr db_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr table_name_;
+  bool result_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MysqlDescribeResponse_TablesEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<MysqlDescribeResponse_TablesEntry_DoNotUse, 
+    std::string, ::mysql_proxy_msg::MysqlDescTable,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_MESSAGE,
+    0 > {
+public:
+  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<MysqlDescribeResponse_TablesEntry_DoNotUse, 
+    std::string, ::mysql_proxy_msg::MysqlDescTable,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_MESSAGE,
+    0 > SuperType;
+  MysqlDescribeResponse_TablesEntry_DoNotUse();
+  MysqlDescribeResponse_TablesEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void MergeFrom(const MysqlDescribeResponse_TablesEntry_DoNotUse& other);
+  static const MysqlDescribeResponse_TablesEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const MysqlDescribeResponse_TablesEntry_DoNotUse*>(&_MysqlDescribeResponse_TablesEntry_DoNotUse_default_instance_); }
+  static bool ValidateKey(std::string* s) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "mysql_proxy_msg.MysqlDescribeResponse.TablesEntry.key");
+ }
+  static bool ValidateValue(void*) { return true; }
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_mysql_5fproxy_5fmsg_2eproto);
+    return ::descriptor_table_mysql_5fproxy_5fmsg_2eproto.file_level_metadata[7];
+  }
+
+  public:
+};
+
+// -------------------------------------------------------------------
+
+class MysqlDescribeResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mysql_proxy_msg.MysqlDescribeResponse) */ {
+ public:
+  MysqlDescribeResponse();
+  virtual ~MysqlDescribeResponse();
+
+  MysqlDescribeResponse(const MysqlDescribeResponse& from);
+  MysqlDescribeResponse(MysqlDescribeResponse&& from) noexcept
+    : MysqlDescribeResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline MysqlDescribeResponse& operator=(const MysqlDescribeResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MysqlDescribeResponse& operator=(MysqlDescribeResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MysqlDescribeResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MysqlDescribeResponse* internal_default_instance() {
+    return reinterpret_cast<const MysqlDescribeResponse*>(
+               &_MysqlDescribeResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(MysqlDescribeResponse& a, MysqlDescribeResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MysqlDescribeResponse* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MysqlDescribeResponse* New() const final {
+    return CreateMaybeMessage<MysqlDescribeResponse>(nullptr);
+  }
+
+  MysqlDescribeResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MysqlDescribeResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MysqlDescribeResponse& from);
+  void MergeFrom(const MysqlDescribeResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MysqlDescribeResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mysql_proxy_msg.MysqlDescribeResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_mysql_5fproxy_5fmsg_2eproto);
+    return ::descriptor_table_mysql_5fproxy_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTablesFieldNumber = 1,
+  };
+  // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+  int tables_size() const;
+  private:
+  int _internal_tables_size() const;
+  public:
+  void clear_tables();
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >&
+      _internal_tables() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >*
+      _internal_mutable_tables();
+  public:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >&
+      tables() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >*
+      mutable_tables();
+
+  // @@protoc_insertion_point(class_scope:mysql_proxy_msg.MysqlDescribeResponse)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+      MysqlDescribeResponse_TablesEntry_DoNotUse,
+      std::string, ::mysql_proxy_msg::MysqlDescTable,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_MESSAGE,
+      0 > tables_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
+};
 // ===================================================================
 
 
@@ -1612,9 +2315,459 @@ MysqlTable::rows() const {
   return rows_;
 }
 
+// -------------------------------------------------------------------
+
+// MysqlDescribeRequest
+
+// repeated string names = 1;
+inline int MysqlDescribeRequest::_internal_names_size() const {
+  return names_.size();
+}
+inline int MysqlDescribeRequest::names_size() const {
+  return _internal_names_size();
+}
+inline void MysqlDescribeRequest::clear_names() {
+  names_.Clear();
+}
+inline std::string* MysqlDescribeRequest::add_names() {
+  // @@protoc_insertion_point(field_add_mutable:mysql_proxy_msg.MysqlDescribeRequest.names)
+  return _internal_add_names();
+}
+inline const std::string& MysqlDescribeRequest::_internal_names(int index) const {
+  return names_.Get(index);
+}
+inline const std::string& MysqlDescribeRequest::names(int index) const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescribeRequest.names)
+  return _internal_names(index);
+}
+inline std::string* MysqlDescribeRequest::mutable_names(int index) {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescribeRequest.names)
+  return names_.Mutable(index);
+}
+inline void MysqlDescribeRequest::set_names(int index, const std::string& value) {
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescribeRequest.names)
+  names_.Mutable(index)->assign(value);
+}
+inline void MysqlDescribeRequest::set_names(int index, std::string&& value) {
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescribeRequest.names)
+  names_.Mutable(index)->assign(std::move(value));
+}
+inline void MysqlDescribeRequest::set_names(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  names_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline void MysqlDescribeRequest::set_names(int index, const char* value, size_t size) {
+  names_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline std::string* MysqlDescribeRequest::_internal_add_names() {
+  return names_.Add();
+}
+inline void MysqlDescribeRequest::add_names(const std::string& value) {
+  names_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline void MysqlDescribeRequest::add_names(std::string&& value) {
+  names_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline void MysqlDescribeRequest::add_names(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  names_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline void MysqlDescribeRequest::add_names(const char* value, size_t size) {
+  names_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:mysql_proxy_msg.MysqlDescribeRequest.names)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+MysqlDescribeRequest::names() const {
+  // @@protoc_insertion_point(field_list:mysql_proxy_msg.MysqlDescribeRequest.names)
+  return names_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+MysqlDescribeRequest::mutable_names() {
+  // @@protoc_insertion_point(field_mutable_list:mysql_proxy_msg.MysqlDescribeRequest.names)
+  return &names_;
+}
+
+// -------------------------------------------------------------------
+
+// MysqlDescField
+
+// uint32 index = 1;
+inline void MysqlDescField::clear_index() {
+  index_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::_internal_index() const {
+  return index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::index() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescField.index)
+  return _internal_index();
+}
+inline void MysqlDescField::_internal_set_index(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  index_ = value;
+}
+inline void MysqlDescField::set_index(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_index(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescField.index)
+}
+
+// string name = 2;
+inline void MysqlDescField::clear_name() {
+  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MysqlDescField::name() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescField.name)
+  return _internal_name();
+}
+inline void MysqlDescField::set_name(const std::string& value) {
+  _internal_set_name(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescField.name)
+}
+inline std::string* MysqlDescField::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescField.name)
+  return _internal_mutable_name();
+}
+inline const std::string& MysqlDescField::_internal_name() const {
+  return name_.GetNoArena();
+}
+inline void MysqlDescField::_internal_set_name(const std::string& value) {
+  
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MysqlDescField::set_name(std::string&& value) {
+  
+  name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mysql_proxy_msg.MysqlDescField.name)
+}
+inline void MysqlDescField::set_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlDescField.name)
+}
+inline void MysqlDescField::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mysql_proxy_msg.MysqlDescField.name)
+}
+inline std::string* MysqlDescField::_internal_mutable_name() {
+  
+  return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MysqlDescField::release_name() {
+  // @@protoc_insertion_point(field_release:mysql_proxy_msg.MysqlDescField.name)
+  
+  return name_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MysqlDescField::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:mysql_proxy_msg.MysqlDescField.name)
+}
+
+// uint32 flags = 3;
+inline void MysqlDescField::clear_flags() {
+  flags_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::_internal_flags() const {
+  return flags_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::flags() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescField.flags)
+  return _internal_flags();
+}
+inline void MysqlDescField::_internal_set_flags(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  flags_ = value;
+}
+inline void MysqlDescField::set_flags(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_flags(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescField.flags)
+}
+
+// uint32 type = 4;
+inline void MysqlDescField::clear_type() {
+  type_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::_internal_type() const {
+  return type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::type() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescField.type)
+  return _internal_type();
+}
+inline void MysqlDescField::_internal_set_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  type_ = value;
+}
+inline void MysqlDescField::set_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescField.type)
+}
+
+// uint32 offset = 5;
+inline void MysqlDescField::clear_offset() {
+  offset_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::_internal_offset() const {
+  return offset_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MysqlDescField::offset() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescField.offset)
+  return _internal_offset();
+}
+inline void MysqlDescField::_internal_set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  offset_ = value;
+}
+inline void MysqlDescField::set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_offset(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescField.offset)
+}
+
+// -------------------------------------------------------------------
+
+// MysqlDescTable
+
+// string db_name = 1;
+inline void MysqlDescTable::clear_db_name() {
+  db_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MysqlDescTable::db_name() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescTable.db_name)
+  return _internal_db_name();
+}
+inline void MysqlDescTable::set_db_name(const std::string& value) {
+  _internal_set_db_name(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescTable.db_name)
+}
+inline std::string* MysqlDescTable::mutable_db_name() {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescTable.db_name)
+  return _internal_mutable_db_name();
+}
+inline const std::string& MysqlDescTable::_internal_db_name() const {
+  return db_name_.GetNoArena();
+}
+inline void MysqlDescTable::_internal_set_db_name(const std::string& value) {
+  
+  db_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MysqlDescTable::set_db_name(std::string&& value) {
+  
+  db_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mysql_proxy_msg.MysqlDescTable.db_name)
+}
+inline void MysqlDescTable::set_db_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  db_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlDescTable.db_name)
+}
+inline void MysqlDescTable::set_db_name(const char* value, size_t size) {
+  
+  db_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mysql_proxy_msg.MysqlDescTable.db_name)
+}
+inline std::string* MysqlDescTable::_internal_mutable_db_name() {
+  
+  return db_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MysqlDescTable::release_db_name() {
+  // @@protoc_insertion_point(field_release:mysql_proxy_msg.MysqlDescTable.db_name)
+  
+  return db_name_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MysqlDescTable::set_allocated_db_name(std::string* db_name) {
+  if (db_name != nullptr) {
+    
+  } else {
+    
+  }
+  db_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), db_name);
+  // @@protoc_insertion_point(field_set_allocated:mysql_proxy_msg.MysqlDescTable.db_name)
+}
+
+// string table_name = 2;
+inline void MysqlDescTable::clear_table_name() {
+  table_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MysqlDescTable::table_name() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescTable.table_name)
+  return _internal_table_name();
+}
+inline void MysqlDescTable::set_table_name(const std::string& value) {
+  _internal_set_table_name(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescTable.table_name)
+}
+inline std::string* MysqlDescTable::mutable_table_name() {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescTable.table_name)
+  return _internal_mutable_table_name();
+}
+inline const std::string& MysqlDescTable::_internal_table_name() const {
+  return table_name_.GetNoArena();
+}
+inline void MysqlDescTable::_internal_set_table_name(const std::string& value) {
+  
+  table_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MysqlDescTable::set_table_name(std::string&& value) {
+  
+  table_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mysql_proxy_msg.MysqlDescTable.table_name)
+}
+inline void MysqlDescTable::set_table_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  table_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlDescTable.table_name)
+}
+inline void MysqlDescTable::set_table_name(const char* value, size_t size) {
+  
+  table_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mysql_proxy_msg.MysqlDescTable.table_name)
+}
+inline std::string* MysqlDescTable::_internal_mutable_table_name() {
+  
+  return table_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MysqlDescTable::release_table_name() {
+  // @@protoc_insertion_point(field_release:mysql_proxy_msg.MysqlDescTable.table_name)
+  
+  return table_name_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MysqlDescTable::set_allocated_table_name(std::string* table_name) {
+  if (table_name != nullptr) {
+    
+  } else {
+    
+  }
+  table_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), table_name);
+  // @@protoc_insertion_point(field_set_allocated:mysql_proxy_msg.MysqlDescTable.table_name)
+}
+
+// repeated .mysql_proxy_msg.MysqlDescField fields = 3;
+inline int MysqlDescTable::_internal_fields_size() const {
+  return fields_.size();
+}
+inline int MysqlDescTable::fields_size() const {
+  return _internal_fields_size();
+}
+inline void MysqlDescTable::clear_fields() {
+  fields_.Clear();
+}
+inline ::mysql_proxy_msg::MysqlDescField* MysqlDescTable::mutable_fields(int index) {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescTable.fields)
+  return fields_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mysql_proxy_msg::MysqlDescField >*
+MysqlDescTable::mutable_fields() {
+  // @@protoc_insertion_point(field_mutable_list:mysql_proxy_msg.MysqlDescTable.fields)
+  return &fields_;
+}
+inline const ::mysql_proxy_msg::MysqlDescField& MysqlDescTable::_internal_fields(int index) const {
+  return fields_.Get(index);
+}
+inline const ::mysql_proxy_msg::MysqlDescField& MysqlDescTable::fields(int index) const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescTable.fields)
+  return _internal_fields(index);
+}
+inline ::mysql_proxy_msg::MysqlDescField* MysqlDescTable::_internal_add_fields() {
+  return fields_.Add();
+}
+inline ::mysql_proxy_msg::MysqlDescField* MysqlDescTable::add_fields() {
+  // @@protoc_insertion_point(field_add:mysql_proxy_msg.MysqlDescTable.fields)
+  return _internal_add_fields();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mysql_proxy_msg::MysqlDescField >&
+MysqlDescTable::fields() const {
+  // @@protoc_insertion_point(field_list:mysql_proxy_msg.MysqlDescTable.fields)
+  return fields_;
+}
+
+// bool result = 4;
+inline void MysqlDescTable::clear_result() {
+  result_ = false;
+}
+inline bool MysqlDescTable::_internal_result() const {
+  return result_;
+}
+inline bool MysqlDescTable::result() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescTable.result)
+  return _internal_result();
+}
+inline void MysqlDescTable::_internal_set_result(bool value) {
+  
+  result_ = value;
+}
+inline void MysqlDescTable::set_result(bool value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescTable.result)
+}
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// MysqlDescribeResponse
+
+// map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+inline int MysqlDescribeResponse::_internal_tables_size() const {
+  return tables_.size();
+}
+inline int MysqlDescribeResponse::tables_size() const {
+  return _internal_tables_size();
+}
+inline void MysqlDescribeResponse::clear_tables() {
+  tables_.Clear();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >&
+MysqlDescribeResponse::_internal_tables() const {
+  return tables_.GetMap();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >&
+MysqlDescribeResponse::tables() const {
+  // @@protoc_insertion_point(field_map:mysql_proxy_msg.MysqlDescribeResponse.tables)
+  return _internal_tables();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >*
+MysqlDescribeResponse::_internal_mutable_tables() {
+  return tables_.MutableMap();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >*
+MysqlDescribeResponse::mutable_tables() {
+  // @@protoc_insertion_point(field_mutable_map:mysql_proxy_msg.MysqlDescribeResponse.tables)
+  return _internal_mutable_tables();
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

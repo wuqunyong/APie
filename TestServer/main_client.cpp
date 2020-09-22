@@ -16,12 +16,12 @@
 class TestPbClass
 {
 public:
-	static void HandleFun1(uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
+	static void HandleFun1(uint64_t serialNum, ::login_msg::MSG_REQUEST_CLIENT_LOGIN msg) {
 		std::cout << "serialNum:" << serialNum << std::endl;
 		msg.PrintDebugString();
 
 
-		::login_msg::MSG_CLIENT_LOGINTOL response;
+		::login_msg::MSG_REQUEST_CLIENT_LOGIN response;
 		response.set_user_id(msg.user_id());
 
 		APie::Network::OutputStream::sendMsg(serialNum, 1101, response, APie::ConnetionType::CT_SERVER);
@@ -30,9 +30,9 @@ public:
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_CLIENT_LOGINTOL());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(1100, TestPbClass::HandleFun1, ::login_msg::MSG_REQUEST_CLIENT_LOGIN());
 
-	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_CLIENT_LOGINTOL msg) {
+	auto replyCb = [](uint64_t serialNum, ::login_msg::MSG_REQUEST_CLIENT_LOGIN msg) {
 		std::cout << "serialNum:" << serialNum << ",msg:" << msg.ShortDebugString() << std::endl;
 
 		auto ptrClint = APie::ClientProxy::findClient(serialNum);
@@ -41,7 +41,7 @@ std::tuple<uint32_t, std::string> initHook()
 			return;
 		}
 
-		::login_msg::MSG_CLIENT_LOGINTOL request;
+		::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
 		request.set_user_id(time(NULL));
 		request.set_session_key("hello");
 
@@ -63,7 +63,7 @@ std::tuple<uint32_t, std::string> initHook()
 		};
 		//APie::RPC::RpcClientSingleton::get().call(cntl, server, ::rpc_msg::PRC_None, request, rpcCB);
 	};
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_CLIENT_LOGINTOL());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(1101, replyCb, ::login_msg::MSG_REQUEST_CLIENT_LOGIN());
 
 	return std::make_tuple(0, "");
 }
@@ -78,7 +78,7 @@ std::tuple<uint32_t, std::string> initHook2()
 	APie::RPC::rpcInit();
 
 	auto rpcCB = [](const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args) -> std::tuple<uint32_t, std::string> {
-		::login_msg::MSG_CLIENT_LOGINTOL request;
+		::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
 		if (!request.ParseFromString(args))
 		{
 			return std::make_tuple(::rpc_msg::CODE_Unregister, "");;
@@ -103,11 +103,11 @@ std::tuple<uint32_t, std::string> startHook()
 		auto connectCb = [](APie::ClientProxy* ptrClient, uint32_t iResult) {
 			if (iResult == 0)
 			{
-				::login_msg::MSG_CLIENT_LOGINTOL msg;
+				::login_msg::MSG_REQUEST_CLIENT_LOGIN msg;
 				msg.set_user_id(100);
 				msg.set_session_key("hello");
 
-				ptrClient->sendMsg(1100, msg);
+				ptrClient->sendMsg(2000, msg);
 				ptrClient->addReconnectTimer(30000);
 			}
 			return true;
@@ -123,14 +123,14 @@ std::tuple<uint32_t, std::string> startHook()
 	}
 
 
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
-		auto& refMsg1 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-		std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.ShortDebugString() << std::endl;
-	});
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
-		auto& refMsg2 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-		std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.ShortDebugString() << std::endl;
-	});
+	//APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+	//	auto& refMsg1 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	//	std::cout << "topic:" << topic << ",refMsg1:" << refMsg1.ShortDebugString() << std::endl;
+	//});
+	//APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, [](uint64_t topic, ::google::protobuf::Message& msg) {
+	//	auto& refMsg2 = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	//	std::cout << "topic:" << topic << ",refMsg2:" << refMsg2.ShortDebugString() << std::endl;
+	//});
 
 	return std::make_tuple(0, "");
 }
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 	}
 
 	//auto ptrTest1 = [](uint64_t topic, ::google::protobuf::Message& msg) {
-	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+	//	auto& refMsg = dynamic_cast<::login_msg::MSG_REQUEST_CLIENT_LOGIN&>(msg);
 	//	std::cout << "sub:" << refMsg.ShortDebugString();
 
 	//	auto userId = refMsg.user_id() + 111;
@@ -158,7 +158,7 @@ int main(int argc, char **argv)
 	//APie::PubSubSingleton::get().subscribe(1, ptrTest1);
 
 	//auto ptrTest2 = [](uint64_t topic, ::google::protobuf::Message& msg) {
-	//	auto& refMsg = dynamic_cast<::login_msg::MSG_CLIENT_LOGINTOL&>(msg);
+	//	auto& refMsg = dynamic_cast<::login_msg::MSG_REQUEST_CLIENT_LOGIN&>(msg);
 	//	std::cout << "sub:" << refMsg.ShortDebugString();
 	//};
 	//APie::PubSubSingleton::get().subscribe(1, ptrTest2);
@@ -166,7 +166,7 @@ int main(int argc, char **argv)
 	//APie::PubSubSingleton::get().unregister(1, id);
 
 
-	//::login_msg::MSG_CLIENT_LOGINTOL msg;
+	//::login_msg::MSG_REQUEST_CLIENT_LOGIN msg;
 	//msg.set_user_id(100);
 	//msg.set_session_key("hello");
 	//APie::PubSubSingleton::get().publish(1, msg);

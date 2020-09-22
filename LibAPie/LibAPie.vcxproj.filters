@@ -304,6 +304,9 @@
     <ClInclude Include="..\PBMsg\common.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="api\forward_handler.h">
+      <Filter>api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -482,6 +485,9 @@
     </ClCompile>
     <ClCompile Include="..\PBMsg\common.pb.cc">
       <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="api\forward_handler.cc">
+      <Filter>api</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

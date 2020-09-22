@@ -150,6 +150,7 @@
     <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
+    <ClInclude Include="api\forward_handler.h" />
     <ClInclude Include="api\hook.h" />
     <ClInclude Include="api\os_sys_calls.h" />
     <ClInclude Include="api\pb_handler.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\PBMsg\service_discovery.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
     <ClCompile Include="api\api_impl.cc" />
+    <ClCompile Include="api\forward_handler.cc" />
     <ClCompile Include="api\hook.cc" />
     <ClCompile Include="api\os_sys_calls.cc" />
     <ClCompile Include="api\pb_handler.cc" />

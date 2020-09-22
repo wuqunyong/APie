@@ -195,7 +195,7 @@ void Ctx::init(const std::string& configFile)
 		s_log_name = APie::CtxSingleton::get().yamlAs<std::string>({ "log", "name" }, "apie");
 
 		uint32_t pid = APie::Api::OsSysCallsSingleton::get().getCurProcessId();
-		snprintf(timebuf, sizeof(timebuf), "%d-%s", pid, m_launchTime.c_str());
+		snprintf(timebuf, sizeof(timebuf), "%s-%d", m_launchTime.c_str(), pid);
 		s_log_postfix = timebuf;
 
 		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "config:%s", configFile.c_str());
@@ -263,8 +263,8 @@ void Ctx::init(const std::string& configFile)
 			options.db = db;
 			options.port = port;
 
-			db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
-			db_thread_->initMysql(options);
+			//db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
+			logic_thread_->initMysql(options);
 		}
 	}
 	catch (YAML::BadFile& e) {

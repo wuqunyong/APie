@@ -15,6 +15,7 @@
 
 #include "api/api_impl.h"
 #include "api/pb_handler.h"
+#include "api/forward_handler.h"
 #include "api/hook.h"
 #include "api/pubsub.h"
 #include "api/os_sys_calls.h"

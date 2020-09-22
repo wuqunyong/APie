@@ -21,6 +21,7 @@ namespace APie {
 		void exit();
 
 	public:
+		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
 
 	private:
 		std::map<uint64_t, uint64_t> m_serialNumRoleId;

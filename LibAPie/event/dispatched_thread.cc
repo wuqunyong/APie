@@ -52,6 +52,11 @@ void DispatchedThreadImpl::exit() {
 	state_ = DTState::DTS_Done;
 }
 
+MySQLConnector& DispatchedThreadImpl::getMySQLConnector()
+{
+	return mysqlConnector_;
+}
+
 void DispatchedThreadImpl::push(std::shared_ptr<Network::Listener> listener)
 {
 	listener_.push_back(listener);

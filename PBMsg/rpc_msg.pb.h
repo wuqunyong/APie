@@ -98,14 +98,16 @@ PROTOBUF_NAMESPACE_CLOSE
 namespace rpc_msg {
 
 enum RPC_OPCODES : int {
-  PRC_None = 0,
-  PRC_Multiplexer_Forward = 1,
+  RPC_None = 0,
+  RPC_Multiplexer_Forward = 1,
+  RPC_DeMultiplexer_Forward = 2,
+  RPC_MysqlDescTable = 401,
   RPC_OPCODES_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_OPCODES_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RPC_OPCODES_IsValid(int value);
-constexpr RPC_OPCODES RPC_OPCODES_MIN = PRC_None;
-constexpr RPC_OPCODES RPC_OPCODES_MAX = PRC_Multiplexer_Forward;
+constexpr RPC_OPCODES RPC_OPCODES_MIN = RPC_None;
+constexpr RPC_OPCODES RPC_OPCODES_MAX = RPC_MysqlDescTable;
 constexpr int RPC_OPCODES_ARRAYSIZE = RPC_OPCODES_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_OPCODES_descriptor();
@@ -131,12 +133,14 @@ enum RPC_CODE : int {
   CODE_ErrorServerPost = 103,
   CODE_RouteNotLinkToServer = 104,
   CODE_RouteSendToServerError = 105,
+  CODE_OpcodeUnregister = 106,
+  CODE_CreateMsgError = 107,
   RPC_CODE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_CODE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RPC_CODE_IsValid(int value);
 constexpr RPC_CODE RPC_CODE_MIN = CODE_Ok;
-constexpr RPC_CODE RPC_CODE_MAX = CODE_RouteSendToServerError;
+constexpr RPC_CODE RPC_CODE_MAX = CODE_CreateMsgError;
 constexpr int RPC_CODE_ARRAYSIZE = RPC_CODE_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_CODE_descriptor();
@@ -433,6 +437,156 @@ class CONTROLLER :
 };
 // -------------------------------------------------------------------
 
+class RoleIdentifier :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_msg.RoleIdentifier) */ {
+ public:
+  RoleIdentifier();
+  virtual ~RoleIdentifier();
+
+  RoleIdentifier(const RoleIdentifier& from);
+  RoleIdentifier(RoleIdentifier&& from) noexcept
+    : RoleIdentifier() {
+    *this = ::std::move(from);
+  }
+
+  inline RoleIdentifier& operator=(const RoleIdentifier& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RoleIdentifier& operator=(RoleIdentifier&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RoleIdentifier& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RoleIdentifier* internal_default_instance() {
+    return reinterpret_cast<const RoleIdentifier*>(
+               &_RoleIdentifier_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(RoleIdentifier& a, RoleIdentifier& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RoleIdentifier* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RoleIdentifier* New() const final {
+    return CreateMaybeMessage<RoleIdentifier>(nullptr);
+  }
+
+  RoleIdentifier* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RoleIdentifier>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RoleIdentifier& from);
+  void MergeFrom(const RoleIdentifier& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RoleIdentifier* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc_msg.RoleIdentifier";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmsg_2eproto);
+    return ::descriptor_table_rpc_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserIdFieldNumber = 1,
+    kChannelSerialNumFieldNumber = 3,
+    kGwIdFieldNumber = 2,
+  };
+  // uint64 user_id = 1;
+  void clear_user_id();
+  ::PROTOBUF_NAMESPACE_ID::uint64 user_id() const;
+  void set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_user_id() const;
+  void _internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // uint64 channel_serial_num = 3;
+  void clear_channel_serial_num();
+  ::PROTOBUF_NAMESPACE_ID::uint64 channel_serial_num() const;
+  void set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_channel_serial_num() const;
+  void _internal_set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // uint32 gw_id = 2;
+  void clear_gw_id();
+  ::PROTOBUF_NAMESPACE_ID::uint32 gw_id() const;
+  void set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_gw_id() const;
+  void _internal_set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc_msg.RoleIdentifier)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 user_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 channel_serial_num_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 gw_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_rpc_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
 class CLIENT_IDENTIFIER :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_msg.CLIENT_IDENTIFIER) */ {
  public:
@@ -475,7 +629,7 @@ class CLIENT_IDENTIFIER :
                &_CLIENT_IDENTIFIER_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(CLIENT_IDENTIFIER& a, CLIENT_IDENTIFIER& b) {
     a.Swap(&b);
@@ -541,7 +695,9 @@ class CLIENT_IDENTIFIER :
   enum : int {
     kStubFieldNumber = 1,
     kRouterFieldNumber = 4,
+    kRoleIdentifierFieldNumber = 6,
     kSeqIdFieldNumber = 2,
+    kChannelSerialNumFieldNumber = 5,
     kRequiredReplyFieldNumber = 3,
   };
   // .rpc_msg.CHANNEL stub = 1;
@@ -574,6 +730,21 @@ class CLIENT_IDENTIFIER :
   ::rpc_msg::CHANNEL* _internal_mutable_router();
   public:
 
+  // .rpc_msg.RoleIdentifier role_identifier = 6;
+  bool has_role_identifier() const;
+  private:
+  bool _internal_has_role_identifier() const;
+  public:
+  void clear_role_identifier();
+  const ::rpc_msg::RoleIdentifier& role_identifier() const;
+  ::rpc_msg::RoleIdentifier* release_role_identifier();
+  ::rpc_msg::RoleIdentifier* mutable_role_identifier();
+  void set_allocated_role_identifier(::rpc_msg::RoleIdentifier* role_identifier);
+  private:
+  const ::rpc_msg::RoleIdentifier& _internal_role_identifier() const;
+  ::rpc_msg::RoleIdentifier* _internal_mutable_role_identifier();
+  public:
+
   // uint64 seq_id = 2;
   void clear_seq_id();
   ::PROTOBUF_NAMESPACE_ID::uint64 seq_id() const;
@@ -581,6 +752,15 @@ class CLIENT_IDENTIFIER :
   private:
   ::PROTOBUF_NAMESPACE_ID::uint64 _internal_seq_id() const;
   void _internal_set_seq_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // uint64 channel_serial_num = 5;
+  void clear_channel_serial_num();
+  ::PROTOBUF_NAMESPACE_ID::uint64 channel_serial_num() const;
+  void set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_channel_serial_num() const;
+  void _internal_set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // bool required_reply = 3;
@@ -599,7 +779,9 @@ class CLIENT_IDENTIFIER :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::rpc_msg::CHANNEL* stub_;
   ::rpc_msg::CHANNEL* router_;
+  ::rpc_msg::RoleIdentifier* role_identifier_;
   ::PROTOBUF_NAMESPACE_ID::uint64 seq_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 channel_serial_num_;
   bool required_reply_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -648,7 +830,7 @@ class SERVER_IDENTIFIER :
                &_SERVER_IDENTIFIER_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(SERVER_IDENTIFIER& a, SERVER_IDENTIFIER& b) {
     a.Swap(&b);
@@ -782,7 +964,7 @@ class RPC_REQUEST :
                &_RPC_REQUEST_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(RPC_REQUEST& a, RPC_REQUEST& b) {
     a.Swap(&b);
@@ -962,7 +1144,7 @@ class STATUS :
                &_STATUS_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(STATUS& a, STATUS& b) {
     a.Swap(&b);
@@ -1108,7 +1290,7 @@ class RPC_RESPONSE :
                &_RPC_RESPONSE_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(RPC_RESPONSE& a, RPC_RESPONSE& b) {
     a.Swap(&b);
@@ -1247,145 +1429,6 @@ class RPC_RESPONSE :
   ::rpc_msg::CLIENT_IDENTIFIER* client_;
   ::rpc_msg::SERVER_IDENTIFIER* server_;
   ::rpc_msg::STATUS* status_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_rpc_5fmsg_2eproto;
-};
-// -------------------------------------------------------------------
-
-class RoleIdentifier :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_msg.RoleIdentifier) */ {
- public:
-  RoleIdentifier();
-  virtual ~RoleIdentifier();
-
-  RoleIdentifier(const RoleIdentifier& from);
-  RoleIdentifier(RoleIdentifier&& from) noexcept
-    : RoleIdentifier() {
-    *this = ::std::move(from);
-  }
-
-  inline RoleIdentifier& operator=(const RoleIdentifier& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RoleIdentifier& operator=(RoleIdentifier&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const RoleIdentifier& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RoleIdentifier* internal_default_instance() {
-    return reinterpret_cast<const RoleIdentifier*>(
-               &_RoleIdentifier_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    7;
-
-  friend void swap(RoleIdentifier& a, RoleIdentifier& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RoleIdentifier* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline RoleIdentifier* New() const final {
-    return CreateMaybeMessage<RoleIdentifier>(nullptr);
-  }
-
-  RoleIdentifier* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<RoleIdentifier>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const RoleIdentifier& from);
-  void MergeFrom(const RoleIdentifier& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(RoleIdentifier* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rpc_msg.RoleIdentifier";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmsg_2eproto);
-    return ::descriptor_table_rpc_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kUserIdFieldNumber = 1,
-    kGwIdFieldNumber = 2,
-  };
-  // uint64 user_id = 1;
-  void clear_user_id();
-  ::PROTOBUF_NAMESPACE_ID::uint64 user_id() const;
-  void set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_user_id() const;
-  void _internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
-  // uint32 gw_id = 2;
-  void clear_gw_id();
-  ::PROTOBUF_NAMESPACE_ID::uint32 gw_id() const;
-  void set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_gw_id() const;
-  void _internal_set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:rpc_msg.RoleIdentifier)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 user_id_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 gw_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -1649,6 +1692,70 @@ inline void CONTROLLER::set_timeout_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
 
 // -------------------------------------------------------------------
 
+// RoleIdentifier
+
+// uint64 user_id = 1;
+inline void RoleIdentifier::clear_user_id() {
+  user_id_ = PROTOBUF_ULONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::_internal_user_id() const {
+  return user_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::user_id() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.RoleIdentifier.user_id)
+  return _internal_user_id();
+}
+inline void RoleIdentifier::_internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  user_id_ = value;
+}
+inline void RoleIdentifier::set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_user_id(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.RoleIdentifier.user_id)
+}
+
+// uint32 gw_id = 2;
+inline void RoleIdentifier::clear_gw_id() {
+  gw_id_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RoleIdentifier::_internal_gw_id() const {
+  return gw_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RoleIdentifier::gw_id() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.RoleIdentifier.gw_id)
+  return _internal_gw_id();
+}
+inline void RoleIdentifier::_internal_set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  gw_id_ = value;
+}
+inline void RoleIdentifier::set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_gw_id(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.RoleIdentifier.gw_id)
+}
+
+// uint64 channel_serial_num = 3;
+inline void RoleIdentifier::clear_channel_serial_num() {
+  channel_serial_num_ = PROTOBUF_ULONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::_internal_channel_serial_num() const {
+  return channel_serial_num_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::channel_serial_num() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.RoleIdentifier.channel_serial_num)
+  return _internal_channel_serial_num();
+}
+inline void RoleIdentifier::_internal_set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  channel_serial_num_ = value;
+}
+inline void RoleIdentifier::set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_channel_serial_num(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.RoleIdentifier.channel_serial_num)
+}
+
+// -------------------------------------------------------------------
+
 // CLIENT_IDENTIFIER
 
 // .rpc_msg.CHANNEL stub = 1;
@@ -1809,6 +1916,86 @@ inline void CLIENT_IDENTIFIER::set_allocated_router(::rpc_msg::CHANNEL* router) 
   }
   router_ = router;
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.CLIENT_IDENTIFIER.router)
+}
+
+// uint64 channel_serial_num = 5;
+inline void CLIENT_IDENTIFIER::clear_channel_serial_num() {
+  channel_serial_num_ = PROTOBUF_ULONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CLIENT_IDENTIFIER::_internal_channel_serial_num() const {
+  return channel_serial_num_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CLIENT_IDENTIFIER::channel_serial_num() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CLIENT_IDENTIFIER.channel_serial_num)
+  return _internal_channel_serial_num();
+}
+inline void CLIENT_IDENTIFIER::_internal_set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  channel_serial_num_ = value;
+}
+inline void CLIENT_IDENTIFIER::set_channel_serial_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_channel_serial_num(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.CLIENT_IDENTIFIER.channel_serial_num)
+}
+
+// .rpc_msg.RoleIdentifier role_identifier = 6;
+inline bool CLIENT_IDENTIFIER::_internal_has_role_identifier() const {
+  return this != internal_default_instance() && role_identifier_ != nullptr;
+}
+inline bool CLIENT_IDENTIFIER::has_role_identifier() const {
+  return _internal_has_role_identifier();
+}
+inline void CLIENT_IDENTIFIER::clear_role_identifier() {
+  if (GetArenaNoVirtual() == nullptr && role_identifier_ != nullptr) {
+    delete role_identifier_;
+  }
+  role_identifier_ = nullptr;
+}
+inline const ::rpc_msg::RoleIdentifier& CLIENT_IDENTIFIER::_internal_role_identifier() const {
+  const ::rpc_msg::RoleIdentifier* p = role_identifier_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::RoleIdentifier*>(
+      &::rpc_msg::_RoleIdentifier_default_instance_);
+}
+inline const ::rpc_msg::RoleIdentifier& CLIENT_IDENTIFIER::role_identifier() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CLIENT_IDENTIFIER.role_identifier)
+  return _internal_role_identifier();
+}
+inline ::rpc_msg::RoleIdentifier* CLIENT_IDENTIFIER::release_role_identifier() {
+  // @@protoc_insertion_point(field_release:rpc_msg.CLIENT_IDENTIFIER.role_identifier)
+  
+  ::rpc_msg::RoleIdentifier* temp = role_identifier_;
+  role_identifier_ = nullptr;
+  return temp;
+}
+inline ::rpc_msg::RoleIdentifier* CLIENT_IDENTIFIER::_internal_mutable_role_identifier() {
+  
+  if (role_identifier_ == nullptr) {
+    auto* p = CreateMaybeMessage<::rpc_msg::RoleIdentifier>(GetArenaNoVirtual());
+    role_identifier_ = p;
+  }
+  return role_identifier_;
+}
+inline ::rpc_msg::RoleIdentifier* CLIENT_IDENTIFIER::mutable_role_identifier() {
+  // @@protoc_insertion_point(field_mutable:rpc_msg.CLIENT_IDENTIFIER.role_identifier)
+  return _internal_mutable_role_identifier();
+}
+inline void CLIENT_IDENTIFIER::set_allocated_role_identifier(::rpc_msg::RoleIdentifier* role_identifier) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete role_identifier_;
+  }
+  if (role_identifier) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      role_identifier = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, role_identifier, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  role_identifier_ = role_identifier;
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.CLIENT_IDENTIFIER.role_identifier)
 }
 
 // -------------------------------------------------------------------
@@ -2405,50 +2592,6 @@ inline void RPC_RESPONSE::set_allocated_result_data(std::string* result_data) {
   }
   result_data_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), result_data);
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_RESPONSE.result_data)
-}
-
-// -------------------------------------------------------------------
-
-// RoleIdentifier
-
-// uint64 user_id = 1;
-inline void RoleIdentifier::clear_user_id() {
-  user_id_ = PROTOBUF_ULONGLONG(0);
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::_internal_user_id() const {
-  return user_id_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint64 RoleIdentifier::user_id() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.RoleIdentifier.user_id)
-  return _internal_user_id();
-}
-inline void RoleIdentifier::_internal_set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  
-  user_id_ = value;
-}
-inline void RoleIdentifier::set_user_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _internal_set_user_id(value);
-  // @@protoc_insertion_point(field_set:rpc_msg.RoleIdentifier.user_id)
-}
-
-// uint32 gw_id = 2;
-inline void RoleIdentifier::clear_gw_id() {
-  gw_id_ = 0u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 RoleIdentifier::_internal_gw_id() const {
-  return gw_id_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 RoleIdentifier::gw_id() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.RoleIdentifier.gw_id)
-  return _internal_gw_id();
-}
-inline void RoleIdentifier::_internal_set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
-  gw_id_ = value;
-}
-inline void RoleIdentifier::set_gw_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_set_gw_id(value);
-  // @@protoc_insertion_point(field_set:rpc_msg.RoleIdentifier.gw_id)
 }
 
 // -------------------------------------------------------------------

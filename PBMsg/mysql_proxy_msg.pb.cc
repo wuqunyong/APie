@@ -14,6 +14,9 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlField_mysql_5fproxy_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlRow_mysql_5fproxy_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_mysql_5fproxy_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MysqlValue_mysql_5fproxy_5fmsg_2eproto;
@@ -42,7 +45,99 @@ class MysqlTableDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlTable> _instance;
 } _MysqlTable_default_instance_;
+class MysqlDescribeRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlDescribeRequest> _instance;
+} _MysqlDescribeRequest_default_instance_;
+class MysqlDescFieldDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlDescField> _instance;
+} _MysqlDescField_default_instance_;
+class MysqlDescTableDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlDescTable> _instance;
+} _MysqlDescTable_default_instance_;
+class MysqlDescribeResponse_TablesEntry_DoNotUseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlDescribeResponse_TablesEntry_DoNotUse> _instance;
+} _MysqlDescribeResponse_TablesEntry_DoNotUse_default_instance_;
+class MysqlDescribeResponseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MysqlDescribeResponse> _instance;
+} _MysqlDescribeResponse_default_instance_;
 }  // namespace mysql_proxy_msg
+static void InitDefaultsscc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::mysql_proxy_msg::_MysqlDescField_default_instance_;
+    new (ptr) ::mysql_proxy_msg::MysqlDescField();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::mysql_proxy_msg::MysqlDescField::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::mysql_proxy_msg::_MysqlDescTable_default_instance_;
+    new (ptr) ::mysql_proxy_msg::MysqlDescTable();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::mysql_proxy_msg::MysqlDescTable::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto}, {
+      &scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto.base,}};
+
+static void InitDefaultsscc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::mysql_proxy_msg::_MysqlDescribeRequest_default_instance_;
+    new (ptr) ::mysql_proxy_msg::MysqlDescribeRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::mysql_proxy_msg::MysqlDescribeRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::mysql_proxy_msg::_MysqlDescribeResponse_default_instance_;
+    new (ptr) ::mysql_proxy_msg::MysqlDescribeResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::mysql_proxy_msg::MysqlDescribeResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto}, {
+      &scc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto.base,}};
+
+static void InitDefaultsscc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::mysql_proxy_msg::_MysqlDescribeResponse_TablesEntry_DoNotUse_default_instance_;
+    new (ptr) ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse();
+  }
+  ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto}, {
+      &scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto.base,}};
+
 static void InitDefaultsscc_info_MysqlField_mysql_5fproxy_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -102,7 +197,7 @@ static void InitDefaultsscc_info_MysqlValue_mysql_5fproxy_5fmsg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MysqlValue_mysql_5fproxy_5fmsg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MysqlValue_mysql_5fproxy_5fmsg_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_mysql_5fproxy_5fmsg_2eproto[4];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_mysql_5fproxy_5fmsg_2eproto[9];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto = nullptr;
 
@@ -143,12 +238,57 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mysql_5fproxy_5fmsg_2eproto::o
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlTable, db_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlTable, name_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlTable, rows_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeRequest, names_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, index_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, name_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, flags_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, type_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescField, offset_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescTable, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescTable, db_name_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescTable, table_name_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescTable, fields_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescTable, result_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse, value_),
+  0,
+  1,
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlDescribeResponse, tables_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::mysql_proxy_msg::MysqlValue)},
   { 15, -1, sizeof(::mysql_proxy_msg::MysqlField)},
   { 22, -1, sizeof(::mysql_proxy_msg::MysqlRow)},
   { 28, -1, sizeof(::mysql_proxy_msg::MysqlTable)},
+  { 36, -1, sizeof(::mysql_proxy_msg::MysqlDescribeRequest)},
+  { 42, -1, sizeof(::mysql_proxy_msg::MysqlDescField)},
+  { 52, -1, sizeof(::mysql_proxy_msg::MysqlDescTable)},
+  { 61, 68, sizeof(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse)},
+  { 70, -1, sizeof(::mysql_proxy_msg::MysqlDescribeResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -156,6 +296,11 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlField_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlRow_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlTable_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlDescribeRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlDescField_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlDescTable_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlDescribeResponse_TablesEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mysql_proxy_msg::_MysqlDescribeResponse_default_instance_),
 };
 
 const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -171,18 +316,33 @@ const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECT
   "w\022+\n\006fields\030\001 \003(\0132\033.mysql_proxy_msg.Mysq"
   "lField\"O\n\nMysqlTable\022\n\n\002db\030\001 \001(\t\022\014\n\004name"
   "\030\002 \001(\t\022\'\n\004rows\030\003 \003(\0132\031.mysql_proxy_msg.M"
-  "ysqlRow*\252\001\n\025MysqlScalarValueTypes\022\r\n\tMSV"
-  "T_None\020\000\022\016\n\nMSVT_INT32\020\001\022\016\n\nMSVT_INT64\020\002"
-  "\022\017\n\013MSVT_UINT32\020\003\022\017\n\013MSVT_UINT64\020\004\022\017\n\013MS"
-  "VT_STRING\020\005\022\016\n\nMSVT_BYTES\020\006\022\016\n\nMSVT_FLOA"
-  "T\020\007\022\017\n\013MSVT_DOUBLE\020\010*e\n\025MysqlDataManipul"
-  "ation\022\014\n\010MDM_None\020\000\022\016\n\nMDM_SELECT\020\001\022\016\n\nM"
-  "DM_UPDATE\020\002\022\016\n\nMDM_DELETE\020\003\022\016\n\nMDM_INSER"
-  "T\020\004b\006proto3"
+  "ysqlRow\"%\n\024MysqlDescribeRequest\022\r\n\005names"
+  "\030\001 \003(\t\"Z\n\016MysqlDescField\022\r\n\005index\030\001 \001(\r\022"
+  "\014\n\004name\030\002 \001(\t\022\r\n\005flags\030\003 \001(\r\022\014\n\004type\030\004 \001"
+  "(\r\022\016\n\006offset\030\005 \001(\r\"v\n\016MysqlDescTable\022\017\n\007"
+  "db_name\030\001 \001(\t\022\022\n\ntable_name\030\002 \001(\t\022/\n\006fie"
+  "lds\030\003 \003(\0132\037.mysql_proxy_msg.MysqlDescFie"
+  "ld\022\016\n\006result\030\004 \001(\010\"\253\001\n\025MysqlDescribeResp"
+  "onse\022B\n\006tables\030\001 \003(\01322.mysql_proxy_msg.M"
+  "ysqlDescribeResponse.TablesEntry\032N\n\013Tabl"
+  "esEntry\022\013\n\003key\030\001 \001(\t\022.\n\005value\030\002 \001(\0132\037.my"
+  "sql_proxy_msg.MysqlDescTable:\0028\001*\252\001\n\025Mys"
+  "qlScalarValueTypes\022\r\n\tMSVT_None\020\000\022\016\n\nMSV"
+  "T_INT32\020\001\022\016\n\nMSVT_INT64\020\002\022\017\n\013MSVT_UINT32"
+  "\020\003\022\017\n\013MSVT_UINT64\020\004\022\017\n\013MSVT_STRING\020\005\022\016\n\n"
+  "MSVT_BYTES\020\006\022\016\n\nMSVT_FLOAT\020\007\022\017\n\013MSVT_DOU"
+  "BLE\020\010*e\n\025MysqlDataManipulation\022\014\n\010MDM_No"
+  "ne\020\000\022\016\n\nMDM_SELECT\020\001\022\016\n\nMDM_UPDATE\020\002\022\016\n\n"
+  "MDM_DELETE\020\003\022\016\n\nMDM_INSERT\020\004b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs[4] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs[9] = {
+  &scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto.base,
+  &scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto.base,
+  &scc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto.base,
+  &scc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto.base,
+  &scc_info_MysqlDescribeResponse_TablesEntry_DoNotUse_mysql_5fproxy_5fmsg_2eproto.base,
   &scc_info_MysqlField_mysql_5fproxy_5fmsg_2eproto.base,
   &scc_info_MysqlRow_mysql_5fproxy_5fmsg_2eproto.base,
   &scc_info_MysqlTable_mysql_5fproxy_5fmsg_2eproto.base,
@@ -191,10 +351,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mys
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_mysql_5fproxy_5fmsg_2eproto_once;
 static bool descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5fproxy_5fmsg_2eproto = {
-  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 771,
-  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs, descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps, 4, 0,
+  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 1196,
+  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs, descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_mysql_5fproxy_5fmsg_2eproto::offsets,
-  file_level_metadata_mysql_5fproxy_5fmsg_2eproto, 4, file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto, file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto,
+  file_level_metadata_mysql_5fproxy_5fmsg_2eproto, 9, file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto, file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1422,6 +1582,1043 @@ void MysqlTable::InternalSwap(MysqlTable* other) {
 }
 
 
+// ===================================================================
+
+void MysqlDescribeRequest::InitAsDefaultInstance() {
+}
+class MysqlDescribeRequest::_Internal {
+ public:
+};
+
+MysqlDescribeRequest::MysqlDescribeRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:mysql_proxy_msg.MysqlDescribeRequest)
+}
+MysqlDescribeRequest::MysqlDescribeRequest(const MysqlDescribeRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      names_(from.names_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:mysql_proxy_msg.MysqlDescribeRequest)
+}
+
+void MysqlDescribeRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto.base);
+}
+
+MysqlDescribeRequest::~MysqlDescribeRequest() {
+  // @@protoc_insertion_point(destructor:mysql_proxy_msg.MysqlDescribeRequest)
+  SharedDtor();
+}
+
+void MysqlDescribeRequest::SharedDtor() {
+}
+
+void MysqlDescribeRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MysqlDescribeRequest& MysqlDescribeRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MysqlDescribeRequest_mysql_5fproxy_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MysqlDescribeRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:mysql_proxy_msg.MysqlDescribeRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  names_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MysqlDescribeRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // repeated string names = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_names();
+            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mysql_proxy_msg.MysqlDescribeRequest.names"));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MysqlDescribeRequest::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mysql_proxy_msg.MysqlDescribeRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated string names = 1;
+  for (int i = 0, n = this->_internal_names_size(); i < n; i++) {
+    const auto& s = this->_internal_names(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlDescribeRequest.names");
+    target = stream->WriteString(1, s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mysql_proxy_msg.MysqlDescribeRequest)
+  return target;
+}
+
+size_t MysqlDescribeRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mysql_proxy_msg.MysqlDescribeRequest)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated string names = 1;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(names_.size());
+  for (int i = 0, n = names_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      names_.Get(i));
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MysqlDescribeRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mysql_proxy_msg.MysqlDescribeRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MysqlDescribeRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MysqlDescribeRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mysql_proxy_msg.MysqlDescribeRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mysql_proxy_msg.MysqlDescribeRequest)
+    MergeFrom(*source);
+  }
+}
+
+void MysqlDescribeRequest::MergeFrom(const MysqlDescribeRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mysql_proxy_msg.MysqlDescribeRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  names_.MergeFrom(from.names_);
+}
+
+void MysqlDescribeRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mysql_proxy_msg.MysqlDescribeRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MysqlDescribeRequest::CopyFrom(const MysqlDescribeRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mysql_proxy_msg.MysqlDescribeRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MysqlDescribeRequest::IsInitialized() const {
+  return true;
+}
+
+void MysqlDescribeRequest::InternalSwap(MysqlDescribeRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  names_.InternalSwap(&other->names_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlDescribeRequest::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MysqlDescField::InitAsDefaultInstance() {
+}
+class MysqlDescField::_Internal {
+ public:
+};
+
+MysqlDescField::MysqlDescField()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:mysql_proxy_msg.MysqlDescField)
+}
+MysqlDescField::MysqlDescField(const MysqlDescField& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_name().empty()) {
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  ::memcpy(&index_, &from.index_,
+    static_cast<size_t>(reinterpret_cast<char*>(&offset_) -
+    reinterpret_cast<char*>(&index_)) + sizeof(offset_));
+  // @@protoc_insertion_point(copy_constructor:mysql_proxy_msg.MysqlDescField)
+}
+
+void MysqlDescField::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto.base);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&index_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&offset_) -
+      reinterpret_cast<char*>(&index_)) + sizeof(offset_));
+}
+
+MysqlDescField::~MysqlDescField() {
+  // @@protoc_insertion_point(destructor:mysql_proxy_msg.MysqlDescField)
+  SharedDtor();
+}
+
+void MysqlDescField::SharedDtor() {
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void MysqlDescField::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MysqlDescField& MysqlDescField::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MysqlDescField_mysql_5fproxy_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MysqlDescField::Clear() {
+// @@protoc_insertion_point(message_clear_start:mysql_proxy_msg.MysqlDescField)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&index_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&offset_) -
+      reinterpret_cast<char*>(&index_)) + sizeof(offset_));
+  _internal_metadata_.Clear();
+}
+
+const char* MysqlDescField::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint32 index = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mysql_proxy_msg.MysqlDescField.name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 flags = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          flags_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 type = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 offset = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          offset_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MysqlDescField::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mysql_proxy_msg.MysqlDescField)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 index = 1;
+  if (this->index() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_index(), target);
+  }
+
+  // string name = 2;
+  if (this->name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlDescField.name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_name(), target);
+  }
+
+  // uint32 flags = 3;
+  if (this->flags() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_flags(), target);
+  }
+
+  // uint32 type = 4;
+  if (this->type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_type(), target);
+  }
+
+  // uint32 offset = 5;
+  if (this->offset() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_offset(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mysql_proxy_msg.MysqlDescField)
+  return target;
+}
+
+size_t MysqlDescField::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mysql_proxy_msg.MysqlDescField)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 2;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  // uint32 index = 1;
+  if (this->index() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_index());
+  }
+
+  // uint32 flags = 3;
+  if (this->flags() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_flags());
+  }
+
+  // uint32 type = 4;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_type());
+  }
+
+  // uint32 offset = 5;
+  if (this->offset() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_offset());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MysqlDescField::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mysql_proxy_msg.MysqlDescField)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MysqlDescField* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MysqlDescField>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mysql_proxy_msg.MysqlDescField)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mysql_proxy_msg.MysqlDescField)
+    MergeFrom(*source);
+  }
+}
+
+void MysqlDescField::MergeFrom(const MysqlDescField& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mysql_proxy_msg.MysqlDescField)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.name().size() > 0) {
+
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  if (from.index() != 0) {
+    _internal_set_index(from._internal_index());
+  }
+  if (from.flags() != 0) {
+    _internal_set_flags(from._internal_flags());
+  }
+  if (from.type() != 0) {
+    _internal_set_type(from._internal_type());
+  }
+  if (from.offset() != 0) {
+    _internal_set_offset(from._internal_offset());
+  }
+}
+
+void MysqlDescField::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mysql_proxy_msg.MysqlDescField)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MysqlDescField::CopyFrom(const MysqlDescField& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mysql_proxy_msg.MysqlDescField)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MysqlDescField::IsInitialized() const {
+  return true;
+}
+
+void MysqlDescField::InternalSwap(MysqlDescField* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(index_, other->index_);
+  swap(flags_, other->flags_);
+  swap(type_, other->type_);
+  swap(offset_, other->offset_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlDescField::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MysqlDescTable::InitAsDefaultInstance() {
+}
+class MysqlDescTable::_Internal {
+ public:
+};
+
+MysqlDescTable::MysqlDescTable()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:mysql_proxy_msg.MysqlDescTable)
+}
+MysqlDescTable::MysqlDescTable(const MysqlDescTable& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      fields_(from.fields_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  db_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_db_name().empty()) {
+    db_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.db_name_);
+  }
+  table_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_table_name().empty()) {
+    table_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.table_name_);
+  }
+  result_ = from.result_;
+  // @@protoc_insertion_point(copy_constructor:mysql_proxy_msg.MysqlDescTable)
+}
+
+void MysqlDescTable::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto.base);
+  db_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  table_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  result_ = false;
+}
+
+MysqlDescTable::~MysqlDescTable() {
+  // @@protoc_insertion_point(destructor:mysql_proxy_msg.MysqlDescTable)
+  SharedDtor();
+}
+
+void MysqlDescTable::SharedDtor() {
+  db_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  table_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void MysqlDescTable::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MysqlDescTable& MysqlDescTable::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MysqlDescTable_mysql_5fproxy_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MysqlDescTable::Clear() {
+// @@protoc_insertion_point(message_clear_start:mysql_proxy_msg.MysqlDescTable)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  fields_.Clear();
+  db_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  table_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  result_ = false;
+  _internal_metadata_.Clear();
+}
+
+const char* MysqlDescTable::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string db_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_db_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mysql_proxy_msg.MysqlDescTable.db_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string table_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_table_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mysql_proxy_msg.MysqlDescTable.table_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .mysql_proxy_msg.MysqlDescField fields = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_fields(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // bool result = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          result_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MysqlDescTable::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mysql_proxy_msg.MysqlDescTable)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string db_name = 1;
+  if (this->db_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_db_name().data(), static_cast<int>(this->_internal_db_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlDescTable.db_name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_db_name(), target);
+  }
+
+  // string table_name = 2;
+  if (this->table_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_table_name().data(), static_cast<int>(this->_internal_table_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlDescTable.table_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_table_name(), target);
+  }
+
+  // repeated .mysql_proxy_msg.MysqlDescField fields = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_fields_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, this->_internal_fields(i), target, stream);
+  }
+
+  // bool result = 4;
+  if (this->result() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_result(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mysql_proxy_msg.MysqlDescTable)
+  return target;
+}
+
+size_t MysqlDescTable::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mysql_proxy_msg.MysqlDescTable)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .mysql_proxy_msg.MysqlDescField fields = 3;
+  total_size += 1UL * this->_internal_fields_size();
+  for (const auto& msg : this->fields_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // string db_name = 1;
+  if (this->db_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_db_name());
+  }
+
+  // string table_name = 2;
+  if (this->table_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_table_name());
+  }
+
+  // bool result = 4;
+  if (this->result() != 0) {
+    total_size += 1 + 1;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MysqlDescTable::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mysql_proxy_msg.MysqlDescTable)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MysqlDescTable* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MysqlDescTable>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mysql_proxy_msg.MysqlDescTable)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mysql_proxy_msg.MysqlDescTable)
+    MergeFrom(*source);
+  }
+}
+
+void MysqlDescTable::MergeFrom(const MysqlDescTable& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mysql_proxy_msg.MysqlDescTable)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  fields_.MergeFrom(from.fields_);
+  if (from.db_name().size() > 0) {
+
+    db_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.db_name_);
+  }
+  if (from.table_name().size() > 0) {
+
+    table_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.table_name_);
+  }
+  if (from.result() != 0) {
+    _internal_set_result(from._internal_result());
+  }
+}
+
+void MysqlDescTable::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mysql_proxy_msg.MysqlDescTable)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MysqlDescTable::CopyFrom(const MysqlDescTable& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mysql_proxy_msg.MysqlDescTable)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MysqlDescTable::IsInitialized() const {
+  return true;
+}
+
+void MysqlDescTable::InternalSwap(MysqlDescTable* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  fields_.InternalSwap(&other->fields_);
+  db_name_.Swap(&other->db_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  table_name_.Swap(&other->table_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(result_, other->result_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlDescTable::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+MysqlDescribeResponse_TablesEntry_DoNotUse::MysqlDescribeResponse_TablesEntry_DoNotUse() {}
+MysqlDescribeResponse_TablesEntry_DoNotUse::MysqlDescribeResponse_TablesEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+    : SuperType(arena) {}
+void MysqlDescribeResponse_TablesEntry_DoNotUse::MergeFrom(const MysqlDescribeResponse_TablesEntry_DoNotUse& other) {
+  MergeFromInternal(other);
+}
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlDescribeResponse_TablesEntry_DoNotUse::GetMetadata() const {
+  return GetMetadataStatic();
+}
+void MysqlDescribeResponse_TablesEntry_DoNotUse::MergeFrom(
+    const ::PROTOBUF_NAMESPACE_ID::Message& other) {
+  ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom(other);
+}
+
+
+// ===================================================================
+
+void MysqlDescribeResponse::InitAsDefaultInstance() {
+}
+class MysqlDescribeResponse::_Internal {
+ public:
+};
+
+MysqlDescribeResponse::MysqlDescribeResponse()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:mysql_proxy_msg.MysqlDescribeResponse)
+}
+MysqlDescribeResponse::MysqlDescribeResponse(const MysqlDescribeResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  tables_.MergeFrom(from.tables_);
+  // @@protoc_insertion_point(copy_constructor:mysql_proxy_msg.MysqlDescribeResponse)
+}
+
+void MysqlDescribeResponse::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto.base);
+}
+
+MysqlDescribeResponse::~MysqlDescribeResponse() {
+  // @@protoc_insertion_point(destructor:mysql_proxy_msg.MysqlDescribeResponse)
+  SharedDtor();
+}
+
+void MysqlDescribeResponse::SharedDtor() {
+}
+
+void MysqlDescribeResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MysqlDescribeResponse& MysqlDescribeResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MysqlDescribeResponse_mysql_5fproxy_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MysqlDescribeResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:mysql_proxy_msg.MysqlDescribeResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  tables_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MysqlDescribeResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(&tables_, ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MysqlDescribeResponse::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mysql_proxy_msg.MysqlDescribeResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+  if (!this->_internal_tables().empty()) {
+    typedef ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >::const_pointer
+        ConstPtr;
+    typedef ConstPtr SortItem;
+    typedef ::PROTOBUF_NAMESPACE_ID::internal::CompareByDerefFirst<SortItem> Less;
+    struct Utf8Check {
+      static void Check(ConstPtr p) {
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+          p->first.data(), static_cast<int>(p->first.length()),
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+          "mysql_proxy_msg.MysqlDescribeResponse.TablesEntry.key");
+      }
+    };
+
+    if (stream->IsSerializationDeterministic() &&
+        this->_internal_tables().size() > 1) {
+      ::std::unique_ptr<SortItem[]> items(
+          new SortItem[this->_internal_tables().size()]);
+      typedef ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >::size_type size_type;
+      size_type n = 0;
+      for (::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >::const_iterator
+          it = this->_internal_tables().begin();
+          it != this->_internal_tables().end(); ++it, ++n) {
+        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
+      }
+      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
+      for (size_type i = 0; i < n; i++) {
+        target = MysqlDescribeResponse_TablesEntry_DoNotUse::Funcs::InternalSerialize(1, items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second, target, stream);
+        Utf8Check::Check(&(*items[static_cast<ptrdiff_t>(i)]));
+      }
+    } else {
+      for (::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >::const_iterator
+          it = this->_internal_tables().begin();
+          it != this->_internal_tables().end(); ++it) {
+        target = MysqlDescribeResponse_TablesEntry_DoNotUse::Funcs::InternalSerialize(1, it->first, it->second, target, stream);
+        Utf8Check::Check(&(*it));
+      }
+    }
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mysql_proxy_msg.MysqlDescribeResponse)
+  return target;
+}
+
+size_t MysqlDescribeResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mysql_proxy_msg.MysqlDescribeResponse)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_tables_size());
+  for (::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >::const_iterator
+      it = this->_internal_tables().begin();
+      it != this->_internal_tables().end(); ++it) {
+    total_size += MysqlDescribeResponse_TablesEntry_DoNotUse::Funcs::ByteSizeLong(it->first, it->second);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MysqlDescribeResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mysql_proxy_msg.MysqlDescribeResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MysqlDescribeResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MysqlDescribeResponse>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mysql_proxy_msg.MysqlDescribeResponse)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mysql_proxy_msg.MysqlDescribeResponse)
+    MergeFrom(*source);
+  }
+}
+
+void MysqlDescribeResponse::MergeFrom(const MysqlDescribeResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mysql_proxy_msg.MysqlDescribeResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  tables_.MergeFrom(from.tables_);
+}
+
+void MysqlDescribeResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mysql_proxy_msg.MysqlDescribeResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MysqlDescribeResponse::CopyFrom(const MysqlDescribeResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mysql_proxy_msg.MysqlDescribeResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MysqlDescribeResponse::IsInitialized() const {
+  return true;
+}
+
+void MysqlDescribeResponse::InternalSwap(MysqlDescribeResponse* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  tables_.Swap(&other->tables_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlDescribeResponse::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace mysql_proxy_msg
 PROTOBUF_NAMESPACE_OPEN
@@ -1436,6 +2633,21 @@ template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlRow* Arena::CreateMaybeMess
 }
 template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlTable* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlTable >(Arena* arena) {
   return Arena::CreateInternal< ::mysql_proxy_msg::MysqlTable >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlDescribeRequest* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDescribeRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::mysql_proxy_msg::MysqlDescribeRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlDescField* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDescField >(Arena* arena) {
+  return Arena::CreateInternal< ::mysql_proxy_msg::MysqlDescField >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlDescTable* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDescTable >(Arena* arena) {
+  return Arena::CreateInternal< ::mysql_proxy_msg::MysqlDescTable >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateInternal< ::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlDescribeResponse* Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDescribeResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::mysql_proxy_msg::MysqlDescribeResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

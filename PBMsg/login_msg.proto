@@ -5,7 +5,8 @@ package login_msg;
 //---------------------------------------
 
 
-message MSG_CLIENT_LOGINTOL{
+message MSG_REQUEST_CLIENT_LOGIN
+{
 	uint64 user_id = 1;
 	int32 version = 2;
 	bytes session_key = 3;
@@ -13,10 +14,10 @@ message MSG_CLIENT_LOGINTOL{
 
 message MSG_LOGINSERVER_VALIDATE{
 	uint64 user_id = 1;
-	int32 port = 2; //GWServer 端口
-	bool is_real_name_flag = 3; //实名制标识, true:已实名, false:未实名
-	string ip = 4; //GWServer IP
-	bytes check_out_text = 5; //校验码
+	int32 port = 2; 
+	bool is_real_name_flag = 3; 
+	string ip = 4;
+	bytes check_out_text = 5;
 }
 
 

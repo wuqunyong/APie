@@ -5,8 +5,11 @@ package rpc_msg;
 //-------------RPC-------------
 
 enum RPC_OPCODES {
-	PRC_None = 0;
-	PRC_Multiplexer_Forward = 1;
+	RPC_None = 0;
+	RPC_Multiplexer_Forward = 1;
+	RPC_DeMultiplexer_Forward = 2;
+
+	RPC_MysqlDescTable = 401;
 }
 
 enum RPC_CODE {
@@ -19,6 +22,8 @@ enum RPC_CODE {
 	CODE_ErrorServerPost = 103; 
 	CODE_RouteNotLinkToServer = 104;
 	CODE_RouteSendToServerError = 105;
+	CODE_OpcodeUnregister = 106;
+	CODE_CreateMsgError = 107;
 }
 
 
@@ -34,12 +39,21 @@ message CONTROLLER
 	uint64 timeout_ms = 2;
 }
 
+message RoleIdentifier
+{
+	uint64 user_id = 1;
+	uint32 gw_id = 2;
+	uint64 channel_serial_num = 3;
+}
+
 message CLIENT_IDENTIFIER
 {
 	CHANNEL stub = 1;
 	uint64 seq_id = 2;
 	bool required_reply = 3;
 	CHANNEL router = 4;
+	uint64 channel_serial_num = 5;
+	RoleIdentifier role_identifier = 6;
 }
 
 message SERVER_IDENTIFIER
@@ -67,12 +81,6 @@ message RPC_RESPONSE
 	SERVER_IDENTIFIER server = 2;
 	STATUS status = 3;
 	bytes result_data = 4;
-}
-
-message RoleIdentifier
-{
-	uint64 user_id = 1;
-	uint32 gw_id = 2;
 }
 
 message PRC_Multiplexer_Forward_Args

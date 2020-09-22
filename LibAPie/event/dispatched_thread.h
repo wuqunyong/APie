@@ -84,6 +84,8 @@ namespace Event {
 			*/
 		void exit();
 
+		MySQLConnector& getMySQLConnector();
+
 	private:
 		void sendStop();
 		void threadRoutine(void);
