@@ -23,6 +23,8 @@ namespace APie {
 	public:
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
 
+		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+
 	private:
 		std::map<uint64_t, uint64_t> m_serialNumRoleId;
 	};

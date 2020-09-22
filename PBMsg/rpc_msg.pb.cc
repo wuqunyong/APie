@@ -320,14 +320,14 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "fier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*"
   "p\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Mult"
   "iplexer_Forward\020\001\022\035\n\031RPC_DeMultiplexer_F"
-  "orward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003*\364\001\n\010RP"
+  "orward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003*\216\002\n\010RP"
   "C_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020"
   "\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n"
   "\017CODE_ParseError\020f\022\030\n\024CODE_ErrorServerPo"
   "st\020g\022\035\n\031CODE_RouteNotLinkToServer\020h\022\037\n\033C"
   "ODE_RouteSendToServerError\020i\022\031\n\025CODE_Opc"
   "odeUnregister\020j\022\027\n\023CODE_CreateMsgError\020k"
-  "b\006proto3"
+  "\022\030\n\024CODE_LogicThreadNull\020lb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -345,7 +345,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1288,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1314,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -386,6 +386,7 @@ bool RPC_CODE_IsValid(int value) {
     case 105:
     case 106:
     case 107:
+    case 108:
       return true;
     default:
       return false;

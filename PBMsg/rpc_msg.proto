@@ -24,6 +24,7 @@ enum RPC_CODE {
 	CODE_RouteSendToServerError = 105;
 	CODE_OpcodeUnregister = 106;
 	CODE_CreateMsgError = 107;
+	CODE_LogicThreadNull = 108;
 }
 
 
