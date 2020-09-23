@@ -288,7 +288,8 @@ class MysqlValue :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTypeFieldNumber = 1,
+    kDbTypeFieldNumber = 1,
+    kTypeFieldNumber = 2,
     kInt32VFieldNumber = 101,
     kInt64VFieldNumber = 102,
     kUint32VFieldNumber = 103,
@@ -298,7 +299,16 @@ class MysqlValue :
     kFloatVFieldNumber = 107,
     kDoubleVFieldNumber = 108,
   };
-  // .mysql_proxy_msg.MysqlScalarValueTypes type = 1;
+  // int32 db_type = 1;
+  void clear_db_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 db_type() const;
+  void set_db_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_db_type() const;
+  void _internal_set_db_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // .mysql_proxy_msg.MysqlScalarValueTypes type = 2;
   void clear_type();
   ::mysql_proxy_msg::MysqlScalarValueTypes type() const;
   void set_type(::mysql_proxy_msg::MysqlScalarValueTypes value);
@@ -435,6 +445,7 @@ class MysqlValue :
   inline void clear_has_payload();
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 db_type_;
   int type_;
   union PayloadUnion {
     PayloadUnion() {}
@@ -1934,7 +1945,27 @@ class MysqlQueryResponse :
 #endif  // __GNUC__
 // MysqlValue
 
-// .mysql_proxy_msg.MysqlScalarValueTypes type = 1;
+// int32 db_type = 1;
+inline void MysqlValue::clear_db_type() {
+  db_type_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MysqlValue::_internal_db_type() const {
+  return db_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MysqlValue::db_type() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlValue.db_type)
+  return _internal_db_type();
+}
+inline void MysqlValue::_internal_set_db_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  db_type_ = value;
+}
+inline void MysqlValue::set_db_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_db_type(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlValue.db_type)
+}
+
+// .mysql_proxy_msg.MysqlScalarValueTypes type = 2;
 inline void MysqlValue::clear_type() {
   type_ = 0;
 }

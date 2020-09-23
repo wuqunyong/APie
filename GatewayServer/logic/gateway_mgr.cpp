@@ -82,13 +82,13 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 
 			ModelUser user;
 
-			auto roleDesc = (*response.mutable_tables())["role_base"];
+			auto roleDesc = (*response.mutable_tables())["role_base_copy"];
 			MysqlTable table;
 			table = DeclarativeBase::convertFrom(roleDesc);
 			user.initMetaData(table);
 			bool bResult = user.checkInvalid();
 
-			user.fields.user_id = 2002020;
+			user.fields.user_id = 200;
 
 			mysql_proxy_msg::MysqlQueryRequest queryRequest;
 			queryRequest = user.generateQuery();

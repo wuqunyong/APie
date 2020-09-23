@@ -247,7 +247,8 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 		uint32_t iIndex = 0;
 		for (auto &items : table.getFields())
 		{
-			switch (items.convertToDbType())
+			auto dbType = items.convertToDbType();
+			switch (dbType)
 			{
 			case MysqlField::DB_FIELD_TYPE::T_INT8:
 			{
@@ -258,6 +259,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
 
@@ -272,6 +274,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
 				break;
@@ -285,6 +288,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
 				break;
@@ -298,6 +302,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int64_v(fieldValue);
 				break;
@@ -311,6 +316,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_float_v(fieldValue);
 				break;
@@ -324,6 +330,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_double_v(fieldValue);
 				break;
@@ -337,6 +344,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_bytes_v(fieldValue);
 				break;
@@ -350,6 +358,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_string_v(fieldValue);
 				break;
@@ -363,6 +372,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
 				break;
@@ -376,6 +386,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
 				break;
@@ -389,6 +400,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);;
 				break;
@@ -402,6 +414,7 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 
 				auto ptrAddFields = ptrAddRows->add_fields();
 				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
 				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint64_v(fieldValue);;
 				break;
@@ -594,7 +607,33 @@ bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response
 			case mysql_proxy_msg::MSVT_INT32:
 			{
 				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
-				this->writeValue(fieldAddress, items.value().int32_v());
+
+				MysqlField::DB_FIELD_TYPE dbType = static_cast<MysqlField::DB_FIELD_TYPE>(items.value().db_type());
+				switch (dbType)
+				{
+				case MysqlField::DB_FIELD_TYPE::T_INT8:
+				{
+					int8_t dbValue = static_cast<int8_t>(items.value().int32_v());
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_INT16:
+				{
+					int16_t dbValue = static_cast<int16_t>(items.value().int32_v());
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_INT32:
+				{
+					int32_t dbValue = items.value().int32_v();
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
 				break;
 			}
 			case mysql_proxy_msg::MSVT_INT64:
@@ -606,7 +645,33 @@ bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response
 			case mysql_proxy_msg::MSVT_UINT32:
 			{
 				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
-				this->writeValue(fieldAddress, items.value().uint32_v());
+
+				MysqlField::DB_FIELD_TYPE dbType = static_cast<MysqlField::DB_FIELD_TYPE>(items.value().db_type());
+				switch (dbType)
+				{
+				case MysqlField::DB_FIELD_TYPE::T_UINT8:
+				{
+					uint8_t dbValue = static_cast<uint8_t>(items.value().uint32_v());
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT16:
+				{
+					uint16_t dbValue = static_cast<uint16_t>(items.value().uint32_v());
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				case MysqlField::DB_FIELD_TYPE::T_UINT32:
+				{
+					uint32_t dbValue = items.value().uint32_v();
+					this->writeValue(fieldAddress, dbValue);
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
 				break;
 			}
 			case mysql_proxy_msg::MSVT_UINT64:

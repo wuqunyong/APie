@@ -18,7 +18,8 @@ enum MysqlScalarValueTypes
 
 message MysqlValue
 {
-	MysqlScalarValueTypes type = 1;
+	int32 db_type = 1;
+	MysqlScalarValueTypes type = 2;
 	oneof payload {
 		int32 int32_v = 101;
 		int64 int64_v = 102;

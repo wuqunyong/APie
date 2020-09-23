@@ -31,6 +31,9 @@ namespace APie {
 			std::string global_mails_info;
 			std::string treasure_info;
 			std::string feats_info;
+			std::string small_value;
+			uint8_t small_int;
+			uint8_t small_int1;
 		});
 
 		virtual void* blockAddress() override
@@ -61,6 +64,9 @@ namespace APie {
 				offsetof(db_fields, global_mails_info),
 				offsetof(db_fields, treasure_info),
 				offsetof(db_fields, feats_info),
+				offsetof(db_fields, small_value),
+				offsetof(db_fields, small_int),
+				offsetof(db_fields, small_int1),
 			};
 
 			return layout;

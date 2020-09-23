@@ -246,6 +246,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mysql_5fproxy_5fmsg_2eproto::o
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlValue, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlValue, db_type_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlValue, type_),
   offsetof(::mysql_proxy_msg::MysqlValueDefaultTypeInternal, int32_v_),
   offsetof(::mysql_proxy_msg::MysqlValueDefaultTypeInternal, int64_v_),
@@ -336,16 +337,16 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mysql_5fproxy_5fmsg_2eproto::o
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::mysql_proxy_msg::MysqlValue)},
-  { 15, -1, sizeof(::mysql_proxy_msg::MysqlField)},
-  { 22, -1, sizeof(::mysql_proxy_msg::MysqlRow)},
-  { 28, -1, sizeof(::mysql_proxy_msg::MysqlTable)},
-  { 36, -1, sizeof(::mysql_proxy_msg::MysqlDescribeRequest)},
-  { 42, -1, sizeof(::mysql_proxy_msg::MysqlDescField)},
-  { 52, -1, sizeof(::mysql_proxy_msg::MysqlDescTable)},
-  { 61, 68, sizeof(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse)},
-  { 70, -1, sizeof(::mysql_proxy_msg::MysqlDescribeResponse)},
-  { 76, -1, sizeof(::mysql_proxy_msg::MysqlQueryRequest)},
-  { 84, -1, sizeof(::mysql_proxy_msg::MysqlQueryResponse)},
+  { 16, -1, sizeof(::mysql_proxy_msg::MysqlField)},
+  { 23, -1, sizeof(::mysql_proxy_msg::MysqlRow)},
+  { 29, -1, sizeof(::mysql_proxy_msg::MysqlTable)},
+  { 37, -1, sizeof(::mysql_proxy_msg::MysqlDescribeRequest)},
+  { 43, -1, sizeof(::mysql_proxy_msg::MysqlDescField)},
+  { 53, -1, sizeof(::mysql_proxy_msg::MysqlDescTable)},
+  { 62, 69, sizeof(::mysql_proxy_msg::MysqlDescribeResponse_TablesEntry_DoNotUse)},
+  { 71, -1, sizeof(::mysql_proxy_msg::MysqlDescribeResponse)},
+  { 77, -1, sizeof(::mysql_proxy_msg::MysqlQueryRequest)},
+  { 85, -1, sizeof(::mysql_proxy_msg::MysqlQueryResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -364,41 +365,41 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\025mysql_proxy_msg.proto\022\017mysql_proxy_msg"
-  "\"\351\001\n\nMysqlValue\0224\n\004type\030\001 \001(\0162&.mysql_pr"
-  "oxy_msg.MysqlScalarValueTypes\022\021\n\007int32_v"
-  "\030e \001(\005H\000\022\021\n\007int64_v\030f \001(\003H\000\022\022\n\010uint32_v\030"
-  "g \001(\rH\000\022\022\n\010uint64_v\030h \001(\004H\000\022\022\n\010string_v\030"
-  "i \001(\tH\000\022\021\n\007bytes_v\030j \001(\014H\000\022\021\n\007float_v\030k "
-  "\001(\002H\000\022\022\n\010double_v\030l \001(\001H\000B\t\n\007payload\"G\n\n"
-  "MysqlField\022\r\n\005index\030\001 \001(\r\022*\n\005value\030\002 \001(\013"
-  "2\033.mysql_proxy_msg.MysqlValue\"7\n\010MysqlRo"
-  "w\022+\n\006fields\030\001 \003(\0132\033.mysql_proxy_msg.Mysq"
-  "lField\"O\n\nMysqlTable\022\n\n\002db\030\001 \001(\t\022\014\n\004name"
-  "\030\002 \001(\t\022\'\n\004rows\030\003 \003(\0132\031.mysql_proxy_msg.M"
-  "ysqlRow\"%\n\024MysqlDescribeRequest\022\r\n\005names"
-  "\030\001 \003(\t\"Z\n\016MysqlDescField\022\r\n\005index\030\001 \001(\r\022"
-  "\014\n\004name\030\002 \001(\t\022\r\n\005flags\030\003 \001(\r\022\014\n\004type\030\004 \001"
-  "(\r\022\016\n\006offset\030\005 \001(\r\"v\n\016MysqlDescTable\022\017\n\007"
-  "db_name\030\001 \001(\t\022\022\n\ntable_name\030\002 \001(\t\022/\n\006fie"
-  "lds\030\003 \003(\0132\037.mysql_proxy_msg.MysqlDescFie"
-  "ld\022\016\n\006result\030\004 \001(\010\"\253\001\n\025MysqlDescribeResp"
-  "onse\022B\n\006tables\030\001 \003(\01322.mysql_proxy_msg.M"
-  "ysqlDescribeResponse.TablesEntry\032N\n\013Tabl"
-  "esEntry\022\013\n\003key\030\001 \001(\t\022.\n\005value\030\002 \001(\0132\037.my"
-  "sql_proxy_msg.MysqlDescTable:\0028\001\"j\n\021Mysq"
-  "lQueryRequest\022\017\n\007db_name\030\001 \001(\t\022\022\n\ntable_"
-  "name\030\002 \001(\t\0220\n\013primary_key\030\003 \003(\0132\033.mysql_"
-  "proxy_msg.MysqlField\"d\n\022MysqlQueryRespon"
-  "se\022\016\n\006result\030\001 \001(\010\022\022\n\nerror_info\030\002 \001(\t\022*"
-  "\n\005table\030\003 \001(\0132\033.mysql_proxy_msg.MysqlTab"
-  "le*\252\001\n\025MysqlScalarValueTypes\022\r\n\tMSVT_Non"
-  "e\020\000\022\016\n\nMSVT_INT32\020\001\022\016\n\nMSVT_INT64\020\002\022\017\n\013M"
-  "SVT_UINT32\020\003\022\017\n\013MSVT_UINT64\020\004\022\017\n\013MSVT_ST"
-  "RING\020\005\022\016\n\nMSVT_BYTES\020\006\022\016\n\nMSVT_FLOAT\020\007\022\017"
-  "\n\013MSVT_DOUBLE\020\010*e\n\025MysqlDataManipulation"
-  "\022\014\n\010MDM_None\020\000\022\016\n\nMDM_SELECT\020\001\022\016\n\nMDM_UP"
-  "DATE\020\002\022\016\n\nMDM_DELETE\020\003\022\016\n\nMDM_INSERT\020\004b\006"
-  "proto3"
+  "\"\372\001\n\nMysqlValue\022\017\n\007db_type\030\001 \001(\005\0224\n\004type"
+  "\030\002 \001(\0162&.mysql_proxy_msg.MysqlScalarValu"
+  "eTypes\022\021\n\007int32_v\030e \001(\005H\000\022\021\n\007int64_v\030f \001"
+  "(\003H\000\022\022\n\010uint32_v\030g \001(\rH\000\022\022\n\010uint64_v\030h \001"
+  "(\004H\000\022\022\n\010string_v\030i \001(\tH\000\022\021\n\007bytes_v\030j \001("
+  "\014H\000\022\021\n\007float_v\030k \001(\002H\000\022\022\n\010double_v\030l \001(\001"
+  "H\000B\t\n\007payload\"G\n\nMysqlField\022\r\n\005index\030\001 \001"
+  "(\r\022*\n\005value\030\002 \001(\0132\033.mysql_proxy_msg.Mysq"
+  "lValue\"7\n\010MysqlRow\022+\n\006fields\030\001 \003(\0132\033.mys"
+  "ql_proxy_msg.MysqlField\"O\n\nMysqlTable\022\n\n"
+  "\002db\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\'\n\004rows\030\003 \003(\0132\031."
+  "mysql_proxy_msg.MysqlRow\"%\n\024MysqlDescrib"
+  "eRequest\022\r\n\005names\030\001 \003(\t\"Z\n\016MysqlDescFiel"
+  "d\022\r\n\005index\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\r\n\005flags\030"
+  "\003 \001(\r\022\014\n\004type\030\004 \001(\r\022\016\n\006offset\030\005 \001(\r\"v\n\016M"
+  "ysqlDescTable\022\017\n\007db_name\030\001 \001(\t\022\022\n\ntable_"
+  "name\030\002 \001(\t\022/\n\006fields\030\003 \003(\0132\037.mysql_proxy"
+  "_msg.MysqlDescField\022\016\n\006result\030\004 \001(\010\"\253\001\n\025"
+  "MysqlDescribeResponse\022B\n\006tables\030\001 \003(\01322."
+  "mysql_proxy_msg.MysqlDescribeResponse.Ta"
+  "blesEntry\032N\n\013TablesEntry\022\013\n\003key\030\001 \001(\t\022.\n"
+  "\005value\030\002 \001(\0132\037.mysql_proxy_msg.MysqlDesc"
+  "Table:\0028\001\"j\n\021MysqlQueryRequest\022\017\n\007db_nam"
+  "e\030\001 \001(\t\022\022\n\ntable_name\030\002 \001(\t\0220\n\013primary_k"
+  "ey\030\003 \003(\0132\033.mysql_proxy_msg.MysqlField\"d\n"
+  "\022MysqlQueryResponse\022\016\n\006result\030\001 \001(\010\022\022\n\ne"
+  "rror_info\030\002 \001(\t\022*\n\005table\030\003 \001(\0132\033.mysql_p"
+  "roxy_msg.MysqlTable*\252\001\n\025MysqlScalarValue"
+  "Types\022\r\n\tMSVT_None\020\000\022\016\n\nMSVT_INT32\020\001\022\016\n\n"
+  "MSVT_INT64\020\002\022\017\n\013MSVT_UINT32\020\003\022\017\n\013MSVT_UI"
+  "NT64\020\004\022\017\n\013MSVT_STRING\020\005\022\016\n\nMSVT_BYTES\020\006\022"
+  "\016\n\nMSVT_FLOAT\020\007\022\017\n\013MSVT_DOUBLE\020\010*e\n\025Mysq"
+  "lDataManipulation\022\014\n\010MDM_None\020\000\022\016\n\nMDM_S"
+  "ELECT\020\001\022\016\n\nMDM_UPDATE\020\002\022\016\n\nMDM_DELETE\020\003\022"
+  "\016\n\nMDM_INSERT\020\004b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps[1] = {
 };
@@ -418,7 +419,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mys
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_mysql_5fproxy_5fmsg_2eproto_once;
 static bool descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5fproxy_5fmsg_2eproto = {
-  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 1406,
+  &descriptor_table_mysql_5fproxy_5fmsg_2eproto_initialized, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto, "mysql_proxy_msg.proto", 1423,
   &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, descriptor_table_mysql_5fproxy_5fmsg_2eproto_sccs, descriptor_table_mysql_5fproxy_5fmsg_2eproto_deps, 11, 0,
   schemas, file_default_instances, TableStruct_mysql_5fproxy_5fmsg_2eproto::offsets,
   file_level_metadata_mysql_5fproxy_5fmsg_2eproto, 11, file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto, file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto,
@@ -493,7 +494,9 @@ MysqlValue::MysqlValue(const MysqlValue& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  type_ = from.type_;
+  ::memcpy(&db_type_, &from.db_type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&type_) -
+    reinterpret_cast<char*>(&db_type_)) + sizeof(type_));
   clear_has_payload();
   switch (from.payload_case()) {
     case kInt32V: {
@@ -537,7 +540,9 @@ MysqlValue::MysqlValue(const MysqlValue& from)
 
 void MysqlValue::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MysqlValue_mysql_5fproxy_5fmsg_2eproto.base);
-  type_ = 0;
+  ::memset(&db_type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&type_) -
+      reinterpret_cast<char*>(&db_type_)) + sizeof(type_));
   clear_has_payload();
 }
 
@@ -610,7 +615,9 @@ void MysqlValue::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  type_ = 0;
+  ::memset(&db_type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&type_) -
+      reinterpret_cast<char*>(&db_type_)) + sizeof(type_));
   clear_payload();
   _internal_metadata_.Clear();
 }
@@ -622,9 +629,16 @@ const char* MysqlValue::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .mysql_proxy_msg.MysqlScalarValueTypes type = 1;
+      // int32 db_type = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          db_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .mysql_proxy_msg.MysqlScalarValueTypes type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
           _internal_set_type(static_cast<::mysql_proxy_msg::MysqlScalarValueTypes>(val));
@@ -715,11 +729,17 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .mysql_proxy_msg.MysqlScalarValueTypes type = 1;
+  // int32 db_type = 1;
+  if (this->db_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_db_type(), target);
+  }
+
+  // .mysql_proxy_msg.MysqlScalarValueTypes type = 2;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
+      2, this->_internal_type(), target);
   }
 
   // int32 int32_v = 101;
@@ -790,7 +810,14 @@ size_t MysqlValue::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .mysql_proxy_msg.MysqlScalarValueTypes type = 1;
+  // int32 db_type = 1;
+  if (this->db_type() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_db_type());
+  }
+
+  // .mysql_proxy_msg.MysqlScalarValueTypes type = 2;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
@@ -884,6 +911,9 @@ void MysqlValue::MergeFrom(const MysqlValue& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.db_type() != 0) {
+    _internal_set_db_type(from._internal_db_type());
+  }
   if (from.type() != 0) {
     _internal_set_type(from._internal_type());
   }
@@ -947,6 +977,7 @@ bool MysqlValue::IsInitialized() const {
 void MysqlValue::InternalSwap(MysqlValue* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(db_type_, other->db_type_);
   swap(type_, other->type_);
   swap(payload_, other->payload_);
   swap(_oneof_case_[0], other->_oneof_case_[0]);

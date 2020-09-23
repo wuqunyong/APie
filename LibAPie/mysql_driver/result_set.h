@@ -123,6 +123,64 @@ private:
 		return true;
 	};
 
+	template <>
+	bool Field<uint8_t>(uint8_t& ref_value)
+	{
+		if ((NULL == this->mysql_rows_) || (this->index_ >= this->num_fields_))
+		{
+			return false;
+		}
+
+		//uint32_t cur_index = this->index_;
+
+		const char* ptr_field = this->mysql_rows_[this->index_++];
+		if (NULL == ptr_field)
+		{
+			return false;
+		}
+
+		//unsigned long binary_len = lengths_[cur_index];
+
+		std::stringstream strbuf;
+		strbuf << ptr_field << std::endl;
+		strbuf.flush();
+
+		uint16_t new_value;
+		strbuf >> new_value;
+
+		ref_value = static_cast<uint8_t>(new_value);
+		return true;
+	};
+
+	template <>
+	bool Field<int8_t>(int8_t& ref_value)
+	{
+		if ((NULL == this->mysql_rows_) || (this->index_ >= this->num_fields_))
+		{
+			return false;
+		}
+
+		//uint32_t cur_index = this->index_;
+
+		const char* ptr_field = this->mysql_rows_[this->index_++];
+		if (NULL == ptr_field)
+		{
+			return false;
+		}
+
+		//unsigned long binary_len = lengths_[cur_index];
+
+		std::stringstream strbuf;
+		strbuf << ptr_field << std::endl;
+		strbuf.flush();
+
+		int16_t new_value;
+		strbuf >> new_value;
+
+		ref_value = static_cast<int8_t>(new_value);
+		return true;
+	};
+
 protected:
 	uint32_t   index_;
 	uint32_t   num_fields_;
