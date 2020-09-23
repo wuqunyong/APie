@@ -13,13 +13,6 @@
 
 int main(int argc, char **argv)
 {
-	std::stringstream strbuf;
-	strbuf << "255";
-	//strbuf.flush();
-
-	uint8_t new_value;
-	strbuf >> new_value;
-
 	if (argc != 2)
 	{
 		fatalExit("usage: exe <ConfFile>");
