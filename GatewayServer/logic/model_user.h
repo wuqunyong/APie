@@ -19,10 +19,10 @@ namespace APie {
 			uint64_t user_id;
 			uint64_t game_id;
 			uint32_t level;
-			uint64_t register_time;
-			uint64_t login_time;
-			uint64_t offline_time;
-			std::string name;
+			uint64_t register_time = 1;
+			uint64_t login_time = 2;
+			uint64_t offline_time = 3;
+			std::string name = "hello";
 			std::string role_info;
 			std::string magic_slot_info;
 			std::string magic_info;

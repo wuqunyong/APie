@@ -227,14 +227,13 @@ std::string DeclarativeBase::toString(const ::mysql_proxy_msg::MysqlValue& value
 mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr)
 {
 	mysql_proxy_msg::MysqlQueryResponse queryResult;
+	queryResult.mutable_table()->set_db(table.getDb());
+	queryResult.mutable_table()->set_name(table.getTable());
 
 	if (!sharedPtr)
 	{
 		return queryResult;
 	}
-
-	queryResult.mutable_table()->set_db(table.getDb());
-	queryResult.mutable_table()->set_name(table.getTable());
 
 	auto result = sharedPtr.get();
 
@@ -419,6 +418,11 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 	return queryResult;
 }
 
+uint32_t DeclarativeBase::getRowCount()
+{
+	return m_rowCount;
+}
+
 bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 {
 	if (!sharedPtr)
@@ -559,10 +563,90 @@ bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 
 	}
 
-	if (iRowCount != 1)
+	m_rowCount = iRowCount;
+	return true;
+}
+
+bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response)
+{
+	if (!response.result())
 	{
 		return false;
 	}
+
+	if (response.table().db() != m_table.getDb() || response.table().name() != m_table.getTable())
+	{
+		return false;
+	}
+
+	uint32_t iRowCount = 0;
+	for (auto& rowData : response.table().rows())
+	{
+		iRowCount++;
+
+		for (auto &items : rowData.fields())
+		{
+			void* address = blockAddress();
+			uint32_t iOffset = this->fieldOffset(items.index());
+
+			switch (items.value().type())
+			{
+			case mysql_proxy_msg::MSVT_INT32:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().int32_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_INT64:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().int64_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_UINT32:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().uint32_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_UINT64:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().uint64_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_STRING:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().string_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_BYTES:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().bytes_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_FLOAT:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().float_v());
+				break;
+			}
+			case mysql_proxy_msg::MSVT_DOUBLE:
+			{
+				unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+				this->writeValue(fieldAddress, items.value().double_v());
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+
+	m_rowCount = iRowCount;
+
 	return true;
 }
 

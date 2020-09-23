@@ -88,7 +88,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			user.initMetaData(table);
 			bool bResult = user.checkInvalid();
 
-			user.fields.user_id = 200;
+			user.fields.user_id = 2002020;
 
 			mysql_proxy_msg::MysqlQueryRequest queryRequest;
 			queryRequest = user.generateQuery();
@@ -97,7 +97,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			server.set_type(common::EPT_DB_Proxy);
 			server.set_id(1);
 
-			auto queryCB = [](const rpc_msg::STATUS& status, const std::string& replyData)
+			auto queryCB = [user](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 			{
 				if (status.code() != ::rpc_msg::CODE_Ok)
 				{
@@ -113,6 +113,8 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 				std::stringstream ss;
 				ss << response.ShortDebugString();
 				ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+				bool bResult = user.loadFromPb(response);
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 		};

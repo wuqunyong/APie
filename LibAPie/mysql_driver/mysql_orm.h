@@ -49,7 +49,11 @@ public:
 		*((T*)address) = value;
 	}
 
+	uint32_t getRowCount();
+
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
+	bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
+
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
 
 	bool checkInvalid();
@@ -71,5 +75,6 @@ public:
 private:
 	MysqlTable m_table;
 	std::bitset<256> m_dirtyFlags;
+	uint32_t m_rowCount = 0;
 };
 
