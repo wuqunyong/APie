@@ -38,6 +38,15 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::r
 		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
 	}
 
+	if (request.names_size() == 0)
+	{
+		std::stringstream ss;
+		ss << "names_size:" << request.names_size();
+		response.set_result(false);
+		response.set_error_info(ss.str());
+		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	}
+
 	for (const auto& items : request.names())
 	{
 		mysql_proxy_msg::MysqlDescTable descTable;
@@ -71,10 +80,17 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::r
 
 			TableCacheMgrSingleton::get().addTable(table);
 		}
+		else
+		{
+			response.set_result(false);
+			response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+			return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+		}
 
 		(*response.mutable_tables())[items] = descTable;
 	}
 
+	response.set_result(true);
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
@@ -94,18 +110,18 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
 	}
 
-	std::string sSQL;
-	bool bResult = sharedTable->generateQuerySQL(request, sSQL);
-	response.set_sql_statement(sSQL);
-	if (!bResult)
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
-
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
 		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+	}
+
+	std::string sSQL;
+	bool bResult = sharedTable->generateQuerySQL(ptrDispatched->getMySQLConnector(), request, sSQL);
+	response.set_sql_statement(sSQL);
+	if (!bResult)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
 	}
 
 	std::shared_ptr<ResultSet> recordSet;
@@ -134,19 +150,19 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlInsert(const ::rpc_
 	{
 		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
 	}
-
-	std::string sSQL;
-	bool bResult = sharedTable->generateInsertSQL(request, sSQL);
-	response.set_sql_statement(sSQL);
-	if (!bResult)
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
-
+	
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
 		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+	}
+
+	std::string sSQL;
+	bool bResult = sharedTable->generateInsertSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
+	response.set_sql_statement(sSQL);
+	if (!bResult)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
 	}
 
 	std::shared_ptr<ResultSet> recordSet;

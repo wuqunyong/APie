@@ -45,33 +45,29 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
 {
 	static std::map<std::string, MysqlTable> loadedTable;
+	static ModelUser loadedUser;
 
 	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
 	if (command.cmd() == "mysql_desc")
 	{
 		::mysql_proxy_msg::MysqlDescribeRequest args;
-		if (command.params().empty())
+
+		if (command.params_size() < 2)
 		{
 			return;
 		}
 
-		std::string tableName;
-		for (const auto& name : command.params())
-		{
-			auto ptrAdd = args.add_names();
-			*ptrAdd = name;
+		std::string tableName = command.params()[0];
+		uint64_t userId = std::stoull(command.params()[1]);
 
-			if (tableName.empty())
-			{
-				tableName = name;
-			}
-		}
+		auto ptrAdd = args.add_names();
+		*ptrAdd = tableName;
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
 		server.set_id(1);
 
-		auto rpcCB = [tableName](const rpc_msg::STATUS& status, const std::string& replyData)
+		auto rpcCB = [tableName, userId](const rpc_msg::STATUS& status, const std::string& replyData)
 		{
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
@@ -100,7 +96,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 				loadedTable[tableName] = table;
 			}
 
-			user.fields.user_id = 200;
+			user.fields.user_id = userId;
 
 			mysql_proxy_msg::MysqlQueryRequest queryRequest;
 			queryRequest = user.generateQuery();
@@ -127,6 +123,10 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 				ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
 				bool bResult = user.loadFromPb(response);
+				if (bResult)
+				{
+					loadedUser = user;
+				}
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 		};
@@ -148,22 +148,22 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			return;
 		}
 
-		ModelUser user;
-		user.fields.user_id = userId;
-		user.initMetaData(findIte->second);
-		bool bResult = user.checkInvalid();
+		//ModelUser user;
+		loadedUser.fields.user_id = userId;
+		loadedUser.initMetaData(findIte->second);
+		bool bResult = loadedUser.checkInvalid();
 		if (!bResult)
 		{
 			return;
 		}
 
-		mysql_proxy_msg::MysqlInsertRequest insertRequest = user.generateInsert();
+		mysql_proxy_msg::MysqlInsertRequest insertRequest = loadedUser.generateInsert();
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
 		server.set_id(1);
 
-		auto insertCB = [user](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+		auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 		{
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{

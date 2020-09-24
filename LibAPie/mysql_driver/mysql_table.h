@@ -15,6 +15,8 @@
 
 #include "mysql_field.h"
 
+class MySQLConnector;
+
 class MysqlTable
 {
 public:
@@ -28,8 +30,8 @@ public:
 	std::optional<uint32_t> getIndexByName(const std::string& name);
 	std::optional<std::string> getNameByIndex(uint32_t index);
 
-	bool generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql);
-	bool generateInsertSQL(const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql);
+	bool generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql);
+	bool generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql);
 
 private:
 	std::string m_db;

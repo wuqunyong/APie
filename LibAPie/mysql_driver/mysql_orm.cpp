@@ -7,7 +7,7 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 	return true;
 }
 
-std::string DeclarativeBase::query()
+std::string DeclarativeBase::query(MySQLConnector& connector)
 {
 	std::stringstream ss;
 	ss << "SELECT ";
@@ -51,7 +51,7 @@ std::string DeclarativeBase::query()
 			std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
 			if (field.has_value())
 			{
-				ss << toString(field.value());
+				ss << toString(connector, field.value());
 			}
 			else
 			{
@@ -198,7 +198,7 @@ uint32_t DeclarativeBase::fieldSize(uint32_t index)
 	return m_table.getFields()[index].getSize();
 }
 
-std::string DeclarativeBase::toString(const ::mysql_proxy_msg::MysqlValue& value)
+std::string DeclarativeBase::toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value)
 {
 	std::string quotes("'");
 
@@ -227,12 +227,25 @@ std::string DeclarativeBase::toString(const ::mysql_proxy_msg::MysqlValue& value
 	}
 	case ::mysql_proxy_msg::MSVT_STRING:
 	{
-		ss << quotes << value.string_v() << quotes;
+		std::string escapeString;
+		bool bResult = connector.escapeString(value.string_v(), escapeString);
+		if (!bResult)
+		{
+			//TODO
+		}
+		ss << quotes << escapeString << quotes;
+		//ss << quotes << value.string_v() << quotes;
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_BYTES:
 	{
-		ss << quotes << value.bytes_v() << quotes;
+		std::string escapeString;
+		bool bResult = connector.escapeString(value.bytes_v(), escapeString);
+		if (!bResult)
+		{
+			//TODO
+		}
+		ss << quotes << escapeString << quotes;
 		break;
 
 	}

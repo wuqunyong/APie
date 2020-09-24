@@ -56,7 +56,7 @@ std::optional<std::string> MysqlTable::getNameByIndex(uint32_t index)
 	return std::make_optional(findIte->second);
 }
 
-bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql)
+bool MysqlTable::generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");
 
@@ -107,7 +107,7 @@ bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& qu
 			return false;
 		}
 		ss << graveAccent << optName.value() << graveAccent << "=" << " ";
-		ss << DeclarativeBase::toString(items.value());
+		ss << DeclarativeBase::toString(connector, items.value());
 	}
 
 	if (bFirst)
@@ -124,7 +124,7 @@ bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& qu
 }
 
 
-bool MysqlTable::generateInsertSQL(const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
+bool MysqlTable::generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");
 	const std::string quote("'");
@@ -165,7 +165,7 @@ bool MysqlTable::generateInsertSQL(const ::mysql_proxy_msg::MysqlInsertRequest& 
 	for (auto& items : query.fields())
 	{
 		iIndex++;
-		ss << DeclarativeBase::toString(items.value());
+		ss << DeclarativeBase::toString(connector, items.value());
 		if (iIndex < iTotalSize)
 		{
 			ss << ",";

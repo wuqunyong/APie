@@ -32,8 +32,8 @@ namespace APie {
 			std::string treasure_info;
 			std::string feats_info;
 			std::string small_value = "2020-09-23 17:24:20";
-			uint8_t small_int = 1;
-			uint8_t small_int1 = 2;
+			uint8_t small_int = 98;
+			uint8_t small_int1 = 123;
 		});
 
 		virtual void* blockAddress() override

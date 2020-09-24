@@ -126,7 +126,7 @@ int main()
 
 		data.fields.user_id = 200;
 		data.fields.game_id = 10980102021;
-		std::string querySql = data.query();
+		std::string querySql = data.query(mysqlConnector);
 
 		std::shared_ptr<ResultSet> recordSet;
 		bResult = mysqlConnector.query(querySql.c_str(), querySql.length(), recordSet);

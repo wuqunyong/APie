@@ -1573,9 +1573,11 @@ class MysqlDescribeResponse :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTablesFieldNumber = 1,
+    kTablesFieldNumber = 3,
+    kErrorInfoFieldNumber = 2,
+    kResultFieldNumber = 1,
   };
-  // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+  // map<string, .mysql_proxy_msg.MysqlDescTable> tables = 3;
   int tables_size() const;
   private:
   int _internal_tables_size() const;
@@ -1592,6 +1594,31 @@ class MysqlDescribeResponse :
   ::PROTOBUF_NAMESPACE_ID::Map< std::string, ::mysql_proxy_msg::MysqlDescTable >*
       mutable_tables();
 
+  // bytes error_info = 2;
+  void clear_error_info();
+  const std::string& error_info() const;
+  void set_error_info(const std::string& value);
+  void set_error_info(std::string&& value);
+  void set_error_info(const char* value);
+  void set_error_info(const void* value, size_t size);
+  std::string* mutable_error_info();
+  std::string* release_error_info();
+  void set_allocated_error_info(std::string* error_info);
+  private:
+  const std::string& _internal_error_info() const;
+  void _internal_set_error_info(const std::string& value);
+  std::string* _internal_mutable_error_info();
+  public:
+
+  // bool result = 1;
+  void clear_result();
+  bool result() const;
+  void set_result(bool value);
+  private:
+  bool _internal_result() const;
+  void _internal_set_result(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:mysql_proxy_msg.MysqlDescribeResponse)
  private:
   class _Internal;
@@ -1603,6 +1630,8 @@ class MysqlDescribeResponse :
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_MESSAGE,
       0 > tables_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr error_info_;
+  bool result_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5fproxy_5fmsg_2eproto;
 };
@@ -1892,13 +1921,13 @@ class MysqlQueryResponse :
     kTableFieldNumber = 3,
     kResultFieldNumber = 1,
   };
-  // string error_info = 2;
+  // bytes error_info = 2;
   void clear_error_info();
   const std::string& error_info() const;
   void set_error_info(const std::string& value);
   void set_error_info(std::string&& value);
   void set_error_info(const char* value);
-  void set_error_info(const char* value, size_t size);
+  void set_error_info(const void* value, size_t size);
   std::string* mutable_error_info();
   std::string* release_error_info();
   void set_allocated_error_info(std::string* error_info);
@@ -1908,13 +1937,13 @@ class MysqlQueryResponse :
   std::string* _internal_mutable_error_info();
   public:
 
-  // string sql_statement = 4;
+  // bytes sql_statement = 4;
   void clear_sql_statement();
   const std::string& sql_statement() const;
   void set_sql_statement(const std::string& value);
   void set_sql_statement(std::string&& value);
   void set_sql_statement(const char* value);
-  void set_sql_statement(const char* value, size_t size);
+  void set_sql_statement(const void* value, size_t size);
   std::string* mutable_sql_statement();
   std::string* release_sql_statement();
   void set_allocated_sql_statement(std::string* sql_statement);
@@ -2247,13 +2276,13 @@ class MysqlInsertResponse :
     kInsertIdFieldNumber = 4,
     kResultFieldNumber = 1,
   };
-  // string error_info = 2;
+  // bytes error_info = 2;
   void clear_error_info();
   const std::string& error_info() const;
   void set_error_info(const std::string& value);
   void set_error_info(std::string&& value);
   void set_error_info(const char* value);
-  void set_error_info(const char* value, size_t size);
+  void set_error_info(const void* value, size_t size);
   std::string* mutable_error_info();
   std::string* release_error_info();
   void set_allocated_error_info(std::string* error_info);
@@ -2263,13 +2292,13 @@ class MysqlInsertResponse :
   std::string* _internal_mutable_error_info();
   public:
 
-  // string sql_statement = 5;
+  // bytes sql_statement = 5;
   void clear_sql_statement();
   const std::string& sql_statement() const;
   void set_sql_statement(const std::string& value);
   void set_sql_statement(std::string&& value);
   void set_sql_statement(const char* value);
-  void set_sql_statement(const char* value, size_t size);
+  void set_sql_statement(const void* value, size_t size);
   std::string* mutable_sql_statement();
   std::string* release_sql_statement();
   void set_allocated_sql_statement(std::string* sql_statement);
@@ -3486,7 +3515,87 @@ inline void MysqlDescTable::set_result(bool value) {
 
 // MysqlDescribeResponse
 
-// map<string, .mysql_proxy_msg.MysqlDescTable> tables = 1;
+// bool result = 1;
+inline void MysqlDescribeResponse::clear_result() {
+  result_ = false;
+}
+inline bool MysqlDescribeResponse::_internal_result() const {
+  return result_;
+}
+inline bool MysqlDescribeResponse::result() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescribeResponse.result)
+  return _internal_result();
+}
+inline void MysqlDescribeResponse::_internal_set_result(bool value) {
+  
+  result_ = value;
+}
+inline void MysqlDescribeResponse::set_result(bool value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescribeResponse.result)
+}
+
+// bytes error_info = 2;
+inline void MysqlDescribeResponse::clear_error_info() {
+  error_info_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MysqlDescribeResponse::error_info() const {
+  // @@protoc_insertion_point(field_get:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+  return _internal_error_info();
+}
+inline void MysqlDescribeResponse::set_error_info(const std::string& value) {
+  _internal_set_error_info(value);
+  // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+}
+inline std::string* MysqlDescribeResponse::mutable_error_info() {
+  // @@protoc_insertion_point(field_mutable:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+  return _internal_mutable_error_info();
+}
+inline const std::string& MysqlDescribeResponse::_internal_error_info() const {
+  return error_info_.GetNoArena();
+}
+inline void MysqlDescribeResponse::_internal_set_error_info(const std::string& value) {
+  
+  error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MysqlDescribeResponse::set_error_info(std::string&& value) {
+  
+  error_info_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+}
+inline void MysqlDescribeResponse::set_error_info(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+}
+inline void MysqlDescribeResponse::set_error_info(const void* value, size_t size) {
+  
+  error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+}
+inline std::string* MysqlDescribeResponse::_internal_mutable_error_info() {
+  
+  return error_info_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MysqlDescribeResponse::release_error_info() {
+  // @@protoc_insertion_point(field_release:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+  
+  return error_info_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MysqlDescribeResponse::set_allocated_error_info(std::string* error_info) {
+  if (error_info != nullptr) {
+    
+  } else {
+    
+  }
+  error_info_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), error_info);
+  // @@protoc_insertion_point(field_set_allocated:mysql_proxy_msg.MysqlDescribeResponse.error_info)
+}
+
+// map<string, .mysql_proxy_msg.MysqlDescTable> tables = 3;
 inline int MysqlDescribeResponse::_internal_tables_size() const {
   return tables_.size();
 }
@@ -3702,7 +3811,7 @@ inline void MysqlQueryResponse::set_result(bool value) {
   // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlQueryResponse.result)
 }
 
-// string error_info = 2;
+// bytes error_info = 2;
 inline void MysqlQueryResponse::clear_error_info() {
   error_info_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -3737,7 +3846,7 @@ inline void MysqlQueryResponse::set_error_info(const char* value) {
   error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlQueryResponse.error_info)
 }
-inline void MysqlQueryResponse::set_error_info(const char* value, size_t size) {
+inline void MysqlQueryResponse::set_error_info(const void* value, size_t size) {
   
   error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3822,7 +3931,7 @@ inline void MysqlQueryResponse::set_allocated_table(::mysql_proxy_msg::MysqlTabl
   // @@protoc_insertion_point(field_set_allocated:mysql_proxy_msg.MysqlQueryResponse.table)
 }
 
-// string sql_statement = 4;
+// bytes sql_statement = 4;
 inline void MysqlQueryResponse::clear_sql_statement() {
   sql_statement_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -3857,7 +3966,7 @@ inline void MysqlQueryResponse::set_sql_statement(const char* value) {
   sql_statement_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlQueryResponse.sql_statement)
 }
-inline void MysqlQueryResponse::set_sql_statement(const char* value, size_t size) {
+inline void MysqlQueryResponse::set_sql_statement(const void* value, size_t size) {
   
   sql_statement_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4069,7 +4178,7 @@ inline void MysqlInsertResponse::set_result(bool value) {
   // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlInsertResponse.result)
 }
 
-// string error_info = 2;
+// bytes error_info = 2;
 inline void MysqlInsertResponse::clear_error_info() {
   error_info_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -4104,7 +4213,7 @@ inline void MysqlInsertResponse::set_error_info(const char* value) {
   error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlInsertResponse.error_info)
 }
-inline void MysqlInsertResponse::set_error_info(const char* value, size_t size) {
+inline void MysqlInsertResponse::set_error_info(const void* value, size_t size) {
   
   error_info_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4169,7 +4278,7 @@ inline void MysqlInsertResponse::set_insert_id(::PROTOBUF_NAMESPACE_ID::uint64 v
   // @@protoc_insertion_point(field_set:mysql_proxy_msg.MysqlInsertResponse.insert_id)
 }
 
-// string sql_statement = 5;
+// bytes sql_statement = 5;
 inline void MysqlInsertResponse::clear_sql_statement() {
   sql_statement_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -4204,7 +4313,7 @@ inline void MysqlInsertResponse::set_sql_statement(const char* value) {
   sql_statement_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:mysql_proxy_msg.MysqlInsertResponse.sql_statement)
 }
-inline void MysqlInsertResponse::set_sql_statement(const char* value, size_t size) {
+inline void MysqlInsertResponse::set_sql_statement(const void* value, size_t size) {
   
   sql_statement_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
