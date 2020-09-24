@@ -17,8 +17,8 @@ namespace APie {
 	public:
 		PACKED_STRUCT(struct db_fields {
 			uint64_t user_id;
-			uint64_t game_id;
-			uint32_t level;
+			uint64_t game_id = 1;
+			uint32_t level = 2;
 			uint64_t register_time = 1;
 			uint64_t login_time = 2;
 			uint64_t offline_time = 3;
@@ -31,9 +31,9 @@ namespace APie {
 			std::string global_mails_info;
 			std::string treasure_info;
 			std::string feats_info;
-			std::string small_value;
-			uint8_t small_int;
-			uint8_t small_int1;
+			std::string small_value = "2020-09-23 17:24:20";
+			uint8_t small_int = 1;
+			uint8_t small_int1 = 2;
 		});
 
 		virtual void* blockAddress() override

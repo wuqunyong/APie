@@ -100,6 +100,37 @@ mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 	return queryRequest;
 }
 
+mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
+{
+	mysql_proxy_msg::MysqlInsertRequest insertRequest;
+	insertRequest.set_db_name(m_table.getDb());
+	insertRequest.set_table_name(m_table.getTable());
+
+	for (auto& items : m_table.getFields())
+	{
+		auto ptrAdd = insertRequest.add_fields();
+
+		std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+		if (!field.has_value())
+		{
+			std::stringstream ss;
+			ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+			throw std::invalid_argument(ss.str());
+		}
+		ptrAdd->set_index(items.getIndex());
+		*ptrAdd->mutable_value() = field.value();
+	}
+
+	if (insertRequest.fields_size() == 0)
+	{
+		std::stringstream ss;
+		ss << "invalidInsert|table:" << m_table.getTable() << "|fieldSize:" << insertRequest.fields_size();
+		throw std::invalid_argument(ss.str());
+	}
+
+	return insertRequest;
+}
+
 bool DeclarativeBase::checkInvalid()
 {
 	if (m_table.getFields().size() != this->columNums())
@@ -734,9 +765,35 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	{
 	case ::mysql_proxy_msg::MSVT_INT32:
 	{
-		uint32_t fieldValue = 0;
-		this->extract(fieldValue, fieldAddress);
-		value.set_int32_v(fieldValue);
+		auto dbType = m_table.getFields()[index].convertToDbType();
+		switch (dbType)
+		{
+		case MysqlField::DB_FIELD_TYPE::T_INT8:
+		{
+			int8_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_int32_v(fieldValue);
+			break;
+		}
+		case MysqlField::DB_FIELD_TYPE::T_INT16:
+		{
+			int16_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_int32_v(fieldValue);
+			break;
+		}
+		case MysqlField::DB_FIELD_TYPE::T_INT32:
+		{
+			int32_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_int32_v(fieldValue);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_INT64:
@@ -748,9 +805,35 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	}
 	case ::mysql_proxy_msg::MSVT_UINT32:
 	{
-		uint32_t fieldValue = 0;
-		this->extract(fieldValue, fieldAddress);
-		value.set_uint32_v(fieldValue);
+		auto dbType = m_table.getFields()[index].convertToDbType();
+		switch (dbType)
+		{
+		case MysqlField::DB_FIELD_TYPE::T_UINT8:
+		{
+			uint8_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_uint32_v(fieldValue);
+			break;
+		}
+		case MysqlField::DB_FIELD_TYPE::T_UINT16:
+		{
+			uint16_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_uint32_v(fieldValue);
+			break;
+		}
+		case MysqlField::DB_FIELD_TYPE::T_UINT32:
+		{
+			uint32_t fieldValue = 0;
+			this->extract(fieldValue, fieldAddress);
+			value.set_uint32_v(fieldValue);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
 		break;
 	}
 	case ::mysql_proxy_msg::MSVT_UINT64:

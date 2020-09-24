@@ -58,6 +58,8 @@ std::optional<std::string> MysqlTable::getNameByIndex(uint32_t index)
 
 bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql)
 {
+	const std::string graveAccent("`");
+
 	std::stringstream ss;
 	ss << "SELECT ";
 
@@ -67,7 +69,7 @@ bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& qu
 	for (auto &items : m_fields)
 	{
 		iIndex++;
-		ss << "`" << items.getName() << "`";
+		ss << graveAccent << items.getName() << graveAccent;
 
 		if (iIndex < iTotalSize)
 		{
@@ -104,7 +106,7 @@ bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& qu
 			sql = errorInfo.str();
 			return false;
 		}
-		ss << "`" << optName.value() << "`" << "=" << " ";
+		ss << graveAccent << optName.value() << graveAccent << "=" << " ";
 		ss << DeclarativeBase::toString(items.value());
 	}
 
@@ -116,6 +118,64 @@ bool MysqlTable::generateQuerySQL(const ::mysql_proxy_msg::MysqlQueryRequest& qu
 
 		return false;
 	}
+
+	sql = ss.str();
+	return true;
+}
+
+
+bool MysqlTable::generateInsertSQL(const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
+{
+	const std::string graveAccent("`");
+	const std::string quote("'");
+
+	if (m_fields.size() != query.fields_size())
+	{
+		std::stringstream ss;
+		ss << "fieldSize not equal|fields:" << m_fields.size() << "|insertFieldSize:" << query.fields_size();
+		sql = ss.str();
+		return false;
+	}
+
+	std::stringstream ss;
+	ss << "INSERT INTO " << graveAccent << query.table_name() << graveAccent << " (";
+
+	uint32_t iTotalSize = m_fields.size();
+
+	uint32_t iIndex = 0;
+	for (auto &items : m_fields)
+	{
+		iIndex++;
+		ss << graveAccent << items.getName() << graveAccent;
+
+		if (iIndex < iTotalSize)
+		{
+			ss << ",";
+		}
+		else
+		{
+			ss << "";
+		}
+	}
+
+	ss << " ) VALUES (" ;
+
+	iTotalSize = query.fields_size();
+	iIndex = 0;
+	for (auto& items : query.fields())
+	{
+		iIndex++;
+		ss << DeclarativeBase::toString(items.value());
+		if (iIndex < iTotalSize)
+		{
+			ss << ",";
+		}
+		else
+		{
+			ss << "";
+		}
+	}
+	ss << ")";
 
 	sql = ss.str();
 	return true;

@@ -44,6 +44,8 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 
 void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
 {
+	static std::map<std::string, MysqlTable> loadedTable;
+
 	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
 	if (command.cmd() == "mysql_desc")
 	{
@@ -53,17 +55,23 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			return;
 		}
 
+		std::string tableName;
 		for (const auto& name : command.params())
 		{
 			auto ptrAdd = args.add_names();
 			*ptrAdd = name;
+
+			if (tableName.empty())
+			{
+				tableName = name;
+			}
 		}
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
 		server.set_id(1);
 
-		auto rpcCB = [](const rpc_msg::STATUS& status, const std::string& replyData)
+		auto rpcCB = [tableName](const rpc_msg::STATUS& status, const std::string& replyData)
 		{
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
@@ -82,11 +90,15 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 
 			ModelUser user;
 
-			auto roleDesc = (*response.mutable_tables())["role_base_copy"];
+			auto roleDesc = (*response.mutable_tables())[tableName];
 			MysqlTable table;
 			table = DeclarativeBase::convertFrom(roleDesc);
 			user.initMetaData(table);
 			bool bResult = user.checkInvalid();
+			if (bResult)
+			{
+				loadedTable[tableName] = table;
+			}
 
 			user.fields.user_id = 200;
 
@@ -119,6 +131,57 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 		};
 		APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
+	}
+	else if (command.cmd() == "mysql_insert")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		std::string tableName = command.params()[0];
+		uint64_t userId = std::stoull(command.params()[1]);
+
+		auto findIte = loadedTable.find(tableName);
+		if (findIte == loadedTable.end())
+		{
+			return;
+		}
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		user.initMetaData(findIte->second);
+		bool bResult = user.checkInvalid();
+		if (!bResult)
+		{
+			return;
+		}
+
+		mysql_proxy_msg::MysqlInsertRequest insertRequest = user.generateInsert();
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto insertCB = [user](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+		{
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+
+			::mysql_proxy_msg::MysqlInsertResponse response;
+			if (!response.ParseFromString(replyData))
+			{
+				return;
+			}
+
+			std::stringstream ss;
+			ss << response.ShortDebugString();
+			ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+		};
+		APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 	}
 }
 

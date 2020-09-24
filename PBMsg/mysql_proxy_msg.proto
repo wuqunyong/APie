@@ -98,4 +98,21 @@ message MysqlQueryResponse
 	bool result = 1;
 	string error_info = 2;
 	MysqlTable table = 3;
+	string sql_statement = 4;
+}
+
+message MysqlInsertRequest
+{
+	string db_name = 1;
+	string table_name = 2;
+	repeated MysqlField fields = 3;
+}
+
+message MysqlInsertResponse
+{
+	bool result = 1;
+	string error_info = 2;
+	uint64 affected_rows = 3;
+	uint64 insert_id = 4;
+	string sql_statement = 5;
 }

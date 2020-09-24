@@ -9,6 +9,7 @@ void DBProxyMgr::init()
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
 }
 
 void DBProxyMgr::start()
@@ -95,7 +96,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 
 	std::string sSQL;
 	bool bResult = sharedTable->generateQuerySQL(request, sSQL);
-
+	response.set_sql_statement(sSQL);
 	if (!bResult)
 	{
 		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
@@ -113,8 +114,51 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 	response.set_result(bResult);
 	if (!bResult)
 	{
-		response.set_error_info(sSQL);
+		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
 	}
+	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+}
+
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlInsert(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+{
+	::mysql_proxy_msg::MysqlInsertResponse response;
+
+	::mysql_proxy_msg::MysqlInsertRequest request;
+	if (!request.ParseFromString(args))
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
+	if (sharedTable == nullptr)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	std::string sSQL;
+	bool bResult = sharedTable->generateInsertSQL(request, sSQL);
+	response.set_sql_statement(sSQL);
+	if (!bResult)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+	}
+
+	std::shared_ptr<ResultSet> recordSet;
+	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
+	response.set_result(bResult);
+	if (!bResult)
+	{
+		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+	}
+	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+	response.set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
+
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 

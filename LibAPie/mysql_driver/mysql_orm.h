@@ -66,6 +66,7 @@ public:
 	void markDirty(const std::vector<uint8_t>& index);
 
 	mysql_proxy_msg::MysqlQueryRequest generateQuery();
+	mysql_proxy_msg::MysqlInsertRequest generateInsert();
 
 public:
 	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
