@@ -183,6 +183,58 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 	}
+	else if (command.cmd() == "mysql_update")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		std::string tableName = command.params()[0];
+		uint64_t userId = std::stoull(command.params()[1]);
+
+		auto findIte = loadedTable.find(tableName);
+		if (findIte == loadedTable.end())
+		{
+			return;
+		}
+
+		//ModelUser user;
+		loadedUser.fields.user_id = userId;
+		loadedUser.initMetaData(findIte->second);
+		bool bResult = loadedUser.checkInvalid();
+		if (!bResult)
+		{
+			return;
+		}
+
+		loadedUser.dirtySet();
+		mysql_proxy_msg::MysqlUpdateRequest insertRequest = loadedUser.generateUpdate();
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+		{
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+
+			::mysql_proxy_msg::MysqlUpdateResponse response;
+			if (!response.ParseFromString(replyData))
+			{
+				return;
+			}
+
+			std::stringstream ss;
+			ss << response.ShortDebugString();
+			ASYNC_PIE_LOG("mysql_update", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+		};
+		APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, insertRequest, insertCB);
+	}
 }
 
 }

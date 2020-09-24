@@ -131,6 +131,61 @@ mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 	return insertRequest;
 }
 
+mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
+{
+	mysql_proxy_msg::MysqlUpdateRequest updateRequest;
+	updateRequest.set_db_name(m_table.getDb());
+	updateRequest.set_table_name(m_table.getTable());
+
+	for (auto& items : m_table.getFields())
+	{
+		if (!isDirty(items.getIndex()))
+		{
+			continue;
+		}
+
+		auto ptrAdd = updateRequest.add_fields();
+
+		std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+		if (!field.has_value())
+		{
+			std::stringstream ss;
+			ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+			throw std::invalid_argument(ss.str());
+		}
+		ptrAdd->set_index(items.getIndex());
+		*ptrAdd->mutable_value() = field.value();
+	}
+
+	if (updateRequest.fields_size() == 0)
+	{
+		std::stringstream ss;
+		ss << "invalidUpdate|table:" << m_table.getTable() << "|fieldSize:" << updateRequest.fields_size();
+		throw std::invalid_argument(ss.str());
+	}
+
+	for (auto& items : m_table.getFields())
+	{
+		bool bResult = items.is_primary_key();
+		if (bResult)
+		{
+			auto ptrAdd = updateRequest.add_primary_key();
+
+			std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+			if (!field.has_value())
+			{
+				std::stringstream ss;
+				ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+				throw std::invalid_argument(ss.str());
+			}
+			ptrAdd->set_index(items.getIndex());
+			*ptrAdd->mutable_value() = field.value();
+		}
+	}
+
+	return updateRequest;
+}
+
 bool DeclarativeBase::checkInvalid()
 {
 	if (m_table.getFields().size() != this->columNums())
@@ -903,6 +958,27 @@ void DeclarativeBase::markDirty(const std::vector<uint8_t>& index)
 		}
 	}
 }
+
+bool DeclarativeBase::isDirty(uint8_t index)
+{
+	if (index >= m_dirtyFlags.size())
+	{
+		return false;
+	}
+
+	return m_dirtyFlags.test(index);
+}
+
+void DeclarativeBase::dirtySet()
+{
+	m_dirtyFlags.set();
+}
+
+void DeclarativeBase::dirtyReset()
+{
+	m_dirtyFlags.reset();
+}
+
 
 MysqlTable DeclarativeBase::convertFrom(::mysql_proxy_msg::MysqlDescTable& desc)
 {

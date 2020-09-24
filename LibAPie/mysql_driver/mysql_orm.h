@@ -66,9 +66,13 @@ public:
 
 	std::string query(MySQLConnector& connector);
 	void markDirty(const std::vector<uint8_t>& index);
+	bool isDirty(uint8_t index);
+	void dirtySet();
+	void dirtyReset();
 
 	mysql_proxy_msg::MysqlQueryRequest generateQuery();
 	mysql_proxy_msg::MysqlInsertRequest generateInsert();
+	mysql_proxy_msg::MysqlUpdateRequest generateUpdate();
 
 public:
 	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);

@@ -118,3 +118,20 @@ message MysqlInsertResponse
 	uint64 insert_id = 4;
 	bytes sql_statement = 5;
 }
+
+message MysqlUpdateRequest
+{
+	string db_name = 1;
+	string table_name = 2;
+	repeated MysqlField fields = 3;
+	repeated MysqlField primary_key = 4;
+}
+
+message MysqlUpdateResponse
+{
+	bool result = 1;
+	bytes error_info = 2;
+	uint64 affected_rows = 3;
+	uint64 insert_id = 4;
+	bytes sql_statement = 5;
+}

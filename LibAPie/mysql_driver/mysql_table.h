@@ -32,6 +32,7 @@ public:
 
 	bool generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequest& query, std::string& sql);
 	bool generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql);
+	bool generateUpdateSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlUpdateRequest& query, std::string& sql);
 
 private:
 	std::string m_db;

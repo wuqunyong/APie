@@ -100,21 +100,18 @@ bool MysqlTable::generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy
 		auto optName = this->getNameByIndex(items.index());
 		if (!optName.has_value())
 		{
-			std::stringstream errorInfo;
-			errorInfo << "invalidName|table:" << m_table << "|index:" << items.index();
+			ss << "invalidName|table:" << m_table << "|index:" << items.index();
 
-			sql = errorInfo.str();
+			sql = ss.str();
 			return false;
 		}
-		ss << graveAccent << optName.value() << graveAccent << "=" << " ";
-		ss << DeclarativeBase::toString(connector, items.value());
+		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
 	}
 
 	if (bFirst)
 	{
-		std::stringstream errorInfo;
-		errorInfo << "no primary";
-		sql = errorInfo.str();
+		ss << "error|no primary";
+		sql = ss.str();
 
 		return false;
 	}
@@ -127,7 +124,6 @@ bool MysqlTable::generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy
 bool MysqlTable::generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");
-	const std::string quote("'");
 
 	if (m_fields.size() != query.fields_size())
 	{
@@ -176,6 +172,79 @@ bool MysqlTable::generateInsertSQL(MySQLConnector& connector, const ::mysql_prox
 		}
 	}
 	ss << ")";
+
+	sql = ss.str();
+	return true;
+}
+
+bool MysqlTable::generateUpdateSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlUpdateRequest& query, std::string& sql)
+{
+	const std::string graveAccent("`");
+
+	std::stringstream ss;
+	ss << "UPDATE " << graveAccent << query.table_name() << graveAccent << " SET ";
+
+	uint32_t iTotalSize = query.fields().size();
+
+	uint32_t iIndex = 0;
+	for (auto &items : query.fields())
+	{
+		iIndex++;
+
+		std::string fieldName;
+		auto optName = this->getNameByIndex(items.index());
+		if (!optName.has_value())
+		{
+			ss << "error|table:" << m_table << "|index:" << items.index();
+
+			sql = ss.str();
+			return false;
+		}
+		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
+
+		if (iIndex < iTotalSize)
+		{
+			ss << ",";
+		}
+		else
+		{
+			ss << "";
+		}
+	}
+	ss << " WHERE (";
+
+	bool bFirst = true;
+	for (auto& items : query.primary_key())
+	{
+		if (bFirst)
+		{
+			bFirst = false;
+		}
+		else
+		{
+			ss << " AND ";
+		}
+
+		std::string fieldName;
+		auto optName = this->getNameByIndex(items.index());
+		if (!optName.has_value())
+		{
+			ss << "error|table:" << m_table << "|index:" << items.index();
+
+			sql = ss.str();
+			return false;
+		}
+		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
+	}
+	ss << ")";
+
+	if (bFirst)
+	{
+		ss << "error|no primary";
+		sql = ss.str();
+
+		return false;
+	}
 
 	sql = ss.str();
 	return true;
