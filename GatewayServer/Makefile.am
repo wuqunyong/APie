@@ -14,7 +14,8 @@ apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/
 gateway_server_sources = \
 	$(top_srcdir)/SceneServer/main.cpp \
 	$(top_srcdir)/SceneServer/service_init.cpp \
-	$(top_srcdir)/SceneServer/logic/gateway_mgr.cpp 
+	$(top_srcdir)/SceneServer/logic/gateway_mgr.cpp \
+	$(top_srcdir)/SceneServer/logic/model_user.cpp
 
 bin_PROGRAMS = gateway_server
 
