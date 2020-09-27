@@ -11,7 +11,7 @@ INCLUDES = -I /usr/local/include \
 			
 apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
-gateway_server_sources = \
+db_proxy_sources = \
 	$(top_srcdir)/DBProxy/main.cpp \
 	$(top_srcdir)/DBProxy/service_init.cpp \
 	$(top_srcdir)/DBProxy/logic/dbproxy_mgr.cpp \
@@ -20,6 +20,6 @@ gateway_server_sources = \
 
 bin_PROGRAMS = db_proxy_server
 
-scene_server_SOURCES = $(gateway_server_sources)
+scene_server_SOURCES = $(db_proxy_sources)
 scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
 scene_server_LDFLAGS = $(apie_module_ldflags)
