@@ -12,10 +12,10 @@ INCLUDES = -I /usr/local/include \
 apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
 gateway_server_sources = \
-	$(top_srcdir)/SceneServer/main.cpp \
-	$(top_srcdir)/SceneServer/service_init.cpp \
-	$(top_srcdir)/SceneServer/logic/gateway_mgr.cpp \
-	$(top_srcdir)/SceneServer/logic/model_user.cpp
+	$(top_srcdir)/GatewayServer/main.cpp \
+	$(top_srcdir)/GatewayServer/service_init.cpp \
+	$(top_srcdir)/GatewayServer/logic/gateway_mgr.cpp \
+	$(top_srcdir)/GatewayServer/logic/model_user.cpp
 
 bin_PROGRAMS = gateway_server
 
