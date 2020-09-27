@@ -18,6 +18,6 @@ login_server_sources = \
 
 bin_PROGRAMS = login_server
 
-scene_server_SOURCES = $(login_server_sources)
-scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-scene_server_LDFLAGS = $(apie_module_ldflags)
+login_server_SOURCES = $(login_server_sources)
+login_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+login_server_LDFLAGS = $(apie_module_ldflags)

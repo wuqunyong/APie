@@ -19,6 +19,6 @@ gateway_server_sources = \
 
 bin_PROGRAMS = gateway_server
 
-scene_server_SOURCES = $(gateway_server_sources)
-scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
-scene_server_LDFLAGS = $(apie_module_ldflags)
+gateway_server_SOURCES = $(gateway_server_sources)
+gateway_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
+gateway_server_LDFLAGS = $(apie_module_ldflags)
