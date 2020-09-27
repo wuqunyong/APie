@@ -35,4 +35,73 @@ make install
 ldconfig
 ```
 ### 安装yaml
+```shell
 unzip yaml-cpp-master.zip
+cd yaml-cpp-master
+mkdir build
+cd build
+cmake ..
+make
+make test
+make install
+```
+
+## 编译
+```shell
+./bootstrap.sh
+./configure
+make rpm
+```
+
+## Demo
+```cpp
+#include <cstdlib>
+#include <string>
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <tuple>
+
+#include "apie.h"
+
+#include "service_init.h"
+
+std::tuple<uint32_t, std::string> initHook()
+{
+	//TODO
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
+
+std::tuple<uint32_t, std::string> startHook()
+{
+	//TODO
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
+
+std::tuple<uint32_t, std::string> exitHook()
+{
+	//TODO
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
+
+int main(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		fatalExit("usage: exe <ConfFile>");
+	}
+
+	std::string configFile = argv[1];
+
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Exit, exitHook);
+
+	APie::CtxSingleton::get().init(configFile);
+	APie::CtxSingleton::get().start();
+	APie::CtxSingleton::get().waitForShutdown();
+
+    return 0;
+}
+```
