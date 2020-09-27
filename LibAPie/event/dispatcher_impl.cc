@@ -456,6 +456,14 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
 	bufferevent_enable(bev, EV_READ | EV_WRITE);
 
+	struct timeval tv_read;
+	tv_read.tv_sec = 600;
+	tv_read.tv_usec = 0;
+	struct timeval tv_write;
+	tv_write.tv_sec = 600;
+	tv_write.tv_usec = 0;
+	bufferevent_set_timeouts(bev, &tv_read, &tv_write);
+
 	DispatcherImpl::addConnection(ptrConnection);
 }
 
