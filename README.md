@@ -53,6 +53,15 @@ make install
 make rpm
 ```
 
+## 生成rpm包
+apie-1.0.0-1.x86_64.rpm
+apie-debuginfo-1.0.0-1.x86_64.rpm
+
+## 安装rpm包
+```shell
+rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
+```
+
 ## Demo
 ```cpp
 #include <cstdlib>
@@ -64,6 +73,8 @@ make rpm
 #include <tuple>
 
 #include "apie.h"
+
+#include "service_init.h"
 
 std::tuple<uint32_t, std::string> initHook()
 {
