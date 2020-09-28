@@ -531,39 +531,79 @@ void Ctx::waitForShutdown()
 		}
 	}
 #else
-	int actualSignal = 0;
-	int errCount = 0;
-	bool quitFlag = false;
-
-	pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "handleSigWait");
-
-	while (!quitFlag)
+	bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({ "daemon" }, true);
+	if (bDaemon)
 	{
-		int status = sigwait(&g_SigSet, &actualSignal);
-		if (status != 0)
+		int actualSignal = 0;
+		int errCount = 0;
+		bool quitFlag = false;
+
+		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "handleSigWait");
+
+		while (!quitFlag)
 		{
-			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error %d from sigwait", status);
-			if (errCount++ > 5)
+			int status = sigwait(&g_SigSet, &actualSignal);
+			if (status != 0)
 			{
-				fatalExit("sigwait error exit");
+				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error %d from sigwait", status);
+				if (errCount++ > 5)
+				{
+					fatalExit("sigwait error exit");
+				}
+				continue;
 			}
-			continue;
+
+			errCount = 0;
+			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Main thread: Got signal %d|%s",
+				actualSignal, strsignal(actualSignal));
+
+			switch (actualSignal) {
+			case SIGQUIT:
+			case SIGTERM:
+			case SIGHUP:
+				quitFlag = true;
+				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+				break;
+			default:
+				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
+				break;
+			}
 		}
+	}
+	else
+	{
+		while (true)
+		{
+			std::cout << std::endl;
 
-		errCount = 0;
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Main thread: Got signal %d|%s",
-			actualSignal, strsignal(actualSignal));
+			std::cout << ">>>";
+			char mystring[2048] = { '\0' };
+			char answer[2048] = "exit";
+			char* prtGet = fgets(mystring, 2048, stdin);
+			if (prtGet != NULL)
+			{
+				//std::cout << "Input Recv:" << mystring << std::endl;
+				int iResult = strncmp(mystring, answer, 4);
+				if (iResult == 0)
+				{
+					PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+					break;
+				}
 
-		switch (actualSignal) {
-		case SIGQUIT:
-		case SIGTERM:
-		case SIGHUP:
-			quitFlag = true;
-			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
-			break;
-		default:
-			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
-			break;
+				std::string cmd = APie::TrimString(mystring, APie::kWhitespaceASCII);
+				if (cmd.empty())
+				{
+					continue;
+				}
+
+				auto ptrCmd = new LogicCmd;
+				ptrCmd->sCmd = cmd;
+
+				Command command;
+				command.type = Command::logic_cmd;
+				command.args.logic_cmd.ptrData = ptrCmd;
+				APie::CtxSingleton::get().getLogicThread()->push(command);
+			}
 		}
 	}
 #endif

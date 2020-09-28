@@ -54,12 +54,42 @@ make rpm
 ```
 
 ## 生成的rpm包
-apie-1.0.0-1.x86_64.rpm  
+apie-1.0.0-1.x86_64.rpm 
 apie-debuginfo-1.0.0-1.x86_64.rpm
 
 ## 安装rpm包
 ```shell
 rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
+```
+
+## CentOS7 x64安装MySQL
+[# How To Install MySQL on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7)
+In a web browser, visit:
+```
+https://dev.mysql.com/downloads/repo/yum/
+```
+###  Step 1 — Installing MySQL
+```
+wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+md5sum mysql57-community-release-el7-9.noarch.rpm
+rpm -ivh mysql57-community-release-el7-9.noarch.rpm
+yum install mysql-server
+```
+
+### Step 2 — Starting MySQL
+```
+systemctl start mysqld
+systemctl status mysqld
+grep 'temporary password' /var/log/mysqld.log
+```
+
+### Step 3 — Configuring MySQL
+```
+mysql_secure_installation
+```
+### Step 4 — Testing MySQL
+```
+mysqladmin -u root -p version
 ```
 
 ## Demo
