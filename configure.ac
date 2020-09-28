@@ -8,7 +8,7 @@ AC_PREFIX_DEFAULT([/usr/local/apie/])
 AC_CONFIG_SRCDIR([LibAPie/network/ctx.cpp])
 AC_CONFIG_HEADER([config.h])
 
-# CXXFLAGS=${CXXFLAGS--g}
+# CXXFLAGS=${CXXFLAGS--g -O0}
 
 # Checks for programs.
 # AM_PROG_CC_C_O
