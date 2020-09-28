@@ -53,7 +53,7 @@ make install
 make rpm
 ```
 
-## 生成rpm包
+## 生成的rpm包
 apie-1.0.0-1.x86_64.rpm  
 apie-debuginfo-1.0.0-1.x86_64.rpm
 
