@@ -23,11 +23,13 @@
 #include "../../PBMsg/mysql_proxy_msg.pb.h"
 
 
-
+#ifdef _MSC_VER
 #define PACKED_STRUCT(definition, ...)                                                             \
   __pragma(pack(push, 1)) definition, ##__VA_ARGS__;                                               \
   __pragma(pack(pop))
-
+#else
+#define PACKED_STRUCT(definition, ...) definition, ##__VA_ARGS__ __attribute__((packed))
+#endif
 
 class DeclarativeBase
 {
