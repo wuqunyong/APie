@@ -70,6 +70,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/network/signaler.cpp  \
 	$(top_srcdir)/LibAPie/rpc/client/rpc_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/server/rpc_server.cpp  \
+	$(top_srcdir)/LibAPie/rpc/init.cpp  \
 	$(top_srcdir)/LibAPie/serialization/byte_buffer.cpp  \
 	$(top_srcdir)/LibAPie/serialization/protocol_head.cpp
 

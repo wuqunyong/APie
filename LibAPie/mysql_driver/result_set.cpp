@@ -30,7 +30,7 @@ bool ResultSet::MoveNext()
 
 bool ResultSet::operator>> (int8_t& ref_value)
 {
-	return this->Field<int8_t>(ref_value);
+	return this->FieldInt8(ref_value);
 }
 
 bool ResultSet::operator>> (int16_t& ref_value)
@@ -50,7 +50,7 @@ bool ResultSet::operator>> (int64_t& ref_value)
 
 bool ResultSet::operator>> (uint8_t& ref_value)
 {
-	return this->Field<uint8_t>(ref_value);
+	return this->FieldUint8(ref_value);
 }
 
 bool ResultSet::operator>> (uint16_t& ref_value)

@@ -123,8 +123,7 @@ private:
 		return true;
 	};
 
-	template <>
-	bool Field<uint8_t>(uint8_t& ref_value)
+	bool FieldUint8(uint8_t& ref_value)
 	{
 		if ((NULL == this->mysql_rows_) || (this->index_ >= this->num_fields_))
 		{
@@ -152,8 +151,7 @@ private:
 		return true;
 	};
 
-	template <>
-	bool Field<int8_t>(int8_t& ref_value)
+	bool FieldInt8(int8_t& ref_value)
 	{
 		if ((NULL == this->mysql_rows_) || (this->index_ >= this->num_fields_))
 		{

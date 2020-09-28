@@ -107,8 +107,8 @@ Ctx::Ctx() :
 	logic_thread_(nullptr),
 	log_thread_(nullptr),
 	metrics_thread_(nullptr),
-	endpoint_(nullptr),
-	db_thread_(nullptr)
+	db_thread_(nullptr),
+	endpoint_(nullptr)
 {
 
 }

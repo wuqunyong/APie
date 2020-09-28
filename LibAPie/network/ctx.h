@@ -119,7 +119,7 @@ namespace APie
 		YAML::Node node_;
 		std::mutex node_sync_;
 
-		std::shared_ptr<SelfRegistration> endpoint_ = {nullptr};
+		std::shared_ptr<SelfRegistration> endpoint_ = nullptr;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;
