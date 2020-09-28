@@ -54,7 +54,7 @@ make rpm
 ```
 
 ## 生成rpm包
-apie-1.0.0-1.x86_64.rpm
+apie-1.0.0-1.x86_64.rpm  
 apie-debuginfo-1.0.0-1.x86_64.rpm
 
 ## 安装rpm包
