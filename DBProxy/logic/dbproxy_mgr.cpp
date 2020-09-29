@@ -11,6 +11,7 @@ void DBProxyMgr::init()
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
 }
 
 void DBProxyMgr::start()
@@ -218,6 +219,48 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlUpdate(const ::rpc_
 	}
 	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
 	response.set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
+
+	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+}
+
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDelete(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+{
+	::mysql_proxy_msg::MysqlDeleteResponse response;
+
+	::mysql_proxy_msg::MysqlDeleteRequest request;
+	if (!request.ParseFromString(args))
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
+	if (sharedTable == nullptr)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+	}
+
+	std::string sSQL;
+	bool bResult = sharedTable->generateDeleteSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
+	response.set_sql_statement(sSQL);
+	if (!bResult)
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+	}
+
+	std::shared_ptr<ResultSet> recordSet;
+	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
+	response.set_result(bResult);
+	if (!bResult)
+	{
+		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+	}
+	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
 
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }

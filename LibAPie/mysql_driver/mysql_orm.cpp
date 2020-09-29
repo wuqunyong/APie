@@ -186,6 +186,42 @@ mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 	return updateRequest;
 }
 
+mysql_proxy_msg::MysqlDeleteRequest DeclarativeBase::generateDelete()
+{
+	mysql_proxy_msg::MysqlDeleteRequest deleteRequest;
+	deleteRequest.set_db_name(m_table.getDb());
+	deleteRequest.set_table_name(m_table.getTable());
+
+	for (auto& items : m_table.getFields())
+	{
+		bool bResult = items.is_primary_key();
+		if (bResult)
+		{
+			auto ptrAdd = deleteRequest.add_primary_key();
+
+			std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+			if (!field.has_value())
+			{
+				std::stringstream ss;
+				ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+				throw std::invalid_argument(ss.str());
+			}
+			ptrAdd->set_index(items.getIndex());
+			*ptrAdd->mutable_value() = field.value();
+		}
+	}
+
+	if (deleteRequest.primary_key_size() <= 0)
+	{
+		std::stringstream ss;
+		ss << "invalid primary key size|size:" << deleteRequest.primary_key_size();
+		throw std::invalid_argument(ss.str());
+	}
+
+	return deleteRequest;
+}
+
+
 bool DeclarativeBase::checkInvalid()
 {
 	if (m_table.getFields().size() != this->columNums())

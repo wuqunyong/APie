@@ -249,3 +249,47 @@ bool MysqlTable::generateUpdateSQL(MySQLConnector& connector, const ::mysql_prox
 	sql = ss.str();
 	return true;
 }
+
+bool MysqlTable::generateDeleteSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlDeleteRequest& query, std::string& sql)
+{
+	const std::string graveAccent("`");
+
+	std::stringstream ss;
+	ss << "DELETE FROM " << graveAccent << query.table_name() << graveAccent << " WHERE(";
+
+	bool bFirst = true;
+	for (auto& items : query.primary_key())
+	{
+		if (bFirst)
+		{
+			bFirst = false;
+		}
+		else
+		{
+			ss << " AND ";
+		}
+
+		std::string fieldName;
+		auto optName = this->getNameByIndex(items.index());
+		if (!optName.has_value())
+		{
+			ss << "error|table:" << m_table << "|index:" << items.index();
+
+			sql = ss.str();
+			return false;
+		}
+		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
+	}
+	ss << ")";
+
+	if (bFirst)
+	{
+		ss << "error|no primary";
+		sql = ss.str();
+
+		return false;
+	}
+
+	sql = ss.str();
+	return true;
+}

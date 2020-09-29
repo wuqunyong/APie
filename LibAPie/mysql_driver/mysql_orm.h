@@ -79,6 +79,7 @@ public:
 	mysql_proxy_msg::MysqlQueryRequest generateQuery();
 	mysql_proxy_msg::MysqlInsertRequest generateInsert();
 	mysql_proxy_msg::MysqlUpdateRequest generateUpdate();
+	mysql_proxy_msg::MysqlDeleteRequest generateDelete();
 
 public:
 	static std::string toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value);
