@@ -38,7 +38,7 @@ class DeclarativeBase
 {
 public:
 
-	virtual uint32_t blockSize() = 0;
+	//virtual uint32_t blockSize() = 0;
 	virtual void* blockAddress() = 0;
 	virtual std::vector<uint32_t> layoutOffset() = 0;
 	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() = 0;

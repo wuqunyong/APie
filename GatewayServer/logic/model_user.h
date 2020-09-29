@@ -41,11 +41,6 @@ namespace APie {
 			return &fields;
 		}
 
-		virtual uint32_t blockSize() override
-		{
-			return sizeof(fields);
-		}
-
 		virtual std::vector<uint32_t> layoutOffset() override
 		{
 			std::vector<uint32_t> layout = {

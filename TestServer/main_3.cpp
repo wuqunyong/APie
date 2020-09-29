@@ -40,10 +40,10 @@ public:
 		return &fields;
 	}
 
-	virtual uint32_t blockSize() override
-	{
-		return sizeof(fields);
-	}
+	//virtual uint32_t blockSize() override
+	//{
+	//	return sizeof(fields);
+	//}
 
 	virtual std::vector<uint32_t> layoutOffset() override
 	{
