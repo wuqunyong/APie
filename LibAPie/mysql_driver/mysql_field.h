@@ -10,10 +10,12 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <type_traits>
 
 #include <mysql.h>
 
 #include "../../PBMsg/mysql_proxy_msg.pb.h"
+
 
 class MysqlField
 {
@@ -111,3 +113,57 @@ private:
 	::mysql_proxy_msg::MysqlValue m_value;
 };
 
+
+
+template <typename T>
+std::set<MysqlField::DB_FIELD_TYPE> get_field_type(T t)
+{
+	std::set<MysqlField::DB_FIELD_TYPE> result;
+	if constexpr (std::is_same<T, int8_t>::value) 
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_INT8);
+	}
+	else if constexpr (std::is_same<T, int16_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_INT16);
+	}
+	else if constexpr (std::is_same<T, int32_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_INT32);
+	}
+	else if constexpr (std::is_same<T, int64_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_INT64);
+	}
+	else if constexpr (std::is_same<T, uint8_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_UINT8);
+	}
+	else if constexpr (std::is_same<T, uint16_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_UINT16);
+	}
+	else if constexpr (std::is_same<T, uint32_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_UINT32);
+	}
+	else if constexpr (std::is_same<T, uint64_t>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_UINT64);
+	}
+	else if constexpr (std::is_same<T, float>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_FLOAT);
+	}
+	else if constexpr (std::is_same<T, double>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_DOUBLE);
+	}
+	else if constexpr (std::is_same<T, std::string>::value)
+	{
+		result.insert(MysqlField::DB_FIELD_TYPE::T_STRING);
+		result.insert(MysqlField::DB_FIELD_TYPE::T_BYTES);
+	}
+
+	return result;
+}

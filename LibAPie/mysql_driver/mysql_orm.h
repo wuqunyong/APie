@@ -28,8 +28,11 @@
   __pragma(pack(push, 1)) definition, ##__VA_ARGS__;                                               \
   __pragma(pack(pop))
 #else
-#define PACKED_STRUCT(definition, ...) definition, ##__VA_ARGS__ __attribute__((packed))
+#define PACKED_STRUCT(definition, ...) definition, ##__VA_ARGS__
 #endif
+
+
+//#define PACKED_STRUCT(definition, ...) definition, ##__VA_ARGS__ __attribute__((packed))
 
 class DeclarativeBase
 {
@@ -37,7 +40,8 @@ public:
 
 	virtual uint32_t blockSize() = 0;
 	virtual void* blockAddress() = 0;
-	virtual std::vector<uint32_t> layoutInfo() = 0;
+	virtual std::vector<uint32_t> layoutOffset() = 0;
+	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() = 0;
 
 	bool initMetaData(MysqlTable& table);
 
@@ -63,7 +67,7 @@ public:
 	bool checkInvalid();
 
 	size_t columNums();
-	uint32_t fieldOffset(uint32_t index);
+	uint32_t getLayoutOffset(uint32_t index);
 	uint32_t fieldSize(uint32_t index);
 
 	std::string query(MySQLConnector& connector);

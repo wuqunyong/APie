@@ -19,9 +19,9 @@ namespace APie {
 			uint64_t user_id;
 			uint64_t game_id = 1;
 			uint32_t level = 2;
-			uint64_t register_time = 1;
-			uint64_t login_time = 2;
-			uint64_t offline_time = 3;
+			int64_t register_time = 1;
+			int64_t login_time = 2;
+			int64_t offline_time = 3;
 			std::string name = "hello";
 			std::string role_info;
 			std::string magic_slot_info;
@@ -32,8 +32,8 @@ namespace APie {
 			std::string treasure_info;
 			std::string feats_info;
 			std::string small_value = "2020-09-23 17:24:20";
-			uint8_t small_int = 98;
-			uint8_t small_int1 = 123;
+			int8_t small_int = 98;
+			int8_t small_int1 = 123;
 		});
 
 		virtual void* blockAddress() override
@@ -46,7 +46,7 @@ namespace APie {
 			return sizeof(fields);
 		}
 
-		virtual std::vector<uint32_t> layoutInfo() override
+		virtual std::vector<uint32_t> layoutOffset() override
 		{
 			std::vector<uint32_t> layout = {
 				offsetof(db_fields, user_id),
@@ -67,6 +67,32 @@ namespace APie {
 				offsetof(db_fields, small_value),
 				offsetof(db_fields, small_int),
 				offsetof(db_fields, small_int1),
+			};
+
+			return layout;
+		}
+
+		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
+		{
+			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
+				get_field_type(fields.user_id),
+				get_field_type(fields.game_id),
+				get_field_type(fields.level),
+				get_field_type(fields.register_time),
+				get_field_type(fields.login_time),
+				get_field_type(fields.offline_time),
+				get_field_type(fields.name),
+				get_field_type(fields.role_info),
+				get_field_type(fields.magic_slot_info),
+				get_field_type(fields.magic_info),
+				get_field_type(fields.guild_quest),
+				get_field_type(fields.match_info),
+				get_field_type(fields.global_mails_info),
+				get_field_type(fields.treasure_info),
+				get_field_type(fields.feats_info),
+				get_field_type(fields.small_value),
+				get_field_type(fields.small_int),
+				get_field_type(fields.small_int1)
 			};
 
 			return layout;

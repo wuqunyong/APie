@@ -30,7 +30,7 @@ metrics:
   udp_port: 8089
 mysql:
   enable: true
-  host: "127.0.0.1"
+  host: "139.180.147.104"
   port: 3306
   user: "root"
   passwd: ";JliVosg*54&"

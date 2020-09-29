@@ -21,9 +21,9 @@ public:
 		uint64_t user_id;
 		uint64_t game_id;
 		uint32_t level;
-		uint64_t register_time;
-		uint64_t login_time;
-		uint64_t offline_time;
+		int64_t register_time;
+		int64_t login_time;
+		int64_t offline_time;
 		std::string name;
 		std::string role_info;
 		std::string magic_slot_info;
@@ -45,7 +45,7 @@ public:
 		return sizeof(fields);
 	}
 
-	virtual std::vector<uint32_t> layoutInfo() override
+	virtual std::vector<uint32_t> layoutOffset() override
 	{
 		std::vector<uint32_t> layout = {
 			offsetof(db_fields, user_id),
@@ -62,7 +62,30 @@ public:
 			offsetof(db_fields, match_info),
 			offsetof(db_fields, global_mails_info),
 			offsetof(db_fields, treasure_info),
-			offsetof(db_fields, feats_info),
+			offsetof(db_fields, feats_info)
+		};
+
+		return layout;
+	}
+
+	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
+	{
+		std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
+			get_field_type(fields.user_id),
+			get_field_type(fields.game_id),
+			get_field_type(fields.level),
+			get_field_type(fields.register_time),
+			get_field_type(fields.login_time),
+			get_field_type(fields.offline_time),
+			get_field_type(fields.name),
+			get_field_type(fields.role_info),
+			get_field_type(fields.magic_slot_info),
+			get_field_type(fields.magic_info),
+			get_field_type(fields.guild_quest),
+			get_field_type(fields.match_info),
+			get_field_type(fields.global_mails_info),
+			get_field_type(fields.treasure_info),
+			get_field_type(fields.feats_info)
 		};
 
 		return layout;
@@ -140,7 +163,7 @@ int main()
 		auto field1 = data.getValueByIndex(0);
 		auto field2 = data.getValueByIndex(1);
 		auto field3 = data.getValueByIndex(2);
-		auto layout = data.layoutInfo();
+		auto layout = data.layoutOffset();
 	}
 
 

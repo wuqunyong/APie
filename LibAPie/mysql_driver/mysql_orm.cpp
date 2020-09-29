@@ -193,19 +193,25 @@ bool DeclarativeBase::checkInvalid()
 		return false;
 	}
 
-	uint32_t iBlockSize = 0;
-	for (auto& items : m_table.getFields())
-	{
-		auto iSize = items.getSize();
-		iBlockSize += iSize;
-	}
-
-	if (iBlockSize != this->blockSize())
+	if (m_table.getFields().size() != this->layoutType().size())
 	{
 		return false;
 	}
 
-	auto layout = this->layoutInfo();
+
+	//uint32_t iBlockSize = 0;
+	//for (auto& items : m_table.getFields())
+	//{
+	//	auto iSize = items.getSize();
+	//	iBlockSize += iSize;
+	//}
+
+	//if (iBlockSize != this->blockSize())
+	//{
+	//	return false;
+	//}
+
+	auto layout = this->layoutType();
 	if (layout.size() != m_table.getFields().size())
 	{
 		return false;
@@ -214,7 +220,13 @@ bool DeclarativeBase::checkInvalid()
 	uint32_t iIndex = 0;
 	for (auto& items : m_table.getFields())
 	{
-		if (items.getOffset() != layout[iIndex])
+		if (items.getIndex() != iIndex)
+		{
+			return false;
+		}
+
+		auto dbType = items.convertToDbType();
+		if (layout[iIndex].count(dbType) == 0)
 		{
 			return false;
 		}
@@ -226,19 +238,19 @@ bool DeclarativeBase::checkInvalid()
 
 size_t DeclarativeBase::columNums()
 {
-	return this->layoutInfo().size();
+	return this->layoutOffset().size();
 }
 
-uint32_t DeclarativeBase::fieldOffset(uint32_t index)
+uint32_t DeclarativeBase::getLayoutOffset(uint32_t index)
 {
-	if (index >= m_table.getFields().size())
+	if (index >= this->layoutOffset().size())
 	{
 		std::stringstream ss;
-		ss << "index:" << index << " > size:" << m_table.getFields().size();
+		ss << "index:" << index << " > size:" << this->layoutOffset().size();
 		throw std::out_of_range(ss.str().c_str());
 	}
 
-	return m_table.getFields()[index].getOffset();
+	return this->layoutOffset()[index];
 }
 
 uint32_t DeclarativeBase::fieldSize(uint32_t index)
@@ -553,7 +565,7 @@ bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 		for (auto &items : m_table.getFields())
 		{
 			void* address = blockAddress();
-			uint32_t iOffset = this->fieldOffset(iIndex);
+			uint32_t iOffset = this->getLayoutOffset(iIndex);
 
 			switch (items.convertToDbType())
 			{
@@ -699,7 +711,7 @@ bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response
 		for (auto &items : rowData.fields())
 		{
 			void* address = blockAddress();
-			uint32_t iOffset = this->fieldOffset(items.index());
+			uint32_t iOffset = this->getLayoutOffset(items.index());
 
 			switch (items.value().type())
 			{
@@ -823,7 +835,7 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 
 	::mysql_proxy_msg::MysqlValue value;
 	void* address = blockAddress();
-	uint32_t iOffset = this->fieldOffset(index);
+	uint32_t iOffset = this->getLayoutOffset(index);
 
 	unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
 
