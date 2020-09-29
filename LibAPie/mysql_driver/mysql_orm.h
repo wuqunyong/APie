@@ -39,11 +39,9 @@ class DeclarativeBase
 public:
 
 	//virtual uint32_t blockSize() = 0;
-	virtual void* blockAddress() = 0;
+	virtual void* layoutAddress() = 0;
 	virtual std::vector<uint32_t> layoutOffset() = 0;
 	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() = 0;
-
-	bool initMetaData(MysqlTable& table);
 
 	template <typename T>
 	void extract(T& t, unsigned char* address)
@@ -57,32 +55,35 @@ public:
 		*((T*)address) = value;
 	}
 
-	uint32_t getRowCount();
+	bool initMetaData(MysqlTable& table);
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 	bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
-
-	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
-
+	
 	bool checkInvalid();
 
-	size_t columNums();
+	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
 	uint32_t getLayoutOffset(uint32_t index);
-	uint32_t fieldSize(uint32_t index);
 
-	std::string query(MySQLConnector& connector);
+	size_t columNums();
+	uint32_t fieldSize(uint32_t index);
+	uint32_t getRowCount();
+
 	void markDirty(const std::vector<uint8_t>& index);
 	bool isDirty(uint8_t index);
 	void dirtySet();
 	void dirtyReset();
+
+	std::string query(MySQLConnector& connector);
 
 	mysql_proxy_msg::MysqlQueryRequest generateQuery();
 	mysql_proxy_msg::MysqlInsertRequest generateInsert();
 	mysql_proxy_msg::MysqlUpdateRequest generateUpdate();
 
 public:
-	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
 	static std::string toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value);
+
+	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
 	static mysql_proxy_msg::MysqlQueryResponse convertFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
 
 private:

@@ -36,7 +36,7 @@ namespace APie {
 			int8_t small_int1 = 123;
 		});
 
-		virtual void* blockAddress() override
+		virtual void* layoutAddress() override
 		{
 			return &fields;
 		}

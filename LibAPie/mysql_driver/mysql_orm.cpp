@@ -564,7 +564,7 @@ bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 		uint32_t iIndex = 0;
 		for (auto &items : m_table.getFields())
 		{
-			void* address = blockAddress();
+			void* address = layoutAddress();
 			uint32_t iOffset = this->getLayoutOffset(iIndex);
 
 			switch (items.convertToDbType())
@@ -710,7 +710,7 @@ bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response
 
 		for (auto &items : rowData.fields())
 		{
-			void* address = blockAddress();
+			void* address = layoutAddress();
 			uint32_t iOffset = this->getLayoutOffset(items.index());
 
 			switch (items.value().type())
@@ -834,7 +834,7 @@ std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(ui
 	}
 
 	::mysql_proxy_msg::MysqlValue value;
-	void* address = blockAddress();
+	void* address = layoutAddress();
 	uint32_t iOffset = this->getLayoutOffset(index);
 
 	unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;

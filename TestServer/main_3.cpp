@@ -35,7 +35,7 @@ public:
 		std::string feats_info;
 	});
 
-	virtual void* blockAddress() override
+	virtual void* layoutAddress() override
 	{
 		return &fields;
 	}
