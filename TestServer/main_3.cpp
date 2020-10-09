@@ -14,6 +14,12 @@
 #include <iosfwd>
 #include <sstream>
 
+template<class... Ts>
+struct PersistModelType
+{
+	using tuple_t = decltype(std::make_tuple(std::declval<Ts>()...));
+};
+
 
 class MySQLData : public DeclarativeBase {
 public:
@@ -120,6 +126,8 @@ int main()
 	cc.length_ = 20;
 	aa.name_ = "hello";
 
+	PersistModelType<uint32_t, std::string, uint64_t>::tuple_t stub1 = { 1,"hello", 100 };
+	std::cout << std::get<0>(stub1) << "," << std::get<1>(stub1) << "," << std::get<2>(stub1);
 	{
 
 		MySQLConnectOptions options;

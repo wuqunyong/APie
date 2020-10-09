@@ -411,6 +411,7 @@ class CONTROLLER :
   enum : int {
     kSerialNumFieldNumber = 1,
     kTimeoutMsFieldNumber = 2,
+    kServerStreamFieldNumber = 3,
   };
   // uint64 serial_num = 1;
   void clear_serial_num();
@@ -430,6 +431,15 @@ class CONTROLLER :
   void _internal_set_timeout_ms(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // bool server_stream = 3;
+  void clear_server_stream();
+  bool server_stream() const;
+  void set_server_stream(bool value);
+  private:
+  bool _internal_server_stream() const;
+  void _internal_set_server_stream(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:rpc_msg.CONTROLLER)
  private:
   class _Internal;
@@ -437,6 +447,7 @@ class CONTROLLER :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::uint64 serial_num_;
   ::PROTOBUF_NAMESPACE_ID::uint64 timeout_ms_;
+  bool server_stream_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -1037,6 +1048,7 @@ class RPC_REQUEST :
     kClientFieldNumber = 1,
     kServerFieldNumber = 2,
     kOpcodesFieldNumber = 3,
+    kServerStreamFieldNumber = 5,
   };
   // bytes args_data = 4;
   void clear_args_data();
@@ -1093,6 +1105,15 @@ class RPC_REQUEST :
   void _internal_set_opcodes(::rpc_msg::RPC_OPCODES value);
   public:
 
+  // bool server_stream = 5;
+  void clear_server_stream();
+  bool server_stream() const;
+  void set_server_stream(bool value);
+  private:
+  bool _internal_server_stream() const;
+  void _internal_set_server_stream(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:rpc_msg.RPC_REQUEST)
  private:
   class _Internal;
@@ -1102,6 +1123,7 @@ class RPC_REQUEST :
   ::rpc_msg::CLIENT_IDENTIFIER* client_;
   ::rpc_msg::SERVER_IDENTIFIER* server_;
   int opcodes_;
+  bool server_stream_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -1363,6 +1385,7 @@ class RPC_RESPONSE :
     kClientFieldNumber = 1,
     kServerFieldNumber = 2,
     kStatusFieldNumber = 3,
+    kHasMoreFieldNumber = 5,
   };
   // bytes result_data = 4;
   void clear_result_data();
@@ -1425,6 +1448,15 @@ class RPC_RESPONSE :
   ::rpc_msg::STATUS* _internal_mutable_status();
   public:
 
+  // bool has_more = 5;
+  void clear_has_more();
+  bool has_more() const;
+  void set_has_more(bool value);
+  private:
+  bool _internal_has_more() const;
+  void _internal_set_has_more(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:rpc_msg.RPC_RESPONSE)
  private:
   class _Internal;
@@ -1434,6 +1466,7 @@ class RPC_RESPONSE :
   ::rpc_msg::CLIENT_IDENTIFIER* client_;
   ::rpc_msg::SERVER_IDENTIFIER* server_;
   ::rpc_msg::STATUS* status_;
+  bool has_more_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -1693,6 +1726,26 @@ inline void CONTROLLER::_internal_set_timeout_ms(::PROTOBUF_NAMESPACE_ID::uint64
 inline void CONTROLLER::set_timeout_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_timeout_ms(value);
   // @@protoc_insertion_point(field_set:rpc_msg.CONTROLLER.timeout_ms)
+}
+
+// bool server_stream = 3;
+inline void CONTROLLER::clear_server_stream() {
+  server_stream_ = false;
+}
+inline bool CONTROLLER::_internal_server_stream() const {
+  return server_stream_;
+}
+inline bool CONTROLLER::server_stream() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CONTROLLER.server_stream)
+  return _internal_server_stream();
+}
+inline void CONTROLLER::_internal_set_server_stream(bool value) {
+  
+  server_stream_ = value;
+}
+inline void CONTROLLER::set_server_stream(bool value) {
+  _internal_set_server_stream(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.CONTROLLER.server_stream)
 }
 
 // -------------------------------------------------------------------
@@ -2271,6 +2324,26 @@ inline void RPC_REQUEST::set_allocated_args_data(std::string* args_data) {
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_REQUEST.args_data)
 }
 
+// bool server_stream = 5;
+inline void RPC_REQUEST::clear_server_stream() {
+  server_stream_ = false;
+}
+inline bool RPC_REQUEST::_internal_server_stream() const {
+  return server_stream_;
+}
+inline bool RPC_REQUEST::server_stream() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.RPC_REQUEST.server_stream)
+  return _internal_server_stream();
+}
+inline void RPC_REQUEST::_internal_set_server_stream(bool value) {
+  
+  server_stream_ = value;
+}
+inline void RPC_REQUEST::set_server_stream(bool value) {
+  _internal_set_server_stream(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.RPC_REQUEST.server_stream)
+}
+
 // -------------------------------------------------------------------
 
 // STATUS
@@ -2597,6 +2670,26 @@ inline void RPC_RESPONSE::set_allocated_result_data(std::string* result_data) {
   }
   result_data_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), result_data);
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.RPC_RESPONSE.result_data)
+}
+
+// bool has_more = 5;
+inline void RPC_RESPONSE::clear_has_more() {
+  has_more_ = false;
+}
+inline bool RPC_RESPONSE::_internal_has_more() const {
+  return has_more_;
+}
+inline bool RPC_RESPONSE::has_more() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.RPC_RESPONSE.has_more)
+  return _internal_has_more();
+}
+inline void RPC_RESPONSE::_internal_set_has_more(bool value) {
+  
+  has_more_ = value;
+}
+inline void RPC_RESPONSE::set_has_more(bool value) {
+  _internal_set_has_more(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.RPC_RESPONSE.has_more)
 }
 
 // -------------------------------------------------------------------

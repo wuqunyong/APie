@@ -42,6 +42,7 @@ message CONTROLLER
 {
 	uint64 serial_num = 1;
 	uint64 timeout_ms = 2;
+	bool server_stream = 3;
 }
 
 message RoleIdentifier
@@ -72,6 +73,7 @@ message RPC_REQUEST
 	SERVER_IDENTIFIER server = 2;
 	RPC_OPCODES opcodes = 3;
 	bytes args_data = 4;
+	bool server_stream = 5;
 }
 
 message STATUS
@@ -86,6 +88,7 @@ message RPC_RESPONSE
 	SERVER_IDENTIFIER server = 2;
 	STATUS status = 3;
 	bytes result_data = 4;
+	bool has_more = 5;
 }
 
 message PRC_Multiplexer_Forward_Args

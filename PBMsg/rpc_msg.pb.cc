@@ -211,6 +211,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, serial_num_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, timeout_ms_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, server_stream_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -245,6 +246,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, server_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, opcodes_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, args_data_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, server_stream_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::STATUS, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -261,6 +263,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, server_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, status_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, result_data_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, has_more_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_Multiplexer_Forward_Args, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -273,13 +276,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
   { 7, -1, sizeof(::rpc_msg::CONTROLLER)},
-  { 14, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 22, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 33, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 39, -1, sizeof(::rpc_msg::RPC_REQUEST)},
-  { 48, -1, sizeof(::rpc_msg::STATUS)},
-  { 55, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 64, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
+  { 15, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 23, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
+  { 34, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 40, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 50, -1, sizeof(::rpc_msg::STATUS)},
+  { 57, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
+  { 67, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -296,41 +299,42 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rrpc_msg.proto\022\007rpc_msg\"#\n\007CHANNEL\022\014\n\004t"
-  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"4\n\nCONTROLLER\022\022\n\ns"
-  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\"L\n\016R"
-  "oleIdentifier\022\017\n\007user_id\030\001 \001(\004\022\r\n\005gw_id\030"
-  "\002 \001(\r\022\032\n\022channel_serial_num\030\003 \001(\004\"\313\001\n\021CL"
-  "IENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg."
-  "CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_repl"
-  "y\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANNE"
-  "L\022\032\n\022channel_serial_num\030\005 \001(\004\0220\n\017role_id"
-  "entifier\030\006 \001(\0132\027.rpc_msg.RoleIdentifier\""
-  "3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc"
-  "_msg.CHANNEL\"\237\001\n\013RPC_REQUEST\022*\n\006client\030\001"
-  " \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serv"
-  "er\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022%\n\007"
-  "opcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021\n\ta"
-  "rgs_data\030\004 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001(\r\022\013"
-  "\n\003msg\030\002 \001(\t\"\234\001\n\014RPC_RESPONSE\022*\n\006client\030\001"
-  " \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serv"
-  "er\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\037\n\006"
-  "status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013result_"
-  "data\030\004 \001(\014\"k\n\034PRC_Multiplexer_Forward_Ar"
-  "gs\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdenti"
-  "fier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*"
-  "\307\001\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Mul"
-  "tiplexer_Forward\020\001\022\035\n\031RPC_DeMultiplexer_"
-  "Forward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RP"
-  "C_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n"
-  "\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225"
-  "\003*\216\002\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_A"
-  "sync\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregis"
-  "ter\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE_Error"
-  "ServerPost\020g\022\035\n\031CODE_RouteNotLinkToServe"
-  "r\020h\022\037\n\033CODE_RouteSendToServerError\020i\022\031\n\025"
-  "CODE_OpcodeUnregister\020j\022\027\n\023CODE_CreateMs"
-  "gError\020k\022\030\n\024CODE_LogicThreadNull\020lb\006prot"
-  "o3"
+  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"K\n\nCONTROLLER\022\022\n\ns"
+  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\022\025\n\rs"
+  "erver_stream\030\003 \001(\010\"L\n\016RoleIdentifier\022\017\n\007"
+  "user_id\030\001 \001(\004\022\r\n\005gw_id\030\002 \001(\r\022\032\n\022channel_"
+  "serial_num\030\003 \001(\004\"\313\001\n\021CLIENT_IDENTIFIER\022\036"
+  "\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\022\016\n\006seq_id"
+  "\030\002 \001(\004\022\026\n\016required_reply\030\003 \001(\010\022 \n\006router"
+  "\030\004 \001(\0132\020.rpc_msg.CHANNEL\022\032\n\022channel_seri"
+  "al_num\030\005 \001(\004\0220\n\017role_identifier\030\006 \001(\0132\027."
+  "rpc_msg.RoleIdentifier\"3\n\021SERVER_IDENTIF"
+  "IER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\"\266\001\n\013"
+  "RPC_REQUEST\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CL"
+  "IENT_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_ms"
+  "g.SERVER_IDENTIFIER\022%\n\007opcodes\030\003 \001(\0162\024.r"
+  "pc_msg.RPC_OPCODES\022\021\n\targs_data\030\004 \001(\014\022\025\n"
+  "\rserver_stream\030\005 \001(\010\"#\n\006STATUS\022\014\n\004code\030\001"
+  " \001(\r\022\013\n\003msg\030\002 \001(\t\"\256\001\n\014RPC_RESPONSE\022*\n\006cl"
+  "ient\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*"
+  "\n\006server\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFI"
+  "ER\022\037\n\006status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013r"
+  "esult_data\030\004 \001(\014\022\020\n\010has_more\030\005 \001(\010\"k\n\034PR"
+  "C_Multiplexer_Forward_Args\022(\n\007role_id\030\001 "
+  "\001(\0132\027.rpc_msg.RoleIdentifier\022\017\n\007opcodes\030"
+  "\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*\307\001\n\013RPC_OPCODES\022"
+  "\014\n\010RPC_None\020\000\022\033\n\027RPC_Multiplexer_Forward"
+  "\020\001\022\035\n\031RPC_DeMultiplexer_Forward\020\002\022\027\n\022RPC"
+  "_MysqlDescTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022"
+  "\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate"
+  "\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003*\216\002\n\010RPC_CODE\022\013"
+  "\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_T"
+  "imeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_Pa"
+  "rseError\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031"
+  "CODE_RouteNotLinkToServer\020h\022\037\n\033CODE_Rout"
+  "eSendToServerError\020i\022\031\n\025CODE_OpcodeUnreg"
+  "ister\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE"
+  "_LogicThreadNull\020lb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -348,7 +352,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1402,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1466,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -635,15 +639,15 @@ CONTROLLER::CONTROLLER(const CONTROLLER& from)
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&serial_num_, &from.serial_num_,
-    static_cast<size_t>(reinterpret_cast<char*>(&timeout_ms_) -
-    reinterpret_cast<char*>(&serial_num_)) + sizeof(timeout_ms_));
+    static_cast<size_t>(reinterpret_cast<char*>(&server_stream_) -
+    reinterpret_cast<char*>(&serial_num_)) + sizeof(server_stream_));
   // @@protoc_insertion_point(copy_constructor:rpc_msg.CONTROLLER)
 }
 
 void CONTROLLER::SharedCtor() {
   ::memset(&serial_num_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&timeout_ms_) -
-      reinterpret_cast<char*>(&serial_num_)) + sizeof(timeout_ms_));
+      reinterpret_cast<char*>(&server_stream_) -
+      reinterpret_cast<char*>(&serial_num_)) + sizeof(server_stream_));
 }
 
 CONTROLLER::~CONTROLLER() {
@@ -670,8 +674,8 @@ void CONTROLLER::Clear() {
   (void) cached_has_bits;
 
   ::memset(&serial_num_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&timeout_ms_) -
-      reinterpret_cast<char*>(&serial_num_)) + sizeof(timeout_ms_));
+      reinterpret_cast<char*>(&server_stream_) -
+      reinterpret_cast<char*>(&serial_num_)) + sizeof(server_stream_));
   _internal_metadata_.Clear();
 }
 
@@ -693,6 +697,13 @@ const char* CONTROLLER::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           timeout_ms_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool server_stream = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          server_stream_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -734,6 +745,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_timeout_ms(), target);
   }
 
+  // bool server_stream = 3;
+  if (this->server_stream() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_server_stream(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -762,6 +779,11 @@ size_t CONTROLLER::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_timeout_ms());
+  }
+
+  // bool server_stream = 3;
+  if (this->server_stream() != 0) {
+    total_size += 1 + 1;
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -801,6 +823,9 @@ void CONTROLLER::MergeFrom(const CONTROLLER& from) {
   if (from.timeout_ms() != 0) {
     _internal_set_timeout_ms(from._internal_timeout_ms());
   }
+  if (from.server_stream() != 0) {
+    _internal_set_server_stream(from._internal_server_stream());
+  }
 }
 
 void CONTROLLER::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -826,6 +851,7 @@ void CONTROLLER::InternalSwap(CONTROLLER* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(serial_num_, other->serial_num_);
   swap(timeout_ms_, other->timeout_ms_);
+  swap(server_stream_, other->server_stream_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata CONTROLLER::GetMetadata() const {
@@ -1690,7 +1716,9 @@ RPC_REQUEST::RPC_REQUEST(const RPC_REQUEST& from)
   } else {
     server_ = nullptr;
   }
-  opcodes_ = from.opcodes_;
+  ::memcpy(&opcodes_, &from.opcodes_,
+    static_cast<size_t>(reinterpret_cast<char*>(&server_stream_) -
+    reinterpret_cast<char*>(&opcodes_)) + sizeof(server_stream_));
   // @@protoc_insertion_point(copy_constructor:rpc_msg.RPC_REQUEST)
 }
 
@@ -1698,8 +1726,8 @@ void RPC_REQUEST::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RPC_REQUEST_rpc_5fmsg_2eproto.base);
   args_data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&client_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&opcodes_) -
-      reinterpret_cast<char*>(&client_)) + sizeof(opcodes_));
+      reinterpret_cast<char*>(&server_stream_) -
+      reinterpret_cast<char*>(&client_)) + sizeof(server_stream_));
 }
 
 RPC_REQUEST::~RPC_REQUEST() {
@@ -1737,7 +1765,9 @@ void RPC_REQUEST::Clear() {
     delete server_;
   }
   server_ = nullptr;
-  opcodes_ = 0;
+  ::memset(&opcodes_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&server_stream_) -
+      reinterpret_cast<char*>(&opcodes_)) + sizeof(server_stream_));
   _internal_metadata_.Clear();
 }
 
@@ -1775,6 +1805,13 @@ const char* RPC_REQUEST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_args_data();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool server_stream = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          server_stream_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1833,6 +1870,12 @@ failure:
         4, this->_internal_args_data(), target);
   }
 
+  // bool server_stream = 5;
+  if (this->server_stream() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_server_stream(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -1874,6 +1917,11 @@ size_t RPC_REQUEST::ByteSizeLong() const {
   if (this->opcodes() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_opcodes());
+  }
+
+  // bool server_stream = 5;
+  if (this->server_stream() != 0) {
+    total_size += 1 + 1;
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1920,6 +1968,9 @@ void RPC_REQUEST::MergeFrom(const RPC_REQUEST& from) {
   if (from.opcodes() != 0) {
     _internal_set_opcodes(from._internal_opcodes());
   }
+  if (from.server_stream() != 0) {
+    _internal_set_server_stream(from._internal_server_stream());
+  }
 }
 
 void RPC_REQUEST::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1948,6 +1999,7 @@ void RPC_REQUEST::InternalSwap(RPC_REQUEST* other) {
   swap(client_, other->client_);
   swap(server_, other->server_);
   swap(opcodes_, other->opcodes_);
+  swap(server_stream_, other->server_stream_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RPC_REQUEST::GetMetadata() const {
@@ -2238,6 +2290,7 @@ RPC_RESPONSE::RPC_RESPONSE(const RPC_RESPONSE& from)
   } else {
     status_ = nullptr;
   }
+  has_more_ = from.has_more_;
   // @@protoc_insertion_point(copy_constructor:rpc_msg.RPC_RESPONSE)
 }
 
@@ -2245,8 +2298,8 @@ void RPC_RESPONSE::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto.base);
   result_data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&client_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&status_) -
-      reinterpret_cast<char*>(&client_)) + sizeof(status_));
+      reinterpret_cast<char*>(&has_more_) -
+      reinterpret_cast<char*>(&client_)) + sizeof(has_more_));
 }
 
 RPC_RESPONSE::~RPC_RESPONSE() {
@@ -2289,6 +2342,7 @@ void RPC_RESPONSE::Clear() {
     delete status_;
   }
   status_ = nullptr;
+  has_more_ = false;
   _internal_metadata_.Clear();
 }
 
@@ -2325,6 +2379,13 @@ const char* RPC_RESPONSE::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_result_data();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool has_more = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          has_more_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2384,6 +2445,12 @@ failure:
         4, this->_internal_result_data(), target);
   }
 
+  // bool has_more = 5;
+  if (this->has_more() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_has_more(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -2426,6 +2493,11 @@ size_t RPC_RESPONSE::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *status_);
+  }
+
+  // bool has_more = 5;
+  if (this->has_more() != 0) {
+    total_size += 1 + 1;
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2472,6 +2544,9 @@ void RPC_RESPONSE::MergeFrom(const RPC_RESPONSE& from) {
   if (from.has_status()) {
     _internal_mutable_status()->::rpc_msg::STATUS::MergeFrom(from._internal_status());
   }
+  if (from.has_more() != 0) {
+    _internal_set_has_more(from._internal_has_more());
+  }
 }
 
 void RPC_RESPONSE::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -2500,6 +2575,7 @@ void RPC_RESPONSE::InternalSwap(RPC_RESPONSE* other) {
   swap(client_, other->client_);
   swap(server_, other->server_);
   swap(status_, other->status_);
+  swap(has_more_, other->has_more_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RPC_RESPONSE::GetMetadata() const {

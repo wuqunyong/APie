@@ -28,6 +28,7 @@ namespace RPC {
 	public:
 		bool init();
 		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
+		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 
 		void handleTimeout();
 
@@ -40,9 +41,19 @@ namespace RPC {
 		RpcReplyCb find(uint64_t seqId);
 		void del(uint64_t seqId);
 
+		bool isServerStream(uint64_t seqId);
+
 	private:
 		std::map<uint64_t, RpcReplyCb> m_reply;
-		std::map<uint64_t, uint64_t> m_expireAt; //ms
+
+		struct timer_info
+		{
+			uint64_t id;
+			uint64_t expireAt;
+		};
+		std::multimap<uint64_t, timer_info> m_expireAt;
+		std::map<uint64_t, bool> m_serverStream;
+
 		uint64_t m_iSeqId = 0;
 		uint64_t m_iCheckTimeoutAt = 60;
 

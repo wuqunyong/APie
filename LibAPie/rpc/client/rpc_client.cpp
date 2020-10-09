@@ -79,6 +79,64 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
+	bool RpcClient::callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	{
+		rpc_msg::STATUS status;
+		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
+		if (routeList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route list empty|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_Rpc_RouteEmpty);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::common::EPT_Route_Proxy);
+		if (establishedList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route established empty|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_Rpc_RouteEstablishedEmpty);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		EndPoint target;
+		target.type = server.type();
+		target.id = server.id();
+		uint32_t iHash = CtxSingleton::get().generateHash(target);
+
+		uint32_t index = iHash % establishedList.size();
+		EndPoint route = establishedList[index];
+
+		auto serialOpt = EndPointMgrSingleton::get().getSerialNum(route);
+		if (!serialOpt.has_value())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+
+		controller.set_serial_num(serialOpt.value());
+		controller.set_server_stream(true);
+		return this->call(controller, server, opcodes, args, reply);
+	}
+
 	bool RpcClient::call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
 		rpc_msg::STATUS status;
@@ -110,7 +168,14 @@ namespace RPC {
 		{
 			request.mutable_client()->set_required_reply(true);
 			m_reply[m_iSeqId] = reply;
-			m_expireAt[m_iSeqId] = iExpireAt;
+
+			timer_info info = { m_iSeqId, iExpireAt };
+			m_expireAt.insert(std::make_pair(iExpireAt, info));
+
+			if (controller.server_stream())
+			{
+				m_serverStream[m_iSeqId] = true;
+			}
 		}
 
 		bool bResult = APie::Network::OutputStream::sendMsg(controller.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
@@ -137,28 +202,33 @@ namespace RPC {
 		{
 			m_iCheckTimeoutAt = curTime + CHECK_INTERVAL;
 
-			std::vector<uint64_t> delVec;
-			for (const auto& item : m_expireAt)
-			{
-				if (item.second < curTime)
+
+			auto it = m_expireAt.begin();
+			while (it != m_expireAt.end()) {
+
+				//  If we have to wait to execute the item, same will be true about
+				//  all the following items (multimap is sorted). Thus we can stop
+				//  checking the subsequent timers and return the time to wait for
+				//  the next timer (at least 1ms).
+				if (it->first > curTime)
+					return;
+
+				//  Trigger the timer.
+				auto findIte = m_reply.find(it->first);
+				if (findIte != m_reply.end())
 				{
-					delVec.push_back(item.first);
+					::rpc_msg::STATUS status;
+					status.set_code(::rpc_msg::RPC_CODE::CODE_Timeout);
+					findIte->second(status, "");
 
-					auto findIte = m_reply.find(item.first);
-					if (findIte != m_reply.end())
-					{
-						::rpc_msg::STATUS status;
-						status.set_code(::rpc_msg::RPC_CODE::CODE_Timeout);
-						findIte->second(status, "");
-
-						m_reply.erase(findIte);
-					}
+					m_reply.erase(findIte);
 				}
-			}
+				m_serverStream.erase(it->first);
 
-			for (const auto& item : delVec)
-			{
-				m_expireAt.erase(item);
+				//  Remove it from the list of active timers.
+				auto o = it;
+				++it;
+				m_expireAt.erase(o);
 			}
 		}
 	}
@@ -182,6 +252,18 @@ namespace RPC {
 		{
 			m_reply.erase(findIte);
 		}
+		m_serverStream.erase(seqId);
+	}
+
+	bool RpcClient::isServerStream(uint64_t seqId)
+	{
+		auto findIte = m_serverStream.find(seqId);
+		if (findIte == m_serverStream.end())
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	void RpcClient::handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response)
@@ -234,7 +316,23 @@ namespace RPC {
 		}
 		replyCb(response.status(), response.result_data());
 
-		RpcClientSingleton::get().del(seqId);
+		bool isStream = RpcClientSingleton::get().isServerStream(seqId);
+		if (isStream)
+		{
+			bool hasMore = response.has_more();
+			if (hasMore)
+			{
+				//Nothing
+			}
+			else
+			{
+				RpcClientSingleton::get().del(seqId);
+			}
+		} 
+		else
+		{
+			RpcClientSingleton::get().del(seqId);
+		}
 		RpcClientSingleton::get().handleTimeout();
 	}
 
