@@ -23,8 +23,10 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcServer::asyncReply(uint64_t iSerialNum, const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData)
+	bool RpcServer::asyncReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData)
 	{
+		uint64_t iSerialNum = client.channel_serial_num();
+
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_type(APie::CtxSingleton::get().identify().id);
@@ -43,11 +45,36 @@ namespace RPC {
 		return true;
 	}
 
+	bool RpcServer::asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore)
+	{
+		uint64_t iSerialNum = client.channel_serial_num();
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(APie::CtxSingleton::get().identify().type);
+		server.set_type(APie::CtxSingleton::get().identify().id);
+
+		::rpc_msg::RPC_RESPONSE response;
+		*response.mutable_client() = client;
+		*response.mutable_server()->mutable_stub() = server;
+		response.mutable_status()->set_code(errCode);
+		response.set_result_data(replyData);
+		response.set_has_more(hasMore);
+
+		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+		if (!bResult)
+		{
+			//TODO
+		}
+		return true;
+	}
+
 	void RpcServer::handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST& request)
 	{
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_id(APie::CtxSingleton::get().identify().id);
+
+		request.mutable_client()->set_channel_serial_num(iSerialNum);
 
 		::rpc_msg::RPC_RESPONSE response;
 		*response.mutable_client() = request.client();
