@@ -29,6 +29,8 @@ enum RPC_CODE {
 	CODE_OpcodeUnregister = 106;
 	CODE_CreateMsgError = 107;
 	CODE_LogicThreadNull = 108;
+	CODE_NotReceivedReply = 109;
+	CODE_NotSend = 110;
 }
 
 
@@ -43,6 +45,7 @@ message CONTROLLER
 	uint64 serial_num = 1;
 	uint64 timeout_ms = 2;
 	bool server_stream = 3;
+	uint64 seq_id = 4;
 }
 
 message RoleIdentifier

@@ -137,11 +137,178 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
+	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, ::google::protobuf::Message&>> methods, RpcMultiReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	{
+		std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData;
+
+		rpc_msg::STATUS status;
+		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
+		if (routeList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route list empty");
+
+			status.set_code(opcodes::SC_Rpc_RouteEmpty);
+			if (reply)
+			{
+				while (replyData.size() < methods.size())
+				{
+					rpc_msg::STATUS responseStatus;
+					responseStatus.set_code(opcodes::SC_RPC_NotSend);
+
+					std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+					replyData.push_back(response);
+				}
+				reply(status, replyData);
+			}
+			return false;
+		}
+
+		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::common::EPT_Route_Proxy);
+		if (establishedList.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route established empty");
+
+			status.set_code(opcodes::SC_Rpc_RouteEstablishedEmpty);
+			if (reply)
+			{
+				while (replyData.size() < methods.size())
+				{
+					rpc_msg::STATUS responseStatus;
+					responseStatus.set_code(opcodes::SC_RPC_NotSend);
+
+					std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+					replyData.push_back(response);
+				}
+				reply(status, replyData);
+			}
+			return false;
+		}
+
+		auto sharedPtrPending = std::make_shared<MultiCallPending>();
+		sharedPtrPending->iCount = methods.size();
+		sharedPtrPending->iCompleted = 0;
+
+		uint32_t iIndex = 0;
+		for (const auto& methon : methods)
+		{
+			EndPoint target;
+			target.type = std::get<0>(methon).type();
+			target.id = std::get<0>(methon).id();
+			uint32_t iHash = CtxSingleton::get().generateHash(target);
+
+			uint32_t index = iHash % establishedList.size();
+			EndPoint route = establishedList[index];
+
+			auto serialOpt = EndPointMgrSingleton::get().getSerialNum(route);
+			if (!serialOpt.has_value())
+			{
+				ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed");
+
+				status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
+				if (reply)
+				{
+					for (const auto& seqId : sharedPtrPending->seqIdVec)
+					{
+						auto findIte = sharedPtrPending->replyData.find(seqId);
+						if (findIte != sharedPtrPending->replyData.end())
+						{
+							sharedPtrPending->result.push_back(findIte->second);
+						}
+						else
+						{
+							rpc_msg::STATUS responseStatus;
+							responseStatus.set_code(opcodes::SC_Rpc_Timeout);
+
+							std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+							sharedPtrPending->result.push_back(response);
+						}
+					}
+
+					while (sharedPtrPending->result.size() < methods.size())
+					{
+						rpc_msg::STATUS responseStatus;
+						responseStatus.set_code(opcodes::SC_RPC_NotSend);
+
+						std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+						sharedPtrPending->result.push_back(response);
+					}
+
+					reply(status, sharedPtrPending->result);
+				}
+				return false;
+			}
+
+			m_iSeqId++;
+
+			uint64_t iCurSeqId = m_iSeqId;
+			controller.set_serial_num(serialOpt.value());
+			controller.set_seq_id(iCurSeqId);
+
+			sharedPtrPending->seqIdVec.push_back(iCurSeqId);
+
+			iIndex++;
+			auto pendingCb = [sharedPtrPending, iCurSeqId, reply](const rpc_msg::STATUS& status, const std::string& replyData) mutable {
+				sharedPtrPending->iCompleted = sharedPtrPending->iCompleted + 1;
+				sharedPtrPending->replyData[iCurSeqId] = std::make_tuple(status, replyData);
+
+				if (sharedPtrPending->iCompleted >= sharedPtrPending->iCount)
+				{
+					bool bHasError = false;
+					for (const auto& seqId : sharedPtrPending->seqIdVec)
+					{
+						auto findIte = sharedPtrPending->replyData.find(seqId);
+						if (findIte != sharedPtrPending->replyData.end())
+						{
+							sharedPtrPending->result.push_back(findIte->second);
+						}
+						else
+						{
+							rpc_msg::STATUS responseStatus;
+							responseStatus.set_code(opcodes::SC_Rpc_Timeout);
+
+							std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+							sharedPtrPending->result.push_back(response);
+							bHasError = true;
+						}
+					}
+
+					rpc_msg::STATUS resultStatus;
+					resultStatus.set_code(opcodes::SC_Ok);
+					if (bHasError)
+					{
+						resultStatus.set_code(opcodes::SC_Rpc_Timeout);
+					}
+
+					if (reply)
+					{
+						sharedPtrPending->iCallTimes++;
+						reply(resultStatus, sharedPtrPending->result);
+					}
+				}
+
+			};
+			this->call(controller, std::get<0>(methon), std::get<1>(methon), std::get<2>(methon), pendingCb);
+		}
+
+		return true;
+	}
+
+
 	bool RpcClient::call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
 		rpc_msg::STATUS status;
 
-		m_iSeqId++;
+		uint64_t iCurSeqId = 0;
+		if (controller.seq_id() == 0)
+		{
+			m_iSeqId++;
+			iCurSeqId = m_iSeqId;
+		} 
+		else
+		{
+			iCurSeqId = controller.seq_id();
+		}
+		
 
 		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
 
@@ -157,7 +324,7 @@ namespace RPC {
 
 		::rpc_msg::RPC_REQUEST request;
 		*request.mutable_client()->mutable_stub() = client;
-		request.mutable_client()->set_seq_id(m_iSeqId);
+		request.mutable_client()->set_seq_id(iCurSeqId);
 		request.mutable_client()->set_required_reply(false);
 
 		*request.mutable_server()->mutable_stub() = server;
@@ -167,14 +334,14 @@ namespace RPC {
 		if (reply)
 		{
 			request.mutable_client()->set_required_reply(true);
-			m_reply[m_iSeqId] = reply;
+			m_reply[iCurSeqId] = reply;
 
-			timer_info info = { m_iSeqId, iExpireAt };
+			timer_info info = { iCurSeqId, iExpireAt };
 			m_expireAt.insert(std::make_pair(iExpireAt, info));
 
 			if (controller.server_stream())
 			{
-				m_serverStream[m_iSeqId] = true;
+				m_serverStream[iCurSeqId] = true;
 			}
 		}
 

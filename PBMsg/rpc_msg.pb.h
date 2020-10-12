@@ -140,12 +140,14 @@ enum RPC_CODE : int {
   CODE_OpcodeUnregister = 106,
   CODE_CreateMsgError = 107,
   CODE_LogicThreadNull = 108,
+  CODE_NotReceivedReply = 109,
+  CODE_NotSend = 110,
   RPC_CODE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_CODE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RPC_CODE_IsValid(int value);
 constexpr RPC_CODE RPC_CODE_MIN = CODE_Ok;
-constexpr RPC_CODE RPC_CODE_MAX = CODE_LogicThreadNull;
+constexpr RPC_CODE RPC_CODE_MAX = CODE_NotSend;
 constexpr int RPC_CODE_ARRAYSIZE = RPC_CODE_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_CODE_descriptor();
@@ -411,6 +413,7 @@ class CONTROLLER :
   enum : int {
     kSerialNumFieldNumber = 1,
     kTimeoutMsFieldNumber = 2,
+    kSeqIdFieldNumber = 4,
     kServerStreamFieldNumber = 3,
   };
   // uint64 serial_num = 1;
@@ -431,6 +434,15 @@ class CONTROLLER :
   void _internal_set_timeout_ms(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // uint64 seq_id = 4;
+  void clear_seq_id();
+  ::PROTOBUF_NAMESPACE_ID::uint64 seq_id() const;
+  void set_seq_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_seq_id() const;
+  void _internal_set_seq_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
   // bool server_stream = 3;
   void clear_server_stream();
   bool server_stream() const;
@@ -447,6 +459,7 @@ class CONTROLLER :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::uint64 serial_num_;
   ::PROTOBUF_NAMESPACE_ID::uint64 timeout_ms_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 seq_id_;
   bool server_stream_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -1746,6 +1759,26 @@ inline void CONTROLLER::_internal_set_server_stream(bool value) {
 inline void CONTROLLER::set_server_stream(bool value) {
   _internal_set_server_stream(value);
   // @@protoc_insertion_point(field_set:rpc_msg.CONTROLLER.server_stream)
+}
+
+// uint64 seq_id = 4;
+inline void CONTROLLER::clear_seq_id() {
+  seq_id_ = PROTOBUF_ULONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CONTROLLER::_internal_seq_id() const {
+  return seq_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 CONTROLLER::seq_id() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CONTROLLER.seq_id)
+  return _internal_seq_id();
+}
+inline void CONTROLLER::_internal_set_seq_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  seq_id_ = value;
+}
+inline void CONTROLLER::set_seq_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_seq_id(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.CONTROLLER.seq_id)
 }
 
 // -------------------------------------------------------------------

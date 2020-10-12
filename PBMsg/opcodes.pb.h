@@ -106,6 +106,8 @@ enum StatusCode : int {
   SC_Rpc_RouteEstablishedEmpty = 3002,
   SC_RPC_RouteSerialNumInvalid = 3003,
   SC_RPC_RouteSendError = 3004,
+  SC_RPC_NotReceivedReply = 3005,
+  SC_RPC_NotSend = 3006,
   SC_ClientProxy_SerialNumEqualZero = 4000,
   SC_ClientProxy_SerialNumNotEqualZero = 4001,
   SC_ClientProxy_Established = 4002,

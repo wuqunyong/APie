@@ -212,6 +212,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, serial_num_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, timeout_ms_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, server_stream_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, seq_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -276,13 +277,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
   { 7, -1, sizeof(::rpc_msg::CONTROLLER)},
-  { 15, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 23, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 34, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 40, -1, sizeof(::rpc_msg::RPC_REQUEST)},
-  { 50, -1, sizeof(::rpc_msg::STATUS)},
-  { 57, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 67, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
+  { 16, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 24, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
+  { 35, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 41, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 51, -1, sizeof(::rpc_msg::STATUS)},
+  { 58, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
+  { 68, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -299,42 +300,44 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rrpc_msg.proto\022\007rpc_msg\"#\n\007CHANNEL\022\014\n\004t"
-  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"K\n\nCONTROLLER\022\022\n\ns"
+  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"[\n\nCONTROLLER\022\022\n\ns"
   "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\022\025\n\rs"
-  "erver_stream\030\003 \001(\010\"L\n\016RoleIdentifier\022\017\n\007"
-  "user_id\030\001 \001(\004\022\r\n\005gw_id\030\002 \001(\r\022\032\n\022channel_"
-  "serial_num\030\003 \001(\004\"\313\001\n\021CLIENT_IDENTIFIER\022\036"
-  "\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\022\016\n\006seq_id"
-  "\030\002 \001(\004\022\026\n\016required_reply\030\003 \001(\010\022 \n\006router"
-  "\030\004 \001(\0132\020.rpc_msg.CHANNEL\022\032\n\022channel_seri"
-  "al_num\030\005 \001(\004\0220\n\017role_identifier\030\006 \001(\0132\027."
-  "rpc_msg.RoleIdentifier\"3\n\021SERVER_IDENTIF"
-  "IER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\"\266\001\n\013"
-  "RPC_REQUEST\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CL"
-  "IENT_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_ms"
-  "g.SERVER_IDENTIFIER\022%\n\007opcodes\030\003 \001(\0162\024.r"
-  "pc_msg.RPC_OPCODES\022\021\n\targs_data\030\004 \001(\014\022\025\n"
-  "\rserver_stream\030\005 \001(\010\"#\n\006STATUS\022\014\n\004code\030\001"
-  " \001(\r\022\013\n\003msg\030\002 \001(\t\"\256\001\n\014RPC_RESPONSE\022*\n\006cl"
-  "ient\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*"
-  "\n\006server\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFI"
-  "ER\022\037\n\006status\030\003 \001(\0132\017.rpc_msg.STATUS\022\023\n\013r"
-  "esult_data\030\004 \001(\014\022\020\n\010has_more\030\005 \001(\010\"k\n\034PR"
-  "C_Multiplexer_Forward_Args\022(\n\007role_id\030\001 "
-  "\001(\0132\027.rpc_msg.RoleIdentifier\022\017\n\007opcodes\030"
-  "\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*\307\001\n\013RPC_OPCODES\022"
-  "\014\n\010RPC_None\020\000\022\033\n\027RPC_Multiplexer_Forward"
-  "\020\001\022\035\n\031RPC_DeMultiplexer_Forward\020\002\022\027\n\022RPC"
-  "_MysqlDescTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022"
-  "\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate"
-  "\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003*\216\002\n\010RPC_CODE\022\013"
-  "\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_T"
-  "imeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_Pa"
-  "rseError\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031"
-  "CODE_RouteNotLinkToServer\020h\022\037\n\033CODE_Rout"
-  "eSendToServerError\020i\022\031\n\025CODE_OpcodeUnreg"
-  "ister\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE"
-  "_LogicThreadNull\020lb\006proto3"
+  "erver_stream\030\003 \001(\010\022\016\n\006seq_id\030\004 \001(\004\"L\n\016Ro"
+  "leIdentifier\022\017\n\007user_id\030\001 \001(\004\022\r\n\005gw_id\030\002"
+  " \001(\r\022\032\n\022channel_serial_num\030\003 \001(\004\"\313\001\n\021CLI"
+  "ENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.C"
+  "HANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_reply"
+  "\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANNEL"
+  "\022\032\n\022channel_serial_num\030\005 \001(\004\0220\n\017role_ide"
+  "ntifier\030\006 \001(\0132\027.rpc_msg.RoleIdentifier\"3"
+  "\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_"
+  "msg.CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006client\030\001 "
+  "\001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serve"
+  "r\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022%\n\007o"
+  "pcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021\n\tar"
+  "gs_data\030\004 \001(\014\022\025\n\rserver_stream\030\005 \001(\010\"#\n\006"
+  "STATUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\"\256\001\n\014RP"
+  "C_RESPONSE\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CLI"
+  "ENT_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_msg"
+  ".SERVER_IDENTIFIER\022\037\n\006status\030\003 \001(\0132\017.rpc"
+  "_msg.STATUS\022\023\n\013result_data\030\004 \001(\014\022\020\n\010has_"
+  "more\030\005 \001(\010\"k\n\034PRC_Multiplexer_Forward_Ar"
+  "gs\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdenti"
+  "fier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014*"
+  "\307\001\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Mul"
+  "tiplexer_Forward\020\001\022\035\n\031RPC_DeMultiplexer_"
+  "Forward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RP"
+  "C_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n"
+  "\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225"
+  "\003*\273\002\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_A"
+  "sync\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregis"
+  "ter\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE_Error"
+  "ServerPost\020g\022\035\n\031CODE_RouteNotLinkToServe"
+  "r\020h\022\037\n\033CODE_RouteSendToServerError\020i\022\031\n\025"
+  "CODE_OpcodeUnregister\020j\022\027\n\023CODE_CreateMs"
+  "gError\020k\022\030\n\024CODE_LogicThreadNull\020l\022\031\n\025CO"
+  "DE_NotReceivedReply\020m\022\020\n\014CODE_NotSend\020nb"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -352,7 +355,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1466,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1527,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -398,6 +401,8 @@ bool RPC_CODE_IsValid(int value) {
     case 106:
     case 107:
     case 108:
+    case 109:
+    case 110:
       return true;
     default:
       return false;
@@ -707,6 +712,13 @@ const char* CONTROLLER::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // uint64 seq_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          seq_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -751,6 +763,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_server_stream(), target);
   }
 
+  // uint64 seq_id = 4;
+  if (this->seq_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_seq_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -779,6 +797,13 @@ size_t CONTROLLER::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_timeout_ms());
+  }
+
+  // uint64 seq_id = 4;
+  if (this->seq_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_seq_id());
   }
 
   // bool server_stream = 3;
@@ -823,6 +848,9 @@ void CONTROLLER::MergeFrom(const CONTROLLER& from) {
   if (from.timeout_ms() != 0) {
     _internal_set_timeout_ms(from._internal_timeout_ms());
   }
+  if (from.seq_id() != 0) {
+    _internal_set_seq_id(from._internal_seq_id());
+  }
   if (from.server_stream() != 0) {
     _internal_set_server_stream(from._internal_server_stream());
   }
@@ -851,6 +879,7 @@ void CONTROLLER::InternalSwap(CONTROLLER* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(serial_num_, other->serial_num_);
   swap(timeout_ms_, other->timeout_ms_);
+  swap(seq_id_, other->seq_id_);
   swap(server_stream_, other->server_stream_);
 }
 

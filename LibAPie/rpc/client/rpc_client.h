@@ -22,13 +22,26 @@ namespace APie {
 namespace RPC {
 
 	using RpcReplyCb = std::function<void(const rpc_msg::STATUS& status, const std::string& replyData)>;
+	using RpcMultiReplyCb = std::function<void(const rpc_msg::STATUS& status, std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData)>;
+
+	struct MultiCallPending
+	{
+		uint32_t iCount = 0;
+		uint32_t iCompleted = 0;
+		uint32_t iCallTimes = 0;
+		std::vector<uint64_t> seqIdVec;
+		std::map<uint64_t, std::tuple<rpc_msg::STATUS, std::string>> replyData;
+		std::vector<std::tuple<rpc_msg::STATUS, std::string>> result;
+	};
 
 	class RpcClient
 	{
 	public:
 		bool init();
+
 		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
+		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, ::google::protobuf::Message&>> methods, RpcMultiReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 
 		void handleTimeout();
 
