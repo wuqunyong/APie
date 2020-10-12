@@ -137,7 +137,7 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, ::google::protobuf::Message&>> methods, RpcMultiReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply, ::rpc_msg::CONTROLLER controller)
 	{
 		std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData;
 
@@ -287,7 +287,7 @@ namespace RPC {
 				}
 
 			};
-			this->call(controller, std::get<0>(methon), std::get<1>(methon), std::get<2>(methon), pendingCb);
+			this->callWithStrArgs(controller, std::get<0>(methon), std::get<1>(methon), std::get<2>(methon), pendingCb);
 		}
 
 		return true;
@@ -350,6 +350,72 @@ namespace RPC {
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d|args:%s", 
 				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_RPC_RouteSendError);
+			if (reply)
+			{
+				reply(status, "");
+			}
+		}
+
+		return bResult;
+	}
+
+	bool RpcClient::callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, std::string args, RpcReplyCb reply)
+	{
+		rpc_msg::STATUS status;
+
+		uint64_t iCurSeqId = 0;
+		if (controller.seq_id() == 0)
+		{
+			m_iSeqId++;
+			iCurSeqId = m_iSeqId;
+		}
+		else
+		{
+			iCurSeqId = controller.seq_id();
+		}
+
+
+		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
+
+		uint64_t iExpireAt = curTime + TIMEOUT_DURATION;
+		if (controller.timeout_ms() != 0)
+		{
+			iExpireAt = curTime + controller.timeout_ms();
+		}
+
+		::rpc_msg::CHANNEL client;
+		client.set_type(APie::CtxSingleton::get().identify().type);
+		client.set_id(APie::CtxSingleton::get().identify().id);
+
+		::rpc_msg::RPC_REQUEST request;
+		*request.mutable_client()->mutable_stub() = client;
+		request.mutable_client()->set_seq_id(iCurSeqId);
+		request.mutable_client()->set_required_reply(false);
+
+		*request.mutable_server()->mutable_stub() = server;
+		request.set_opcodes(opcodes);
+		request.set_args_data(args);
+
+		if (reply)
+		{
+			request.mutable_client()->set_required_reply(true);
+			m_reply[iCurSeqId] = reply;
+
+			timer_info info = { iCurSeqId, iExpireAt };
+			m_expireAt.insert(std::make_pair(iExpireAt, info));
+
+			if (controller.server_stream())
+			{
+				m_serverStream[iCurSeqId] = true;
+			}
+		}
+
+		bool bResult = APie::Network::OutputStream::sendMsg(controller.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+		if (!bResult)
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d", server.ShortDebugString().c_str(), opcodes);
 
 			status.set_code(opcodes::SC_RPC_RouteSendError);
 			if (reply)
