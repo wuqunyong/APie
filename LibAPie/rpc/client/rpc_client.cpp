@@ -142,6 +142,16 @@ namespace RPC {
 		std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData;
 
 		rpc_msg::STATUS status;
+		if (methods.empty())
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "methods empty");
+			
+			status.set_code(opcodes::SC_RPC_InvalidArgs_MethodsEmpty);
+			reply(status, replyData);
+
+			return false;
+		}
+
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
 		{

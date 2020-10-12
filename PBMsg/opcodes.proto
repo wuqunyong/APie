@@ -43,6 +43,7 @@ enum StatusCode {
 	SC_RPC_RouteSendError = 3004;
 	SC_RPC_NotReceivedReply = 3005;
 	SC_RPC_NotSend = 3006;
+	SC_RPC_InvalidArgs_MethodsEmpty = 3007;
 
 	SC_ClientProxy_SerialNumEqualZero = 4000;
 	SC_ClientProxy_SerialNumNotEqualZero = 4001;
