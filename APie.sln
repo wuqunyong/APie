@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedDir", "SharedDir", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{62FCC784-215A-4B55-BFF8-3109AD9BDC00}"
 	ProjectSection(SolutionItems) = preProject
+		SharedDir\dao\dao_factory.cpp = SharedDir\dao\dao_factory.cpp
+		SharedDir\dao\dao_factory.h = SharedDir\dao\dao_factory.h
 		SharedDir\dao\model_user.h = SharedDir\dao\model_user.h
 	EndProjectSection
 EndProject

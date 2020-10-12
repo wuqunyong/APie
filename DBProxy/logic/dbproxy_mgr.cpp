@@ -2,6 +2,9 @@
 
 #include "table_cache_mgr.h"
 
+#include "../../SharedDir/dao/dao_factory.h"
+#include "../../SharedDir/dao/model_user.h"
+
 namespace APie {
 
 void DBProxyMgr::init()
@@ -14,9 +17,51 @@ void DBProxyMgr::init()
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
 }
 
-void DBProxyMgr::start()
+std::tuple<uint32_t, std::string> DBProxyMgr::start()
 {
+	DAOFactory::registerFactory(ModelUser::getFactoryName(), ModelUser::createMethod);
 
+
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "null ptrDispatched");
+	}
+
+	std::vector<std::string> tables;
+	for (const auto& items : DAOFactory::getMethods())
+	{
+		tables.push_back(items.first);
+	}
+
+	for (const auto& tableName : tables)
+	{
+		MysqlTable table;
+		bool bSQL = ptrDispatched->getMySQLConnector().describeTable(tableName, table);
+		if (bSQL)
+		{
+			TableCacheMgrSingleton::get().addTable(table);
+
+			auto ptrDaoBase = DAOFactory::create(tableName);
+			if (ptrDaoBase == nullptr)
+			{
+				return std::make_tuple(Hook::HookResult::HR_Error, "");
+			}
+
+			ptrDaoBase->initMetaData(table);
+			bool bResult = ptrDaoBase->checkInvalid();
+			if (!bResult)
+			{
+				return std::make_tuple(Hook::HookResult::HR_Error, "");
+			}
+		}
+		else
+		{
+			return std::make_tuple(Hook::HookResult::HR_Error, ptrDispatched->getMySQLConnector().getError());
+		}
+	}
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 void DBProxyMgr::exit()

@@ -31,9 +31,6 @@ namespace APie {
 			std::string global_mails_info;
 			std::string treasure_info;
 			std::string feats_info;
-			std::string small_value = "2020-09-23 17:24:20";
-			int8_t small_int = 98;
-			int8_t small_int1 = 123;
 		});
 
 		virtual void* layoutAddress() override
@@ -59,9 +56,6 @@ namespace APie {
 				offsetof(db_fields, global_mails_info),
 				offsetof(db_fields, treasure_info),
 				offsetof(db_fields, feats_info),
-				offsetof(db_fields, small_value),
-				offsetof(db_fields, small_int),
-				offsetof(db_fields, small_int1),
 			};
 
 			return layout;
@@ -85,12 +79,19 @@ namespace APie {
 				get_field_type(fields.global_mails_info),
 				get_field_type(fields.treasure_info),
 				get_field_type(fields.feats_info),
-				get_field_type(fields.small_value),
-				get_field_type(fields.small_int),
-				get_field_type(fields.small_int1)
 			};
 
 			return layout;
+		}
+
+		static std::shared_ptr<DeclarativeBase> createMethod()
+		{
+			return std::make_shared<ModelUser>();
+		}
+
+		static std::string getFactoryName() 
+		{ 
+			return "role_base"; 
 		}
 
 	public:

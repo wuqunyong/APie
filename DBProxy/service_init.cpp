@@ -13,8 +13,7 @@ std::tuple<uint32_t, std::string> initHook()
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	DBProxyMgrSingleton::get().start();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return DBProxyMgrSingleton::get().start();
 }
 
 std::tuple<uint32_t, std::string> exitHook()

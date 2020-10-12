@@ -27,6 +27,9 @@
     <ClCompile Include="logic\table_records_cache_mgr.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="..\SharedDir\dao\dao_factory.cpp">
+      <Filter>SharedDir\dao</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">

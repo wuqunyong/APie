@@ -17,7 +17,7 @@ namespace APie {
 	{
 	public:
 		void init();
-		void start();
+		std::tuple<uint32_t, std::string> start();
 		void exit();
 
 	public:
