@@ -5,8 +5,8 @@
     <ClInclude Include="logic\gateway_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\model_user.h">
-      <Filter>logic</Filter>
+    <ClInclude Include="..\SharedDir\dao\model_user.h">
+      <Filter>SharedDir\dao</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -15,13 +15,16 @@
     <ClCompile Include="logic\gateway_mgr.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\model_user.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{9fc74d54-78ab-468b-86fd-ba95ecfd17e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir">
+      <UniqueIdentifier>{9de18d71-708b-4f67-a8a6-2d973d88ca9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir\dao">
+      <UniqueIdentifier>{0b702e53-b791-485b-93f1-eaa573f0b1c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

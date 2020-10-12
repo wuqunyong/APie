@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\SharedDir\dao\model_user.h" />
     <ClInclude Include="logic\dbproxy_mgr.h" />
     <ClInclude Include="logic\table_cache_mgr.h" />
     <ClInclude Include="logic\table_records_cache_mgr.h" />

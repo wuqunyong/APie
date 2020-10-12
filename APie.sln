@@ -19,6 +19,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBProxy", "DBProxy\DBProxy.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoginServer", "LoginServer\LoginServer.vcxproj", "{15569726-82ED-4571-814E-D9A51EC6A080}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedDir", "SharedDir", "{B41838FE-32B7-4039-B022-DF0B2A02597B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{62FCC784-215A-4B55-BFF8-3109AD9BDC00}"
+	ProjectSection(SolutionItems) = preProject
+		SharedDir\dao\model_user.h = SharedDir\dao\model_user.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -94,6 +101,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62FCC784-215A-4B55-BFF8-3109AD9BDC00} = {B41838FE-32B7-4039-B022-DF0B2A02597B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAD434AF-6389-4CA2-957F-63E3E0EC379A}

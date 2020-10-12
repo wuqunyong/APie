@@ -1,6 +1,6 @@
 #include "gateway_mgr.h"
+#include "../../SharedDir/dao/model_user.h"
 
-#include "model_user.h"
 
 namespace APie {
 

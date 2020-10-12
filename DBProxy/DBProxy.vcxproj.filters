@@ -11,6 +11,9 @@
     <ClInclude Include="logic\table_records_cache_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\SharedDir\dao\model_user.h">
+      <Filter>SharedDir\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -28,6 +31,12 @@
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{1d5738c3-298d-4de1-a803-bb96b73009d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir">
+      <UniqueIdentifier>{8a3b406c-8cb2-41cd-8493-a4fec2f5b02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir\dao">
+      <UniqueIdentifier>{08d230ae-8eee-4128-af51-b760fe2b90b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
