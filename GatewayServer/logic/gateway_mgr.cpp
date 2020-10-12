@@ -286,6 +286,41 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, insertRequest, insertCB);
 	}
+	else if (command.cmd() == "multi_mysql_desc")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods;
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		for (const auto& items : command.params())
+		{
+			::mysql_proxy_msg::MysqlDescribeRequest args;
+
+			std::string tableName = items;
+
+			auto ptrAdd = args.add_names();
+			*ptrAdd = tableName;
+
+			methods.push_back(std::make_tuple(server, ::rpc_msg::RPC_MysqlDescTable, args.SerializeAsString()));
+		}
+
+		auto rpcCB = [](const rpc_msg::STATUS& status, std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData)
+		{
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+
+		};
+		APie::RPC::RpcClientSingleton::get().multiCallByRoute(methods, rpcCB);
+	}
 }
 
 }
