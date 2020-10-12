@@ -107,34 +107,41 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::r
 		}
 
 
-		MysqlTable table;
-		bool bSQL = ptrDispatched->getMySQLConnector().describeTable(items, table);
-		descTable.set_result(bSQL);
-		if (bSQL)
-		{
-			descTable.set_db_name(table.getDb());
-			descTable.set_table_name(table.getTable());
+		//MysqlTable table;
+		//bool bSQL = ptrDispatched->getMySQLConnector().describeTable(items, table);
+		//descTable.set_result(bSQL);
+		//if (bSQL)
+		//{
+		//	descTable.set_db_name(table.getDb());
+		//	descTable.set_table_name(table.getTable());
 
-			for (auto& fields : table.getFields())
-			{
-				auto ptrAdd = descTable.add_fields();
-				ptrAdd->set_index(fields.getIndex());
-				ptrAdd->set_name(fields.getName());
-				ptrAdd->set_flags(fields.getFlags());
-				ptrAdd->set_type(fields.getType());
-				ptrAdd->set_offset(fields.getOffset());
-			}
+		//	for (auto& fields : table.getFields())
+		//	{
+		//		auto ptrAdd = descTable.add_fields();
+		//		ptrAdd->set_index(fields.getIndex());
+		//		ptrAdd->set_name(fields.getName());
+		//		ptrAdd->set_flags(fields.getFlags());
+		//		ptrAdd->set_type(fields.getType());
+		//		ptrAdd->set_offset(fields.getOffset());
+		//	}
 
-			TableCacheMgrSingleton::get().addTable(table);
-		}
-		else
-		{
-			response.set_result(false);
-			response.set_error_info(ptrDispatched->getMySQLConnector().getError());
-			return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
-		}
+		//	TableCacheMgrSingleton::get().addTable(table);
+		//}
+		//else
+		//{
+		//	response.set_result(false);
+		//	response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+		//	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+		//}
+		
+		//(*response.mutable_tables())[items] = descTable;
 
-		(*response.mutable_tables())[items] = descTable;
+		std::stringstream ss;
+		ss << "not cache:" << items;
+
+		response.set_result(false);
+		response.set_error_info(ss.str());
+		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 	}
 
 	response.set_result(true);
