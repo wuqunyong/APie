@@ -21,15 +21,19 @@ namespace APie {
 		using TCreateMethod = std::function<std::shared_ptr<DeclarativeBase>()>;
 
 	public:
-		DAOFactory() = delete;
-
-		static bool registerFactory(const std::string name, TCreateMethod funcCreate);
-		static std::shared_ptr<DeclarativeBase> create(const std::string& name);
-		static std::map<std::string, TCreateMethod>& getMethods();
+		bool registerFactory(const std::string name, TCreateMethod funcCreate);
+		std::shared_ptr<DeclarativeBase> create(const std::string& name);
+		std::map<std::string, TCreateMethod>& getMethods();
 
 	private:
-		static std::map<std::string, TCreateMethod> s_methods;
+		std::map<std::string, TCreateMethod> m_methods;
 	};
 
+	class DAOFactoryType
+	{
+	public:
+		DAOFactory role;
+	};
 
+	typedef ThreadSafeSingleton<DAOFactoryType> DAOFactoryTypeSingleton;
 }

@@ -2,14 +2,13 @@
 
 namespace APie {
 
-std::map<std::string, DAOFactory::TCreateMethod> DAOFactory::s_methods;
 
 bool DAOFactory::registerFactory(const std::string name, TCreateMethod funcCreate)
 {
-	if (auto it = s_methods.find(name); it == s_methods.end())
+	if (auto it = m_methods.find(name); it == m_methods.end())
 	{
 		// C++17 init-if
-		s_methods[name] = funcCreate;
+		m_methods[name] = funcCreate;
 		return true;
 	}
 
@@ -18,7 +17,7 @@ bool DAOFactory::registerFactory(const std::string name, TCreateMethod funcCreat
 
 std::shared_ptr<DeclarativeBase> DAOFactory::create(const std::string& name)
 {
-	if (auto it = s_methods.find(name); it != s_methods.end())
+	if (auto it = m_methods.find(name); it != m_methods.end())
 	{
 		return it->second(); // call the createFunc
 	}
@@ -28,7 +27,7 @@ std::shared_ptr<DeclarativeBase> DAOFactory::create(const std::string& name)
 
 std::map<std::string, DAOFactory::TCreateMethod>& DAOFactory::getMethods()
 {
-	return s_methods;
+	return m_methods;
 }
 
 }

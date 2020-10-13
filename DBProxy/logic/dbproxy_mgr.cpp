@@ -19,7 +19,7 @@ void DBProxyMgr::init()
 
 std::tuple<uint32_t, std::string> DBProxyMgr::start()
 {
-	DAOFactory::registerFactory(ModelUser::getFactoryName(), ModelUser::createMethod);
+	DAOFactoryTypeSingleton::get().role.registerFactory(ModelUser::getFactoryName(), ModelUser::createMethod);
 
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
@@ -29,7 +29,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 	}
 
 	std::vector<std::string> tables;
-	for (const auto& items : DAOFactory::getMethods())
+	for (const auto& items : DAOFactoryTypeSingleton::get().role.getMethods())
 	{
 		tables.push_back(items.first);
 	}
@@ -42,7 +42,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 		{
 			TableCacheMgrSingleton::get().addTable(table);
 
-			auto ptrDaoBase = DAOFactory::create(tableName);
+			auto ptrDaoBase = DAOFactoryTypeSingleton::get().role.create(tableName);
 			if (ptrDaoBase == nullptr)
 			{
 				return std::make_tuple(Hook::HookResult::HR_Error, "");
