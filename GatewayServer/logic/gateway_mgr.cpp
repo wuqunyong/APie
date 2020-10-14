@@ -379,7 +379,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		server.set_type(common::EPT_DB_Proxy);
 		server.set_id(1);
 
-		auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser> userList) {
+		auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser>& userList) {
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
 				return;
