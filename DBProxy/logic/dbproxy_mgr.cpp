@@ -237,7 +237,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const
 		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 	}
 
-	const uint32_t iBatchSize = 1;
+	const uint32_t iBatchSize = 3;
 	uint32_t iCurBatchSize = 0;
 	uint32_t iOffset = 0;
 
