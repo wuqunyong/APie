@@ -363,17 +363,20 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 	}
 	else if (command.cmd() == "load_from_db_by_filter")
 	{
-		if (command.params_size() < 1)
+		if (command.params_size() < 2)
 		{
 			return;
 		}
 
-		uint32_t level = std::stoull(command.params()[0]);
+		uint64_t gameId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
 
 		ModelUser user;
+		user.fields.game_id = gameId;
 		user.fields.level = level;
 		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
-		user.markFilter({ 2 });
+		user.markFilter({ 1, 2 });
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
