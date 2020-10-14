@@ -57,6 +57,7 @@ enum MysqlDataManipulation
 	MDM_UPDATE = 2;
 	MDM_DELETE = 3;
 	MDM_INSERT = 4;
+	MDM_QUERY_BY_FILTER = 5;
 }
 
 message MysqlDescribeRequest
@@ -150,3 +151,12 @@ message MysqlDeleteResponse
 	uint64 affected_rows = 3;
 	bytes sql_statement = 4;
 }
+
+message MysqlQueryRequestByFilter
+{
+	string db_name = 1;
+	string table_name = 2;
+	repeated MysqlField key = 3;
+}
+
+//MysqlQueryResponse

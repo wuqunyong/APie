@@ -122,6 +122,36 @@ mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 	return queryRequest;
 }
 
+mysql_proxy_msg::MysqlQueryRequestByFilter DeclarativeBase::generateQueryByFilter()
+{
+	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
+	queryRequest.set_db_name(m_table.getDb());
+	queryRequest.set_table_name(m_table.getTable());
+
+	for (auto& items : m_table.getFields())
+	{
+		if (!isFilter(items.getIndex()))
+		{
+			continue;
+		}
+
+		auto ptrAdd = queryRequest.add_key();
+
+		std::optional<::mysql_proxy_msg::MysqlValue> field = getValueByIndex(items.getIndex());
+		if (!field.has_value())
+		{
+			std::stringstream ss;
+			ss << "invalid type|table:" << m_table.getTable() << "|index:" << items.getIndex();
+			throw std::invalid_argument(ss.str());
+		}
+		ptrAdd->set_index(items.getIndex());
+		*ptrAdd->mutable_value() = field.value();
+		
+	}
+
+	return queryRequest;
+}
+
 mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 {
 	mysql_proxy_msg::MysqlInsertRequest insertRequest;
@@ -884,6 +914,125 @@ bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response
 	return true;
 }
 
+bool DeclarativeBase::loadFromPb(const ::mysql_proxy_msg::MysqlRow& row)
+{
+	for (auto &items : row.fields())
+	{
+		void* address = layoutAddress();
+		uint32_t iOffset = this->getLayoutOffset(items.index());
+
+		switch (items.value().type())
+		{
+		case mysql_proxy_msg::MSVT_INT32:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+
+			MysqlField::DB_FIELD_TYPE dbType = static_cast<MysqlField::DB_FIELD_TYPE>(items.value().db_type());
+			switch (dbType)
+			{
+			case MysqlField::DB_FIELD_TYPE::T_INT8:
+			{
+				int8_t dbValue = static_cast<int8_t>(items.value().int32_v());
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_INT16:
+			{
+				int16_t dbValue = static_cast<int16_t>(items.value().int32_v());
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_INT32:
+			{
+				int32_t dbValue = items.value().int32_v();
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+			break;
+		}
+		case mysql_proxy_msg::MSVT_INT64:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().int64_v());
+			break;
+		}
+		case mysql_proxy_msg::MSVT_UINT32:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+
+			MysqlField::DB_FIELD_TYPE dbType = static_cast<MysqlField::DB_FIELD_TYPE>(items.value().db_type());
+			switch (dbType)
+			{
+			case MysqlField::DB_FIELD_TYPE::T_UINT8:
+			{
+				uint8_t dbValue = static_cast<uint8_t>(items.value().uint32_v());
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT16:
+			{
+				uint16_t dbValue = static_cast<uint16_t>(items.value().uint32_v());
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT32:
+			{
+				uint32_t dbValue = items.value().uint32_v();
+				this->writeValue(fieldAddress, dbValue);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+			break;
+		}
+		case mysql_proxy_msg::MSVT_UINT64:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().uint64_v());
+			break;
+		}
+		case mysql_proxy_msg::MSVT_STRING:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().string_v());
+			break;
+		}
+		case mysql_proxy_msg::MSVT_BYTES:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().bytes_v());
+			break;
+		}
+		case mysql_proxy_msg::MSVT_FLOAT:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().float_v());
+			break;
+		}
+		case mysql_proxy_msg::MSVT_DOUBLE:
+		{
+			unsigned char* fieldAddress = (unsigned char*)(address)+iOffset;
+			this->writeValue(fieldAddress, items.value().double_v());
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	m_rowCount = 1;
+
+	return true;
+}
+
 std::optional<::mysql_proxy_msg::MysqlValue> DeclarativeBase::getValueByIndex(uint32_t index)
 {
 	if (index >= m_table.getFields().size())
@@ -1029,6 +1178,17 @@ void DeclarativeBase::markDirty(const std::vector<uint8_t>& index)
 	}
 }
 
+void DeclarativeBase::markFilter(const std::vector<uint8_t>& indexs)
+{
+	for (const auto& index : indexs)
+	{
+		if (index < m_table.getFields().size() && index < m_filterFlags.size())
+		{
+			m_filterFlags.set(index);
+		}
+	}
+}
+
 bool DeclarativeBase::isDirty(uint8_t index)
 {
 	if (index >= m_dirtyFlags.size())
@@ -1037,6 +1197,16 @@ bool DeclarativeBase::isDirty(uint8_t index)
 	}
 
 	return m_dirtyFlags.test(index);
+}
+
+bool DeclarativeBase::isFilter(uint8_t index)
+{
+	if (index >= m_filterFlags.size())
+	{
+		return false;
+	}
+
+	return m_filterFlags.test(index);
 }
 
 void DeclarativeBase::dirtySet()
@@ -1049,6 +1219,10 @@ void DeclarativeBase::dirtyReset()
 	m_dirtyFlags.reset();
 }
 
+void DeclarativeBase::filterReset()
+{
+	m_filterFlags.reset();
+}
 
 MysqlTable DeclarativeBase::convertFrom(::mysql_proxy_msg::MysqlDescTable& desc)
 {

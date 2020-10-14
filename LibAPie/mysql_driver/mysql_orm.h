@@ -60,7 +60,8 @@ public:
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 	bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
-	
+	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
+
 	bool checkInvalid();
 
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
@@ -75,12 +76,18 @@ public:
 	void dirtySet();
 	void dirtyReset();
 
+	void markFilter(const std::vector<uint8_t>& index);
+	bool isFilter(uint8_t index);
+	void filterReset();
+
 	std::string query(MySQLConnector& connector);
 
 	mysql_proxy_msg::MysqlQueryRequest generateQuery();
 	mysql_proxy_msg::MysqlInsertRequest generateInsert();
 	mysql_proxy_msg::MysqlUpdateRequest generateUpdate();
 	mysql_proxy_msg::MysqlDeleteRequest generateDelete();
+
+	mysql_proxy_msg::MysqlQueryRequestByFilter generateQueryByFilter();
 
 public:
 	static std::string toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value);
@@ -91,6 +98,7 @@ public:
 private:
 	MysqlTable m_table;
 	std::bitset<256> m_dirtyFlags;
+	std::bitset<256> m_filterFlags;
 	uint32_t m_rowCount = 0;
 };
 

@@ -121,6 +121,63 @@ bool MysqlTable::generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy
 }
 
 
+bool MysqlTable::generateQueryByFilterSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& query, std::string& sql)
+{
+	const std::string graveAccent("`");
+
+	std::stringstream ss;
+	ss << "SELECT ";
+
+	uint32_t iTotalSize = m_fields.size();
+
+	uint32_t iIndex = 0;
+	for (auto &items : m_fields)
+	{
+		iIndex++;
+		ss << graveAccent << items.getName() << graveAccent;
+
+		if (iIndex < iTotalSize)
+		{
+			ss << ",";
+		}
+		else
+		{
+			ss << " ";
+		}
+	}
+
+	ss << "FROM " << m_table << " ";
+
+	bool bFirst = true;
+	for (auto& items : query.key())
+	{
+		if (bFirst)
+		{
+			ss << "WHERE ";
+
+			bFirst = false;
+		}
+		else
+		{
+			ss << " AND ";
+		}
+
+		std::string fieldName;
+		auto optName = this->getNameByIndex(items.index());
+		if (!optName.has_value())
+		{
+			ss << "invalidName|table:" << m_table << "|index:" << items.index();
+
+			sql = ss.str();
+			return false;
+		}
+		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
+	}
+
+	sql = ss.str();
+	return true;
+}
+
 bool MysqlTable::generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");

@@ -52,6 +52,15 @@ using LoadFromDbReplyCB = typename LoadFromDbCallback_<T>::ReplyCallback;
 
 
 template <typename T>
+struct LoadFromDbByFilterCallback_
+{
+	using ReplyCallback = std::function<void(rpc_msg::STATUS, std::vector<T>&)>;
+};
+
+template <typename T>
+using LoadFromDbByFilterCB = typename LoadFromDbByFilterCallback_<T>::ReplyCallback;
+
+template <typename T>
 typename std::enable_if<HasInsertToDb<T>::value, bool>::type 
 InsertToDb(T& message) {
   return message.insertToDb();
@@ -118,6 +127,68 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 }
 
+template <typename T>
+typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
+LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
+{
+	std::vector<T> result;
+
+	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
+	queryRequest = dbObj.generateQueryByFilter();
+
+	auto queryCB = [dbObj, cb, result](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			cb(status, result);
+			return;
+		}
+
+		rpc_msg::STATUS newStatus;
+		newStatus.set_code(::rpc_msg::CODE_Ok);
+
+		::mysql_proxy_msg::MysqlQueryResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			cb(newStatus, result);
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		if (!response.result())
+		{
+			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			cb(newStatus, result);
+			return;
+		}
+
+
+		uint32_t iRowCount = 0;
+		for (auto& rowData : response.table().rows())
+		{
+			decltype(dbObj) newObj;
+
+			bool bResult = newObj.loadFromPb(rowData);
+			if (!bResult)
+			{
+				newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+				cb(newStatus, result);
+				return;
+			}
+			else
+			{
+				result.push_back(newObj);
+			}
+		}
+
+		cb(newStatus, result);
+	};
+	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+}
 
 }  // namespace message
 

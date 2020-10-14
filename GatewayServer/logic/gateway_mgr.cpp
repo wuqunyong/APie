@@ -361,6 +361,32 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		LoadFromDb<ModelUser>(server, user, cb);
 	}
+	else if (command.cmd() == "load_from_db_by_filter")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint32_t level = std::stoull(command.params()[0]);
+
+		ModelUser user;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		user.markFilter({ 2 });
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser> userList) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		LoadFromDbByFilter<ModelUser>(server, user, cb);
+	}
 }
 
 }
