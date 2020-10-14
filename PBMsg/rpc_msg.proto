@@ -85,6 +85,8 @@ message STATUS
 {
 	uint32 code = 1;
 	string msg = 2;
+	bool has_more = 3;
+	uint32 offset = 4;
 }
 
 message RPC_RESPONSE
@@ -94,6 +96,7 @@ message RPC_RESPONSE
 	STATUS status = 3;
 	bytes result_data = 4;
 	bool has_more = 5;
+	uint32 offset = 6;
 }
 
 message PRC_Multiplexer_Forward_Args

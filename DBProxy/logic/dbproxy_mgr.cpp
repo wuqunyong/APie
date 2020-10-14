@@ -3,6 +3,7 @@
 #include "table_cache_mgr.h"
 
 #include "../../SharedDir/dao/model_user.h"
+#include "../../LibAPie/rpc/server/rpc_server.h"
 
 namespace APie {
 
@@ -181,6 +182,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
 	response = DeclarativeBase::convertFrom(*sharedTable, recordSet);
+	response.set_sql_statement(sSQL);
 	response.set_result(bResult);
 	if (!bResult)
 	{
@@ -221,12 +223,55 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const
 
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-	response = DeclarativeBase::convertFrom(*sharedTable, recordSet);
+
+	response.mutable_table()->set_db(sharedTable->getDb());
+	response.mutable_table()->set_name(sharedTable->getTable());
 	response.set_result(bResult);
 	if (!bResult)
 	{
 		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
 	}
+
+	if (!recordSet)
+	{
+		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	}
+
+	const uint32_t iBatchSize = 1;
+	uint32_t iCurBatchSize = 0;
+	uint32_t iOffset = 0;
+
+	do 
+	{
+		auto optRowData = DeclarativeBase::convertToRowFrom(*sharedTable, recordSet);
+		if (optRowData.has_value())
+		{
+			auto ptrAddRows = response.mutable_table()->add_rows();
+			*ptrAddRows = optRowData.value();
+
+			iCurBatchSize++;
+			if (iCurBatchSize >= iBatchSize)
+			{
+				iCurBatchSize = 0;
+
+				RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), true, iOffset);
+				response.mutable_table()->clear_rows();
+			}
+		}
+		else
+		{
+			break;
+		}
+
+		iOffset++;
+	} while (true);
+
+	if (iCurBatchSize != 0)
+	{
+		RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), true, iOffset);
+		response.mutable_table()->clear_rows();
+	}
+
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 

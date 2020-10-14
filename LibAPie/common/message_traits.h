@@ -131,15 +131,24 @@ template <typename T>
 typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
 LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
 {
-	std::vector<T> result;
+	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
+	std::get<1>(*ptrTuple) = false;
 
 	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
 	queryRequest = dbObj.generateQueryByFilter();
 
-	auto queryCB = [dbObj, cb, result](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	auto queryCB = [dbObj, cb, ptrTuple](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 	{
+		auto& result = std::get<0>(*ptrTuple);
+		auto& hasError = std::get<1>(*ptrTuple);
+		if (hasError)
+		{
+			return;
+		}
+
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
+			hasError = true;
 			cb(status, result);
 			return;
 		}
@@ -150,6 +159,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		::mysql_proxy_msg::MysqlQueryResponse response;
 		if (!response.ParseFromString(replyData))
 		{
+			hasError = true;
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
 			cb(newStatus, result);
 			return;
@@ -161,6 +171,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 
 		if (!response.result())
 		{
+			hasError = true;
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
 			cb(newStatus, result);
 			return;
@@ -175,6 +186,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			bool bResult = newObj.loadFromPb(rowData);
 			if (!bResult)
 			{
+				hasError = true;
 				newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
 				cb(newStatus, result);
 				return;
@@ -185,9 +197,14 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			}
 		}
 
-		cb(newStatus, result);
+		if (!status.has_more())
+		{
+			cb(newStatus, result);
+		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+	return APie::RPC::RpcClientSingleton::get().callByRouteWithServerStream(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+	
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
 
 }  // namespace message

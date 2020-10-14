@@ -31,7 +31,7 @@ namespace RPC {
 
 		bool registerOpcodes(::rpc_msg::RPC_OPCODES opcodes, RpcServerCb cb);
 		bool asyncReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData);
-		bool asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore);
+		bool asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset);
 
 		static void handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST& request);
 

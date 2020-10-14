@@ -45,7 +45,7 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcServer::asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore)
+	bool RpcServer::asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset)
 	{
 		uint64_t iSerialNum = client.channel_serial_num();
 
@@ -59,6 +59,7 @@ namespace RPC {
 		response.mutable_status()->set_code(errCode);
 		response.set_result_data(replyData);
 		response.set_has_more(hasMore);
+		response.set_offset(offset);
 
 		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)

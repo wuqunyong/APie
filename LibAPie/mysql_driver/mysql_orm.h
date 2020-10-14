@@ -94,6 +94,8 @@ public:
 
 	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
 	static mysql_proxy_msg::MysqlQueryResponse convertFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
+	static std::optional<mysql_proxy_msg::MysqlRow> convertToRowFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
+
 
 private:
 	MysqlTable m_table;

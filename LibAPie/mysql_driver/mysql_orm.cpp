@@ -630,6 +630,209 @@ mysql_proxy_msg::MysqlQueryResponse DeclarativeBase::convertFrom(MysqlTable& tab
 	return queryResult;
 }
 
+
+std::optional<mysql_proxy_msg::MysqlRow> DeclarativeBase::convertToRowFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr)
+{
+	if (!sharedPtr)
+	{
+		return std::nullopt;
+	}
+
+	auto result = sharedPtr.get();
+
+	if (result->MoveNext())
+	{
+		mysql_proxy_msg::MysqlRow addRows;
+
+		uint32_t iIndex = 0;
+		for (auto &items : table.getFields())
+		{
+			auto dbType = items.convertToDbType();
+			switch (dbType)
+			{
+			case MysqlField::DB_FIELD_TYPE::T_INT8:
+			{
+				int8_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
+
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_INT16:
+			{
+				int16_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_INT32:
+			{
+				int32_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_INT64:
+			{
+				int64_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_int64_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_FLOAT:
+			{
+				float fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_float_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_DOUBLE:
+			{
+				double fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_double_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_BYTES:
+			{
+				std::string fieldValue;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_bytes_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_STRING:
+			{
+				std::string fieldValue;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_string_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT8:
+			{
+				uint8_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT16:
+			{
+				uint16_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT32:
+			{
+				uint32_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);;
+				break;
+			}
+			case MysqlField::DB_FIELD_TYPE::T_UINT64:
+			{
+				uint64_t fieldValue = 0;
+				*result >> fieldValue;
+
+				auto fieldType = items.convertToPbType();
+
+				auto ptrAddFields = addRows.add_fields();
+				ptrAddFields->set_index(iIndex);
+				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+				ptrAddFields->mutable_value()->set_type(fieldType);
+				ptrAddFields->mutable_value()->set_uint64_v(fieldValue);;
+				break;
+			}
+			default:
+				break;
+			}
+
+			iIndex++;
+		}
+
+		return std::make_optional(addRows);
+	}
+
+	return std::nullopt;
+}
+
+
 uint32_t DeclarativeBase::getRowCount()
 {
 	return m_rowCount;

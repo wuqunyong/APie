@@ -557,20 +557,24 @@ namespace RPC {
 			//TODO
 			return;
 		}
-		replyCb(response.status(), response.result_data());
+
+		bool hasMore = false;
+		auto status = response.status();
 
 		bool isStream = RpcClientSingleton::get().isServerStream(seqId);
 		if (isStream)
 		{
-			bool hasMore = response.has_more();
-			if (hasMore)
-			{
-				//Nothing
-			}
-			else
-			{
-				RpcClientSingleton::get().del(seqId);
-			}
+			hasMore = response.has_more();
+
+			status.set_has_more(hasMore);
+			status.set_offset(response.offset());
+		}
+
+		replyCb(status, response.result_data());
+
+		if (hasMore)
+		{
+			//Nothing
 		} 
 		else
 		{
