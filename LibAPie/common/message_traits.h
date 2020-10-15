@@ -81,7 +81,10 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
-			cb(status, false, 0, 0);
+			if (cb)
+			{
+				cb(status, false, 0, 0);
+			}
 			return;
 		}
 
@@ -92,7 +95,11 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 		if (!response.ParseFromString(replyData))
 		{
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, false, 0, 0);
+
+			if (cb)
+			{
+				cb(newStatus, false, 0, 0);
+			}
 			return;
 		}
 
@@ -100,7 +107,10 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 		ss << response.ShortDebugString();
 		ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		cb(newStatus, response.result(), response.affected_rows(), response.insert_id());
+		if (cb)
+		{
+			cb(newStatus, response.result(), response.affected_rows(), response.insert_id());
+		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 }
@@ -116,7 +126,10 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
-			cb(status, false, 0);
+			if (cb)
+			{
+				cb(status, false, 0);
+			}
 			return;
 		}
 
@@ -127,7 +140,10 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 		if (!response.ParseFromString(replyData))
 		{
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, false, 0);
+			if (cb)
+			{
+				cb(newStatus, false, 0);
+			}
 			return;
 		}
 
@@ -135,7 +151,10 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 		ss << response.ShortDebugString();
 		ASYNC_PIE_LOG("mysql_delete", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		cb(newStatus, response.result(), response.affected_rows());
+		if (cb)
+		{
+			cb(newStatus, response.result(), response.affected_rows());
+		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
 }
@@ -153,7 +172,10 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 		rpc_msg::STATUS status;
 		status.set_code(::rpc_msg::CODE_DirtyFlagZero);
 
-		cb(status, false, 0);
+		if (cb)
+		{
+			cb(status, false, 0);
+		}
 		return false;
 	}
 
@@ -161,7 +183,11 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
-			cb(status, false, 0);
+			if (cb)
+			{
+				cb(status, false, 0);
+			}
+			
 			return;
 		}
 
@@ -172,7 +198,10 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 		if (!response.ParseFromString(replyData))
 		{
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, false, 0);
+			if (cb)
+			{
+				cb(newStatus, false, 0);
+			}
 			return;
 		}
 
@@ -180,7 +209,10 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 		ss << response.ShortDebugString();
 		ASYNC_PIE_LOG("mysql_update", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		cb(newStatus, response.result(), response.affected_rows());
+		if (cb)
+		{
+			cb(newStatus, response.result(), response.affected_rows());
+		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
 }
@@ -197,7 +229,10 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
-			cb(status, dbObj);
+			if (cb)
+			{
+				cb(status, dbObj);
+			}
 			return;
 		}
 
@@ -208,7 +243,10 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 		if (!response.ParseFromString(replyData))
 		{
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, dbObj);
+			if (cb)
+			{
+				cb(newStatus, dbObj);
+			}
 			return;
 		}
 
@@ -222,7 +260,10 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
 		}
 
-		cb(newStatus, dbObj);
+		if (cb)
+		{
+			cb(newStatus, dbObj);
+		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 }
@@ -249,7 +290,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
 			hasError = true;
-			cb(status, result);
+			if (cb)
+			{
+				cb(status, result);
+			}
 			return;
 		}
 
@@ -261,7 +305,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		{
 			hasError = true;
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, result);
+			if (cb)
+			{
+				cb(newStatus, result);
+			}
 			return;
 		}
 
@@ -273,7 +320,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		{
 			hasError = true;
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			cb(newStatus, result);
+			if (cb)
+			{
+				cb(newStatus, result);
+			}
 			return;
 		}
 
@@ -288,7 +338,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			{
 				hasError = true;
 				newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
-				cb(newStatus, result);
+				if (cb)
+				{
+					cb(newStatus, result);
+				}
 				return;
 			}
 			else
@@ -299,7 +352,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 
 		if (!status.has_more())
 		{
-			cb(newStatus, result);
+			if (cb)
+			{
+				cb(newStatus, result);
+			}
 		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRouteWithServerStream(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
