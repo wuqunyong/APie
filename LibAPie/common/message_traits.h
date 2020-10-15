@@ -17,9 +17,11 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 
 #include "macros.h"
 #include "../mysql_driver/mysql_orm.h"
+
 
 namespace APie {
 
@@ -60,24 +62,118 @@ struct LoadFromDbByFilterCallback_
 template <typename T>
 using LoadFromDbByFilterCB = typename LoadFromDbByFilterCallback_<T>::ReplyCallback;
 
+
+
+using InsertToDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows, uint64_t insertId)>;
+using UpdateToDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows)>;
+using DeleteFromDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows)>;
+
 template <typename T>
-typename std::enable_if<HasInsertToDb<T>::value, bool>::type 
-InsertToDb(T& message) {
-  return message.insertToDb();
+typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
+InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
+{
+	dbObj.dirtySet();
+
+	mysql_proxy_msg::MysqlInsertRequest insertRequest = dbObj.generateInsert();
+	dbObj.dirtyReset();
+
+	auto insertCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			cb(status, false, 0, 0);
+			return;
+		}
+
+		rpc_msg::STATUS newStatus;
+		newStatus.set_code(::rpc_msg::CODE_Ok);
+
+		::mysql_proxy_msg::MysqlInsertResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			cb(newStatus, false, 0, 0);
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		cb(newStatus, response.result(), response.affected_rows(), response.insert_id());
+	};
+	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 }
 
 
 template <typename T>
-typename std::enable_if<HasDeleteFromDb<T>::value, bool>::type
-DeleteFromDb(T& message) {
-  return message.deleteFromDb();
+typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
+DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb) 
+{
+	mysql_proxy_msg::MysqlDeleteRequest deleteRequest = dbObj.generateDelete();
+
+	auto deleteCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			cb(status, false, 0);
+			return;
+		}
+
+		rpc_msg::STATUS newStatus;
+		newStatus.set_code(::rpc_msg::CODE_Ok);
+
+		::mysql_proxy_msg::MysqlDeleteResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			cb(newStatus, false, 0);
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_delete", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		cb(newStatus, response.result(), response.affected_rows());
+	};
+	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
 }
 
 
 template <typename T>
-typename std::enable_if<HasUpdateToDb<T>::value, bool>::type
-UpdateToDb(T& message) {
-  return message.updateToDb();
+typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
+UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
+{
+	mysql_proxy_msg::MysqlUpdateRequest updateRequest = dbObj.generateUpdate();
+	dbObj.dirtyReset();
+
+	auto updateCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			cb(status, false, 0);
+			return;
+		}
+
+		rpc_msg::STATUS newStatus;
+		newStatus.set_code(::rpc_msg::CODE_Ok);
+
+		::mysql_proxy_msg::MysqlUpdateResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			cb(newStatus, false, 0);
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_update", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		cb(newStatus, response.result(), response.affected_rows());
+	};
+	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
 }
 
 
@@ -85,13 +181,8 @@ template <typename T>
 typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
 LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 {
-
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest = dbObj.generateQuery();
-
-	//::rpc_msg::CHANNEL server;
-	//server.set_type(common::EPT_DB_Proxy);
-	//server.set_id(1);
 
 	auto queryCB = [dbObj, cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 	{

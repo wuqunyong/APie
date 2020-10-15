@@ -390,6 +390,87 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		LoadFromDbByFilter<ModelUser>(server, user, cb);
 	}
+	else if (command.cmd() == "mysql_insert_orm")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		InsertToDb<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "mysql_update_orm")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		UpdateToDb<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "mysql_delete_orm")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		DeleteFromDb<ModelUser>(server, user, cb);
+	}
 }
 
 }
