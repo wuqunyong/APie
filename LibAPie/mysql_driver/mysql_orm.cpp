@@ -985,6 +985,21 @@ bool DeclarativeBase::loadFromDb(std::shared_ptr<ResultSet> sharedPtr)
 	return true;
 }
 
+bool  DeclarativeBase::loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& response)
+{
+	if (!response.result())
+	{
+		return false;
+	}
+
+	if (response.table().db() != m_table.getDb() || response.table().name() != m_table.getTable())
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response)
 {
 	if (!response.result())

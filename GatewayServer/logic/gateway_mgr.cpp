@@ -125,10 +125,25 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 				ss << response.ShortDebugString();
 				ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
-				bool bResult = user.loadFromPb(response);
-				if (bResult)
+				//bool bResult = user.loadFromPb(response);
+				//if (bResult)
+				//{
+				//	loadedUser = user;
+				//}
+
+				bool bResult = user.loadFromPbCheck(response);
+				if (!bResult)
 				{
+					return;
+				}
+
+				uint32_t iRowCount = response.table().rows_size();
+				for (auto& rowData : response.table().rows())
+				{
+					user.loadFromPb(rowData);
+
 					loadedUser = user;
+					break;
 				}
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
@@ -353,7 +368,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		server.set_type(common::EPT_DB_Proxy);
 		server.set_id(1);
 
-		auto cb = [](rpc_msg::STATUS status, ModelUser user) {
+		auto cb = [](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
 				return;

@@ -46,7 +46,7 @@ constexpr bool HasDbSerializer<T>::value;
 template <typename T>
 struct LoadFromDbCallback_
 {
-	using ReplyCallback = std::function<void(rpc_msg::STATUS, T&)>;
+	using ReplyCallback = std::function<void(rpc_msg::STATUS, T& dbObj, uint32_t iRows)>;
 }; 
 
 template <typename T>
@@ -56,7 +56,7 @@ using LoadFromDbReplyCB = typename LoadFromDbCallback_<T>::ReplyCallback;
 template <typename T>
 struct LoadFromDbByFilterCallback_
 {
-	using ReplyCallback = std::function<void(rpc_msg::STATUS, std::vector<T>&)>;
+	using ReplyCallback = std::function<void(rpc_msg::STATUS, std::vector<T>& dbObjList)>;
 };
 
 template <typename T>
@@ -231,7 +231,7 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 		{
 			if (cb)
 			{
-				cb(status, dbObj);
+				cb(status, dbObj, 0);
 			}
 			return;
 		}
@@ -245,7 +245,7 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 			newStatus.set_code(::rpc_msg::CODE_ParseError);
 			if (cb)
 			{
-				cb(newStatus, dbObj);
+				cb(newStatus, dbObj, 0);
 			}
 			return;
 		}
@@ -254,15 +254,33 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 		ss << response.ShortDebugString();
 		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		bool bResult = dbObj.loadFromPb(response);
+		//bool bResult = dbObj.loadFromPb(response);
+		//if (!bResult)
+		//{
+		//	newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+		//}
+
+		bool bResult = dbObj.loadFromPbCheck(response);
 		if (!bResult)
 		{
 			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+			if (cb)
+			{
+				cb(newStatus, dbObj, 0);
+			}
+			return;
+		}
+
+		uint32_t iRowCount = response.table().rows_size();
+		for (auto& rowData : response.table().rows())
+		{
+			dbObj.loadFromPb(rowData);
+			break;
 		}
 
 		if (cb)
 		{
-			cb(newStatus, dbObj);
+			cb(newStatus, dbObj, iRowCount);
 		}
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
@@ -316,10 +334,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		ss << response.ShortDebugString();
 		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		if (!response.result())
+		bool bResult = dbObj.loadFromPbCheck(response);
+		if (!bResult)
 		{
-			hasError = true;
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
+			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, result);
@@ -327,27 +345,13 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			return;
 		}
 
-
 		uint32_t iRowCount = 0;
 		for (auto& rowData : response.table().rows())
 		{
 			decltype(dbObj) newObj;
 
-			bool bResult = newObj.loadFromPb(rowData);
-			if (!bResult)
-			{
-				hasError = true;
-				newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
-				if (cb)
-				{
-					cb(newStatus, result);
-				}
-				return;
-			}
-			else
-			{
-				result.push_back(newObj);
-			}
+			newObj.loadFromPb(rowData);
+			result.push_back(newObj);
 		}
 
 		if (!status.has_more())
