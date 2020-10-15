@@ -329,7 +329,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			return;
 		}
 
-		uint64_t userId = std::stoull(command.params()[1]);
+		uint64_t userId = std::stoull(command.params()[0]);
 
 		ModelUser user;
 		user.fields.user_id = userId;
@@ -339,7 +339,10 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		server.set_id(1);
 
 		auto cb = [](rpc_msg::STATUS status, ModelUser user) {
-
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
 		};
 		LoadFromDb<ModelUser>(server, user, cb);
 	}
