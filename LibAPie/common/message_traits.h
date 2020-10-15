@@ -19,6 +19,7 @@
 #include <string>
 
 #include "macros.h"
+#include "../mysql_driver/mysql_orm.h"
 
 namespace APie {
 
@@ -72,7 +73,8 @@ UpdateToDb(T& message) {
 
 
 template <typename T>
-typename std::enable_if<HasLoadFromDb<T>::value, bool>::type LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
+typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
+LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 {
 
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
