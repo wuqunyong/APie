@@ -8,9 +8,12 @@
 #include <algorithm>
 #include <tuple>
 #include <memory>
+#include <functional>
+#include <optional>
 
-#include "apie.h"
+#include "mysql_orm.h"
 
+#include "../singleton/threadsafe_singleton.h"
 
 
 namespace APie {
@@ -25,8 +28,12 @@ namespace APie {
 		std::shared_ptr<DeclarativeBase> create(const std::string& name);
 		std::map<std::string, TCreateMethod>& getMethods();
 
+		bool addTable(const std::string& name, MysqlTable& table);
+		std::optional<MysqlTable> getTable(const std::string& name);
+
 	private:
 		std::map<std::string, TCreateMethod> m_methods;
+		std::map<std::string, MysqlTable> m_tables;
 	};
 
 	class DAOFactoryType

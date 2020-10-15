@@ -2,7 +2,6 @@
 
 #include "table_cache_mgr.h"
 
-#include "../../SharedDir/dao/dao_factory.h"
 #include "../../SharedDir/dao/model_user.h"
 
 namespace APie {

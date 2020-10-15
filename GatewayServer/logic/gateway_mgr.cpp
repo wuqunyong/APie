@@ -95,6 +95,8 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			if (bResult)
 			{
 				loadedTable[tableName] = table;
+
+				DAOFactoryTypeSingleton::get().role.addTable(tableName, table);
 			}
 
 			user.fields.user_id = userId;
@@ -333,6 +335,19 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 
 		ModelUser user;
 		user.fields.user_id = userId;
+
+		//auto userTableOpt = DAOFactoryTypeSingleton::get().role.getTable(ModelUser::getFactoryName());
+		//if (userTableOpt.has_value())
+		//{
+		//	user.initMetaData(userTableOpt.value());
+		//}
+		//bool bResult = user.checkInvalid();
+		//if (!bResult)
+		//{
+		//	return;
+		//}
+
+		bool bResult = user.bindTable(ModelUser::getFactoryName());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);

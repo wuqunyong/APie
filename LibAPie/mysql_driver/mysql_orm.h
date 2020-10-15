@@ -56,6 +56,7 @@ public:
 	}
 
 	bool initMetaData(MysqlTable& table);
+	bool bindTable(const std::string& name);
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 	bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);

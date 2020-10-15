@@ -103,7 +103,7 @@ typename std::enable_if<HasLoadFromDb<T>::value, bool>::type LoadFromDb(::rpc_ms
 
 		std::stringstream ss;
 		ss << response.ShortDebugString();
-		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 		bool bResult = dbObj.loadFromPb(response);
 		if (!bResult)
@@ -111,7 +111,6 @@ typename std::enable_if<HasLoadFromDb<T>::value, bool>::type LoadFromDb(::rpc_ms
 			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
 		}
 
-		newStatus.set_code(::rpc_msg::CODE_ParseError);
 		cb(newStatus, dbObj);
 	};
 	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);

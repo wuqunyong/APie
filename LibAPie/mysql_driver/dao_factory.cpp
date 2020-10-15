@@ -30,4 +30,27 @@ std::map<std::string, DAOFactory::TCreateMethod>& DAOFactory::getMethods()
 	return m_methods;
 }
 
+bool DAOFactory::addTable(const std::string& name, MysqlTable& table)
+{
+	auto findIte = m_tables.find(name);
+	if (findIte != m_tables.end())
+	{
+		return false;
+	}
+
+	m_tables[name] = table;
+	return true;
+}
+
+std::optional<MysqlTable> DAOFactory::getTable(const std::string& name)
+{
+	auto findIte = m_tables.find(name);
+	if (findIte == m_tables.end())
+	{
+		return std::nullopt;
+	}
+
+	return std::make_optional(findIte->second);
+}
+
 }

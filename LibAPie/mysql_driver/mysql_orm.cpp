@@ -1,10 +1,23 @@
 #include "mysql_orm.h"
+#include "dao_factory.h"
 
 
 bool DeclarativeBase::initMetaData(MysqlTable& table)
 {
 	m_table = table;
 	return true;
+}
+
+bool DeclarativeBase::bindTable(const std::string& name)
+{
+	auto userTableOpt = APie::DAOFactoryTypeSingleton::get().role.getTable(name);
+	if (!userTableOpt.has_value())
+	{
+		return false;
+	}
+
+	this->initMetaData(userTableOpt.value());
+	return this->checkInvalid();
 }
 
 std::string DeclarativeBase::query(MySQLConnector& connector)

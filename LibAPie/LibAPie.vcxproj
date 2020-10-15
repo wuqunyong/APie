@@ -194,6 +194,7 @@
     <ClInclude Include="http\http_response_decoder.h" />
     <ClInclude Include="http\http_util.h" />
     <ClInclude Include="http\string_util.h" />
+    <ClInclude Include="mysql_driver\dao_factory.h" />
     <ClInclude Include="mysql_driver\mysql_connector.h" />
     <ClInclude Include="mysql_driver\mysql_field.h" />
     <ClInclude Include="mysql_driver\mysql_orm.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="http\http_response_decoder.cpp" />
     <ClCompile Include="http\http_util.cpp" />
     <ClCompile Include="http\string_util.cpp" />
+    <ClCompile Include="mysql_driver\dao_factory.cpp" />
     <ClCompile Include="mysql_driver\mysql_connector.cpp" />
     <ClCompile Include="mysql_driver\mysql_field.cpp" />
     <ClCompile Include="mysql_driver\mysql_orm.cpp" />
