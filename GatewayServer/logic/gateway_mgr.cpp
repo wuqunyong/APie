@@ -433,6 +433,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		user.fields.user_id = userId;
 		user.fields.level = level;
 		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		user.markDirty({ 2 });
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);

@@ -334,7 +334,7 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "e\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlIn"
   "sert\020\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_Mys"
   "qlDelete\020\225\003\022\033\n\026RPC_MysqlQueryByFilter\020\226\003"
-  "*\325\002\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_As"
+  "*\355\002\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_As"
   "ync\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregist"
   "er\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE_ErrorS"
   "erverPost\020g\022\035\n\031CODE_RouteNotLinkToServer"
@@ -342,7 +342,8 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "ODE_OpcodeUnregister\020j\022\027\n\023CODE_CreateMsg"
   "Error\020k\022\030\n\024CODE_LogicThreadNull\020l\022\031\n\025COD"
   "E_NotReceivedReply\020m\022\020\n\014CODE_NotSend\020n\022\030"
-  "\n\024CODE_LoadFromDbError\020ob\006proto3"
+  "\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE_DirtyFl"
+  "agZero\020pb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -360,7 +361,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1632,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1656,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 9, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -410,6 +411,7 @@ bool RPC_CODE_IsValid(int value) {
     case 109:
     case 110:
     case 111:
+    case 112:
       return true;
     default:
       return false;

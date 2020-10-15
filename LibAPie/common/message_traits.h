@@ -148,6 +148,15 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 	mysql_proxy_msg::MysqlUpdateRequest updateRequest = dbObj.generateUpdate();
 	dbObj.dirtyReset();
 
+	if (updateRequest.fields_size() == 0)
+	{
+		rpc_msg::STATUS status;
+		status.set_code(::rpc_msg::CODE_DirtyFlagZero);
+
+		cb(status, false, 0);
+		return false;
+	}
+
 	auto updateCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)

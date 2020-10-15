@@ -1,5 +1,6 @@
 #include "mysql_orm.h"
 #include "dao_factory.h"
+#include "../network/logger.h"
 
 
 bool DeclarativeBase::initMetaData(MysqlTable& table)
@@ -213,7 +214,9 @@ mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 	{
 		std::stringstream ss;
 		ss << "invalidUpdate|table:" << m_table.getTable() << "|fieldSize:" << updateRequest.fields_size();
-		throw std::invalid_argument(ss.str());
+
+		ASYNC_PIE_LOG("db/mysql", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
+		//throw std::invalid_argument(ss.str());
 	}
 
 	for (auto& items : m_table.getFields())
