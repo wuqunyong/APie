@@ -8,15 +8,24 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 	return true;
 }
 
-bool DeclarativeBase::bindTable(const std::string& name)
+bool DeclarativeBase::bindTable(uint32_t type, const std::string& name)
 {
-	auto userTableOpt = APie::DAOFactoryTypeSingleton::get().role.getTable(name);
-	if (!userTableOpt.has_value())
+	switch (type)
 	{
-		return false;
-	}
+	case APie::DAOFactoryType::DBType::DBT_Role:
+	{
+		auto userTableOpt = APie::DAOFactoryTypeSingleton::get().role.getTable(name);
+		if (!userTableOpt.has_value())
+		{
+			return false;
+		}
 
-	this->initMetaData(userTableOpt.value());
+		this->initMetaData(userTableOpt.value());
+		break;
+	}
+	default:
+		break;
+	}
 	return this->checkInvalid();
 }
 

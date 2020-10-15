@@ -347,7 +347,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		//	return;
 		//}
 
-		bool bResult = user.bindTable(ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);

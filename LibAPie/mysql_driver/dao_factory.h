@@ -39,6 +39,11 @@ namespace APie {
 	class DAOFactoryType
 	{
 	public:
+		enum DBType
+		{
+			DBT_Role = 0,
+		};
+		
 		DAOFactory role;
 	};
 
