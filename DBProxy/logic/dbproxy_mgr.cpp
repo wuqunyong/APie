@@ -266,13 +266,8 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const
 		iOffset++;
 	} while (true);
 
-	if (iCurBatchSize != 0)
-	{
-		RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), true, iOffset);
-		response.mutable_table()->clear_rows();
-	}
-
-	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), false, iOffset);
+	return std::make_tuple(::rpc_msg::CODE_Ok_Async, "");
 }
 
 

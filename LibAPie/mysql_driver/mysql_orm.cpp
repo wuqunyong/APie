@@ -992,7 +992,8 @@ bool  DeclarativeBase::loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& re
 		return false;
 	}
 
-	if (response.table().db() != m_table.getDb() || response.table().name() != m_table.getTable())
+	//if (response.table().db() != m_table.getDb() || response.table().name() != m_table.getTable())
+	if (response.table().name() != m_table.getTable())
 	{
 		return false;
 	}
