@@ -41,13 +41,13 @@ constexpr bool HasDbSerializer<T>::value;
 
 
 template <typename T>
-struct DbCallback_
+struct LoadFromDbCallback_
 {
 	using ReplyCallback = std::function<void(rpc_msg::STATUS, T&)>;
 }; 
 
 template <typename T>
-using ReplyCB = typename DbCallback_<T>::ReplyCallback;
+using LoadFromDbReplyCB = typename LoadFromDbCallback_<T>::ReplyCallback;
 
 
 template <typename T>
@@ -72,7 +72,7 @@ UpdateToDb(T& message) {
 
 
 template <typename T>
-typename std::enable_if<HasLoadFromDb<T>::value, bool>::type LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, ReplyCB<T> cb)
+typename std::enable_if<HasLoadFromDb<T>::value, bool>::type LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 {
 
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
