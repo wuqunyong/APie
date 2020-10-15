@@ -31,6 +31,7 @@ enum RPC_CODE {
 	CODE_LogicThreadNull = 108;
 	CODE_NotReceivedReply = 109;
 	CODE_NotSend = 110;
+	CODE_LoadFromDbError = 111;
 }
 
 

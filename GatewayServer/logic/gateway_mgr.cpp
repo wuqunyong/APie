@@ -1,5 +1,6 @@
 #include "gateway_mgr.h"
 #include "../../SharedDir/dao/model_user.h"
+#include "../../LibAPie/common/message_traits.h"
 
 
 namespace APie {
@@ -320,6 +321,27 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 
 		};
 		APie::RPC::RpcClientSingleton::get().multiCallByRoute(methods, rpcCB);
+	}
+	else if (command.cmd() == "load_from_db")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[1]);
+
+		ModelUser user;
+		user.fields.user_id = userId;
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, ModelUser user) {
+
+		};
+		LoadFromDb<ModelUser>(server, user, cb);
 	}
 }
 

@@ -142,12 +142,13 @@ enum RPC_CODE : int {
   CODE_LogicThreadNull = 108,
   CODE_NotReceivedReply = 109,
   CODE_NotSend = 110,
+  CODE_LoadFromDbError = 111,
   RPC_CODE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_CODE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RPC_CODE_IsValid(int value);
 constexpr RPC_CODE RPC_CODE_MIN = CODE_Ok;
-constexpr RPC_CODE RPC_CODE_MAX = CODE_NotSend;
+constexpr RPC_CODE RPC_CODE_MAX = CODE_LoadFromDbError;
 constexpr int RPC_CODE_ARRAYSIZE = RPC_CODE_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_CODE_descriptor();
