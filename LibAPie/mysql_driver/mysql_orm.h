@@ -59,9 +59,9 @@ public:
 	bool bindTable(uint32_t type, const std::string& name);
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
-	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
 
 	bool loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& response);
+	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
 
 	bool checkInvalid();
 
@@ -91,7 +91,7 @@ public:
 	mysql_proxy_msg::MysqlQueryRequestByFilter generateQueryByFilter();
 
 private:
-	bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
+	//bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
 
 public:
 	static std::string toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value);
