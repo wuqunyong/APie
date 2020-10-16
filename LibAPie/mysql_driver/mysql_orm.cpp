@@ -11,28 +11,20 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 
 bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string& name)
 {
-	switch (type)
+	auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(type);
+	if (ptrFactory == nullptr)
 	{
-	case DeclarativeBase::DBType::DBT_Role:
+		return false;
+	}
+
+	auto userTableOpt = (*ptrFactory).getTable(name);
+	if (!userTableOpt.has_value())
 	{
-		auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(DeclarativeBase::DBType::DBT_Role);
-		if (ptrFactory == nullptr)
-		{
-			return false;
-		}
-
-		auto userTableOpt = (*ptrFactory).getTable(name);
-		if (!userTableOpt.has_value())
-		{
-			return false;
-		}
-
-		this->initMetaData(userTableOpt.value());
-		break;
+		return false;
 	}
-	default:
-		break;
-	}
+
+	this->initMetaData(userTableOpt.value());
+
 	return this->checkInvalid();
 }
 
