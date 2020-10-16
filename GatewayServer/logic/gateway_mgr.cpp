@@ -96,7 +96,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			{
 				loadedTable[tableName] = table;
 
-				DAOFactoryTypeSingleton::get().addLoadedTable(DAOFactoryType::DBT_Role, tableName, table);
+				DAOFactoryTypeSingleton::get().addLoadedTable(DeclarativeBase::DBType::DBT_Role, tableName, table);
 			}
 
 			user.fields.user_id = userId;
@@ -351,7 +351,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		ModelUser user;
 		user.fields.user_id = userId;
 
-		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
@@ -379,7 +379,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		ModelUser user;
 		user.fields.game_id = gameId;
 		user.fields.level = level;
-		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 		user.markFilter({ 1, 2 });
 
 		::rpc_msg::CHANNEL server;
@@ -408,7 +408,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		ModelUser user;
 		user.fields.user_id = userId;
 		user.fields.level = level;
-		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);
@@ -436,7 +436,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		ModelUser user;
 		user.fields.user_id = userId;
 		user.fields.level = level;
-		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 		user.markDirty({ 2 });
 
 		::rpc_msg::CHANNEL server;
@@ -462,7 +462,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 
 		ModelUser user;
 		user.fields.user_id = userId;
-		bool bResult = user.bindTable(DAOFactoryType::DBType::DBT_Role, ModelUser::getFactoryName());
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(common::EPT_DB_Proxy);

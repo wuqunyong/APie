@@ -20,7 +20,7 @@ void DBProxyMgr::init()
 
 std::tuple<uint32_t, std::string> DBProxyMgr::start()
 {
-	auto dbType = DAOFactoryType::DBType::DBT_Role;
+	auto dbType = DeclarativeBase::DBType::DBT_Role;
 	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
 
 

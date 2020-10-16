@@ -53,11 +53,11 @@ std::optional<MysqlTable> DAOFactory::getTable(const std::string& name)
 	return std::make_optional(findIte->second);
 }
 
-bool DAOFactoryType::registerRequiredTable(DBType type, const std::string name, DAOFactory::TCreateMethod funcCreate)
+bool DAOFactoryType::registerRequiredTable(DeclarativeBase::DBType type, const std::string name, DAOFactory::TCreateMethod funcCreate)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return DAOFactoryTypeSingleton::get().role.registerFactory(name, funcCreate);
 	}
@@ -70,11 +70,11 @@ bool DAOFactoryType::registerRequiredTable(DBType type, const std::string name, 
 	return false;
 }
 
-std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::getRequiredTable(DBType type)
+std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::getRequiredTable(DeclarativeBase::DBType type)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return std::make_optional(this->role.getMethods());
 	}
@@ -84,11 +84,11 @@ std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::
 	return std::nullopt;
 }
 
-std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DBType type, std::string name)
+std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DeclarativeBase::DBType type, std::string name)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return this->role.create(name);
 	}
@@ -99,11 +99,11 @@ std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DBType type, std:
 	return nullptr;
 }
 
-bool DAOFactoryType::addLoadedTable(DBType type, const std::string& name, MysqlTable& table)
+bool DAOFactoryType::addLoadedTable(DeclarativeBase::DBType type, const std::string& name, MysqlTable& table)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return this->role.addTable(name, table);
 	}
@@ -114,11 +114,11 @@ bool DAOFactoryType::addLoadedTable(DBType type, const std::string& name, MysqlT
 	return false;
 }
 
-DAOFactory* DAOFactoryType::getDAOFactory(DBType type)
+DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return &role;
 	}

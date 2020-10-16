@@ -37,6 +37,11 @@
 class DeclarativeBase
 {
 public:
+	enum DBType
+	{
+		DBT_None = 0,
+		DBT_Role = 1,
+	};
 
 	//virtual uint32_t blockSize() = 0;
 	virtual void* layoutAddress() = 0;
@@ -56,7 +61,7 @@ public:
 	}
 
 	bool initMetaData(MysqlTable& table);
-	bool bindTable(uint32_t type, const std::string& name);
+	bool bindTable(DeclarativeBase::DBType type, const std::string& name);
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 

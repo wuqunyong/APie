@@ -9,13 +9,13 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 	return true;
 }
 
-bool DeclarativeBase::bindTable(uint32_t type, const std::string& name)
+bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string& name)
 {
 	switch (type)
 	{
-	case APie::DAOFactoryType::DBType::DBT_Role:
+	case DeclarativeBase::DBType::DBT_Role:
 	{
-		auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(APie::DAOFactoryType::DBT_Role);
+		auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(DeclarativeBase::DBType::DBT_Role);
 		if (ptrFactory == nullptr)
 		{
 			return false;
