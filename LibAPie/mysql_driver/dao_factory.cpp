@@ -53,7 +53,7 @@ std::optional<MysqlTable> DAOFactory::getTable(const std::string& name)
 	return std::make_optional(findIte->second);
 }
 
-bool DAOFactoryType::registerRequiredTable(DeclarativeBase::DBType type, const std::string name, DAOFactory::TCreateMethod funcCreate)
+bool DAOFactoryType::registerRequiredTable(DeclarativeBase::DBType type, const std::string& name, DAOFactory::TCreateMethod funcCreate)
 {
 	switch (type)
 	{
@@ -84,7 +84,7 @@ std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::
 	return std::nullopt;
 }
 
-std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DeclarativeBase::DBType type, std::string name)
+std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DeclarativeBase::DBType type, const std::string& name)
 {
 	switch (type)
 	{

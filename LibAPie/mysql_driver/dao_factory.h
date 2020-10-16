@@ -39,9 +39,9 @@ namespace APie {
 	class DAOFactoryType
 	{
 	public:
-		bool registerRequiredTable(DeclarativeBase::DBType type, const std::string name, DAOFactory::TCreateMethod funcCreate);
+		bool registerRequiredTable(DeclarativeBase::DBType type, const std::string& name, DAOFactory::TCreateMethod funcCreate);
 		std::optional<std::map<std::string, DAOFactory::TCreateMethod>> getRequiredTable(DeclarativeBase::DBType type);
-		std::shared_ptr<DeclarativeBase> getCreateFunc(DeclarativeBase::DBType type, std::string name);
+		std::shared_ptr<DeclarativeBase> getCreateFunc(DeclarativeBase::DBType type, const std::string& name);
 
 		bool addLoadedTable(DeclarativeBase::DBType type, const std::string& name, MysqlTable& table);
 		DAOFactory* getDAOFactory(DeclarativeBase::DBType type);
