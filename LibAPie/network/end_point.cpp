@@ -92,6 +92,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","ip" }, "");
 	uint32_t port = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","port" }, 0);
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
+	uint32_t db_id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","db_id" }, 0);
 
 	::service_discovery::MSG_REQUEST_ADD_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
@@ -100,6 +101,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	request.mutable_instance()->set_ip(ip);
 	request.mutable_instance()->set_port(port);
 	request.mutable_instance()->set_codec_type(codec_type);
+	request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
 	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, request);
