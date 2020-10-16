@@ -37,7 +37,7 @@
 class DeclarativeBase
 {
 public:
-	enum DBType
+	enum class DBType
 	{
 		DBT_None = 0,
 		DBT_Role = 1,
