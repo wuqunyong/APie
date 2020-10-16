@@ -5,6 +5,7 @@ identify:
   ip: "127.0.0.1"
   port: 5007
   codec_type: 1
+  db_id : 1
 io_threads: 2
 daemon: true
 listeners:

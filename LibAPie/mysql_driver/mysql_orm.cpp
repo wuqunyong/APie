@@ -15,7 +15,13 @@ bool DeclarativeBase::bindTable(uint32_t type, const std::string& name)
 	{
 	case APie::DAOFactoryType::DBType::DBT_Role:
 	{
-		auto userTableOpt = APie::DAOFactoryTypeSingleton::get().role.getTable(name);
+		auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(APie::DAOFactoryType::DBT_Role);
+		if (ptrFactory == nullptr)
+		{
+			return false;
+		}
+
+		auto userTableOpt = (*ptrFactory).getTable(name);
 		if (!userTableOpt.has_value())
 		{
 			return false;

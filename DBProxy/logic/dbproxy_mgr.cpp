@@ -20,7 +20,8 @@ void DBProxyMgr::init()
 
 std::tuple<uint32_t, std::string> DBProxyMgr::start()
 {
-	DAOFactoryTypeSingleton::get().role.registerFactory(ModelUser::getFactoryName(), ModelUser::createMethod);
+	auto dbType = DAOFactoryType::DBType::DBT_Role;
+	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
 
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
@@ -29,8 +30,14 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 		return std::make_tuple(Hook::HookResult::HR_Error, "null ptrDispatched");
 	}
 
+	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(dbType);
+	if (!requiredTableOpt.has_value())
+	{
+		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+	}
+
 	std::vector<std::string> tables;
-	for (const auto& items : DAOFactoryTypeSingleton::get().role.getMethods())
+	for (const auto& items : requiredTableOpt.value())
 	{
 		tables.push_back(items.first);
 	}
@@ -43,7 +50,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 		{
 			TableCacheMgrSingleton::get().addTable(table);
 
-			auto ptrDaoBase = DAOFactoryTypeSingleton::get().role.create(tableName);
+			auto ptrDaoBase = DAOFactoryTypeSingleton::get().getCreateFunc(dbType, tableName);
 			if (ptrDaoBase == nullptr)
 			{
 				return std::make_tuple(Hook::HookResult::HR_Error, "");
