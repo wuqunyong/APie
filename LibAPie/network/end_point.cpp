@@ -153,6 +153,45 @@ std::optional<::service_discovery::EndPointInstance> EndPointMgr::findEndpoint(E
 	return std::nullopt;
 }
 
+std::optional<EndPoint> EndPointMgr::findDbEndpointById(uint32_t type, uint64_t id)
+{
+	std::vector<EndPoint> pointList = this->getEndpointsByType(type);
+	if (pointList.empty())
+	{
+		return std::nullopt;
+	}
+
+	const uint32_t iFactor = 1000;
+
+	uint32_t iDbId = id % iFactor;
+	uint64_t iIndex = id / iFactor;
+
+	std::vector<EndPoint> candidate;
+	for (const auto& point : pointList)
+	{
+		auto findIte = m_endpoints.find(point);
+		if (findIte == m_endpoints.end())
+		{
+			continue;
+		}
+
+		if (findIte->second.db_id() == iDbId)
+		{
+			candidate.push_back(point);
+		}
+	}
+
+	if (candidate.empty())
+	{
+		return std::nullopt;
+	}
+
+	auto iSize = candidate.size();
+	auto iCurIndex = iIndex % iSize;
+
+	return std::make_optional(candidate[iCurIndex]);
+}
+
 std::map<EndPoint, ::service_discovery::EndPointInstance>& EndPointMgr::getEndpoints()
 {
 	return m_endpoints;

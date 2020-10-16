@@ -74,6 +74,9 @@ namespace APie
 		void unregisterEndpoint(EndPoint point);
 		std::optional<::service_discovery::EndPointInstance> findEndpoint(EndPoint point);
 
+		//id:µÕ3Œª∂‘”¶db_id
+		std::optional<EndPoint> findDbEndpointById(uint32_t type, uint64_t id);
+
 		std::map<EndPoint, ::service_discovery::EndPointInstance>& getEndpoints();
 		std::vector<EndPoint> getEndpointsByType(uint32_t type);
 		std::vector<EndPoint> getEstablishedEndpointsByType(uint32_t type);

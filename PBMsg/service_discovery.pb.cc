@@ -143,6 +143,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, ip_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, port_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, codec_type_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, db_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_REQUEST_ADD_INSTANCE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -179,11 +180,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
-  { 11, -1, sizeof(::service_discovery::MSG_REQUEST_ADD_INSTANCE)},
-  { 18, -1, sizeof(::service_discovery::MSG_RESP_ADD_INSTANCE)},
-  { 24, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
-  { 33, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
-  { 38, -1, sizeof(::service_discovery::MSG_RESP_HEARTBEAT)},
+  { 12, -1, sizeof(::service_discovery::MSG_REQUEST_ADD_INSTANCE)},
+  { 19, -1, sizeof(::service_discovery::MSG_RESP_ADD_INSTANCE)},
+  { 25, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 34, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
+  { 39, -1, sizeof(::service_discovery::MSG_RESP_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -197,23 +198,24 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\027service_discovery.proto\022\021service_disco"
-  "very\032\014common.proto\"~\n\020EndPointInstance\022\""
-  "\n\004type\030\001 \001(\0162\024.common.EndPointType\022\n\n\002id"
-  "\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port"
-  "\030\005 \001(\r\022\022\n\ncodec_type\030\006 \001(\r\"_\n\030MSG_REQUES"
-  "T_ADD_INSTANCE\0225\n\010instance\030\001 \001(\0132#.servi"
-  "ce_discovery.EndPointInstance\022\014\n\004auth\030\002 "
-  "\001(\t\",\n\025MSG_RESP_ADD_INSTANCE\022\023\n\013status_c"
-  "ode\030\001 \001(\r\"\371\001\n\023MSG_NOTICE_INSTANCE\022+\n\004mod"
-  "e\030\001 \001(\0162\035.service_discovery.UpdateMode\0229"
-  "\n\014add_instance\030\002 \003(\0132#.service_discovery"
-  ".EndPointInstance\022<\n\017delete_instance\030\003 \003"
-  "(\0132#.service_discovery.EndPointInstance\022"
-  "<\n\017update_instance\030\004 \003(\0132#.service_disco"
-  "very.EndPointInstance\"\027\n\025MSG_REQUEST_HEA"
-  "RTBEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013status_c"
-  "ode\030\001 \001(\r*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007"
-  "UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
+  "very\032\014common.proto\"\215\001\n\020EndPointInstance\022"
+  "\"\n\004type\030\001 \001(\0162\024.common.EndPointType\022\n\n\002i"
+  "d\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004por"
+  "t\030\005 \001(\r\022\022\n\ncodec_type\030\006 \001(\r\022\r\n\005db_id\030\007 \001"
+  "(\r\"_\n\030MSG_REQUEST_ADD_INSTANCE\0225\n\010instan"
+  "ce\030\001 \001(\0132#.service_discovery.EndPointIns"
+  "tance\022\014\n\004auth\030\002 \001(\t\",\n\025MSG_RESP_ADD_INST"
+  "ANCE\022\023\n\013status_code\030\001 \001(\r\"\371\001\n\023MSG_NOTICE"
+  "_INSTANCE\022+\n\004mode\030\001 \001(\0162\035.service_discov"
+  "ery.UpdateMode\0229\n\014add_instance\030\002 \003(\0132#.s"
+  "ervice_discovery.EndPointInstance\022<\n\017del"
+  "ete_instance\030\003 \003(\0132#.service_discovery.E"
+  "ndPointInstance\022<\n\017update_instance\030\004 \003(\013"
+  "2#.service_discovery.EndPointInstance\"\027\n"
+  "\025MSG_REQUEST_HEARTBEAT\")\n\022MSG_RESP_HEART"
+  "BEAT\022\023\n\013status_code\030\001 \001(\r*:\n\nUpdateMode\022"
+  "\013\n\007UM_None\020\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_Incremen"
+  "tal\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
   &::descriptor_table_common_2eproto,
@@ -229,7 +231,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 717,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 733,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 1,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 6, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -280,8 +282,8 @@ EndPointInstance::EndPointInstance(const EndPointInstance& from)
     ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
   }
   ::memcpy(&type_, &from.type_,
-    static_cast<size_t>(reinterpret_cast<char*>(&codec_type_) -
-    reinterpret_cast<char*>(&type_)) + sizeof(codec_type_));
+    static_cast<size_t>(reinterpret_cast<char*>(&db_id_) -
+    reinterpret_cast<char*>(&type_)) + sizeof(db_id_));
   // @@protoc_insertion_point(copy_constructor:service_discovery.EndPointInstance)
 }
 
@@ -290,8 +292,8 @@ void EndPointInstance::SharedCtor() {
   auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&type_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&codec_type_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(codec_type_));
+      reinterpret_cast<char*>(&db_id_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(db_id_));
 }
 
 EndPointInstance::~EndPointInstance() {
@@ -322,8 +324,8 @@ void EndPointInstance::Clear() {
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&type_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&codec_type_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(codec_type_));
+      reinterpret_cast<char*>(&db_id_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(db_id_));
   _internal_metadata_.Clear();
 }
 
@@ -378,6 +380,13 @@ const char* EndPointInstance::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
           codec_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 db_id = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          db_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -452,6 +461,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_codec_type(), target);
   }
 
+  // uint32 db_id = 7;
+  if (this->db_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(7, this->_internal_db_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -509,6 +524,13 @@ size_t EndPointInstance::ByteSizeLong() const {
         this->_internal_codec_type());
   }
 
+  // uint32 db_id = 7;
+  if (this->db_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_db_id());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -560,6 +582,9 @@ void EndPointInstance::MergeFrom(const EndPointInstance& from) {
   if (from.codec_type() != 0) {
     _internal_set_codec_type(from._internal_codec_type());
   }
+  if (from.db_id() != 0) {
+    _internal_set_db_id(from._internal_db_id());
+  }
 }
 
 void EndPointInstance::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -591,6 +616,7 @@ void EndPointInstance::InternalSwap(EndPointInstance* other) {
   swap(id_, other->id_);
   swap(port_, other->port_);
   swap(codec_type_, other->codec_type_);
+  swap(db_id_, other->db_id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EndPointInstance::GetMetadata() const {

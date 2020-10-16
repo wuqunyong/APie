@@ -226,6 +226,7 @@ class EndPointInstance :
     kIdFieldNumber = 2,
     kPortFieldNumber = 5,
     kCodecTypeFieldNumber = 6,
+    kDbIdFieldNumber = 7,
   };
   // string auth = 3;
   void clear_auth();
@@ -295,6 +296,15 @@ class EndPointInstance :
   void _internal_set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
+  // uint32 db_id = 7;
+  void clear_db_id();
+  ::PROTOBUF_NAMESPACE_ID::uint32 db_id() const;
+  void set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_db_id() const;
+  void _internal_set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:service_discovery.EndPointInstance)
  private:
   class _Internal;
@@ -306,6 +316,7 @@ class EndPointInstance :
   ::PROTOBUF_NAMESPACE_ID::uint32 id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 port_;
   ::PROTOBUF_NAMESPACE_ID::uint32 codec_type_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 db_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
 };
@@ -1229,6 +1240,26 @@ inline void EndPointInstance::_internal_set_codec_type(::PROTOBUF_NAMESPACE_ID::
 inline void EndPointInstance::set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_codec_type(value);
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.codec_type)
+}
+
+// uint32 db_id = 7;
+inline void EndPointInstance::clear_db_id() {
+  db_id_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::_internal_db_id() const {
+  return db_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::db_id() const {
+  // @@protoc_insertion_point(field_get:service_discovery.EndPointInstance.db_id)
+  return _internal_db_id();
+}
+inline void EndPointInstance::_internal_set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  db_id_ = value;
+}
+inline void EndPointInstance::set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_db_id(value);
+  // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.db_id)
 }
 
 // -------------------------------------------------------------------
