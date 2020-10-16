@@ -111,5 +111,6 @@ private:
 	std::bitset<256> m_dirtyFlags;
 	std::bitset<256> m_filterFlags;
 	uint32_t m_rowCount = 0;
+	bool m_binded = false;
 };
 

@@ -24,6 +24,8 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 	}
 
 	this->initMetaData(userTableOpt.value());
+	
+	this->m_binded = true;
 
 	return this->checkInvalid();
 }
