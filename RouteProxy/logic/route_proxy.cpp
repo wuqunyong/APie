@@ -280,7 +280,7 @@ void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register
 
 	if (response.status_code() == opcodes::StatusCode::SC_Ok)
 	{
-		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		//ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 	}
 	else
 	{
