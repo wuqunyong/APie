@@ -41,7 +41,8 @@ namespace APie {
 	public:
 		enum DBType
 		{
-			DBT_Role = 0,
+			DBT_None = 0,
+			DBT_Role = 1,
 		};
 
 		bool registerRequiredTable(DBType type, const std::string name, DAOFactory::TCreateMethod funcCreate);
