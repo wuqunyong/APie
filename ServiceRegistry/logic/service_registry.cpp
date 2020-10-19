@@ -2,6 +2,8 @@
 
 namespace APie {
 
+const uint64_t TIMEOUT_CLOSE_INTERVAL = 60 * 10;
+
 void ServiceRegistry::init()
 {
 	APie::RPC::rpcInit();
@@ -118,7 +120,7 @@ void ServiceRegistry::checkTimeout()
 	std::vector<uint64_t> delSerial;
 	for (const auto& items : m_registered)
 	{
-		if (curTime > items.second.modifyTime + 60)
+		if (curTime > items.second.modifyTime + TIMEOUT_CLOSE_INTERVAL)
 		{
 			delSerial.push_back(items.first);
 		}
