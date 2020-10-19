@@ -148,12 +148,16 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tabl
 	iCallCount = iCallCount + 1;
 	auto rpcCB = [server, tables, cb, recallObj, iCallCount](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 	{
-		iCallCount += 1;
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 			//ReSend
+			std::stringstream ss;
+			ss << "recall|iCallCount:" << iCallCount;
+
+			ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
 			auto ptrCmd = new LogicAsyncCallFunctor;
 			ptrCmd->callFunctor = [server, tables, cb, recallObj, iCallCount]() mutable
 			{
