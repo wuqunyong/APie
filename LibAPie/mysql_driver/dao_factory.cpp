@@ -1,5 +1,10 @@
 #include "dao_factory.h"
 
+#include "../network/Command.h"
+#include "../network/Ctx.h"
+#include "../network/logger.h"
+#include "../rpc/client/rpc_client.h"
+
 namespace APie {
 
 
@@ -129,4 +134,68 @@ DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 	return nullptr;
 }
 
+bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb)
+{
+	auto recallObj = CallMysqlDescTable;
+
+	::mysql_proxy_msg::MysqlDescribeRequest args;
+	for (const auto& table : tables)
+	{
+		auto ptrAdd = args.add_names();
+		*ptrAdd = table;
+	}
+
+	iCallCount = iCallCount + 1;
+	auto rpcCB = [server, tables, cb, recallObj, iCallCount](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		iCallCount += 1;
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+			//ReSend
+			auto ptrCmd = new LogicAsyncCallFunctor;
+			ptrCmd->callFunctor = [server, tables, cb, recallObj, iCallCount]() mutable
+			{
+				recallObj(server, tables, iCallCount, cb);
+			};
+
+			Command command;
+			command.type = Command::logic_async_call_functor;
+			command.args.logic_async_call_functor.ptrData = ptrCmd;
+			APie::CtxSingleton::get().getLogicThread()->push(command);
+			return;
+		}
+
+		::mysql_proxy_msg::MysqlDescribeResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			std::stringstream ss;
+			ss << "response parse error";
+			cb(false, ss.str(), iCallCount);
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_desc", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		if (!response.result())
+		{
+			cb(false, response.error_info(), iCallCount);
+			return;
+		}
+
+		for (auto tableData : response.tables())
+		{
+			MysqlTable table;
+			table = DeclarativeBase::convertFrom(tableData.second);
+			DAOFactoryTypeSingleton::get().addLoadedTable(DeclarativeBase::DBType::DBT_Role, tableData.first, table);
+		}
+
+		cb(true, response.error_info(), iCallCount);
+	};
+
+	return RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
+}
 }

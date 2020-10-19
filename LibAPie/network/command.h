@@ -128,6 +128,11 @@ namespace APie
 		std::string sCmd;
 	};
 
+	struct LogicAsyncCallFunctor
+	{
+		std::function<void()> callFunctor;
+	};
+
     //  This structure defines the commands that can be sent between threads.
     class Command
     {
@@ -152,6 +157,7 @@ namespace APie
 			metric_data,
 
 			logic_cmd,
+			logic_async_call_functor,
 
 			close_local_client, //active(LogicThread -> IOThread | ClientProxy::sendClose)
 			close_local_server,
@@ -210,6 +216,10 @@ namespace APie
 			struct {
 				LogicCmd* ptrData;
 			} logic_cmd;
+
+			struct {
+				LogicAsyncCallFunctor* ptrData;
+			} logic_async_call_functor;
 
 			struct {
 				CloseLocalClient* ptrData;

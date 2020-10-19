@@ -272,6 +272,11 @@ void DispatcherImpl::handleCommand()
 			this->handleLogicCmd(cmd.args.logic_cmd.ptrData);
 			break;
 		}
+		case Command::logic_async_call_functor:
+		{
+			this->handleAsyncCallFunctor(cmd.args.logic_async_call_functor.ptrData);
+			break;
+		}
 		case Command::close_local_client:
 		{
 			this->handleCloseLocalClient(cmd.args.close_local_client.ptrData);
@@ -587,6 +592,11 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 	}
 
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
+}
+
+void DispatcherImpl::handleAsyncCallFunctor(LogicAsyncCallFunctor* ptrCmd)
+{
+	ptrCmd->callFunctor();
 }
 
 void DispatcherImpl::handleClientPeerClose(ClientPeerClose* ptrCmd)

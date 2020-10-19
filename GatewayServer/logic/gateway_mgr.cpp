@@ -14,8 +14,47 @@ void GatewayMgr::init()
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
 }
 
-void GatewayMgr::start()
+
+std::tuple<uint32_t, std::string> GatewayMgr::start()
 {
+	auto dbType = DeclarativeBase::DBType::DBT_Role;
+	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
+
+	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(dbType);
+	if (!requiredTableOpt.has_value())
+	{
+		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+	}
+
+
+	::rpc_msg::CHANNEL server;
+	server.set_type(common::EPT_DB_Proxy);
+	server.set_id(1);
+
+	std::vector<std::string> tables;
+	for (const auto& items : requiredTableOpt.value())
+	{
+		tables.push_back(items.first);
+	}
+
+	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount)
+	{
+		if (!bResul)
+		{
+			return;
+		}
+
+		std::stringstream ss;
+		ss << "Server Ready!" << std::endl;
+
+		std::cout << ss.str();
+		ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+	};
+	uint64_t iCallCount = 0;
+	CallMysqlDescTable(server, tables, iCallCount, ptrReadyCb);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
 void GatewayMgr::exit()

@@ -14,6 +14,7 @@
 #include "mysql_orm.h"
 
 #include "../singleton/threadsafe_singleton.h"
+#include "../../PBMsg/rpc_msg.pb.h"
 
 
 namespace APie {
@@ -51,4 +52,9 @@ namespace APie {
 	};
 
 	typedef ThreadSafeSingleton<DAOFactoryType> DAOFactoryTypeSingleton;
+
+
+	using CallMysqlDescTableCB = std::function<void(bool bResul, std::string sInfo, uint64_t iCallCount)>;
+
+	bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb);
 }

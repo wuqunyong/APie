@@ -84,20 +84,19 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::r
 	::mysql_proxy_msg::MysqlDescribeRequest request;
 	if (!request.ParseFromString(args))
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		std::stringstream ss;
+		ss << "ParseError";
+		response.set_result(false);
+		response.set_error_info(ss.str());
+		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
-	}
-
-	if (request.names_size() == 0)
-	{
 		std::stringstream ss;
-		ss << "names_size:" << request.names_size();
-		response.set_result(false);
+		ss << "LogicThread Null";
+		response.set_result(true);
 		response.set_error_info(ss.str());
 		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 	}

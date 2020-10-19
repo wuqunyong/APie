@@ -21,6 +21,7 @@
 
 #include "macros.h"
 #include "../mysql_driver/mysql_orm.h"
+#include "../mysql_driver/dao_factory.h"
 
 
 namespace APie {
@@ -366,6 +367,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 	
 	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
+
 
 }  // namespace message
 

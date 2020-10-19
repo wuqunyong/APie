@@ -85,6 +85,15 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::logic_async_call_functor:
+	{
+		if (NULL != cmd->args.logic_async_call_functor.ptrData)
+		{
+			delete cmd->args.logic_async_call_functor.ptrData;
+			cmd->args.logic_async_call_functor.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::close_local_client:
 	{
 		if (NULL != cmd->args.close_local_client.ptrData)
