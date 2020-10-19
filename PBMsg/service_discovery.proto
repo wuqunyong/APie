@@ -33,10 +33,6 @@ message MSG_RESP_ADD_INSTANCE
 	uint32 status_code = 1;
 }
 
-// message ClientNode
-// {
-// 	repeated uint32 node_type = 1;
-// }
 
 message MSG_NOTICE_INSTANCE
 {
