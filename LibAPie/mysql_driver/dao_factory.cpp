@@ -1,7 +1,7 @@
 #include "dao_factory.h"
 
-#include "../network/Command.h"
-#include "../network/Ctx.h"
+#include "../network/command.h"
+#include "../network/ctx.h"
 #include "../network/logger.h"
 #include "../rpc/client/rpc_client.h"
 
