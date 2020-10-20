@@ -11,8 +11,7 @@ INCLUDES = -I /usr/local/include \
 			
 apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
-shared_dir_sources = \
-	$(top_srcdir)/SharedDir/model.cpp
+shared_dir_sources = 
 
 gateway_server_sources = \
 	$(top_srcdir)/GatewayServer/main.cpp \
