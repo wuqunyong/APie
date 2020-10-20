@@ -51,6 +51,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/http/http_response_decoder.cpp  \
 	$(top_srcdir)/LibAPie/http/http_util.cpp  \
 	$(top_srcdir)/LibAPie/http/string_util.cpp  \
+	$(top_srcdir)/LibAPie/mysql_driver/dao_factory.cpp  \
 	$(top_srcdir)/LibAPie/mysql_driver/mysql_connector.cpp  \
 	$(top_srcdir)/LibAPie/mysql_driver/mysql_field.cpp  \
 	$(top_srcdir)/LibAPie/mysql_driver/mysql_orm.cpp  \

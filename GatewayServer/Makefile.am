@@ -11,6 +11,9 @@ INCLUDES = -I /usr/local/include \
 			
 apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
 
+shared_dir_sources = \
+	$(top_srcdir)/SharedDir/model.cpp
+
 gateway_server_sources = \
 	$(top_srcdir)/GatewayServer/main.cpp \
 	$(top_srcdir)/GatewayServer/service_init.cpp \
@@ -19,6 +22,6 @@ gateway_server_sources = \
 
 bin_PROGRAMS = gateway_server
 
-gateway_server_SOURCES = $(gateway_server_sources)
+gateway_server_SOURCES = $(gateway_server_sources) $(shared_dir_sources)
 gateway_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
 gateway_server_LDFLAGS = $(apie_module_ldflags)
