@@ -23,6 +23,8 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <functional>
+
 #include <stdlib.h>
 
 #include <event2/util.h>
@@ -272,6 +274,5 @@ namespace APie
 
     //  Function to deallocate dynamically allocated components of the command.
     void deallocateCommand(Command* cmd);
-
 }    
 
