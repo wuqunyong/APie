@@ -291,7 +291,7 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 
 template <typename T>
 typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
-LoadFromDbByFilter(::rpc_msg::CHANNEL server, T dbObj, LoadFromDbByFilterCB<T> cb)
+LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
 {
 	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
 	std::get<1>(*ptrTuple) = false;
@@ -351,7 +351,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T dbObj, LoadFromDbByFilterCB<T> c
 		uint32_t iRowCount = 0;
 		for (auto& rowData : response.table().rows())
 		{
-			decltype(dbObj) newObj;
+			typename std::remove_reference<decltype(dbObj)>::type newObj;
 
 			newObj.loadFromPb(rowData);
 			result.push_back(newObj);
