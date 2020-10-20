@@ -20,6 +20,8 @@
 #include <cstdint>
 
 #include "macros.h"
+#include "../rpc/client/rpc_client.h"
+
 #include "../mysql_driver/mysql_orm.h"
 #include "../mysql_driver/dao_factory.h"
 
@@ -289,7 +291,7 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 
 template <typename T>
 typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
-LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
+LoadFromDbByFilter(::rpc_msg::CHANNEL server, T dbObj, LoadFromDbByFilterCB<T> cb)
 {
 	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
 	std::get<1>(*ptrTuple) = false;
