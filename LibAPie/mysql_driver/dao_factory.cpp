@@ -135,7 +135,7 @@ DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 	return nullptr;
 }
 
-bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb)
+bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, CallMysqlDescTableCB cb, uint64_t iCallCount)
 {
 	auto recallObj = CallMysqlDescTable;
 
@@ -178,7 +178,7 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 			auto ephemeralTimerCb = [server, dbType, tables, cb, recallObj, iCallCount]() mutable
 			{
-				recallObj(server, dbType, tables, iCallCount, cb);
+				recallObj(server, dbType, tables, cb, iCallCount);
 			};
 			auto ptrTimer = APie::Event::EphemeralTimerMgrSingleton::get().createEphemeralTimer(ephemeralTimerCb);
 			ptrTimer->enableTimer(1000);

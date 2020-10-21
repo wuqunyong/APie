@@ -52,8 +52,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
 
 	};
-	uint64_t iCallCount = 0;
-	CallMysqlDescTable(server, DeclarativeBase::DBType::DBT_Role, tables, iCallCount, ptrReadyCb);
+	CallMysqlDescTable(server, DeclarativeBase::DBType::DBT_Role, tables, ptrReadyCb);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
