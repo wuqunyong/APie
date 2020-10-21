@@ -7,13 +7,17 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	DBProxyMgrSingleton::get().init();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return DBProxyMgrSingleton::get().init();
 }
 
 std::tuple<uint32_t, std::string> startHook()
 {
 	return DBProxyMgrSingleton::get().start();
+}
+
+std::tuple<uint32_t, std::string> readyHook()
+{
+	return DBProxyMgrSingleton::get().ready();
 }
 
 std::tuple<uint32_t, std::string> exitHook()

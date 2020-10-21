@@ -4,7 +4,7 @@ namespace APie {
 
 const uint64_t TIMEOUT_CLOSE_INTERVAL = 60 * 10;
 
-void ServiceRegistry::init()
+std::tuple<uint32_t, std::string> ServiceRegistry::init()
 {
 	APie::RPC::rpcInit();
 
@@ -12,9 +12,11 @@ void ServiceRegistry::init()
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat, ::service_discovery::MSG_REQUEST_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
-void ServiceRegistry::start()
+std::tuple<uint32_t, std::string> ServiceRegistry::start()
 {
 	auto timerCb = [this]() {
 		this->update();
@@ -22,6 +24,13 @@ void ServiceRegistry::start()
 	};
 	this->m_updateTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	this->addUpdateTimer(1000);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
+
+std::tuple<uint32_t, std::string> ServiceRegistry::ready()
+{
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 void ServiceRegistry::exit()

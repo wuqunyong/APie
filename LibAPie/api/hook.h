@@ -19,7 +19,8 @@ enum class HookPoint
 {
 	HP_Init = 0,
 	HP_Start = 1,
-	HP_Exit = 2,
+	HP_Ready = 2,
+	HP_Exit = 3,
 };
 
 enum HookResult

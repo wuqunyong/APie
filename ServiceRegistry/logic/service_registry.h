@@ -25,8 +25,9 @@ namespace APie {
 	class ServiceRegistry
 	{
 	public:
-		void init();
-		void start();
+		std::tuple<uint32_t, std::string> init();
+		std::tuple<uint32_t, std::string> start();
+		std::tuple<uint32_t, std::string> ready();
 		void exit();
 
 	public:

@@ -7,14 +7,17 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	RouteProxySingleton::get().init();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return RouteProxySingleton::get().init();
 }
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	RouteProxySingleton::get().start();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return RouteProxySingleton::get().start();
+}
+
+std::tuple<uint32_t, std::string> readyHook()
+{
+	return RouteProxySingleton::get().ready();
 }
 
 std::tuple<uint32_t, std::string> exitHook()

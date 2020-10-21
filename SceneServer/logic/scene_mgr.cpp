@@ -5,17 +5,24 @@
 
 namespace APie {
 
-void SceneMgr::init()
+std::tuple<uint32_t, std::string> SceneMgr::init()
 {
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
 
 	APie::Api::ForwardHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, SceneMgr::Forward_handleLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
-void SceneMgr::start()
+std::tuple<uint32_t, std::string> SceneMgr::start()
 {
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
 
+std::tuple<uint32_t, std::string> SceneMgr::ready()
+{
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 void SceneMgr::exit()

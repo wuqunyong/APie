@@ -57,8 +57,9 @@ namespace APie {
 	class RouteProxy
 	{
 	public:
-		void init();
-		void start();
+		std::tuple<uint32_t, std::string> init();
+		std::tuple<uint32_t, std::string> start();
+		std::tuple<uint32_t, std::string> ready();
 		void exit();
 
 		std::shared_ptr<RouteClient> findRouteClient(EndPoint point);

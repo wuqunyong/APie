@@ -7,7 +7,7 @@
 
 namespace APie {
 
-void DBProxyMgr::init()
+std::tuple<uint32_t, std::string> DBProxyMgr::init()
 {
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
@@ -16,6 +16,8 @@ void DBProxyMgr::init()
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgr::RPC_handleMysqlQueryByFilter);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
 std::tuple<uint32_t, std::string> DBProxyMgr::start()
@@ -75,6 +77,11 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 		}
 	}
 
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
+
+std::tuple<uint32_t, std::string> DBProxyMgr::ready()
+{
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 

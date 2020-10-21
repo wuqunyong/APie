@@ -155,7 +155,7 @@ void RouteClient::sendHeartbeat(APie::ClientProxy* ptrClient)
 }
 
 
-void RouteProxy::init()
+std::tuple<uint32_t, std::string> RouteProxy::init()
 {
 	APie::RPC::rpcInit();
 
@@ -163,11 +163,18 @@ void RouteProxy::init()
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::ROUTE_MSG_RESP_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_DiscoveryNotice, RouteProxy::onDiscoveryNotice);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
-void RouteProxy::start()
+std::tuple<uint32_t, std::string> RouteProxy::start()
 {
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+}
 
+std::tuple<uint32_t, std::string> RouteProxy::ready()
+{
+	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
 void RouteProxy::exit()

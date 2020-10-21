@@ -7,14 +7,17 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	LoginMgrSingleton::get().init();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return LoginMgrSingleton::get().init();
 }
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	LoginMgrSingleton::get().start();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return LoginMgrSingleton::get().start();
+}
+
+std::tuple<uint32_t, std::string> readyHook()
+{
+	return LoginMgrSingleton::get().ready();
 }
 
 std::tuple<uint32_t, std::string> exitHook()

@@ -12,6 +12,7 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> initHook();
 std::tuple<uint32_t, std::string> startHook();
+std::tuple<uint32_t, std::string> readyHook();
 std::tuple<uint32_t, std::string> exitHook();
 
 }

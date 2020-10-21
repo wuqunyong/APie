@@ -5,13 +5,15 @@
 
 namespace APie {
 
-void GatewayMgr::init()
+	std::tuple<uint32_t, std::string> GatewayMgr::init()
 {
 	APie::RPC::rpcInit();
 
 	Api::OpcodeHandlerSingleton::get().server.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
+
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
 
@@ -57,6 +59,11 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 	uint64_t iCallCount = 0;
 	CallMysqlDescTable(server, DeclarativeBase::DBType::DBT_Role, tables, iCallCount, ptrReadyCb);
 
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+}
+
+std::tuple<uint32_t, std::string> GatewayMgr::ready()
+{
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
