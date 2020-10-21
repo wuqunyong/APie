@@ -56,20 +56,39 @@ namespace APie
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
 
-			YAML::Node node = YAML::Clone(node_);
-			//YAML::Node node = node_;
+			//YAML::Node node = YAML::Clone(node_);
+			////YAML::Node node = node_;
+			//for (const auto &items : index)
+			//{
+			//	if (node[items])
+			//	{
+			//		node = node[items];
+			//	}
+			//	else
+			//	{
+			//		throw std::invalid_argument("Configuration|field:" + items + "|not found");
+			//	}
+			//}
+
+			std::vector<YAML::Node> nodeList;
+			nodeList.push_back(node_);
+
+			uint32_t iIndex = 0;
+
 			for (const auto &items : index)
 			{
-				if (node[items])
+				if (nodeList[iIndex][items])
 				{
-					node = node[items];
+					nodeList.push_back(nodeList[iIndex][items]);
+					iIndex++;
 				}
 				else
 				{
 					throw std::invalid_argument("Configuration|field:" + items + "|not found");
 				}
 			}
-			return node.as<T>();
+
+			return nodeList[iIndex].as<T>();
 		}
 		
 		template <typename T, typename S>
@@ -77,20 +96,39 @@ namespace APie
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
 
-			YAML::Node node = YAML::Clone(node_);
-			//YAML::Node node = node_;
+			//YAML::Node node = YAML::Clone(node_);
+			////YAML::Node node = node_;
+			//for (const auto &items : index)
+			//{
+			//	if (node[items])
+			//	{
+			//		node = node[items];
+			//	}
+			//	else
+			//	{
+			//		return fallback;
+			//	}
+			//}
+
+			std::vector<YAML::Node> nodeList;
+			nodeList.push_back(node_);
+
+			uint32_t iIndex = 0;
+
 			for (const auto &items : index)
 			{
-				if (node[items])
+				if (nodeList[iIndex][items])
 				{
-					node = node[items];
+					nodeList.push_back(nodeList[iIndex][items]);
+					iIndex++;
 				}
 				else
 				{
 					return fallback;
 				}
 			}
-			return node.as<T>(fallback);
+
+			return nodeList[iIndex].as<T>(fallback);
 		}
 
 		std::string launchTime();
