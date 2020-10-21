@@ -53,14 +53,20 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 			auto ptrDaoBase = DAOFactoryTypeSingleton::get().getCreateFunc(dbType, tableName);
 			if (ptrDaoBase == nullptr)
 			{
-				return std::make_tuple(Hook::HookResult::HR_Error, "");
+				std::stringstream ss;
+				ss << "tableName:" << tableName << " not declare";
+
+				return std::make_tuple(Hook::HookResult::HR_Error, ss.str());
 			}
 
 			ptrDaoBase->initMetaData(table);
 			bool bResult = ptrDaoBase->checkInvalid();
 			if (!bResult)
 			{
-				return std::make_tuple(Hook::HookResult::HR_Error, "");
+				std::stringstream ss;
+				ss << "tableName:" << tableName << " checkInvalid false";
+
+				return std::make_tuple(Hook::HookResult::HR_Error, ss.str());
 			}
 		}
 		else

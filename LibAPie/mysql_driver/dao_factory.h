@@ -56,5 +56,5 @@ namespace APie {
 
 	using CallMysqlDescTableCB = std::function<void(bool bResul, std::string sInfo, uint64_t iCallCount)>;
 
-	bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb);
+	bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb);
 }

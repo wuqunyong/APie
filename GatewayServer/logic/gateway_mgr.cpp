@@ -41,7 +41,10 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 	{
 		if (!bResul)
 		{
-			return;
+			std::stringstream ss;
+			ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
+
+			fatalExit(ss.str().c_str());
 		}
 
 		std::stringstream ss;
@@ -52,7 +55,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 
 	};
 	uint64_t iCallCount = 0;
-	CallMysqlDescTable(server, tables, iCallCount, ptrReadyCb);
+	CallMysqlDescTable(server, DeclarativeBase::DBType::DBT_Role, tables, iCallCount, ptrReadyCb);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }

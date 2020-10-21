@@ -134,7 +134,7 @@ DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 	return nullptr;
 }
 
-bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb)
+bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, uint64_t iCallCount, CallMysqlDescTableCB cb)
 {
 	auto recallObj = CallMysqlDescTable;
 
@@ -146,7 +146,7 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tabl
 	}
 
 	iCallCount = iCallCount + 1;
-	auto rpcCB = [server, tables, cb, recallObj, iCallCount](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	auto rpcCB = [server, dbType, tables, cb, recallObj, iCallCount](const rpc_msg::STATUS& status, const std::string& replyData) mutable
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
@@ -159,9 +159,9 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tabl
 			ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 			auto ptrCmd = new LogicAsyncCallFunctor;
-			ptrCmd->callFunctor = [server, tables, cb, recallObj, iCallCount]() mutable
+			ptrCmd->callFunctor = [server, dbType, tables, cb, recallObj, iCallCount]() mutable
 			{
-				recallObj(server, tables, iCallCount, cb);
+				recallObj(server, dbType, tables, iCallCount, cb);
 			};
 
 			Command command;
@@ -194,6 +194,28 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, std::vector<std::string> tabl
 		{
 			MysqlTable table;
 			table = DeclarativeBase::convertFrom(tableData.second);
+
+			auto ptrDaoBase = DAOFactoryTypeSingleton::get().getCreateFunc(dbType, tableData.first);
+			if (ptrDaoBase == nullptr)
+			{
+				std::stringstream ss;
+				ss << "tableName:" << tableData.first << " not declare";
+
+				cb(false, ss.str(), iCallCount);
+				return;
+			}
+
+			ptrDaoBase->initMetaData(table);
+			bool bResult = ptrDaoBase->checkInvalid();
+			if (!bResult)
+			{
+				std::stringstream ss;
+				ss << "tableName:" << tableData.first << " checkInvalid false";
+
+				cb(false, ss.str(), iCallCount);
+				return;
+			}
+
 			DAOFactoryTypeSingleton::get().addLoadedTable(DeclarativeBase::DBType::DBT_Role, tableData.first, table);
 		}
 
