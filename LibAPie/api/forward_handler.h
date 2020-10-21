@@ -65,7 +65,7 @@ private:
 class ForwardHandler
 {
 public:
-	PBForwardHandler client;
+	//PBForwardHandler client;
 	PBForwardHandler server;
 };
 
