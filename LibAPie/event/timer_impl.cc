@@ -4,6 +4,8 @@
 
 #include "event2/event.h"
 
+#include "../network/ctx.h"
+
 namespace APie {
 namespace Event {
 
@@ -29,6 +31,35 @@ void TimerImpl::enableTimer(const std::chrono::milliseconds& d) {
 }
 
 bool TimerImpl::enabled() { return 0 != evtimer_pending(&raw_event_, nullptr); }
+
+
+void EphemeralTimer::enableTimer(uint64_t interval)
+{
+	m_timer->enableTimer(std::chrono::milliseconds(interval));
+}
+
+std::shared_ptr<EphemeralTimer> EphemeralTimerMgr::createEphemeralTimer(TimerCb cb)
+{
+	m_id++;
+
+	uint64_t iId = m_id;
+	auto timerCb = [iId, cb, this]() {
+		cb();
+		this->deleteEphemeralTimer(iId);
+	};
+	auto ptrTimer = std::make_shared<EphemeralTimer>();
+	ptrTimer->m_timer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+	ptrTimer->m_id = iId;
+
+	m_ephemeralCache[iId] = ptrTimer;
+
+	return ptrTimer;
+}
+
+void EphemeralTimerMgr::deleteEphemeralTimer(uint64_t id)
+{
+	m_ephemeralCache.erase(id);
+}
 
 } // namespace Event
 } // namespace Envoy
