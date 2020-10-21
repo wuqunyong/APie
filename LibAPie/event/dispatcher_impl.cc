@@ -512,6 +512,9 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		auto defaultHandler = Api::OpcodeHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
+			std::stringstream ss;
+			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
+			ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 
@@ -520,10 +523,18 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	}
 	case APie::ConnetionType::CT_CLIENT:
 	{
+		std::stringstream ss;
+		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		break;
 	}
 	default:
+	{
+		std::stringstream ss;
+		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		break;
+	}
 	}
 }
 

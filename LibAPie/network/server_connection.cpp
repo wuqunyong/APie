@@ -184,6 +184,9 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 		if (ptrLogic == nullptr)
 		{
+			std::stringstream ss;
+			ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
+			ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 		ptrLogic->push(command);
@@ -194,6 +197,9 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	auto ptrMsg = Api::OpcodeHandlerSingleton::get().server.createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
+		std::stringstream ss;
+		ss << "createMessage null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 
@@ -201,6 +207,9 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	bool bResult = newMsg->ParseFromString(requestStr);
 	if (!bResult)
 	{
+		std::stringstream ss;
+		ss << "ParseFromString error|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 
@@ -219,6 +228,9 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
+		std::stringstream ss;
+		ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 	ptrLogic->push(command);
