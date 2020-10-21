@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, APie::initHook);
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, APie::startHook);
+	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Ready, APie::readyHook);
 	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Exit, APie::exitHook);
 
 	APie::CtxSingleton::get().init(configFile);
