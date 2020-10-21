@@ -204,7 +204,7 @@ void ServiceRegistry::handleRequestAddInstance(uint64_t iSerialNum, const ::serv
 		return;
 	}
 	
-	ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	ASYNC_PIE_LOG("SelfRegistration/handleRequestAddInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
 	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_MSG_RESP_ADD_INSTANCE, response);
