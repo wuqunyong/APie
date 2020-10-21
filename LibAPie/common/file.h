@@ -31,7 +31,7 @@
 
 
 namespace APie {
-namespace common {
+namespace Common {
 
 /**
  * @brief Get file content as string.

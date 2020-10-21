@@ -24,7 +24,7 @@
 #include <sstream>
 
 namespace APie {
-namespace common {
+namespace Common {
 
 bool GetContent(const std::string &file_name, std::string *content) {
   std::ifstream fin(file_name);
