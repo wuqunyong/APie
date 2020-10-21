@@ -169,13 +169,13 @@ uint32_t Ctx::generateHash(EndPoint point)
 
 void Ctx::init(const std::string& configFile)
 {
-	char timebuf[128] = { '\0' };
 	time_t now = time(NULL);
+
+	char timebuf[128] = { '\0' };
 	strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
 	m_launchTime = timebuf;
 
 	memset(timebuf, 0, sizeof(timebuf));
-
 
 	APie::ExceptionTrap();
 
