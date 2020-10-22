@@ -84,7 +84,13 @@ std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const :
 
 void SceneMgr::Forward_handleLogin(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_CLIENT_LOGIN request)
 {
-	PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "login|%s", request.DebugString().c_str());
+	PIE_LOG("SceneMgr/Forward_handleLogin", PIE_CYCLE_DAY, PIE_NOTICE, "login|%s", request.DebugString().c_str());
+
+	::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
+	response.set_user_id(request.user_id());
+	response.set_version(request.version());
+	response.set_is_newbie(true);
+	Network::OutputStream::sendMsgToGatewayByRoute(roleIdentifier, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 }
 
 }

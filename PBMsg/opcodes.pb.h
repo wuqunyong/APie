@@ -71,12 +71,13 @@ enum OPCODE_ID : int {
   OP_RPC_REQUEST = 301,
   OP_RPC_RESPONSE = 302,
   OP_MSG_REQUEST_CLIENT_LOGIN = 2000,
+  OP_MSG_RESPONSE_CLIENT_LOGIN = 2001,
   OPCODE_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   OPCODE_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool OPCODE_ID_IsValid(int value);
 constexpr OPCODE_ID OPCODE_ID_MIN = OP_None;
-constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_REQUEST_CLIENT_LOGIN;
+constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_RESPONSE_CLIENT_LOGIN;
 constexpr int OPCODE_ID_ARRAYSIZE = OPCODE_ID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* OPCODE_ID_descriptor();
@@ -115,12 +116,13 @@ enum StatusCode : int {
   SC_ClientProxy_NotEstablished = 4003,
   SC_ClientProxy_BadAlloc = 4004,
   SC_ClientProxy_NoIOThread = 4005,
+  SC_BindTable_Error = 5000,
   StatusCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   StatusCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool StatusCode_IsValid(int value);
 constexpr StatusCode StatusCode_MIN = SC_Ok;
-constexpr StatusCode StatusCode_MAX = SC_ClientProxy_NoIOThread;
+constexpr StatusCode StatusCode_MAX = SC_BindTable_Error;
 constexpr int StatusCode_ARRAYSIZE = StatusCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor();

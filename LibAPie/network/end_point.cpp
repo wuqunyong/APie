@@ -33,7 +33,7 @@ void SelfRegistration::init()
 void SelfRegistration::registerEndpoint()
 {
 	auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-	if (identityType == ::common::EndPointType::EPT_Service_Registry)
+	if (identityType == ::common::EndPointType::EPT_Service_Registry || identityType == ::common::EndPointType::EPT_Test_Client)
 	{
 		return;
 	}
@@ -93,6 +93,8 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	uint32_t port = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","port" }, 0);
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
 	uint32_t db_id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","db_id" }, 0);
+
+	APie::CtxSingleton::get().setServerId(id);
 
 	::service_discovery::MSG_REQUEST_ADD_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));

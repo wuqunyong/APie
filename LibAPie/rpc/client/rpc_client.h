@@ -73,6 +73,8 @@ namespace RPC {
 
 		static uint64_t TIMEOUT_DURATION;
 		static uint64_t CHECK_INTERVAL;
+
+		friend class APie::Network::OutputStream;
 	};
 
 	typedef APie::ThreadSafeSingleton<RpcClient> RpcClientSingleton;

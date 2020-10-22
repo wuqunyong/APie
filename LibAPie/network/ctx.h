@@ -133,6 +133,9 @@ namespace APie
 
 		std::string launchTime();
 
+		uint32_t getServerId();
+		void setServerId(uint32_t id);
+
 		static std::string logName();
 		static std::string logPostfix();
 
@@ -158,6 +161,7 @@ namespace APie
 		std::mutex node_sync_;
 
 		std::shared_ptr<SelfRegistration> endpoint_ = nullptr;
+		uint32_t m_server_id = 0;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;

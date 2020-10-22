@@ -12,6 +12,7 @@
 
 #include <event2/util.h>
 #include <google/protobuf/message.h>
+#include "../../PBMsg/rpc_msg.pb.h"
 
 
 
@@ -22,6 +23,7 @@ namespace Network {
 	{
 	public:
 		static bool sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsgToGatewayByRoute(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 	};
 
 

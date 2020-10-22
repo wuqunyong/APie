@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main_3.cpp" />
+    <ClCompile Include="test_client.cpp" />
+    <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\test_server.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\test_server.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{a890c62d-52f6-45ee-8365-3836cdc00209}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

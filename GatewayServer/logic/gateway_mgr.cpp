@@ -1,15 +1,18 @@
 #include "gateway_mgr.h"
 #include "../../SharedDir/dao/model_user.h"
 #include "../../LibAPie/common/message_traits.h"
+#include "../../PBMsg/login_msg.pb.h"
 
 
 namespace APie {
 
-	std::tuple<uint32_t, std::string> GatewayMgr::init()
+std::tuple<uint32_t, std::string> GatewayMgr::init()
 {
 	APie::RPC::rpcInit();
+	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
 
 	Api::OpcodeHandlerSingleton::get().server.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
+	Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
 
@@ -74,7 +77,12 @@ void GatewayMgr::exit()
 
 void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
+	auto iGWId = APie::CtxSingleton::get().getServerId();
+	uint64_t iUserId = 0;
+
 	::rpc_msg::PRC_Multiplexer_Forward_Args args;
+	args.mutable_role_id()->set_gw_id(iGWId);
+	args.mutable_role_id()->set_user_id(iUserId);
 	args.set_opcodes(opcodes);
 	args.set_body_msg(msg);
 
@@ -90,6 +98,17 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 		}
 	};
 	APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_Multiplexer_Forward, args, rpcCB);
+}
+
+std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+{
+	::rpc_msg::PRC_DeMultiplexer_Forward_Args request;
+	if (!request.ParseFromString(args))
+	{
+		return std::make_tuple(::rpc_msg::CODE_ParseError, "");
+	}
+
+	return std::make_tuple(::rpc_msg::CODE_Ok, "DeMultiplexer success");
 }
 
 void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
@@ -525,6 +544,54 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		DeleteFromDb<ModelUser>(server, user, cb);
 	}
+}
+
+void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request)
+{
+	ModelUser user;
+	user.fields.user_id = request.user_id();
+
+	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	if (!bResult)
+	{
+		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
+		response.set_status_code(opcodes::SC_BindTable_Error);
+		response.set_user_id(request.user_id());
+		response.set_version(request.version());
+		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		return;
+	}
+
+	::rpc_msg::CHANNEL server;
+	server.set_type(common::EPT_DB_Proxy);
+	server.set_id(1);
+
+	auto cb = [iSerialNum, request](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
+			response.set_status_code(status.code());
+			response.set_user_id(request.user_id());
+			response.set_version(request.version());
+			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+			return;
+		}
+
+		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
+		response.set_status_code(status.code());
+		response.set_user_id(request.user_id());
+		response.set_version(request.version());
+		if (iRows == 0)
+		{
+			response.set_is_newbie(true);
+		} 
+		else
+		{
+			response.set_is_newbie(false);
+		}
+		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+	};
+	LoadFromDb<ModelUser>(server, user, cb);
 }
 
 }

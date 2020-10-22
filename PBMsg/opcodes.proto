@@ -22,6 +22,7 @@ enum OPCODE_ID {
 
 
 	OP_MSG_REQUEST_CLIENT_LOGIN = 2000;
+	OP_MSG_RESPONSE_CLIENT_LOGIN = 2001;
 }
 
 
@@ -51,5 +52,7 @@ enum StatusCode {
 	SC_ClientProxy_NotEstablished = 4003;
 	SC_ClientProxy_BadAlloc = 4004;
 	SC_ClientProxy_NoIOThread = 4005;
+
+	SC_BindTable_Error = 5000;
 
 }

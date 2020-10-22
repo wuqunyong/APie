@@ -106,3 +106,10 @@ message PRC_Multiplexer_Forward_Args
 	uint32 opcodes = 2;
 	bytes body_msg = 3;
 }
+
+message PRC_DeMultiplexer_Forward_Args
+{
+	RoleIdentifier role_id = 1;
+	uint32 opcodes = 2;
+	bytes body_msg = 3;
+}

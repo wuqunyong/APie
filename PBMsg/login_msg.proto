@@ -12,6 +12,14 @@ message MSG_REQUEST_CLIENT_LOGIN
 	bytes session_key = 3;
 }
 
+message MSG_RESPONSE_CLIENT_LOGIN
+{
+	int32 status_code = 1;
+	uint64 user_id = 2;
+	int32 version = 3;
+	bool is_newbie = 4;
+}
+
 message MSG_LOGINSERVER_VALIDATE{
 	uint64 user_id = 1;
 	int32 port = 2; 

@@ -203,6 +203,9 @@ void Ctx::init(const std::string& configFile)
 		adjustOpenFilesLimit();
 		enableCoreFiles();
 
+		uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
+		APie::CtxSingleton::get().setServerId(id);
+
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
 		for (const auto& item : this->node_["listeners"])
@@ -634,6 +637,16 @@ YAML::Node& Ctx::yamlNode()
 std::string Ctx::launchTime()
 {
 	return m_launchTime;
+}
+
+uint32_t Ctx::getServerId()
+{
+	return m_server_id;
+}
+
+void Ctx::setServerId(uint32_t id)
+{
+	m_server_id = id;
 }
 
 std::string Ctx::logName()
