@@ -9,6 +9,7 @@
 #include <tuple>
 
 #include "apie.h"
+#include "../../PBMsg/login_msg.pb.h"
 
 
 namespace APie {
@@ -21,7 +22,12 @@ namespace APie {
 		std::tuple<uint32_t, std::string> ready();
 		void exit();
 
-	private:
+	public:
+		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+
+		static void handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response);
+
+	public:
 		std::shared_ptr<ClientProxy> m_ptrClientProxy;
 	};
 

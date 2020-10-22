@@ -1,4 +1,5 @@
 #include "test_server.h"
+#include "../../PBMsg/login_msg.pb.h"
 
 namespace APie {
 
@@ -7,6 +8,9 @@ std::tuple<uint32_t, std::string> TestServerMgr::init()
 {
 	APie::RPC::rpcInit();
 
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::onLogicCommnad);
+	
+	Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
@@ -45,5 +49,34 @@ std::tuple<uint32_t, std::string> TestServerMgr::ready()
 void TestServerMgr::exit()
 {
 }
+
+void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+
+	if (command.cmd() == "login")
+	{
+		if (command.params_size() < 3)
+		{
+			return;
+		}
+
+		::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
+		request.set_user_id(std::stoull(command.params()[0]));
+		request.set_version(std::stoi(command.params()[1]));
+		request.set_session_key(command.params()[2]);
+
+		auto iSerialNum = TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum();
+		Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request, APie::ConnetionType::CT_CLIENT);
+
+		std::cout << "send|iSerialNum:" << iSerialNum << "|request:" << request.ShortDebugString() << std::endl;
+	}
+}
+
+void TestServerMgr::handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response)
+{
+	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
+}
+
 }
 
