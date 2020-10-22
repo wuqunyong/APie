@@ -150,3 +150,239 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
+
+
+## MysqlORM Demo
+```cpp
+namespace APie {
+
+	class ModelUser : public DeclarativeBase {
+	public:
+		PACKED_STRUCT(struct db_fields {
+			uint64_t user_id;
+			uint64_t game_id = 1;
+			uint32_t level = 2;
+			int64_t register_time = 1;
+			int64_t login_time = 2;
+			int64_t offline_time = 3;
+			std::string name = "hello";
+			std::string role_info;
+			std::string magic_slot_info;
+			std::string magic_info;
+			std::string guild_quest;
+			std::string match_info;
+			std::string global_mails_info;
+			std::string treasure_info;
+			std::string feats_info;
+		});
+
+		virtual void* layoutAddress() override
+		{
+			return &fields;
+		}
+
+		virtual std::vector<uint32_t> layoutOffset() override
+		{
+			std::vector<uint32_t> layout = {
+				offsetof(db_fields, user_id),
+				offsetof(db_fields, game_id),
+				offsetof(db_fields, level),
+				offsetof(db_fields, register_time),
+				offsetof(db_fields, login_time),
+				offsetof(db_fields, offline_time),
+				offsetof(db_fields, name),
+				offsetof(db_fields, role_info),
+				offsetof(db_fields, magic_slot_info),
+				offsetof(db_fields, magic_info),
+				offsetof(db_fields, guild_quest),
+				offsetof(db_fields, match_info),
+				offsetof(db_fields, global_mails_info),
+				offsetof(db_fields, treasure_info),
+				offsetof(db_fields, feats_info),
+			};
+
+			return layout;
+		}
+
+		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
+		{
+			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
+				get_field_type(fields.user_id),
+				get_field_type(fields.game_id),
+				get_field_type(fields.level),
+				get_field_type(fields.register_time),
+				get_field_type(fields.login_time),
+				get_field_type(fields.offline_time),
+				get_field_type(fields.name),
+				get_field_type(fields.role_info),
+				get_field_type(fields.magic_slot_info),
+				get_field_type(fields.magic_info),
+				get_field_type(fields.guild_quest),
+				get_field_type(fields.match_info),
+				get_field_type(fields.global_mails_info),
+				get_field_type(fields.treasure_info),
+				get_field_type(fields.feats_info),
+			};
+
+			return layout;
+		}
+
+		static std::shared_ptr<DeclarativeBase> createMethod()
+		{
+			return std::make_shared<ModelUser>();
+		}
+
+		static std::string getFactoryName() 
+		{ 
+			return "role_base"; 
+		}
+
+	public:
+		db_fields fields;
+	};
+
+
+}
+
+
+///////////////////////////////
+
+	if (command.cmd() == "load_from_db")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+
+		ModelUser user;
+		user.fields.user_id = userId;
+
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		LoadFromDb<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "load_from_db_by_filter")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		uint64_t gameId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
+
+		ModelUser user;
+		user.fields.game_id = gameId;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+		user.markFilter({ 1, 2 });
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser>& userList) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		LoadFromDbByFilter<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "mysql_insert_orm")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		InsertToDb<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "mysql_update_orm")
+	{
+		if (command.params_size() < 2)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+		uint32_t level = std::stoull(command.params()[1]);
+
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		user.fields.level = level;
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+		user.markDirty({ 2 });
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		UpdateToDb<ModelUser>(server, user, cb);
+	}
+	else if (command.cmd() == "mysql_delete_orm")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint64_t userId = std::stoull(command.params()[0]);
+
+		ModelUser user;
+		user.fields.user_id = userId;
+		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+
+		::rpc_msg::CHANNEL server;
+		server.set_type(common::EPT_DB_Proxy);
+		server.set_id(1);
+
+		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				return;
+			}
+		};
+		DeleteFromDb<ModelUser>(server, user, cb);
+	}
+
+```
