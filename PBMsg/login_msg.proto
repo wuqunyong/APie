@@ -20,12 +20,16 @@ message MSG_RESPONSE_CLIENT_LOGIN
 	bool is_newbie = 4;
 }
 
-message MSG_LOGINSERVER_VALIDATE{
-	uint64 user_id = 1;
-	int32 port = 2; 
-	bool is_real_name_flag = 3; 
-	string ip = 4;
-	bytes check_out_text = 5;
+message MSG_REQUEST_ECHO
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}
+
+message MSG_RESPONSE_ECHO
+{
+	uint64 value1 = 1;
+	string value2 = 2;
 }
 
 

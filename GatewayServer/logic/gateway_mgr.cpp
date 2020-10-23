@@ -79,6 +79,11 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 {
 	auto iGWId = APie::CtxSingleton::get().getServerId();
 	uint64_t iUserId = 0;
+	auto findIte = GatewayMgrSingleton::get().m_serialNumRoleId.find(serialNum);
+	if (findIte != GatewayMgrSingleton::get().m_serialNumRoleId.end())
+	{
+		iUserId = findIte->second;
+	}
 
 	::rpc_msg::PRC_Multiplexer_Forward_Args args;
 	args.mutable_role_id()->set_gw_id(iGWId);
@@ -108,6 +113,17 @@ std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(con
 		return std::make_tuple(::rpc_msg::CODE_ParseError, "");
 	}
 
+	uint64_t iSerialNum = 0;
+	for (const auto& items : GatewayMgrSingleton::get().m_serialNumRoleId)
+	{
+		if (items.second == request.role_id().user_id())
+		{
+			iSerialNum = items.first;
+			break;
+		}
+	}
+
+	Network::OutputStream::sendMsgByStr(iSerialNum, request.opcodes(), request.body_msg(), APie::ConnetionType::CT_SERVER);
 	return std::make_tuple(::rpc_msg::CODE_Ok, "DeMultiplexer success");
 }
 
@@ -550,6 +566,8 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 {
 	ModelUser user;
 	user.fields.user_id = request.user_id();
+
+	GatewayMgrSingleton::get().m_serialNumRoleId[iSerialNum] = request.user_id();
 
 	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
 	if (!bResult)

@@ -11,6 +11,7 @@ std::tuple<uint32_t, std::string> TestServerMgr::init()
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::onLogicCommnad);
 	
 	Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
+	Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
@@ -71,9 +72,33 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 
 		std::cout << "send|iSerialNum:" << iSerialNum << "|request:" << request.ShortDebugString() << std::endl;
 	}
+	else if (command.cmd() == "echo")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		uint64_t iCurMS = Ctx::getNowMilliseconds();
+
+		::login_msg::MSG_REQUEST_ECHO request;
+		request.set_value1(iCurMS);
+		request.set_value2(command.params()[0]);
+
+		auto iSerialNum = TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum();
+		Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OP_MSG_REQUEST_ECHO, request, APie::ConnetionType::CT_CLIENT);
+
+		std::cout << "send|iSerialNum:" << iSerialNum << "|request:" << request.ShortDebugString() << std::endl;
+	}
+
 }
 
 void TestServerMgr::handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response)
+{
+	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
+}
+
+void TestServerMgr::handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response)
 {
 	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
 }

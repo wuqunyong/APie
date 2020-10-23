@@ -31,7 +31,7 @@ namespace APie {
 
 		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
 
-	private:
+	public:
 		std::map<uint64_t, uint64_t> m_serialNumRoleId;
 	};
 

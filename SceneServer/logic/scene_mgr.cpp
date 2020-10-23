@@ -10,7 +10,7 @@ std::tuple<uint32_t, std::string> SceneMgr::init()
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
 
-	APie::Api::ForwardHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, SceneMgr::Forward_handleLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
+	APie::Api::ForwardHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -44,6 +44,8 @@ std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const :
 	{
 		return std::make_tuple(::rpc_msg::CODE_ParseError, "");
 	}
+
+	request.mutable_role_id()->set_channel_serial_num(client.channel_serial_num());
 
 	auto optionalData = Api::ForwardHandlerSingleton::get().server.getType(request.opcodes());
 	if (!optionalData)
@@ -82,15 +84,16 @@ std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const :
 	return std::make_tuple(::rpc_msg::CODE_Ok, "forward success");
 }
 
-void SceneMgr::Forward_handleLogin(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_CLIENT_LOGIN request)
+void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_ECHO request)
 {
-	PIE_LOG("SceneMgr/Forward_handleLogin", PIE_CYCLE_DAY, PIE_NOTICE, "login|%s", request.DebugString().c_str());
+	PIE_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request.DebugString().c_str());
 
-	::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-	response.set_user_id(request.user_id());
-	response.set_version(request.version());
-	response.set_is_newbie(true);
-	Network::OutputStream::sendMsgToGatewayByRoute(roleIdentifier, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+	uint64_t iCurMS = Ctx::getNowMilliseconds();
+
+	::login_msg::MSG_RESPONSE_ECHO response;
+	response.set_value1(iCurMS);
+	response.set_value2(request.value2() + "|response");
+	Network::OutputStream::sendMsgToGatewayByRoute(roleIdentifier, opcodes::OP_MSG_RESPONSE_ECHO, response);
 }
 
 }

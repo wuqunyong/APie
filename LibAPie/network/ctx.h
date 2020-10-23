@@ -29,8 +29,6 @@ namespace APie
 
 		EndPoint identify();
 		std::shared_ptr<SelfRegistration> getEndpoint();
-		uint64_t getNowMilliseconds();
-		uint64_t getNowSeconds();
 
 		uint32_t generateHash(EndPoint point);
 
@@ -136,8 +134,12 @@ namespace APie
 		uint32_t getServerId();
 		void setServerId(uint32_t id);
 
+	public:
 		static std::string logName();
 		static std::string logPostfix();
+		
+		static uint64_t getNowMilliseconds();
+		static uint64_t getNowSeconds();
 
     private:
 		void daemonize();
