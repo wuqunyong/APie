@@ -14,7 +14,7 @@
 
 namespace APie {
 
-	class GatewayRole : std::enable_shared_from_this<GatewayRole>
+	class GatewayRole : public std::enable_shared_from_this<GatewayRole>
 	{
 	public:
 		GatewayRole(uint64_t iRoleId, uint64_t iSerialNum);

@@ -40,8 +40,11 @@ void SelfRegistration::registerEndpoint()
 
 	if (!APie::CtxSingleton::get().yamlNode()["service_registry"])
 	{
-		ASYNC_PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, "service_registry empty");
-		return;
+		std::stringstream ss;
+		ss << "service_registry empty";
+
+		ASYNC_PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		fatalExit(ss.str().c_str());
 	}
 
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","address" }, "");
@@ -93,8 +96,6 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	uint32_t port = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","port" }, 0);
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
 	uint32_t db_id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","db_id" }, 0);
-
-	APie::CtxSingleton::get().setServerId(id);
 
 	::service_discovery::MSG_REQUEST_ADD_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));

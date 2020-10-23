@@ -13,6 +13,7 @@ log:
   show_pos: false
   split_size: 128
   backup: "D:/backup"
+  name: "test_client"
 metrics:
   enable: true
   ip: "127.0.0.1"
