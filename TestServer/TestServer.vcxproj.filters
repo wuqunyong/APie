@@ -6,10 +6,16 @@
     <ClCompile Include="logic\test_server.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\mock_role.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
     <ClInclude Include="logic\test_server.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\mock_role.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
