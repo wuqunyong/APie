@@ -14,6 +14,8 @@
 
 namespace APie {
 
+	class GatewayRole;
+
 	class GatewayMgr
 	{
 	public:
@@ -21,6 +23,10 @@ namespace APie {
 		std::tuple<uint32_t, std::string> start();
 		std::tuple<uint32_t, std::string> ready();
 		void exit();
+
+		std::shared_ptr<GatewayRole> findGatewayRoleById(uint64_t iRoleId);
+		std::shared_ptr<GatewayRole> findGatewayRoleBySerialNum(uint64_t iSerialNum);
+		bool addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole);
 
 	public:
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
@@ -31,8 +37,9 @@ namespace APie {
 
 		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
 
-	public:
-		std::map<uint64_t, uint64_t> m_serialNumRoleId;
+	private:
+		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap;
+		std::map<uint64_t, uint64_t> m_roleIdMapSerialNum;
 	};
 
 	using GatewayMgrSingleton = ThreadSafeSingleton<GatewayMgr>;

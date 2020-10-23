@@ -127,10 +127,12 @@
   <ItemGroup>
     <ClInclude Include="..\SharedDir\dao\model_user.h" />
     <ClInclude Include="logic\gateway_mgr.h" />
+    <ClInclude Include="logic\gateway_role.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="logic\gateway_mgr.cpp" />
+    <ClCompile Include="logic\gateway_role.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
   </ItemGroup>

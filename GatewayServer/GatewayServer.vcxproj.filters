@@ -8,11 +8,17 @@
     <ClInclude Include="..\SharedDir\dao\model_user.h">
       <Filter>SharedDir\dao</Filter>
     </ClInclude>
+    <ClInclude Include="logic\gateway_role.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\gateway_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\gateway_role.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

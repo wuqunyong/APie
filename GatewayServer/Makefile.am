@@ -16,7 +16,8 @@ shared_dir_sources =
 gateway_server_sources = \
 	$(top_srcdir)/GatewayServer/main.cpp \
 	$(top_srcdir)/GatewayServer/service_init.cpp \
-	$(top_srcdir)/GatewayServer/logic/gateway_mgr.cpp
+	$(top_srcdir)/GatewayServer/logic/gateway_mgr.cpp \
+	$(top_srcdir)/GatewayServer/logic/gateway_role.cpp
 
 bin_PROGRAMS = gateway_server
 
