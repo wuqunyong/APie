@@ -109,6 +109,12 @@ bool GatewayMgr::addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole)
 	auto iRoleId = ptrGatewayRole->getRoleId();
 	auto iSerialNum = ptrGatewayRole->getSerailNum();
 
+	auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+	if (ptrConnection != nullptr)
+	{
+		ptrGatewayRole->setMaskFlag(ptrConnection->getMaskFlag());
+	}
+
 	auto ptrExist = findGatewayRoleById(iRoleId);
 	if (ptrExist != nullptr)
 	{
@@ -168,7 +174,15 @@ std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(con
 	}
 
 	uint64_t iSerialNum = ptrGatewayRole->getSerailNum();
-	Network::OutputStream::sendMsgByStr(iSerialNum, request.opcodes(), request.body_msg(), APie::ConnetionType::CT_SERVER);
+	uint32_t iMaskFlag = ptrGatewayRole->getMaskFlag();
+	if (iMaskFlag == 0)
+	{
+		Network::OutputStream::sendMsgByStr(iSerialNum, request.opcodes(), request.body_msg(), APie::ConnetionType::CT_SERVER);
+	}
+	else
+	{
+		Network::OutputStream::sendMsgByStrByFlag(iSerialNum, request.opcodes(), request.body_msg(), iMaskFlag, APie::ConnetionType::CT_SERVER);
+	}
 	return std::make_tuple(::rpc_msg::CODE_Ok, "DeMultiplexer success");
 }
 

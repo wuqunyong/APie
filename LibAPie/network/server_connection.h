@@ -47,6 +47,7 @@ namespace APie
 
 		void setIp(std::string ip, std::string peerIp);
 		void setMaskFlag(uint32_t iFlag);
+		uint32_t getMaskFlag();
 
 		std::string ip();
 		std::string peerIp();

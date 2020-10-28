@@ -331,6 +331,11 @@ void ServerConnection::setMaskFlag(uint32_t iFlag)
 	this->iMaskFlag = iFlag;
 }
 
+uint32_t ServerConnection::getMaskFlag()
+{
+	return this->iMaskFlag;
+}
+
 std::string ServerConnection::ip()
 {
 	return this->sIp;

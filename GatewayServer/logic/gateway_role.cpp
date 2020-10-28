@@ -25,5 +25,15 @@ uint64_t GatewayRole::getRoleId()
 	return m_iRoleId;
 }
 
+void GatewayRole::setMaskFlag(uint32_t iFlag)
+{
+	m_iMaskFlag = iFlag;
+}
+
+uint32_t GatewayRole::getMaskFlag()
+{
+	return m_iMaskFlag;
+}
+
 }
 

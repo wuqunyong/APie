@@ -9,6 +9,7 @@
 #include "logger.h"
 #include "../api/pb_handler.h"
 #include "address.h"
+#include "../decompressor/lz4_decompressor_impl.h"
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
@@ -172,7 +173,23 @@ void APie::ClientConnection::readPB()
 		std::string requestStr(pBuf, iBodyLen);
 		free(pBuf);
 
-		this->recv(this->iSerialNum, head.iOpcode, requestStr);
+		if (head.iFlags & PH_COMPRESSED)
+		{
+			Decompressor::LZ4DecompressorImpl decompressor;
+			auto optDate = decompressor.decompress(requestStr);
+			if (optDate.has_value())
+			{
+				this->recv(this->iSerialNum, head.iOpcode, optDate.value());
+			}
+			else
+			{
+				//Error
+			}
+		}
+		else
+		{
+			this->recv(this->iSerialNum, head.iOpcode, requestStr);
+		}
 
 
 		size_t iCurLen = evbuffer_get_length(input);
