@@ -226,7 +226,8 @@ class EndPointInstance :
     kIdFieldNumber = 2,
     kPortFieldNumber = 5,
     kCodecTypeFieldNumber = 6,
-    kDbIdFieldNumber = 7,
+    kMaskFlagFieldNumber = 7,
+    kDbIdFieldNumber = 8,
   };
   // string auth = 3;
   void clear_auth();
@@ -296,7 +297,16 @@ class EndPointInstance :
   void _internal_set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // uint32 db_id = 7;
+  // uint32 mask_flag = 7;
+  void clear_mask_flag();
+  ::PROTOBUF_NAMESPACE_ID::uint32 mask_flag() const;
+  void set_mask_flag(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_mask_flag() const;
+  void _internal_set_mask_flag(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 db_id = 8;
   void clear_db_id();
   ::PROTOBUF_NAMESPACE_ID::uint32 db_id() const;
   void set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -316,6 +326,7 @@ class EndPointInstance :
   ::PROTOBUF_NAMESPACE_ID::uint32 id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 port_;
   ::PROTOBUF_NAMESPACE_ID::uint32 codec_type_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 mask_flag_;
   ::PROTOBUF_NAMESPACE_ID::uint32 db_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
@@ -1242,7 +1253,27 @@ inline void EndPointInstance::set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 val
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.codec_type)
 }
 
-// uint32 db_id = 7;
+// uint32 mask_flag = 7;
+inline void EndPointInstance::clear_mask_flag() {
+  mask_flag_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::_internal_mask_flag() const {
+  return mask_flag_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::mask_flag() const {
+  // @@protoc_insertion_point(field_get:service_discovery.EndPointInstance.mask_flag)
+  return _internal_mask_flag();
+}
+inline void EndPointInstance::_internal_set_mask_flag(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  mask_flag_ = value;
+}
+inline void EndPointInstance::set_mask_flag(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_mask_flag(value);
+  // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.mask_flag)
+}
+
+// uint32 db_id = 8;
 inline void EndPointInstance::clear_db_id() {
   db_id_ = 0u;
 }

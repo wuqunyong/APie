@@ -3,6 +3,7 @@
 
 ByteBuffer& operator >> (ByteBuffer& stream, ProtocolHead& data)
 {
+	stream >> data.iFlags;
 	stream >> data.iMagic;
 	stream >> data.iOpcode;
 	stream >> data.iBodyLen;
@@ -13,6 +14,7 @@ ByteBuffer& operator >> (ByteBuffer& stream, ProtocolHead& data)
 
 ByteBuffer& operator << (ByteBuffer& stream, ProtocolHead data)
 {
+	stream << data.iFlags;
 	stream << data.iMagic;
 	stream << data.iOpcode;
 	stream << data.iBodyLen;

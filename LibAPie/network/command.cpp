@@ -40,6 +40,15 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::send_data_by_flag:
+	{
+		if (NULL != cmd->args.send_data_by_flag.ptrData)
+		{
+			delete cmd->args.send_data_by_flag.ptrData;
+			cmd->args.send_data_by_flag.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::async_log:
 	{
 		if (NULL != cmd->args.async_log.ptrData)

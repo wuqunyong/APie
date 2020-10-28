@@ -9,6 +9,7 @@ MockRole::MockRole(uint64_t iRoleId) :
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "clients", "socket_address", "address" }, "");
 	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "port_value" }, 0);
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "type" }, 0);
+	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "mask_flag" }, 0);
 
 	m_clientProxy = APie::ClientProxy::createClientProxy();
 
@@ -25,7 +26,7 @@ MockRole::MockRole(uint64_t iRoleId) :
 		}
 		return true;
 	};
-	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
+	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
 	m_clientProxy->addReconnectTimer(1000);
 
 	auto cmdCb = [ptrSelf]() mutable {

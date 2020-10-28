@@ -14,16 +14,19 @@ listeners:
       address: "127.0.0.1"
       port_value: 5007
       type: 1
+      mask_flag : 0
 - address:
     socket_address:
       address: "*"
       port_value: 5008
-      type: 1      
+      type: 1
+      mask_flag : 0      
 clients:
     socket_address:
       address: "127.0.0.1"
       port_value: 5007
       type: 1
+      mask_flag : 0
 service_registry:
   address: "127.0.0.1"
   port_value: 5007

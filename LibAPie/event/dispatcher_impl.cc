@@ -34,6 +34,7 @@
 
 #include "event2/event.h"
 #include "influxdb.hpp"
+#include "../compressor/lz4_compressor_impl.h"
 
 
 namespace APie {
@@ -244,6 +245,11 @@ void DispatcherImpl::handleCommand()
 		case Command::send_data:
 		{
 			this->handleSendData(cmd.args.send_data.ptrData);
+			break;
+		}
+		case Command::send_data_by_flag:
+		{
+			this->handleSendDataByFlag(cmd.args.send_data_by_flag.ptrData);
 			break;
 		}
 		case Command::async_log:
@@ -457,6 +463,7 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 		return;
 	}
 	ptrConnection->setIp(itemPtr->sIp, itemPtr->sPeerIp);
+	ptrConnection->setMaskFlag(itemPtr->iMaskFlag);
 
 	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
 	bufferevent_enable(bev, EV_READ | EV_WRITE);
@@ -560,6 +567,81 @@ void DispatcherImpl::handleSendData(SendData *itemPtr)
 			return;
 		}
 		ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
+{
+	switch (itemPtr->type)
+	{
+	case ConnetionType::CT_CLIENT:
+	{
+		auto ptrConnection = getClientConnection(itemPtr->iSerialNum);
+		if (ptrConnection == nullptr)
+		{
+			return;
+		}
+
+		std::string sData;
+		if (itemPtr->head.iFlags & PH_COMPRESSED)
+		{
+			Compressor::LZ4CompressorImpl compressor;
+			auto optData = compressor.compress(itemPtr->sBody, 0);
+			if (!optData.has_value())
+			{
+				return;
+			}
+
+			auto iBodyLen = optData.value().size();
+			itemPtr->head.iBodyLen = iBodyLen;
+
+			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+			sData.append(optData.value());
+		}
+		else
+		{
+			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+			sData.append(itemPtr->sBody);
+		}
+
+		ptrConnection->handleSend(sData.data(), sData.size());
+		break;
+	}
+	case ConnetionType::CT_SERVER:
+	{
+		auto ptrConnection = getConnection(itemPtr->iSerialNum);
+		if (ptrConnection == nullptr)
+		{
+			return;
+		}
+
+		std::string sData;
+		if (itemPtr->head.iFlags & PH_COMPRESSED)
+		{
+			Compressor::LZ4CompressorImpl compressor;
+			auto optData = compressor.compress(itemPtr->sBody, 0);
+			if (!optData.has_value())
+			{
+				return;
+			}
+
+			auto iBodyLen = optData.value().size();
+			itemPtr->head.iBodyLen = iBodyLen;
+
+			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+			sData.append(optData.value());
+		}
+		else
+		{
+			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+			sData.append(itemPtr->sBody);
+		}
+
+		ptrConnection->handleSend(sData.data(), sData.size());
 		break;
 	}
 	default:

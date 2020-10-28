@@ -32,7 +32,7 @@ namespace APie
 		~ClientProxy();
 		bool checkTag();
 
-		int connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb=nullptr);
+		int connect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb=nullptr);
 		void resetConnect(const std::string& ip, uint16_t port, ProtocolType type);
 		int reconnect();
 
@@ -85,6 +85,7 @@ namespace APie
 		std::string m_ip;
 		uint16_t m_port;
 		ProtocolType m_codecType;
+		uint32_t m_maskFlag = 0;
 		HandleConnectCB m_cb;
 
 		uint32_t m_hadEstablished; //当前的连接状态：0：未连接，1：已连上

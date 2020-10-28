@@ -35,6 +35,7 @@ void RouteClient::init()
 	auto ip = m_instance.ip();
 	auto port = m_instance.port();
 	auto type = m_instance.codec_type();
+	auto maskFlag = m_instance.mask_flag();
 
 	m_clientProxy = APie::ClientProxy::createClientProxy();
 	auto connectCb = [weakPtr](APie::ClientProxy* ptrClient, uint32_t iResult) {
@@ -59,7 +60,7 @@ void RouteClient::init()
 
 		return true;
 	};
-	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
+	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
 
 	auto heartbeatCb = [weakPtr](APie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);

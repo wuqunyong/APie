@@ -61,7 +61,7 @@ bool ClientProxy::checkTag()
 	return this->m_tag == 0xbadcafe0;
 }
 
-int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type, HandleConnectCB cb)
+int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb)
 {
 	if (this->m_curSerialNum != 0)
 	{
@@ -72,6 +72,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	this->m_ip = ip;
 	this->m_port = port;
 	this->m_codecType = type;
+	this->m_maskFlag = maskFlag;
 	this->m_cb = cb;
 
 	auto ptrProxy = shared_from_this();
@@ -176,7 +177,14 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 		return opcodes::SC_ClientProxy_NotEstablished;
 	}
 
-	APie::Network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, APie::ConnetionType::CT_CLIENT);
+	if (this->m_maskFlag == 0)
+	{
+		APie::Network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, APie::ConnetionType::CT_CLIENT);
+	}
+	else
+	{
+		APie::Network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, msg, this->m_maskFlag, APie::ConnetionType::CT_CLIENT);
+	}
 	return 0;
 }
 

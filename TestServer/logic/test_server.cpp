@@ -22,6 +22,7 @@ std::tuple<uint32_t, std::string> TestServerMgr::start()
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "clients", "socket_address", "address" }, "");
 	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "port_value" }, 0);
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "type" }, 0);
+	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "mask_flag" }, 0);
 
 	m_ptrClientProxy = APie::ClientProxy::createClientProxy();
 	auto connectCb = [](APie::ClientProxy* ptrClient, uint32_t iResult) {
@@ -31,8 +32,8 @@ std::tuple<uint32_t, std::string> TestServerMgr::start()
 		}
 		return true;
 	};
-	m_ptrClientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
-	m_ptrClientProxy->addReconnectTimer(1000);
+	m_ptrClientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
+	m_ptrClientProxy->addReconnectTimer(10000000);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -67,10 +68,9 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_version(std::stoi(command.params()[1]));
 		request.set_session_key(command.params()[2]);
 
-		auto iSerialNum = TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum();
-		Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request, APie::ConnetionType::CT_CLIENT);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 
-		std::cout << "send|iSerialNum:" << iSerialNum << "|request:" << request.ShortDebugString() << std::endl;
+		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}
 	else if (command.cmd() == "echo")
 	{
@@ -85,10 +85,9 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_value1(iCurMS);
 		request.set_value2(command.params()[0]);
 
-		auto iSerialNum = TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum();
-		Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OP_MSG_REQUEST_ECHO, request, APie::ConnetionType::CT_CLIENT);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
 
-		std::cout << "send|iSerialNum:" << iSerialNum << "|request:" << request.ShortDebugString() << std::endl;
+		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}
 
 }

@@ -13,6 +13,7 @@ listeners:
       address: "127.0.0.1"
       port_value: 15007
       type: 1
+      mask_flag : 0
 service_registry:
   address: "127.0.0.1"
   port_value: 5007

@@ -14,6 +14,7 @@
 #include "../network/ctx.h"
 
 #include "../../PBMsg/login_msg.pb.h"
+#include "../decompressor/lz4_decompressor_impl.h"
 
 
 
@@ -153,7 +154,23 @@ void ServerConnection::readPB()
 		std::string requestStr(pBuf, iBodyLen);
 		free(pBuf);
 
-		this->recv(this->iSerialNum, head.iOpcode, requestStr);
+		if (head.iFlags & PH_COMPRESSED)
+		{
+			Decompressor::LZ4DecompressorImpl decompressor;
+			auto optDate = decompressor.decompress(requestStr);
+			if (optDate.has_value())
+			{
+				this->recv(this->iSerialNum, head.iOpcode, optDate.value());
+			}
+			else
+			{
+				//Error
+			}
+		}
+		else
+		{
+			this->recv(this->iSerialNum, head.iOpcode, requestStr);
+		}
 
 
 		size_t iCurLen = evbuffer_get_length(input);
@@ -307,6 +324,11 @@ void ServerConnection::setIp(std::string ip, std::string peerIp)
 {
 	this->sIp = ip;
 	this->sPeerIp = peerIp;
+}
+
+void ServerConnection::setMaskFlag(uint32_t iFlag)
+{
+	this->iMaskFlag = iFlag;
 }
 
 std::string ServerConnection::ip()

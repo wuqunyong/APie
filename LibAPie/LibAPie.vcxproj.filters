@@ -49,6 +49,12 @@
     <Filter Include="rpc\rpc_server">
       <UniqueIdentifier>{bf6794c7-d915-44a3-b739-cd2736118847}</UniqueIdentifier>
     </Filter>
+    <Filter Include="compressor">
+      <UniqueIdentifier>{02cb0a7c-e270-4a85-96bd-632ba4bd65e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="decompressor">
+      <UniqueIdentifier>{232b9ee9-4159-4f56-a24b-e134b056bea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -310,6 +316,18 @@
     <ClInclude Include="mysql_driver\dao_factory.h">
       <Filter>mysql_driver</Filter>
     </ClInclude>
+    <ClInclude Include="compressor\compressor.h">
+      <Filter>compressor</Filter>
+    </ClInclude>
+    <ClInclude Include="compressor\lz4_compressor_impl.h">
+      <Filter>compressor</Filter>
+    </ClInclude>
+    <ClInclude Include="decompressor\decompressor.h">
+      <Filter>decompressor</Filter>
+    </ClInclude>
+    <ClInclude Include="decompressor\lz4_decompressor_impl.h">
+      <Filter>decompressor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -494,6 +512,12 @@
     </ClCompile>
     <ClCompile Include="mysql_driver\dao_factory.cpp">
       <Filter>mysql_driver</Filter>
+    </ClCompile>
+    <ClCompile Include="compressor\lz4_compressor_impl.cc">
+      <Filter>compressor</Filter>
+    </ClCompile>
+    <ClCompile Include="decompressor\lz4_decompressor_impl.cc">
+      <Filter>decompressor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

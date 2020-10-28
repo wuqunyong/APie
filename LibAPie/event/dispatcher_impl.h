@@ -74,6 +74,7 @@ private:
   void handlePBRequest(PBRequest *itemPtr);
   void handlePBForward(PBForward *itemPtr);
   void handleSendData(SendData *itemPtr);
+  void handleSendDataByFlag(SendDataByFlag *itemPtr);
 
   void handleAsyncLog(LogCmd* ptrCmd);
   void handleMetric(MetricData* ptrCmd);

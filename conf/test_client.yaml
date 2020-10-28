@@ -7,6 +7,7 @@ clients:
       address: "127.0.0.1"
       port_value: 14007
       type: 1
+      mask_flag : 1
 log:
   merge: true
   level: 0

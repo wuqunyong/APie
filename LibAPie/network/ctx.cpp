@@ -59,7 +59,9 @@ std::string Ctx::s_log_postfix;
 class PortCb : public Network::ListenerCallbacks
 {
 public:
-	PortCb(ProtocolType type) : m_type(type)
+	PortCb(ProtocolType type, uint32_t maskFlag) : 
+		m_type(type),
+		m_maskFlag(maskFlag)
 	{
 
 	}
@@ -86,6 +88,7 @@ public:
 		itemObjPtr->iType = m_type;
 		itemObjPtr->sIp = ip;
 		itemObjPtr->sPeerIp = peerIp;
+		itemObjPtr->iMaskFlag = m_maskFlag;
 
 		Command command;
 		command.type = Command::passive_connect;
@@ -101,6 +104,7 @@ public:
 
 private:
 	ProtocolType m_type;
+	uint32_t m_maskFlag;
 };
 
 Ctx::Ctx() :
@@ -213,6 +217,7 @@ void Ctx::init(const std::string& configFile)
 			std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
 			uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
 			uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
+			uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>();
 
 			Network::ListenerConfig config;
 			config.ip = ip;
@@ -226,7 +231,7 @@ void Ctx::init(const std::string& configFile)
 				fatalExit(ss.str().c_str());
 			}
 
-			auto ptrCb = std::make_shared<PortCb>(config.type);
+			auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
 
 			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
 			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));

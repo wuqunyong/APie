@@ -51,6 +51,7 @@ void SelfRegistration::registerEndpoint()
 	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","port_value" }, 0);
 	std::string registryAuth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","type" }, 0);
+	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({"service_registry", "mask_flag" }, 0);
 
 	auto ptrSelf = this->shared_from_this();
 	auto ptrClient = APie::ClientProxy::createClientProxy();
@@ -62,7 +63,7 @@ void SelfRegistration::registerEndpoint()
 		}
 		return true;
 	};
-	ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), connectCb);
+	ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
 
 	auto heartbeatCb = [ptrSelf, registryAuth](APie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);

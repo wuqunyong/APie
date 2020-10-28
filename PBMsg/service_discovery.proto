@@ -19,7 +19,8 @@ message EndPointInstance
 	string ip = 4;
 	uint32 port = 5;
 	uint32 codec_type = 6;
-	uint32 db_id = 7;
+	uint32 mask_flag = 7;
+	uint32 db_id = 8;
 }
 
 message MSG_REQUEST_ADD_INSTANCE

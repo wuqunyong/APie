@@ -37,6 +37,8 @@
 
 #include "i_poll_events.hpp"
 
+#include "../serialization/protocol_head.h"
+
 namespace APie
 {
 	struct PassiveConnect
@@ -45,6 +47,7 @@ namespace APie
 		ProtocolType iType;
 		std::string sIp;
 		std::string sPeerIp;
+		uint32_t iMaskFlag = 0;
 	};
 
 	struct PBRequest
@@ -70,6 +73,14 @@ namespace APie
 		std::string sData;
 	};
 
+	struct SendDataByFlag
+	{
+		ConnetionType type;
+		uint64_t iSerialNum;
+		ProtocolHead head;
+		std::string sBody;
+	};
+
 	struct LogCmd
 	{
 		std::string sFile;
@@ -83,7 +94,8 @@ namespace APie
 		std::string sIp;
 		uint16_t iPort;
 		ProtocolType iCodecType;
-		uint64_t iCurSerialNum;
+		uint64_t iCurSerialNum = 0;
+		uint32_t iMaskFlag = 0;
 	};
 
 	struct DialResult
@@ -152,6 +164,7 @@ namespace APie
 			pb_reqeust,
 			pb_forward,
 			send_data,
+			send_data_by_flag,
 			dial,
 			dial_result,
 
@@ -199,6 +212,10 @@ namespace APie
 				SendData* ptrData;
 			} send_data;
 			
+			struct {
+				SendDataByFlag* ptrData;
+			} send_data_by_flag;
+
 			struct {
 				LogCmd* ptrData;
 			} async_log;

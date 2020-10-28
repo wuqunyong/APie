@@ -46,6 +46,8 @@ namespace APie
 		void eventcb(short what);
 
 		void setIp(std::string ip, std::string peerIp);
+		void setMaskFlag(uint32_t iFlag);
+
 		std::string ip();
 		std::string peerIp();
 
@@ -68,6 +70,7 @@ namespace APie
     private:
 		uint32_t tid_;
 		ProtocolType iType;
+		uint32_t iMaskFlag = 0;
 		uint64_t iSerialNum;
 		bufferevent *bev;
 
