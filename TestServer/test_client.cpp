@@ -8,12 +8,16 @@
 
 #include "apie.h"
 #include "json/json.h"
+#include "tinyxml2.h"
 
 #include "service_init.h"
 
 #include <lz4.h>
 #include <lz4hc.h>
 #include <lz4frame.h>
+
+using namespace tinyxml2;
+using namespace std;
 
 constexpr size_t kMaxVarintLength64 = 10;
 
@@ -122,11 +126,36 @@ int TestJsonCpp()
 	return EXIT_SUCCESS;
 }
 
+int TestXML()
+{
+
+	static const char* xml =
+		"<?xml version=\"1.0\"?>"
+		"<!DOCTYPE PLAY SYSTEM \"play.dtd\">"
+		"<PLAY>"
+		"<TITLE>A Midsummer Night's Dream</TITLE>"
+		"</PLAY>";
+
+	tinyxml2::XMLDocument doc;
+	doc.Parse(xml);
+
+	XMLElement* titleElement = doc.FirstChildElement("PLAY")->FirstChildElement("TITLE");
+	const char* title = titleElement->GetText();
+	printf("Name of play (1): %s\n", title);
+
+	XMLText* textNode = titleElement->FirstChild()->ToText();
+	title = textNode->Value();
+	printf("Name of play (2): %s\n", title);
+
+	return doc.ErrorID();
+}
+
 int main(int argc, char **argv)
 {
 	//std::string data = "The other signatures ((2) and (3)) are never called by a delete[]-expression (the delete[] operator always calls the ordinary version of this function, and exactly once for each of its arguments). These other signatures are only called automatically by a new[]-expression when their object construction fails (e.g., if the constructor of an object throws while being constructed by a new[]-expression with nothrow, the matching operator delete[] function accepting a nothrow argument is called).";
 
 	TestJsonCpp();
+	TestXML();
 
 	std::string data;
 	auto optResult = doCompress(data, 0);

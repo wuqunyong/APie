@@ -73,6 +73,9 @@
     <Filter Include="third_party\http-parser">
       <UniqueIdentifier>{789f4035-40eb-4998-b93d-6e05dbeee147}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\tinyxml2">
+      <UniqueIdentifier>{4a096f2c-becf-4d67-9432-40e1d4692880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -379,6 +382,9 @@
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
       <Filter>third_party\http-parser</Filter>
     </ClInclude>
+    <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h">
+      <Filter>third_party\tinyxml2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -578,6 +584,9 @@
     </ClCompile>
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
       <Filter>third_party\http-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp">
+      <Filter>third_party\tinyxml2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
