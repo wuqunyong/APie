@@ -7,6 +7,7 @@
 #include <tuple>
 
 #include "apie.h"
+#include "json/json.h"
 
 #include "service_init.h"
 
@@ -94,9 +95,38 @@ std::optional<std::string> doUncompress(const std::string& in)
 	return result;
 }
 
+int TestJsonCpp()
+{
+	const std::string rawJson = R"({"Age": 20, "Name": "colin"})";
+	const auto rawJsonLength = static_cast<int>(rawJson.length());
+	constexpr bool shouldUseOldWay = false;
+	std::string err;
+	Json::Value root;
+
+	if (shouldUseOldWay) {
+		Json::Reader reader;
+		reader.parse(rawJson, root);
+	}
+	else {
+		Json::CharReaderBuilder builder;
+		const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
+		if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &root,
+			&err)) {
+			std::cout << "error" << std::endl;
+			return EXIT_FAILURE;
+		}
+	}
+	const std::string name = root["Name"].asString();
+	const int age = root["Age"].asInt();
+
+	return EXIT_SUCCESS;
+}
+
 int main(int argc, char **argv)
 {
 	//std::string data = "The other signatures ((2) and (3)) are never called by a delete[]-expression (the delete[] operator always calls the ordinary version of this function, and exactly once for each of its arguments). These other signatures are only called automatically by a new[]-expression when their object construction fails (e.g., if the constructor of an object throws while being constructed by a new[]-expression with nothrow, the matching operator delete[] function accepting a nothrow argument is called).";
+
+	TestJsonCpp();
 
 	std::string data;
 	auto optResult = doCompress(data, 0);

@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)LibAPie;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\lz4\include;C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LibAPie;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)\ThirdParty\jsoncpp-0.y.z\include;C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files\OpenSSL-Win64\lib;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
