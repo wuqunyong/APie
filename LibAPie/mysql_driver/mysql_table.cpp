@@ -293,7 +293,7 @@ bool MysqlTable::generateUpdateSQL(MySQLConnector& connector, const ::mysql_prox
 		}
 		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
 	}
-	ss << ")";
+	ss << ") LIMIT 1";
 
 	if (bFirst)
 	{
@@ -337,7 +337,7 @@ bool MysqlTable::generateDeleteSQL(MySQLConnector& connector, const ::mysql_prox
 		}
 		ss << graveAccent << optName.value() << graveAccent << "=" << DeclarativeBase::toString(connector, items.value());
 	}
-	ss << ")";
+	ss << ") LIMIT 1";
 
 	if (bFirst)
 	{
