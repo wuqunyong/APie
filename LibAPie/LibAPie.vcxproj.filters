@@ -37,9 +37,6 @@
     <Filter Include="http">
       <UniqueIdentifier>{a0d82ed2-8cf5-4770-a906-e7285fb68676}</UniqueIdentifier>
     </Filter>
-    <Filter Include="http\http-parser">
-      <UniqueIdentifier>{db652e8d-aec6-4d5b-bca2-9ba015634fd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="rpc">
       <UniqueIdentifier>{0360f5e6-d4a9-4cb4-ad23-1344147be2a6}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="third_party\jsoncpp-0.y.z\src\lib_json">
       <UniqueIdentifier>{8bd2dc83-e039-4c9b-b337-6b3962787f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\http-parser">
+      <UniqueIdentifier>{789f4035-40eb-4998-b93d-6e05dbeee147}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -289,9 +289,6 @@
     <ClInclude Include="http\string_util.h">
       <Filter>http</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
-      <Filter>http\http-parser</Filter>
-    </ClInclude>
     <ClInclude Include="common\noncopyable.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -378,6 +375,9 @@
     </ClInclude>
     <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_tool.h">
       <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
+      <Filter>third_party\http-parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -522,9 +522,6 @@
     <ClCompile Include="http\string_util.cpp">
       <Filter>http</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
-      <Filter>http\http-parser</Filter>
-    </ClCompile>
     <ClCompile Include="rpc\client\rpc_client.cpp">
       <Filter>rpc\rpc_client</Filter>
     </ClCompile>
@@ -578,6 +575,9 @@
     </ClCompile>
     <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_writer.cpp">
       <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
+      <Filter>third_party\http-parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
