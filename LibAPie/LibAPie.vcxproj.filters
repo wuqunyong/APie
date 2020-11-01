@@ -55,6 +55,24 @@
     <Filter Include="decompressor">
       <UniqueIdentifier>{232b9ee9-4159-4f56-a24b-e134b056bea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{58547d08-2146-4f57-a115-00c898aa10fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp-0.y.z">
+      <UniqueIdentifier>{7bd124f3-0af7-4c50-9f00-834416297938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp-0.y.z\include">
+      <UniqueIdentifier>{33a8f570-4009-4e9b-89b3-9fa1e731938e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp-0.y.z\include\json">
+      <UniqueIdentifier>{8b7b93c5-1e44-4fe0-ad88-d229aad2c415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp-0.y.z\src">
+      <UniqueIdentifier>{b8e22e9f-f3a9-48a1-a151-44d276cc2ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp-0.y.z\src\lib_json">
+      <UniqueIdentifier>{8bd2dc83-e039-4c9b-b337-6b3962787f5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -328,6 +346,39 @@
     <ClInclude Include="decompressor\lz4_decompressor_impl.h">
       <Filter>decompressor</Filter>
     </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\assertions.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\autolink.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\config.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\features.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\forwards.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\json.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\reader.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\value.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\version.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\writer.h">
+      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_tool.h">
+      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -519,5 +570,19 @@
     <ClCompile Include="decompressor\lz4_decompressor_impl.cc">
       <Filter>decompressor</Filter>
     </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_reader.cpp">
+      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_value.cpp">
+      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_writer.cpp">
+      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_valueiterator.inl">
+      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    </None>
   </ItemGroup>
 </Project>

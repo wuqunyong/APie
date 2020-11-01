@@ -22,6 +22,9 @@ apie_sources = \
 	$(top_srcdir)/PBMsg/rpc_msg.pb.cc  \
 	$(top_srcdir)/PBMsg/service_discovery.pb.cc  \
 	$(top_srcdir)/ThirdParty/http-parser/http_parser.c  \
+	$(top_srcdir)/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_writer.cpp  \
+	$(top_srcdir)/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_reader.cpp  \
+	$(top_srcdir)/ThirdParty/jsoncpp-0.y.z/src/lib_json/json_value.cpp  \
 	$(top_srcdir)/LibAPie/api/api_impl.cc  \
 	$(top_srcdir)/LibAPie/api/forward_handler.cc  \
 	$(top_srcdir)/LibAPie/api/hook.cc  \
