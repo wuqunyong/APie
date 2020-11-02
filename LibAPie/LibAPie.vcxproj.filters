@@ -55,26 +55,26 @@
     <Filter Include="third_party">
       <UniqueIdentifier>{58547d08-2146-4f57-a115-00c898aa10fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="third_party\jsoncpp-0.y.z">
-      <UniqueIdentifier>{7bd124f3-0af7-4c50-9f00-834416297938}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="third_party\jsoncpp-0.y.z\include">
-      <UniqueIdentifier>{33a8f570-4009-4e9b-89b3-9fa1e731938e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="third_party\jsoncpp-0.y.z\include\json">
-      <UniqueIdentifier>{8b7b93c5-1e44-4fe0-ad88-d229aad2c415}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="third_party\jsoncpp-0.y.z\src">
-      <UniqueIdentifier>{b8e22e9f-f3a9-48a1-a151-44d276cc2ff0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="third_party\jsoncpp-0.y.z\src\lib_json">
-      <UniqueIdentifier>{8bd2dc83-e039-4c9b-b337-6b3962787f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="third_party\tinyxml2">
       <UniqueIdentifier>{4a096f2c-becf-4d67-9432-40e1d4692880}</UniqueIdentifier>
     </Filter>
     <Filter Include="third_party\http-parser">
       <UniqueIdentifier>{8f638030-3731-4bda-8096-10fdd038eb16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp">
+      <UniqueIdentifier>{b0b992c5-9b0f-4039-97b9-bf73ffe5b5f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp\include">
+      <UniqueIdentifier>{26be6ae9-7e06-4da0-a9d8-f9b0c018cd74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp\src">
+      <UniqueIdentifier>{0feaca00-e53e-402b-8fdd-9b999f20ae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp\include\json">
+      <UniqueIdentifier>{2d9f1354-b8d6-4c89-849a-1028c7077395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\jsoncpp\src\lib_json">
+      <UniqueIdentifier>{05f098f8-559e-44bd-82d6-202bc5e2cf23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,44 +346,44 @@
     <ClInclude Include="decompressor\lz4_decompressor_impl.h">
       <Filter>decompressor</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\assertions.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\autolink.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\config.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\features.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\forwards.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\json.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\reader.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\value.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\version.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\writer.h">
-      <Filter>third_party\jsoncpp-0.y.z\include\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_tool.h">
-      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
-    </ClInclude>
     <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h">
       <Filter>third_party\tinyxml2</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
       <Filter>third_party\http-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\allocator.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\assertions.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\config.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\forwards.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json_features.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\reader.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\value.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\version.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\writer.h">
+      <Filter>third_party\jsoncpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\jsoncpp\src\lib_json\json_tool.h">
+      <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -573,25 +573,25 @@
     <ClCompile Include="decompressor\lz4_decompressor_impl.cc">
       <Filter>decompressor</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_reader.cpp">
-      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_value.cpp">
-      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_writer.cpp">
-      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp">
       <Filter>third_party\tinyxml2</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
       <Filter>third_party\http-parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_reader.cpp">
+      <Filter>third_party\jsoncpp\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_value.cpp">
+      <Filter>third_party\jsoncpp\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_writer.cpp">
+      <Filter>third_party\jsoncpp\src\lib_json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_valueiterator.inl">
-      <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
+    <None Include="..\ThirdParty\jsoncpp\src\lib_json\json_valueiterator.inl">
+      <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </None>
   </ItemGroup>
 </Project>

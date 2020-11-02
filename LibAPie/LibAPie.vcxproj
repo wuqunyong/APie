@@ -74,7 +74,7 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\influxdb-cpp;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)ThirdParty\jsoncpp-0.y.z\include;$(SolutionDir)ThirdParty\tinyxml2;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\influxdb-cpp;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\tinyxml2;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)ThirdParty\libs;C:\Program Files\OpenSSL-Win64\lib;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -147,17 +147,17 @@
     <ClInclude Include="..\PBMsg\rpc_msg.pb.h" />
     <ClInclude Include="..\PBMsg\service_discovery.pb.h" />
     <ClInclude Include="..\ThirdParty\http-parser\http_parser.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\assertions.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\autolink.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\config.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\features.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\forwards.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\json.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\reader.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\value.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\version.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\include\json\writer.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_tool.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\allocator.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\assertions.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\config.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\forwards.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json_features.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\reader.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\value.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\version.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\writer.h" />
+    <ClInclude Include="..\ThirdParty\jsoncpp\src\lib_json\json_tool.h" />
     <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h" />
     <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
@@ -252,9 +252,9 @@
     <ClCompile Include="..\PBMsg\rpc_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\service_discovery.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_value.cpp" />
-    <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_writer.cpp" />
     <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\forward_handler.cc" />
@@ -312,7 +312,7 @@
     <ClCompile Include="serialization\protocol_head.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_valueiterator.inl" />
+    <None Include="..\ThirdParty\jsoncpp\src\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

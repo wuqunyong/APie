@@ -108,8 +108,8 @@ int TestJsonCpp()
 	Json::Value root;
 
 	if (shouldUseOldWay) {
-		Json::Reader reader;
-		reader.parse(rawJson, root);
+		//Json::Reader reader;
+		//reader.parse(rawJson, root);
 	}
 	else {
 		Json::CharReaderBuilder builder;
