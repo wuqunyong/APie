@@ -70,11 +70,11 @@
     <Filter Include="third_party\jsoncpp-0.y.z\src\lib_json">
       <UniqueIdentifier>{8bd2dc83-e039-4c9b-b337-6b3962787f5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="third_party\http-parser">
-      <UniqueIdentifier>{789f4035-40eb-4998-b93d-6e05dbeee147}</UniqueIdentifier>
-    </Filter>
     <Filter Include="third_party\tinyxml2">
       <UniqueIdentifier>{4a096f2c-becf-4d67-9432-40e1d4692880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\http-parser">
+      <UniqueIdentifier>{8f638030-3731-4bda-8096-10fdd038eb16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -379,11 +379,11 @@
     <ClInclude Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_tool.h">
       <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
-      <Filter>third_party\http-parser</Filter>
-    </ClInclude>
     <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h">
       <Filter>third_party\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
+      <Filter>third_party\http-parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -582,11 +582,11 @@
     <ClCompile Include="..\ThirdParty\jsoncpp-0.y.z\src\lib_json\json_writer.cpp">
       <Filter>third_party\jsoncpp-0.y.z\src\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
-      <Filter>third_party\http-parser</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp">
       <Filter>third_party\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
+      <Filter>third_party\http-parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
