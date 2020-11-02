@@ -7,6 +7,8 @@ INCLUDES = -I /usr/local/include \
 			-I /root/yaml-cpp-master/include \
 			-I /root/protobuf-3.11.4/src \
 			-I $(top_srcdir)/ThirdParty/http-parser \
+			-I $(top_srcdir)/ThirdParty/jsoncpp/include \
+			-I $(top_srcdir)/ThirdParty/tinyxml2 \
 			-I $(top_srcdir)/ThirdParty/influxdb-cpp \
 			-I $(top_srcdir)/PBMsg \
 			-I $(top_srcdir)/LibAPie
