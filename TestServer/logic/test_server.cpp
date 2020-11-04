@@ -10,8 +10,10 @@ std::tuple<uint32_t, std::string> TestServerMgr::init()
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::onLogicCommnad);
 	
-	Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
-	Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
+	Api::OpcodeHandlerSingleton::get().client.setDefaultFunc(TestServerMgr::handleDefaultOpcodes);
+
+	//Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
+	//Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
@@ -176,6 +178,24 @@ void TestServerMgr::handleResponseClientLogin(uint64_t iSerialNum, const ::login
 void TestServerMgr::handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response)
 {
 	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
+}
+
+void TestServerMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	auto iRoleIdOpt = TestServerMgrSingleton::get().findRoleIdBySerialNum(serialNum);
+	if (!iRoleIdOpt.has_value())
+	{
+		return;
+	}
+
+	uint64_t iRoleId = iRoleIdOpt.value();
+	auto ptrMockRole = TestServerMgrSingleton::get().findMockRole(iRoleId);
+	if (ptrMockRole == nullptr)
+	{
+		return;
+	}
+
+	ptrMockRole->handleResponse(serialNum, opcodes, msg);
 }
 
 }

@@ -37,6 +37,8 @@ namespace APie {
 		bool addHandler(const std::string& name, HandlerCb cb);
 		HandlerCb findHandler(const std::string& name);
 
+		void handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+
 	private:
 		void handleMsg(::pubsub::LOGIC_CMD& msg);
 

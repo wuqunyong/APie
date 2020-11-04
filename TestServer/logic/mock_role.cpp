@@ -161,6 +161,11 @@ MockRole::HandlerCb MockRole::findHandler(const std::string& name)
 	return findIte->second;
 }
 
+void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+
+}
+
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
 {
 	return std::make_shared<MockRole>(iRoleId);
@@ -168,7 +173,12 @@ std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
 
 void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 {
+	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
+	request.set_user_id(m_iRoleId);
+	request.set_version(std::stoi(msg.params()[0]));
+	request.set_session_key(msg.params()[1]);
 
+	TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 }
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
