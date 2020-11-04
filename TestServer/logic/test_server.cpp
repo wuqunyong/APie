@@ -52,13 +52,35 @@ void TestServerMgr::exit()
 {
 }
 
+void TestServerMgr::addMockRole(std::shared_ptr<MockRole> ptrMockRole)
+{
+	auto iRoleId = ptrMockRole->getRoleId();
+	m_mockRole[iRoleId] = ptrMockRole;
+}
+
+std::shared_ptr<MockRole> TestServerMgr::findMockRole(uint64_t iRoleId)
+{
+	auto findIte = m_mockRole.find(iRoleId);
+	if (findIte == m_mockRole.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+void TestServerMgr::removeMockRole(uint64_t iRoleId)
+{
+	m_mockRole.erase(iRoleId);
+}
+
 void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
 {
 	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
 
 	if (command.cmd() == "login")
 	{
-		if (command.params_size() < 3)
+		if (command.params_size() < 2)
 		{
 			return;
 		}
@@ -88,6 +110,39 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
+	}
+	else if (command.cmd() == "client")
+	{
+		if (command.params_size() < 3)
+		{
+			return;
+		}
+
+		uint64_t iRoleId = std::stoull(command.params()[0]);
+		auto ptrMockRole = TestServerMgrSingleton::get().findMockRole(iRoleId);
+		if (ptrMockRole == nullptr)
+		{
+			ptrMockRole = MockRole::createMockRole(iRoleId);
+			ptrMockRole->start();
+
+			TestServerMgrSingleton::get().addMockRole(ptrMockRole);
+		}
+
+		::pubsub::LOGIC_CMD newMsg;
+		for (int i = 1; i < command.params().size(); i++)
+		{
+			if (i == 1)
+			{
+				newMsg.set_cmd(command.params()[i]);
+			}
+			else
+			{
+				auto ptrAdd = newMsg.add_params();
+				*ptrAdd = command.params()[i];
+			}
+		}
+		//ptrMockRole->clearMsg();
+		ptrMockRole->pushMsg(newMsg);
 	}
 
 }
