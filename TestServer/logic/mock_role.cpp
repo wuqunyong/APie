@@ -75,6 +75,16 @@ uint64_t MockRole::getRoleId()
 
 void MockRole::processCmd()
 {
+	if (!m_clientProxy)
+	{
+		return;
+	}
+
+	if (!m_clientProxy->isConnectted())
+	{
+		return;
+	}
+
 	if (m_configCmd.empty())
 	{
 		return;
