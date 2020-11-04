@@ -14,12 +14,16 @@ MockRole::~MockRole()
 {
 	if (this->m_clientProxy)
 	{
+		TestServerMgrSingleton::get().removeSerialNum(this->m_clientProxy->getSerialNum());
+
 		this->m_clientProxy->onActiveClose();
 	}
 }
 
 void MockRole::setUp()
 {
+	TestServerMgrSingleton::get().addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
+
 	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 

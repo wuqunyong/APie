@@ -74,6 +74,27 @@ void TestServerMgr::removeMockRole(uint64_t iRoleId)
 	m_mockRole.erase(iRoleId);
 }
 
+void TestServerMgr::addSerialNumRole(uint64_t iSerialNum, uint64_t iRoleId)
+{
+	m_serialNumRole[iSerialNum] = iRoleId;
+}
+
+std::optional<uint64_t> TestServerMgr::findRoleIdBySerialNum(uint64_t iSerialNum)
+{
+	auto findIte = m_serialNumRole.find(iSerialNum);
+	if (findIte == m_serialNumRole.end())
+	{
+		return std::nullopt;
+	}
+
+	return findIte->second;
+}
+
+void TestServerMgr::removeSerialNum(uint64_t iSerialNum)
+{
+	m_serialNumRole.erase(iSerialNum);
+}
+
 void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
 {
 	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);

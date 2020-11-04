@@ -27,6 +27,10 @@ namespace APie {
 		std::shared_ptr<MockRole> findMockRole(uint64_t iRoleId);
 		void removeMockRole(uint64_t iRoleId);
 
+		void addSerialNumRole(uint64_t iSerialNum, uint64_t iRoleId);
+		std::optional<uint64_t> findRoleIdBySerialNum(uint64_t iSerialNum);
+		void removeSerialNum(uint64_t iSerialNum);
+
 	public:
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
 
@@ -37,6 +41,7 @@ namespace APie {
 		std::shared_ptr<ClientProxy> m_ptrClientProxy;
 
 		std::map<uint64_t, std::shared_ptr<MockRole>> m_mockRole;
+		std::map<uint64_t, uint64_t> m_serialNumRole;
 	};
 
 
