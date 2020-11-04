@@ -92,8 +92,15 @@ void MockRole::processCmd()
 
 	while (m_iCurIndex < m_configCmd.size())
 	{
+		auto iOldIndex = m_iCurIndex;
+
 		auto& msg = m_configCmd[m_iCurIndex];
 		this->handleMsg(msg);
+
+		if (iOldIndex != m_iCurIndex)
+		{
+			break;
+		}
 
 		m_iCurIndex++;
 	}
