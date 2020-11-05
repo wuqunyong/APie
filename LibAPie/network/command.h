@@ -102,6 +102,7 @@ namespace APie
 	{
 		uint64_t iSerialNum;
 		uint32_t iResult;
+		std::string sLocalIp;
 	};
 
 	struct MetricData

@@ -63,6 +63,8 @@ namespace APie
 
 		Event::TimerPtr& reconnectTimer();
 
+		void setLocalIp(const std::string& ip);
+
 	private:
 		void close();
 		int sendConnect();
@@ -81,6 +83,7 @@ namespace APie
 	private:
 		uint32_t m_tag;
 		uint64_t m_curSerialNum;
+		std::string m_localIp;
 
 		std::string m_ip;
 		uint16_t m_port;

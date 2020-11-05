@@ -170,6 +170,11 @@ Event::TimerPtr& ClientProxy::reconnectTimer()
 	return m_reconnectTimer;
 }
 
+void ClientProxy::setLocalIp(const std::string& ip)
+{
+	m_localIp = ip;
+}
+
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	if (this->m_hadEstablished != CONNECT_ESTABLISHED)
@@ -197,7 +202,7 @@ uint32_t ClientProxy::getReconnectTimes()
 void ClientProxy::onConnect(uint32_t iResult)
 {
 	std::stringstream ss;
-	ss << "recv|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port << ",iResult:" << iResult;
+	ss << "recv|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< " peerIp:" << this->m_ip << ":" << this->m_port << ",iResult:" << iResult;
 	ASYNC_PIE_LOG("ClientProxy/onConnect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	if (iResult == 0)
@@ -308,7 +313,7 @@ void ClientProxy::sendClose()
 void ClientProxy::close()
 {
 	std::stringstream ss;
-	ss << "close|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port;
+	ss << "close|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< "peerIp:" << this->m_ip << ":" << this->m_port;
 	ASYNC_PIE_LOG("ClientProxy/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	ClientProxy::unregisterClient(this->m_curSerialNum);

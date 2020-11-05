@@ -94,6 +94,17 @@ void APie::ClientConnection::sendConnectResultCmd(uint32_t iResult)
 	cmd.args.dial_result.ptrData->iResult = iResult;
 	cmd.args.dial_result.ptrData->iSerialNum = this->iSerialNum;
 
+	if (this->bev)
+	{
+		auto iFd = bufferevent_getfd(this->bev);
+		auto ptrAddr = Network::addressFromFd(iFd);
+		if (ptrAddr != nullptr)
+		{
+			auto ip = Network::makeFriendlyAddress(*ptrAddr);
+			cmd.args.dial_result.ptrData->sLocalIp = ip;
+		}
+	}
+
 	APie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 

@@ -671,6 +671,7 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	auto clientProxy = APie::ClientProxy::findClient(ptrCmd->iSerialNum);
 	if (clientProxy)
 	{
+		clientProxy->setLocalIp(ptrCmd->sLocalIp);
 		clientProxy->onConnect(ptrCmd->iResult);
 	}
 }
