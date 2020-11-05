@@ -163,7 +163,11 @@ MockRole::HandlerCb MockRole::findHandler(const std::string& name)
 
 void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
+	std::stringstream ss;
+	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << "|msg:" << msg;
+	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_DEBUG, "%s", ss.str().c_str());
 
+	std::cout << ss.str() << std::endl;
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
@@ -178,12 +182,17 @@ void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 	request.set_version(std::stoi(msg.params()[0]));
 	request.set_session_key(msg.params()[1]);
 
-	TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+	this->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 }
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
 	TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+}
+
+void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
+{
+	m_clientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, msg);
 }
 
 }

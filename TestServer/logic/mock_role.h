@@ -45,6 +45,8 @@ namespace APie {
 		void handleLogin(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 
+		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
+
 	public:
 		static std::shared_ptr<MockRole> createMockRole(uint64_t iRoleId);
 

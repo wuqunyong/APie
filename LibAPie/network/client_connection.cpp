@@ -207,6 +207,25 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	auto optionalData = Api::OpcodeHandlerSingleton::get().client.getType(iOpcode);
 	if (!optionalData)
 	{
+		PBForward *itemObjPtr = new PBForward;
+		itemObjPtr->type = ConnetionType::CT_CLIENT;
+		itemObjPtr->iSerialNum = this->iSerialNum;
+		itemObjPtr->iOpcode = iOpcode;
+		itemObjPtr->sMsg = requestStr;
+
+		Command command;
+		command.type = Command::pb_forward;
+		command.args.pb_forward.ptrData = itemObjPtr;
+
+		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+		if (ptrLogic == nullptr)
+		{
+			std::stringstream ss;
+			ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
+			ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			return;
+		}
+		ptrLogic->push(command);
 		return;
 	}
 
