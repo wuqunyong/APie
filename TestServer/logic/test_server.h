@@ -33,12 +33,10 @@ namespace APie {
 
 	public:
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
-
-		static void handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response);
-		static void handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response);
-		
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 
+		//static void handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response);
+		//static void handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response);
 	public:
 		std::shared_ptr<ClientProxy> m_ptrClientProxy;
 

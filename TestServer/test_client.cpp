@@ -152,8 +152,6 @@ int TestXML()
 
 int main(int argc, char **argv)
 {
-	//std::string data = "The other signatures ((2) and (3)) are never called by a delete[]-expression (the delete[] operator always calls the ordinary version of this function, and exactly once for each of its arguments). These other signatures are only called automatically by a new[]-expression when their object construction fails (e.g., if the constructor of an object throws while being constructed by a new[]-expression with nothrow, the matching operator delete[] function accepting a nothrow argument is called).";
-
 	TestJsonCpp();
 	TestXML();
 

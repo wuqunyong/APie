@@ -35,7 +35,7 @@ std::tuple<uint32_t, std::string> TestServerMgr::start()
 		return true;
 	};
 	m_ptrClientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
-	m_ptrClientProxy->addReconnectTimer(10000000);
+	m_ptrClientProxy->addReconnectTimer(60000);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -170,15 +170,15 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 
 }
 
-void TestServerMgr::handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response)
-{
-	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
-}
-
-void TestServerMgr::handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response)
-{
-	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
-}
+//void TestServerMgr::handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response)
+//{
+//	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
+//}
+//
+//void TestServerMgr::handleResponseEcho(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ECHO& response)
+//{
+//	std::cout << "recv|iSerialNum:" << iSerialNum << "|response:" << response.ShortDebugString() << std::endl;
+//}
 
 void TestServerMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
