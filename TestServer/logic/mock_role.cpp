@@ -140,20 +140,20 @@ void MockRole::pushMsg(::pubsub::LOGIC_CMD& msg)
 
 bool MockRole::addHandler(const std::string& name, HandlerCb cb)
 {
-	auto findIte = m_cmdHander.find(name);
-	if (findIte != m_cmdHander.end())
+	auto findIte = m_cmdHandler.find(name);
+	if (findIte != m_cmdHandler.end())
 	{
 		return false;
 	}
 
-	m_cmdHander[name] = cb;
+	m_cmdHandler[name] = cb;
 	return true;
 }
 
 MockRole::HandlerCb MockRole::findHandler(const std::string& name)
 {
-	auto findIte = m_cmdHander.find(name);
-	if (findIte == m_cmdHander.end())
+	auto findIte = m_cmdHandler.find(name);
+	if (findIte == m_cmdHandler.end())
 	{
 		return nullptr;
 	}

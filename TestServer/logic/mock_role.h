@@ -58,6 +58,6 @@ namespace APie {
 		uint64_t m_iCurIndex = 0;
 		std::vector<::pubsub::LOGIC_CMD> m_configCmd;
 
-		std::map<std::string, HandlerCb> m_cmdHander;
+		std::map<std::string, HandlerCb> m_cmdHandler;
 	};
 }
