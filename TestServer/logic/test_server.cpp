@@ -43,9 +43,9 @@ std::tuple<uint32_t, std::string> TestServerMgr::start()
 std::tuple<uint32_t, std::string> TestServerMgr::ready()
 {
 	std::stringstream ss;
-	ss << "Server Ready!" << std::endl;
-	std::cout << ss.str();
-	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+	ss << "Server Ready!";
+	std::cout << ss.str() << std::endl;
+	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }

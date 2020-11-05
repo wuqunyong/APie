@@ -165,7 +165,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 {
 	std::stringstream ss;
 	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << "|msg:" << msg;
-	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_DEBUG, "%s", ss.str().c_str());
+	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
 	std::cout << ss.str() << std::endl;
 }
