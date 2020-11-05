@@ -477,6 +477,10 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	bufferevent_set_timeouts(bev, &tv_read, &tv_write);
 
 	DispatcherImpl::addConnection(ptrConnection);
+
+	std::stringstream ss;
+	ss << "iSerialNum:" << iSerialNum << "|fd:" << itemPtr->iFd << "|iType:" << static_cast<uint32_t>(itemPtr->iType) << "|peerIp:" << itemPtr->sPeerIp << " -> " << "ip:" << itemPtr->sIp;
+	ASYNC_PIE_LOG("DispatcherImpl/handleNewConnect", PIE_CYCLE_HOUR, PIE_DEBUG, "%s", ss.str().c_str());
 }
 
 void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)

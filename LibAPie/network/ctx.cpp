@@ -94,6 +94,11 @@ public:
 		command.type = Command::passive_connect;
 		command.args.passive_connect.ptrData = itemObjPtr;
 
+		std::stringstream ss;
+		ss << "accept connect|fd:" << fd << "|iType:" << static_cast<uint32_t>(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
+		ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_HOUR, PIE_DEBUG, "%s", ss.str().c_str());
+
+
 		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
