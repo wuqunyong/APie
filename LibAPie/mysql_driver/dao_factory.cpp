@@ -175,7 +175,7 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			std::stringstream ss;
 			ss << "recall|iCallCount:" << iCallCount;
 
-			ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+			ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 			auto ephemeralTimerCb = [server, dbType, tables, cb, recallObj, iCallCount]() mutable
 			{
 				recallObj(server, dbType, tables, cb, iCallCount);

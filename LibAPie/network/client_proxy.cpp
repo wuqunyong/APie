@@ -202,7 +202,7 @@ uint32_t ClientProxy::getReconnectTimes()
 void ClientProxy::onConnect(uint32_t iResult)
 {
 	std::stringstream ss;
-	ss << "recv|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< " peerIp:" << this->m_ip << ":" << this->m_port << ",iResult:" << iResult;
+	ss << "recv|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< "peerIp:" << this->m_ip << ":" << this->m_port << ",iResult:" << iResult;
 	ASYNC_PIE_LOG("ClientProxy/onConnect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	if (iResult == 0)
