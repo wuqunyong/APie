@@ -136,7 +136,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 	}
 	else if (command.cmd() == "client")
 	{
-		if (command.params_size() < 3)
+		if (command.params_size() < 2)
 		{
 			return;
 		}
