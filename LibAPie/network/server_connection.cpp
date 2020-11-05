@@ -67,10 +67,10 @@ void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive
 {
 	std::stringstream ss;
 	ss << "close|iSerialNum:" << this->iSerialNum
-		<< ",info:" << sInfo
-		<< ",code:" << iCode
-		<< ",active:" << iActive
-		<< ",address:" << this->sIp << "->" << this->sPeerIp;
+		<< "|info:" << sInfo
+		<< "|code:" << iCode
+		<< "|active:" << iActive
+		<< "|peerIp:" << this->sPeerIp << " -> " << "ip:" << this->sIp;
 	ASYNC_PIE_LOG("ServerConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	this->sendCloseCmd(iCode, sInfo, iActive);

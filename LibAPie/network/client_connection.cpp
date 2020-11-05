@@ -65,7 +65,7 @@ void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 {
 	std::stringstream ss;
 	ss << "close|iSerialNum:" << this->iSerialNum 
-		<< "|address:" << this->sLocalAddress << ":" << this->iLocalPort << "->" << this->sListenAddress << ":" << this->iListenPort 
+		<< "|ip:" << this->sLocalAddress << ":" << this->iLocalPort << " -> " << "peerIp:"<< this->sListenAddress << ":" << this->iListenPort 
 		<< "|reason:" << sInfo;
 	ASYNC_PIE_LOG("ClientConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
