@@ -1,4 +1,4 @@
-SUBDIRS = bin DBProxy GatewayServer LoginServer RouteProxy SceneServer ServiceRegistry
+SUBDIRS = bin DBProxy GatewayServer LoginServer RouteProxy SceneServer ServiceRegistry TestServer
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
@@ -31,8 +31,11 @@ EXTRA_DIST =  \
 	RouteProxy \
 	SceneServer \
 	ServiceRegistry \
+	TestServer \
 	ThirdParty/http-parser \
 	ThirdParty/influxdb-cpp \
+	ThirdParty/jsoncpp \
+	ThirdParty/tinyxml2 \
 	$(name).spec.in \
 	bootstrap.sh
 

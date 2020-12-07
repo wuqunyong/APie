@@ -44,6 +44,7 @@ AC_CONFIG_FILES([Makefile
 		RouteProxy/Makefile
 		SceneServer/Makefile
 		ServiceRegistry/Makefile
+		TestServer/Makefile
 		])
 
 AC_OUTPUT
