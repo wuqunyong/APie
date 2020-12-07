@@ -53,6 +53,7 @@ namespace APie {
 	public:
 		std::map<uint64_t, RegisteredEndPoint> m_registered;
 		std::map<EndPoint, uint64_t> m_pointMap;
+		uint32_t m_serviceTimeout = 300;
 
 		Event::TimerPtr m_updateTimer;
 	};

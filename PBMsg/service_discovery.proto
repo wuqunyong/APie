@@ -23,6 +23,7 @@ message EndPointInstance
 	uint32 db_id = 8;
 }
 
+// 注册服务节点 register
 message MSG_REQUEST_ADD_INSTANCE
 {
 	EndPointInstance instance = 1;

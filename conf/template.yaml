@@ -8,6 +8,7 @@ identify:
   db_id : 1
 io_threads: 2
 daemon: true
+service_timeout: 600 #服务发现超时时间，默认：300
 listeners:
 - address:
     socket_address:

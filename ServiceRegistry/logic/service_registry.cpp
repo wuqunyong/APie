@@ -2,8 +2,6 @@
 
 namespace APie {
 
-const uint64_t TIMEOUT_CLOSE_INTERVAL = 60 * 10;
-
 std::tuple<uint32_t, std::string> ServiceRegistry::init()
 {
 	APie::RPC::rpcInit();
@@ -18,6 +16,8 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 
 std::tuple<uint32_t, std::string> ServiceRegistry::start()
 {
+	m_serviceTimeout = APie::CtxSingleton::get().yamlAs<uint32_t>({"service_timeout"}, 300);
+
 	auto timerCb = [this]() {
 		this->update();
 		this->addUpdateTimer(1000);
@@ -133,10 +133,11 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 void ServiceRegistry::checkTimeout()
 {
 	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+
 	std::vector<uint64_t> delSerial;
 	for (const auto& items : m_registered)
 	{
-		if (curTime > items.second.modifyTime + TIMEOUT_CLOSE_INTERVAL)
+		if (curTime > items.second.modifyTime + m_serviceTimeout)
 		{
 			delSerial.push_back(items.first);
 		}

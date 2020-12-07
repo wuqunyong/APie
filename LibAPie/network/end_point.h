@@ -32,6 +32,7 @@ namespace APie
 
 		void init();
 
+		//ÏòServiceRegistry×¢²á·şÎñ
 		void registerEndpoint();
 		void unregisterEndpoint();
 

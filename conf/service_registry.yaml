@@ -7,6 +7,7 @@ identify:
   codec_type: 1
 io_threads: 2
 daemon: true
+service_timeout: 600
 listeners:
 - address:
     socket_address:
