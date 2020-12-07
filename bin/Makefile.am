@@ -39,6 +39,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/common/string_utils.cpp  \
 	$(top_srcdir)/LibAPie/common/utility.cc  \
 	$(top_srcdir)/LibAPie/crypto/crypto_utility.cc  \
+	$(top_srcdir)/LibAPie/decompressor/lz4_decompressor_impl.cc  \
 	$(top_srcdir)/LibAPie/event/dispatched_thread.cc  \
 	$(top_srcdir)/LibAPie/event/dispatcher_impl.cc  \
 	$(top_srcdir)/LibAPie/event/event_impl_base.cc  \
