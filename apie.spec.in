@@ -57,6 +57,8 @@ pwd
 
 /usr/bin/cp -i data/* %{buildroot}/usr/local/%{name}/data/
 
+%{__install} -c -m 755 etc/apie.sh %{buildroot}/etc/rc.d/init.d/apie
+
 make DESTDIR=%{buildroot} install
 
 %clean
@@ -64,10 +66,11 @@ make DESTDIR=%{buildroot} install
 %pre
 
 %post
+/sbin/ldconfig
 if [ $1 = 0 ]; then 
 	# This is an initial install.
 	echo "post if " $1
-elif [ $1 = 1]; then
+elif [ $1 = 1 ]; then
 	# This is an upgrade.
 	echo "post elif " $1
 else
@@ -78,7 +81,7 @@ fi
 if [ $1 = 0 ]; then 
 	# This is an un-installation.
 	echo "preun if " $1
-elif [ $1 = 1]; then
+elif [ $1 = 1 ]; then
 	# This is an upgrade.
 	echo "preun elif " $1
 else
@@ -86,6 +89,7 @@ else
 fi
 
 %postun
+/sbin/ldconfig
 
 
 %files
@@ -98,6 +102,8 @@ fi
 /usr/local/%{name}/lib
 /usr/local/%{name}/logs
 /usr/local/%{name}/keepalived
+/etc/rc.d/init.d
+%attr(0755,root,root) %config  %{_sysconfdir}/rc.d/init.d/apie
 
 %changelog
 
