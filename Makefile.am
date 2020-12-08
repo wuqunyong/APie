@@ -23,6 +23,8 @@ $(name).spec : $(name).spec.in FORCE
 	$< > $@
 
 EXTRA_DIST =  \
+	conf \
+	data \
 	DBProxy \
 	GatewayServer \
 	LibAPie \

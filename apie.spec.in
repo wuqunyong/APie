@@ -41,19 +41,49 @@ pwd
 %{__install} -d %{buildroot}/usr/local/%{name}/etc
 %{__install} -d %{buildroot}/usr/local/%{name}/conf
 %{__install} -d %{buildroot}/usr/local/%{name}/cron
+%{__install} -d %{buildroot}/usr/local/%{name}/data
 %{__install} -d %{buildroot}/usr/local/%{name}/lib
 %{__install} -d %{buildroot}/usr/local/%{name}/logs
 %{__install} -d %{buildroot}/usr/local/%{name}/keepalived
 
 
+%{__install} -c -m 644 conf/db_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_proxy.yaml
+%{__install} -c -m 644 conf/gateway_server.yaml %{buildroot}/usr/local/%{name}/conf/gateway_server.yaml
+%{__install} -c -m 644 conf/login_server.yaml %{buildroot}/usr/local/%{name}/conf/login_server.yaml
+%{__install} -c -m 644 conf/route_proxy.yaml %{buildroot}/usr/local/%{name}/conf/route_proxy.yaml
+%{__install} -c -m 644 conf/scene_server.yaml %{buildroot}/usr/local/%{name}/conf/scene_server.yaml
+%{__install} -c -m 644 conf/service_registry.yaml %{buildroot}/usr/local/%{name}/conf/service_registry.yaml
+%{__install} -c -m 644 conf/test_client.yaml %{buildroot}/usr/local/%{name}/conf/test_client.yaml
+
+/usr/bin/cp -i data/* %{buildroot}/usr/local/%{name}/data/
 
 make DESTDIR=%{buildroot} install
 
 %clean
 
+%pre
+
 %post
+if [ $1 = 0 ]; then 
+	# This is an initial install.
+	echo "post if " $1
+elif [ $1 = 1]; then
+	# This is an upgrade.
+	echo "post elif " $1
+else
+	echo "post else " $1
+fi
 
 %preun
+if [ $1 = 0 ]; then 
+	# This is an un-installation.
+	echo "preun if " $1
+elif [ $1 = 1]; then
+	# This is an upgrade.
+	echo "preun elif " $1
+else
+	echo "preun else " $1
+fi
 
 %postun
 
@@ -64,6 +94,7 @@ make DESTDIR=%{buildroot} install
 /usr/local/%{name}/etc
 /usr/local/%{name}/conf
 /usr/local/%{name}/cron
+/usr/local/%{name}/data
 /usr/local/%{name}/lib
 /usr/local/%{name}/logs
 /usr/local/%{name}/keepalived
