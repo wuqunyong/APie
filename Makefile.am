@@ -26,6 +26,7 @@ EXTRA_DIST =  \
 	conf \
 	data \
 	DBProxy \
+	etc \
 	GatewayServer \
 	LibAPie \
 	LoginServer \
