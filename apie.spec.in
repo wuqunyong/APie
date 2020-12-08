@@ -45,6 +45,7 @@ pwd
 %{__install} -d %{buildroot}/usr/local/%{name}/lib
 %{__install} -d %{buildroot}/usr/local/%{name}/logs
 %{__install} -d %{buildroot}/usr/local/%{name}/keepalived
+%{__install} -d %{buildroot}/etc/rc.d/init.d
 
 
 %{__install} -c -m 644 conf/db_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_proxy.yaml
