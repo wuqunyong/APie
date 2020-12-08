@@ -32,7 +32,7 @@ log:
   show_pos: true
   split_size: 128
   name: "service_registry"
-  backup: "D:/backup"
+  backup: "/usr/local/apie/logs/backup"
 metrics:
   enable: true
   ip: "127.0.0.1"

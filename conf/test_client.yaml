@@ -13,7 +13,7 @@ log:
   level: 0
   show_pos: false
   split_size: 128
-  backup: "D:/backup"
+  backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 metrics:
   enable: true

@@ -299,6 +299,9 @@ void checkRotate()
 			cacheMap.erase(o);
 
 			std::string toDir = APie::CtxSingleton::get().yamlAs<std::string>({"log","backup"}, "");
+#ifdef WIN32
+			toDir = "D:/backup";
+#endif
 			moveFile(fromFile, toDir);
 			continue;
 		}
