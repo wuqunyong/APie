@@ -26,7 +26,8 @@ namespace Network {
 		static bool sendMsgByFlag(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, uint32_t iFlag, ConnetionType type = ConnetionType::CT_NONE);
 		static bool sendMsgByStr(uint64_t iSerialNum, uint32_t iOpcode, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
 		static bool sendMsgByStrByFlag(uint64_t iSerialNum, uint32_t iOpcode, const std::string& msg, uint32_t iFlag, ConnetionType type = ConnetionType::CT_NONE);
-		static bool sendMsgToGatewayByRoute(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg);
+		
+		static bool sendMsgToUserByGateway(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 	};
 
 

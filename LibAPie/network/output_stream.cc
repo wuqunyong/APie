@@ -340,7 +340,7 @@ namespace Network {
 		return true;
 	}
 
-	bool OutputStream::sendMsgToGatewayByRoute(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg)
+	bool OutputStream::sendMsgToUserByGateway(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg)
 	{
 		::rpc_msg::PRC_DeMultiplexer_Forward_Args args;
 		*args.mutable_role_id() = roleIdentifier;
