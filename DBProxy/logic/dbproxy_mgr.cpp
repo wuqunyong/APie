@@ -10,12 +10,12 @@ namespace APie {
 std::tuple<uint32_t, std::string> DBProxyMgr::init()
 {
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgr::RPC_handleMysqlQueryByFilter);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlDescribeRequest>(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlQueryRequest>(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlInsertRequest>(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlUpdateRequest>(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlDeleteRequest>(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlQueryRequestByFilter>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgr::RPC_handleMysqlQueryByFilter);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
@@ -97,19 +97,9 @@ void DBProxyMgr::exit()
 
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlDescribeRequest& request)
 {
 	::mysql_proxy_msg::MysqlDescribeResponse response;
-
-	::mysql_proxy_msg::MysqlDescribeRequest request;
-	if (!request.ParseFromString(args))
-	{
-		std::stringstream ss;
-		ss << "ParseError";
-		response.set_result(false);
-		response.set_error_info(ss.str());
-		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
-	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
@@ -175,15 +165,9 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::r
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlQueryRequest& request)
 {
 	::mysql_proxy_msg::MysqlQueryResponse response;
-
-	::mysql_proxy_msg::MysqlQueryRequest request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
 
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
 	if (sharedTable == nullptr)
@@ -217,15 +201,9 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQuery(const ::rpc_m
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& request)
 {
 	::mysql_proxy_msg::MysqlQueryResponse response;
-
-	::mysql_proxy_msg::MysqlQueryRequestByFilter request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
 
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
 	if (sharedTable == nullptr)
@@ -297,15 +275,9 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlQueryByFilter(const
 }
 
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlInsert(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlInsert(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlInsertRequest& request)
 {
 	::mysql_proxy_msg::MysqlInsertResponse response;
-
-	::mysql_proxy_msg::MysqlInsertRequest request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
 
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
 	if (sharedTable == nullptr)
@@ -340,15 +312,9 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlInsert(const ::rpc_
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlUpdate(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlUpdate(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlUpdateRequest& request)
 {
 	::mysql_proxy_msg::MysqlUpdateResponse response;
-
-	::mysql_proxy_msg::MysqlUpdateRequest request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
 
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
 	if (sharedTable == nullptr)
@@ -383,15 +349,9 @@ std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlUpdate(const ::rpc_
 	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDelete(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDelete(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlDeleteRequest& request)
 {
 	::mysql_proxy_msg::MysqlDeleteResponse response;
-
-	::mysql_proxy_msg::MysqlDeleteRequest request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-	}
 
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
 	if (sharedTable == nullptr)

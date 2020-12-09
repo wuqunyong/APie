@@ -31,7 +31,7 @@ namespace APie {
 	public:
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
 
-		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args);
+		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request);
 
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 

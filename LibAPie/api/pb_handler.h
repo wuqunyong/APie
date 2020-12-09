@@ -55,7 +55,7 @@ public:
 	std::optional<std::string> getType(uint64_t opcode);
 	std::optional<HandleFunction> getFunction(uint64_t opcode);
 
-	google::protobuf::Message* createMessage(const std::string& typeName);
+	static google::protobuf::Message* createMessage(const std::string& typeName);
 	HandleMuxFunction& getDefaultFunc();
 	void setDefaultFunc(HandleMuxFunction func);
 

@@ -6,6 +6,7 @@
  - libevent
  - protobuf
  - yaml
+ - lz4
 
 ## 安装依赖
 ```shell

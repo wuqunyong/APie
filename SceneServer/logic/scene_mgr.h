@@ -22,7 +22,7 @@ namespace APie {
 		void exit();
 
 	public:
-		static std::tuple<uint32_t, std::string> RPC_handleMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args);
+		static std::tuple<uint32_t, std::string> RPC_handleMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, ::rpc_msg::PRC_Multiplexer_Forward_Args request);
 
 		static void Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_ECHO request);
 	private:

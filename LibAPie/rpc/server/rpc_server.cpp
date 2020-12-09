@@ -11,18 +11,6 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcServer::registerOpcodes(::rpc_msg::RPC_OPCODES opcodes, RpcServerCb cb)
-	{
-		auto findIte = m_register.find(opcodes);
-		if (findIte != m_register.end())
-		{
-			return false;
-		}
-
-		m_register[opcodes] = cb;
-		return true;
-	}
-
 	bool RpcServer::asyncReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData)
 	{
 		uint64_t iSerialNum = client.channel_serial_num();
@@ -114,15 +102,37 @@ namespace RPC {
 			}
 		}
 
-		auto cb = RpcServerSingleton::get().find(request.opcodes());
-		if (cb == nullptr)
+		auto functionOpt = RpcServerSingleton::get().findFunction(request.opcodes());
+		if (!functionOpt.has_value())
 		{
 			response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_Unregister);
 			APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 			return;
 		}
 
-		auto tupleResult = cb(request.client(), request.args_data());
+		auto typeOpt = RpcServerSingleton::get().getType(request.opcodes());
+		if (!typeOpt.has_value())
+		{
+			response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_Unregister);
+			APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+			return;
+		}
+
+		std::string sType = typeOpt.value();
+		auto ptrMsg = Api::PBHandler::createMessage(sType);
+		if (ptrMsg == nullptr)
+		{
+			return;
+		}
+
+		std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg);
+		bool bResult = newMsg->ParseFromString(request.args_data());
+		if (!bResult)
+		{
+			return;
+		}
+
+		auto tupleResult = functionOpt.value()(request.client(), newMsg.get());
 
 		uint32_t iCode = std::get<0>(tupleResult);
 		if (iCode == ::rpc_msg::RPC_CODE::CODE_Ok_Async)
@@ -137,7 +147,7 @@ namespace RPC {
 
 		response.mutable_status()->set_code(iCode);
 		response.set_result_data(std::get<1>(tupleResult));
-		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
+		bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)
 		{
 			//TODO
@@ -145,12 +155,23 @@ namespace RPC {
 		return;
 	}
 
-	RpcServerCb RpcServer::find(::rpc_msg::RPC_OPCODES opcodes)
+	std::optional<std::string> RpcServer::getType(uint64_t opcode)
+	{
+		auto findIte = m_types.find(opcode);
+		if (findIte == m_types.end())
+		{
+			return std::nullopt;
+		}
+
+		return findIte->second;
+	}
+
+	std::optional<RpcServer::adaptor_type> RpcServer::findFunction(::rpc_msg::RPC_OPCODES opcodes)
 	{
 		auto findIte = m_register.find(opcodes);
 		if (findIte == m_register.end())
 		{
-			return nullptr;
+			return std::nullopt;
 		}
 
 		return findIte->second;

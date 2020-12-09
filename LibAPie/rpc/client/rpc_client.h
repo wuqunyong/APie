@@ -41,6 +41,7 @@ namespace RPC {
 
 		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
+		
 		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
 
 		void handleTimeout();

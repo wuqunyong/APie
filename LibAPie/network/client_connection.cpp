@@ -241,7 +241,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	}
 
 	std::string sType = optionalData.value();
-	auto ptrMsg = Api::OpcodeHandlerSingleton::get().client.createMessage(sType);
+	auto ptrMsg = Api::PBHandler::createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
 		return;

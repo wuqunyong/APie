@@ -10,7 +10,7 @@ namespace APie {
 std::tuple<uint32_t, std::string> GatewayMgr::init()
 {
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_DeMultiplexer_Forward_Args>(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
 
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
@@ -158,14 +158,8 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 	APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_Multiplexer_Forward, args, rpcCB);
 }
 
-std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request)
 {
-	::rpc_msg::PRC_DeMultiplexer_Forward_Args request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, "");
-	}
-
 	uint64_t iRoleId = request.role_id().user_id();
 	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleById(iRoleId);
 	if (ptrGatewayRole == nullptr)

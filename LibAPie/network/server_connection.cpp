@@ -211,7 +211,7 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	}
 
 	std::string sType = optionalData.value();
-	auto ptrMsg = Api::OpcodeHandlerSingleton::get().server.createMessage(sType);
+	auto ptrMsg = Api::PBHandler::createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
 		std::stringstream ss;

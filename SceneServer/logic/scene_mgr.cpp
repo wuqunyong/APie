@@ -8,7 +8,7 @@ namespace APie {
 std::tuple<uint32_t, std::string> SceneMgr::init()
 {
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_Multiplexer_Forward_Args>(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
 
 	APie::Api::ForwardHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
 
@@ -37,14 +37,8 @@ void SceneMgr::exit()
 
 }
 
-std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)
+std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, ::rpc_msg::PRC_Multiplexer_Forward_Args request)
 {
-	::rpc_msg::PRC_Multiplexer_Forward_Args request;
-	if (!request.ParseFromString(args))
-	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, "");
-	}
-
 	request.mutable_role_id()->set_channel_serial_num(client.channel_serial_num());
 
 	auto optionalData = Api::ForwardHandlerSingleton::get().server.getType(request.opcodes());
@@ -56,7 +50,7 @@ std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const :
 	}
 
 	std::string sType = optionalData.value();
-	auto ptrMsg = Api::ForwardHandlerSingleton::get().server.createMessage(sType);
+	auto ptrMsg = Api::PBHandler::createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
 		std::stringstream ss;

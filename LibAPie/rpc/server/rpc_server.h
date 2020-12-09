@@ -22,24 +22,60 @@
 namespace APie {
 namespace RPC {
 
-	using RpcServerCb = std::function<std::tuple<uint32_t, std::string>(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::string& args)>;
-
 	class RpcServer
 	{
 	public:
 		bool init();
 
-		bool registerOpcodes(::rpc_msg::RPC_OPCODES opcodes, RpcServerCb cb);
+		using adaptor_type = std::function<std::tuple<uint32_t, std::string>(const ::rpc_msg::CLIENT_IDENTIFIER& client, ::google::protobuf::Message* ptrMsg)>;
+
+		template <typename Params>
+		using callback_type = std::function<std::tuple<uint32_t, std::string>(const ::rpc_msg::CLIENT_IDENTIFIER& client, const Params& params)>;
+
+		template <typename Params, typename std::enable_if<std::is_base_of<google::protobuf::Message, Params>::value, int>::type = 0 >
+		bool registerOpcodes(::rpc_msg::RPC_OPCODES opcodes, callback_type<Params> func)
+		{
+			using OriginType = Params;
+			std::string sType = OriginType::descriptor()->full_name();
+
+			auto findIte = m_register.find(opcodes);
+			if (findIte != m_register.end())
+			{
+				std::stringstream ss;
+				ss << "duplicate opcode: " << opcodes;
+				fatalExit(ss.str().c_str());
+
+				return false;
+			}
+
+			auto ptrCb = [func](const ::rpc_msg::CLIENT_IDENTIFIER& client, ::google::protobuf::Message* ptrMsg) {
+				OriginType *ptrData = dynamic_cast<OriginType*>(ptrMsg);
+				if (nullptr == ptrData)
+				{
+					return std::make_tuple<uint32_t, std::string>(::rpc_msg::CODE_ParseError, "");
+				}
+
+				return func(client, *ptrData);
+			};
+
+
+			m_register[opcodes] = ptrCb;
+			m_types[opcodes] = sType;
+			return true;
+		}
+
 		bool asyncReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData);
 		bool asyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset);
 
 		static void handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST& request);
 
 	private:
-		RpcServerCb find(::rpc_msg::RPC_OPCODES opcodes);
+		std::optional<std::string> getType(uint64_t opcode);
+		std::optional<adaptor_type> findFunction(::rpc_msg::RPC_OPCODES opcodes);
 
 	private:
-		std::map<::rpc_msg::RPC_OPCODES, RpcServerCb> m_register;
+		std::map<::rpc_msg::RPC_OPCODES, adaptor_type> m_register;
+		std::map<uint64_t, std::string> m_types;
 	};
 
 	typedef APie::ThreadSafeSingleton<RpcServer> RpcServerSingleton;
