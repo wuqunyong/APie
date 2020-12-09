@@ -36,5 +36,5 @@ mysql:
   port: 3306
   user: "root"
   passwd: "root"
-  db: "ff_base1"
+  db: "apie"
   

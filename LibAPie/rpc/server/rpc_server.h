@@ -52,7 +52,7 @@ namespace RPC {
 				OriginType *ptrData = dynamic_cast<OriginType*>(ptrMsg);
 				if (nullptr == ptrData)
 				{
-					return std::make_tuple<uint32_t, std::string>(::rpc_msg::CODE_ParseError, "");
+					return std::make_tuple<uint32_t, std::string>(::rpc_msg::CODE_ParseError, "rpc_server|handleRequest");
 				}
 
 				return func(client, *ptrData);
