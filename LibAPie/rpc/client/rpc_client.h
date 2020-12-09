@@ -39,10 +39,13 @@ namespace RPC {
 	public:
 		bool init();
 
-		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
-		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
+		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
+		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
 		
-		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply = nullptr, ::rpc_msg::CONTROLLER controller = ::rpc_msg::CONTROLLER::default_instance());
+		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply = nullptr);
+
+		void setOneshotController(::rpc_msg::CONTROLLER controller);
+		::rpc_msg::CONTROLLER getAndResetController();
 
 		void handleTimeout();
 
@@ -50,6 +53,7 @@ namespace RPC {
 		static void handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response);
 
 	private:
+
 		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
 		bool callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, std::string args, RpcReplyCb reply = nullptr);
 
@@ -71,6 +75,8 @@ namespace RPC {
 
 		uint64_t m_iSeqId = 0;
 		uint64_t m_iCheckTimeoutAt = 60;
+
+		::rpc_msg::CONTROLLER m_controller;
 
 		static uint64_t TIMEOUT_DURATION;
 		static uint64_t CHECK_INTERVAL;

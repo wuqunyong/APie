@@ -22,8 +22,10 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
+		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
@@ -79,8 +81,10 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	bool RpcClient::callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
 	{
+		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
@@ -137,8 +141,10 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply, ::rpc_msg::CONTROLLER controller)
+	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply)
 	{
+		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+
 		std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData;
 
 		rpc_msg::STATUS status;
@@ -435,6 +441,19 @@ namespace RPC {
 		}
 
 		return bResult;
+	}
+
+	void RpcClient::setOneshotController(::rpc_msg::CONTROLLER controller)
+	{
+		m_controller = controller;
+	}
+
+	::rpc_msg::CONTROLLER RpcClient::getAndResetController()
+	{
+		auto oldMsg = m_controller;
+		m_controller = ::rpc_msg::CONTROLLER::default_instance();
+
+		return oldMsg;
 	}
 
 	void RpcClient::handleTimeout()
