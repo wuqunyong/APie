@@ -38,11 +38,18 @@ namespace APie {
 		
 
 	public:
+		// CMD
+		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+
+		static void onShowTopology(::pubsub::LOGIC_CMD& cmd);
+
+		// PubSub
+		static void onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg);
+
+
 		static void handleRespAddRoute(uint64_t iSerialNum, const ::route_register::MSG_RESP_ADD_ROUTE& response);
 		static void handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_RESP_HEARTBEAT& response);
 		
-
-		static void onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg);
 
 	private:
 		std::map<EndPoint, std::shared_ptr<RouteClient>> m_connectedPool;

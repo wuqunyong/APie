@@ -124,6 +124,16 @@ uint64_t RouteClient::getSerialNum()
 	return iSerialNum;
 }
 
+bool RouteClient::isConnectted()
+{
+	if (m_clientProxy)
+	{
+		return m_clientProxy->isConnectted();
+	}
+
+	return false;
+}
+
 RouteClient::State RouteClient::state()
 {
 	return m_state;

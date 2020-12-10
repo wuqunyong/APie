@@ -41,6 +41,8 @@ namespace APie {
 		State state();
 		void setState(State value);
 
+		bool isConnectted();
+
 		void sendAddRoute(APie::ClientProxy* ptrClient);
 		void sendHeartbeat(APie::ClientProxy* ptrClient);
 

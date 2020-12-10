@@ -6,6 +6,13 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> RouteProxy::init()
 {
+	// CMD
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, RouteProxy::onLogicCommnad);
+
+	LogicCmdHandlerSingleton::get().init();
+	LogicCmdHandlerSingleton::get().registerOnCmd("show_topo", "show_topology", RouteProxy::onShowTopology);
+
+	// RPC
 	APie::RPC::rpcInit();
 
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_ROUTE, RouteProxy::handleRespAddRoute, ::route_register::MSG_RESP_ADD_ROUTE::default_instance());
@@ -149,6 +156,29 @@ void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register
 	{
 		ASYNC_PIE_LOG("RouteProxy/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 	}
+}
+
+void RouteProxy::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	if (!handlerOpt.has_value())
+	{
+		return;
+	}
+
+	handlerOpt.value()(command);
+}
+
+void RouteProxy::onShowTopology(::pubsub::LOGIC_CMD& cmd)
+{
+	std::stringstream ss;
+	for (const auto& items : RouteProxySingleton::get().connectedPool())
+	{
+		ss << "--> " << "type:" << items.first.type << "|id:" << items.first.id << "|status:" << (uint32_t)items.second->state() << "|isConnectted:" << items.second->isConnectted() << std::endl;
+	}
+
+	ASYNC_PIE_LOG("show_topology:%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
 void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg)
