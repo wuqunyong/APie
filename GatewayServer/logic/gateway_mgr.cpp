@@ -32,6 +32,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 
 std::tuple<uint32_t, std::string> GatewayMgr::start()
 {
+	// 加载，数据表结构
 	auto dbType = DeclarativeBase::DBType::DBT_Role;
 	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
 
@@ -149,7 +150,7 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 		return;
 	}
 
-	uint64_t iGWId = APie::CtxSingleton::get().getServerId();
+	uint32_t iGWId = APie::CtxSingleton::get().getServerId();
 	uint64_t iUserId = ptrGatewayRole->getRoleId();
 
 	::rpc_msg::PRC_Multiplexer_Forward_Args args;
@@ -543,7 +544,7 @@ void GatewayMgr::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint64_t gameId = std::stoull(cmd.params()[0]);
-	uint32_t level = std::stoull(cmd.params()[1]);
+	uint32_t level = std::stoul(cmd.params()[1]);
 
 
 	ModelUser user;
@@ -577,7 +578,7 @@ void GatewayMgr::onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
-	uint32_t level = std::stoull(cmd.params()[1]);
+	uint32_t level = std::stoul(cmd.params()[1]);
 
 
 	ModelUser user;
@@ -611,7 +612,7 @@ void GatewayMgr::onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
-	uint32_t level = std::stoull(cmd.params()[1]);
+	uint32_t level = std::stoul(cmd.params()[1]);
 
 
 	ModelUser user;
