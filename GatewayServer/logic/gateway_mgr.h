@@ -29,12 +29,15 @@ namespace APie {
 		bool addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole);
 
 	public:
+		// CMD
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onMysqlInsert(::pubsub::LOGIC_CMD& cmd);
 
+		// RPC
 		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request);
 
+		// CLIENT OPCODE
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-
 		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
 
 	private:

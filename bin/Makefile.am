@@ -31,6 +31,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/api/api_impl.cc  \
 	$(top_srcdir)/LibAPie/api/forward_handler.cc  \
 	$(top_srcdir)/LibAPie/api/hook.cc  \
+	$(top_srcdir)/LibAPie/api/logiccmd_handler.cc  \
 	$(top_srcdir)/LibAPie/api/os_sys_calls.cc  \
 	$(top_srcdir)/LibAPie/api/pb_handler.cc  \
 	$(top_srcdir)/LibAPie/api/pubsub.cc  \

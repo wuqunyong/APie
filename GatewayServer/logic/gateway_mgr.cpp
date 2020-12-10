@@ -7,16 +7,28 @@
 
 namespace APie {
 
+std::map<std::string, MysqlTable> loadedTable;
+ModelUser loadedUser;
+
+
 std::tuple<uint32_t, std::string> GatewayMgr::init()
 {
+	// CMD
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
+
+	LogicCmdHandlerSingleton::get().init();
+	LogicCmdHandlerSingleton::get().registerOnCmd("mysql insert", "mysql insert", GatewayMgr::onMysqlInsert);
+
+
+	// RPC
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_DeMultiplexer_Forward_Args>(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
 
+
+	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
-
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
@@ -182,10 +194,16 @@ std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(con
 
 void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
 {
-	static std::map<std::string, MysqlTable> loadedTable;
-	static ModelUser loadedUser;
 
 	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	if (!handlerOpt.has_value())
+	{
+		return;
+	}
+
+	handlerOpt.value()(command);
+
 	if (command.cmd() == "mysql_desc")
 	{
 		::mysql_proxy_msg::MysqlDescribeRequest args;
@@ -613,6 +631,58 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		};
 		DeleteFromDb<ModelUser>(server, user, cb);
 	}
+}
+
+void GatewayMgr::onMysqlInsert(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 2)
+	{
+		return;
+	}
+
+	std::string tableName = cmd.params()[0];
+	uint64_t userId = std::stoull(cmd.params()[1]);
+
+	auto findIte = loadedTable.find(tableName);
+	if (findIte == loadedTable.end())
+	{
+		return;
+	}
+
+	//ModelUser user;
+	loadedUser.fields.user_id = userId;
+	loadedUser.initMetaData(findIte->second);
+	bool bResult = loadedUser.checkInvalid();
+	if (!bResult)
+	{
+		return;
+	}
+
+	mysql_proxy_msg::MysqlInsertRequest insertRequest = loadedUser.generateInsert();
+
+	::rpc_msg::CHANNEL server;
+	server.set_type(common::EPT_DB_Proxy);
+	server.set_id(1);
+
+	auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+	{
+		if (status.code() != ::rpc_msg::CODE_Ok)
+		{
+			return;
+		}
+
+		::mysql_proxy_msg::MysqlInsertResponse response;
+		if (!response.ParseFromString(replyData))
+		{
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response.ShortDebugString();
+		ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+	};
+	APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 }
 
 void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request)

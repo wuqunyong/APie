@@ -164,6 +164,7 @@
     <ClInclude Include="api\api_impl.h" />
     <ClInclude Include="api\forward_handler.h" />
     <ClInclude Include="api\hook.h" />
+    <ClInclude Include="api\logiccmd_handler.h" />
     <ClInclude Include="api\os_sys_calls.h" />
     <ClInclude Include="api\pb_handler.h" />
     <ClInclude Include="api\pubsub.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\forward_handler.cc" />
     <ClCompile Include="api\hook.cc" />
+    <ClCompile Include="api\logiccmd_handler.cc" />
     <ClCompile Include="api\os_sys_calls.cc" />
     <ClCompile Include="api\pb_handler.cc" />
     <ClCompile Include="api\pubsub.cc" />
