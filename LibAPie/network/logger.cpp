@@ -55,11 +55,6 @@ std::string getLogLevelName(int level)
 			sLevelName = "PIE_ERROR";
 			break;
 		}
-	case PIE_RECORD:
-		{
-			sLevelName = "PIE_RECORD";
-			break;
-		}
 	default:
 		{
 			char temp[64] = {'\0'};

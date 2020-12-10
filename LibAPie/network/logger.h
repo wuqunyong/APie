@@ -12,7 +12,6 @@
 #define PIE_NOTICE 2
 #define PIE_WARNING 3
 #define PIE_ERROR 4
-#define PIE_RECORD 5
 
 #define PIE_CYCLE_MINUTE 0
 #define PIE_CYCLE_HOUR 1
