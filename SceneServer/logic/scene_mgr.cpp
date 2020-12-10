@@ -7,10 +7,14 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> SceneMgr::init()
 {
+	// CMD
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgr::onLogicCommnad);
+
+
+	// RPC
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_Multiplexer_Forward_Args>(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
 
-	APie::Api::ForwardHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -24,6 +28,11 @@ std::tuple<uint32_t, std::string> SceneMgr::start()
 
 std::tuple<uint32_t, std::string> SceneMgr::ready()
 {
+	// CLIENT OPCODE
+	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
+	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
+
+
 	std::stringstream ss;
 	ss << "Server Ready!";
 	std::cout << ss.str() << std::endl;
@@ -35,6 +44,19 @@ std::tuple<uint32_t, std::string> SceneMgr::ready()
 void SceneMgr::exit()
 {
 
+}
+
+void SceneMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+{
+
+	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	if (!handlerOpt.has_value())
+	{
+		return;
+	}
+
+	handlerOpt.value()(command);
 }
 
 std::tuple<uint32_t, std::string> SceneMgr::RPC_handleMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, ::rpc_msg::PRC_Multiplexer_Forward_Args request)
