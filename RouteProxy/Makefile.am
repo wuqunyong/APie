@@ -17,6 +17,7 @@ apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/
 route_proxy_sources = \
 	$(top_srcdir)/RouteProxy/main.cpp \
 	$(top_srcdir)/RouteProxy/service_init.cpp \
+	$(top_srcdir)/RouteProxy/logic/route_client.cpp \
 	$(top_srcdir)/RouteProxy/logic/route_proxy.cpp 
 
 bin_PROGRAMS = route_proxy

@@ -5,11 +5,17 @@
     <ClInclude Include="logic\route_proxy.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\route_client.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\route_proxy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\route_client.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

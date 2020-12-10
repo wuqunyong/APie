@@ -222,6 +222,12 @@ std::vector<EndPoint> EndPointMgr::getEstablishedEndpointsByType(uint32_t type)
 	std::vector<EndPoint> result;
 	for (const auto& items : m_establishedPoints)
 	{
+		auto pointIte = m_endpoints.find(items.first);
+		if (pointIte == m_endpoints.end())
+		{
+			continue;
+		}
+
 		if (items.first.type == type)
 		{
 			result.push_back(items.first);
@@ -233,6 +239,12 @@ std::vector<EndPoint> EndPointMgr::getEstablishedEndpointsByType(uint32_t type)
 
 std::optional<uint64_t> EndPointMgr::getSerialNum(EndPoint point)
 {
+	auto pointIte = m_endpoints.find(point);
+	if (pointIte == m_endpoints.end())
+	{
+		return std::nullopt;
+	}
+
 	auto findIte = m_establishedPoints.find(point);
 	if (findIte != m_establishedPoints.end())
 	{
