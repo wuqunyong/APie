@@ -25,6 +25,7 @@ log:
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
   name: "gateway_server"
+  show_console: true
 metrics:
   enable: true
   ip: "127.0.0.1"

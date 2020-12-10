@@ -121,6 +121,45 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 		fprintf(ptrFile->pFile, "%s|%llu|%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), msg);
 	}
 	fflush(ptrFile->pFile);
+
+	bool bShowConsole = APie::CtxSingleton::get().yamlAs<bool>({ "log","show_console" }, false);
+	if (bShowConsole)
+	{
+#ifdef WIN32
+		switch (level)
+		{
+		case PIE_DEBUG:
+		case PIE_VERBOSE:
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			break;
+		}
+		case PIE_NOTICE:
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+			break;
+		}
+		case PIE_WARNING:
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_RED);
+			break;
+		}
+		case PIE_ERROR:
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);;
+			break;
+		}
+		default:
+			break;
+		}
+#endif
+
+		printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
+
+#ifdef WIN32
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+#endif
+	}
 }
 
 //file="directory/filename"

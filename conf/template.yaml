@@ -43,6 +43,7 @@ log:
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
   name: "apie"
+  show_console: false  #控制台是否显示日志
 metrics:
   enable: true
   ip: "127.0.0.1"
