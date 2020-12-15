@@ -76,6 +76,9 @@
     <Filter Include="third_party\jsoncpp\src\lib_json">
       <UniqueIdentifier>{05f098f8-559e-44bd-82d6-202bc5e2cf23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\JPSPlusGoalBounding">
+      <UniqueIdentifier>{cb81b34d-6615-43ca-a796-a6d76179cb6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -388,6 +391,48 @@
     <ClInclude Include="api\logiccmd_handler.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Cases.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Entry.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Map.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PathfindingNode.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.h">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -593,6 +638,42 @@
     </ClCompile>
     <ClCompile Include="api\logiccmd_handler.cc">
       <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Entry.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Map.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp">
+      <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
