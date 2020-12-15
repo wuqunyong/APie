@@ -79,8 +79,6 @@ namespace Network {
 		head.iOpcode = iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
 
-		//size_t iSize = sizeof(ProtocolHead) + head.iBodyLen;
-
 		SendData *itemObjPtr = new SendData;
 		itemObjPtr->type = type;
 		itemObjPtr->iSerialNum = iSerialNum;
@@ -161,8 +159,6 @@ namespace Network {
 		head.iOpcode = iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
 
-		//size_t iSize = sizeof(ProtocolHead) + head.iBodyLen;
-
 		SendDataByFlag *itemObjPtr = new SendDataByFlag;
 		itemObjPtr->type = type;
 		itemObjPtr->iSerialNum = iSerialNum;
@@ -241,8 +237,6 @@ namespace Network {
 		ProtocolHead head;
 		head.iOpcode = iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();
-
-		//size_t iSize = sizeof(ProtocolHead) + head.iBodyLen;
 
 		SendData *itemObjPtr = new SendData;
 		itemObjPtr->type = type;
@@ -323,8 +317,6 @@ namespace Network {
 		head.iFlags = iFlag;
 		head.iOpcode = iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();
-
-		//size_t iSize = sizeof(ProtocolHead) + head.iBodyLen;
 
 		SendDataByFlag *itemObjPtr = new SendDataByFlag;
 		itemObjPtr->type = type;
