@@ -151,26 +151,6 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
-			//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-			////ReSend
-			//std::stringstream ss;
-			//ss << "recall|iCallCount:" << iCallCount;
-
-			//ASYNC_PIE_LOG("LogicAsyncCallFunctor", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
-
-			//auto ptrCmd = new LogicAsyncCallFunctor;
-			//ptrCmd->callFunctor = [server, dbType, tables, cb, recallObj, iCallCount]() mutable
-			//{
-			//	recallObj(server, dbType, tables, iCallCount, cb);
-			//};
-
-			//Command command;
-			//command.type = Command::logic_async_call_functor;
-			//command.args.logic_async_call_functor.ptrData = ptrCmd;
-			//APie::CtxSingleton::get().getLogicThread()->push(command);
-
-
 			//ReSend
 			std::stringstream ss;
 			ss << "recall|iCallCount:" << iCallCount;
