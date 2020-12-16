@@ -24,8 +24,11 @@ void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
 
 	std::stringstream ss;
 	ss << "Got an error %d (%s) on the listener. Shutting down.\n", err, evutil_socket_error_to_string(err);
+	ASYNC_PIE_LOG("ListenerImpl/errorCallback", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
-	ASYNC_PIE_LOG("ListenerImpl/errorCallback", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ss.str("");
+	ss << "listener accept failure|err:" << err << "|info:" << evutil_socket_error_to_string(err);
+	fatalExit(ss.str().c_str());
 }
 
 

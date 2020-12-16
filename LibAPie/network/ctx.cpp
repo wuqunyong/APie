@@ -217,6 +217,8 @@ void Ctx::init(const std::string& configFile)
 
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
+		std::shared_ptr<Event::DispatchedThreadImpl> ptrListen = nullptr;
+
 		for (const auto& item : this->node_["listeners"])
 		{
 			std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
@@ -236,11 +238,15 @@ void Ctx::init(const std::string& configFile)
 				fatalExit(ss.str().c_str());
 			}
 
-			auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
+			
+			if (nullptr == ptrListen)
+			{
+				ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
+				thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
+			}
 
-			auto ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
+			auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
 			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
-			thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
 
 			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:%s|port:%d|type:%d", ip.c_str(), port, type);
 		}
