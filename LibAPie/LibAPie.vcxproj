@@ -74,7 +74,7 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\influxdb-cpp;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\tinyxml2;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\influxdb-cpp;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\tinyxml2;$(SolutionDir)ThirdParty\cpp_redis\includes;$(SolutionDir)ThirdParty\cpp_redis\tacopie\includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)ThirdParty\libs;C:\Program Files\OpenSSL-Win64\lib;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -248,6 +248,7 @@
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
+    <ClInclude Include="redis_driver\redis_client.h" />
     <ClInclude Include="rpc\client\rpc_client.h" />
     <ClInclude Include="rpc\init.h" />
     <ClInclude Include="rpc\server\rpc_server.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="network\object.cpp" />
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
+    <ClCompile Include="redis_driver\redis_client.cpp" />
     <ClCompile Include="rpc\client\rpc_client.cpp" />
     <ClCompile Include="rpc\init.cpp" />
     <ClCompile Include="rpc\server\rpc_server.cpp" />

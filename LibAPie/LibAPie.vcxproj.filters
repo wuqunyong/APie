@@ -79,6 +79,9 @@
     <Filter Include="third_party\JPSPlusGoalBounding">
       <UniqueIdentifier>{cb81b34d-6615-43ca-a796-a6d76179cb6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="redis_driver">
+      <UniqueIdentifier>{d98221eb-6553-4ade-8052-c770c14d833e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -433,6 +436,9 @@
     <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
+    <ClInclude Include="redis_driver\redis_client.h">
+      <Filter>redis_driver</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -674,6 +680,9 @@
     </ClCompile>
     <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
+    </ClCompile>
+    <ClCompile Include="redis_driver\redis_client.cpp">
+      <Filter>redis_driver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

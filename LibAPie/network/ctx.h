@@ -129,6 +129,33 @@ namespace APie
 			return nodeList[iIndex].as<T>(fallback);
 		}
 
+		template <typename T, typename S>
+		T nodeYamlAs(YAML::Node curNode, std::vector<std::string> index, const S& fallback)
+		{
+			std::lock_guard<std::mutex> guard(node_sync_);
+
+			std::vector<YAML::Node> nodeList;
+			nodeList.push_back(curNode);
+
+			uint32_t iIndex = 0;
+
+			for (const auto &items : index)
+			{
+				if (nodeList[iIndex][items])
+				{
+					nodeList.push_back(nodeList[iIndex][items]);
+					iIndex++;
+				}
+				else
+				{
+					return fallback;
+				}
+			}
+
+			return nodeList[iIndex].as<T>(fallback);
+		}
+
+
 		std::string launchTime();
 
 		uint32_t getServerId();

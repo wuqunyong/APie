@@ -78,6 +78,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/network/output_stream.cc  \
 	$(top_srcdir)/LibAPie/network/server_connection.cpp  \
 	$(top_srcdir)/LibAPie/network/signaler.cpp  \
+	$(top_srcdir)/LibAPie/rpc/redis_driver/redis_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/client/rpc_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/server/rpc_server.cpp  \
 	$(top_srcdir)/LibAPie/rpc/init.cpp  \

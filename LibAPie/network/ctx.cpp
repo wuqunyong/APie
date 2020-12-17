@@ -5,6 +5,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <tuple> 
 
 #include "../network/ctx.h"
 #include "../network/address.h"
@@ -47,6 +48,8 @@ sigset_t g_SigSet;
 #include "i_poll_events.hpp"
 #include "../common/string_utils.h"
 #include "../api/os_sys_calls.h"
+
+#include "../redis_driver/redis_client.h"
 
 
 
@@ -284,6 +287,33 @@ void Ctx::init(const std::string& configFile)
 
 			//db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
 			logic_thread_->initMysql(options);
+		}
+
+
+		for (const auto& item : this->node_["redis_clients"])
+		{
+			auto iType = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","type" }, 0);
+			auto iId = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","id" }, 0);
+			auto sHost = APie::CtxSingleton::get().nodeYamlAs<std::string>(item, { "client","host" }, "");
+			auto iPort = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","port" }, 0);
+			auto sPasswd = APie::CtxSingleton::get().nodeYamlAs<std::string>(item, { "client","passwd" }, "");
+
+			auto type = (APie::REDIS_CLIENT_TYPE)iType;
+			std::tuple<APie::REDIS_CLIENT_TYPE, uint32_t> key = std::make_tuple(type, iId);
+
+			auto ptrCb = [](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
+				std::stringstream ss;
+				ss << "host:" << host << "|port:" << port << "|status:" << (uint32_t)status;
+				ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+			};
+			auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
+			bool bResult = RedisClientFactorySingleton::get().registerClient(sharedPtr);
+			if (!bResult)
+			{
+				std::stringstream ss;
+				ss << "redis|registerClient error|key:" << (uint32_t)std::get<0>(key) << "-" << std::get<1>(key);
+				fatalExit(ss.str().c_str());
+			}
 		}
 	}
 	catch (YAML::BadFile& e) {
