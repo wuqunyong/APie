@@ -64,15 +64,24 @@ namespace APie {
 
 		m_started = 1;
 
-		auto sharedPtr = this->shared_from_this();
+		std::weak_ptr<RedisClient> weak_this = shared_from_this();
 
-		auto ptrCb = [sharedPtr](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
+		auto ptrCb = [weak_this](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
 			
+			std::shared_ptr<RedisClient> shared_this = weak_this.lock();
+			if (shared_this == nullptr) {
+				std::stringstream ss;
+				ss << "host:" << host << "|port:" << port << "|shared_this null";
+				ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+				return;
+			}
+
+
 			std::stringstream ss;
 			ss << "host:" << host << "|port:" << port << "|status:" << (uint32_t)status;
 			ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
 
-			sharedPtr->getCb()(host, port, status);
+			shared_this->getCb()(host, port, status);
 
 			switch (status)
 			{
@@ -86,17 +95,26 @@ namespace APie {
 				break;
 			case cpp_redis::connect_state::ok:
 			{
-				sharedPtr->setState(RS_Establish);
+				shared_this->setState(RS_Establish);
 
-				if (sharedPtr->getPassword().empty())
+				if (shared_this->getPassword().empty())
 				{
 					return;
 				}
 
-				auto ptrAuth = [sharedPtr](cpp_redis::reply &reply) {
+				auto ptrAuth = [host, port, weak_this](cpp_redis::reply &reply) {
+					std::shared_ptr<RedisClient> shared_this = weak_this.lock();
+					if (shared_this == nullptr) {
+
+						std::stringstream ss;
+						ss << "host:" << host << "|port:" << port << "|auth shared_this null";
+						ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+						return;
+					}
+
 					if (reply.is_error())
 					{
-						sharedPtr->setAuth(3);
+						shared_this->setAuth(3);
 
 						std::stringstream ss;
 						ss << "redis reply:" << reply.error();
@@ -112,11 +130,11 @@ namespace APie {
 						ss << "redis reply:" << reply.as_string();
 						ASYNC_PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
 					}
-					sharedPtr->setAuth(2);
+					shared_this->setAuth(2);
 				};
-				sharedPtr->client().auth(sharedPtr->getPassword(), ptrAuth);
-				sharedPtr->client().commit();
-				sharedPtr->setAuth(1);
+				shared_this->client().auth(shared_this->getPassword(), ptrAuth);
+				shared_this->client().commit();
+				shared_this->setAuth(1);
 				break;
 			}
 			case cpp_redis::connect_state::failed:
@@ -125,7 +143,7 @@ namespace APie {
 				break;
 			case cpp_redis::connect_state::stopped:
 			{
-				sharedPtr->setState(RS_Disconnect);
+				shared_this->setState(RS_Disconnect);
 				break;
 			}
 			default:
