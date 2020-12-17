@@ -50,7 +50,30 @@ bool isChangeFile(LogFile* ptrFile, int cycle);
 
 void logFileClose();
 
-void fatalExit(const char* message);
+//void fatalExit(const char* message);
+
+
+#ifdef WIN32
+#define PANIC_ABORT(format, ...) do { \
+	std::string formatStr("%s:%d|"); \
+	formatStr = formatStr + format; \
+	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_ERROR, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED); \
+	fprintf(stderr, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+	fflush(stderr); \
+	abort(); \
+} while (0);
+#else
+#define PANIC_ABORT(format, args...) do { \
+	std::string formatStr("%s:%d|"); \
+	formatStr = formatStr + format; \
+	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_ERROR, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+	fprintf(stderr, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+	fflush(stderr); \
+	abort(); \
+} while (0);
+#endif
+
 
 #ifdef WIN32
 #define PIE_LOG(file, cycle, level, format, ...) do { \

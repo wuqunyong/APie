@@ -141,7 +141,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 		}
 		case PIE_ERROR:
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 			break;
 		}
 		default:
@@ -427,11 +427,11 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	return false;
 }
 
-void fatalExit(const char* message)
-{
-	fprintf(stderr, "%s: %s\n", "fatalExit", message);
-	pieLog("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", message);
-
-	//exit(EXIT_FAILURE);
-	abort();
-}
+//void fatalExit(const char* message)
+//{
+//	fprintf(stderr, "%s: %s\n", "fatalExit", message);
+//	pieLog("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s\n", "fatalExit", message);
+//
+//	//exit(EXIT_FAILURE);
+//	abort();
+//}

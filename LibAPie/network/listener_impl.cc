@@ -28,7 +28,7 @@ void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
 
 	ss.str("");
 	ss << "listener accept failure|err:" << err << "|info:" << evutil_socket_error_to_string(err);
-	fatalExit(ss.str().c_str());
+	PANIC_ABORT(ss.str().c_str());
 }
 
 

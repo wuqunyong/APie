@@ -238,7 +238,7 @@ void Ctx::init(const std::string& configFile)
 			{
 				std::stringstream ss;
 				ss << "invalid listener type:" << type;
-				fatalExit(ss.str().c_str());
+				PANIC_ABORT(ss.str().c_str());
 			}
 
 			
@@ -312,7 +312,7 @@ void Ctx::init(const std::string& configFile)
 			{
 				std::stringstream ss;
 				ss << "redis|registerClient error|key:" << (uint32_t)std::get<0>(key) << "-" << std::get<1>(key);
-				fatalExit(ss.str().c_str());
+				PANIC_ABORT(ss.str().c_str());
 			}
 		}
 	}
@@ -538,7 +538,7 @@ void Ctx::handleSigProcMask()
 	int rc = pthread_sigmask(SIG_BLOCK, &g_SigSet, NULL);
 	if ( rc != 0)
 	{
-		fatalExit("pthread_sigmask");
+		PANIC_ABORT("pthread_sigmask");
 	}
 #endif
 }
@@ -597,7 +597,7 @@ void Ctx::waitForShutdown()
 				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error %d from sigwait", status);
 				if (errCount++ > 5)
 				{
-					fatalExit("sigwait error exit");
+					PANIC_ABORT("sigwait error exit");
 				}
 				continue;
 			}

@@ -60,7 +60,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 			std::stringstream ss;
 			ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
 
-			fatalExit(ss.str().c_str());
+			PANIC_ABORT(ss.str().c_str());
 		}
 
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);

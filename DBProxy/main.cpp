@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		fatalExit("usage: exe <ConfFile>");
+		PANIC_ABORT("usage: exe <ConfFile>");
 	}
 
 	std::string configFile = argv[1];

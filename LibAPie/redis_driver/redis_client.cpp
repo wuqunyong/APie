@@ -15,6 +15,8 @@ namespace APie {
 		m_password(password),
 		m_cb(cb)
 	{
+		ASYNC_PIE_LOG("Redis/RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, "ctor|key:%d-%d", (uint32_t)std::get<0>(key), std::get<1>(key));
+
 		auto timerCb = [this]() {
 			if (this->client().is_connected())
 			{
@@ -48,6 +50,8 @@ namespace APie {
 
 	RedisClient::~RedisClient()
 	{
+		ASYNC_PIE_LOG("Redis/RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, "destructor|key:%d-%d", (uint32_t)std::get<0>(m_key), std::get<1>(m_key));
+
 		this->disableReconnectTimer();
 	}
 
@@ -90,6 +94,24 @@ namespace APie {
 				}
 
 				auto ptrAuth = [sharedPtr](cpp_redis::reply &reply) {
+					if (reply.is_error())
+					{
+						sharedPtr->setAuth(3);
+
+						std::stringstream ss;
+						ss << "redis reply:" << reply.error();
+						PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+
+						PANIC_ABORT(ss.str().c_str());
+						return;
+					}
+
+					if (reply.is_bulk_string())
+					{
+						std::stringstream ss;
+						ss << "redis reply:" << reply.as_string();
+						ASYNC_PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+					}
 					sharedPtr->setAuth(2);
 				};
 				sharedPtr->client().auth(sharedPtr->getPassword(), ptrAuth);

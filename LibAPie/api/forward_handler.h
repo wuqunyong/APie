@@ -30,7 +30,7 @@ public:
 		{
 			std::stringstream ss;
 			ss << "duplicate opcode: " << opcode;
-			fatalExit(ss.str().c_str());
+			PANIC_ABORT(ss.str().c_str());
 
 			return false;
 		}

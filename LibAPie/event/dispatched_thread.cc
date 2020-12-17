@@ -29,7 +29,7 @@ void DispatchedThreadImpl::initMysql(MySQLConnectOptions& options)
 	{
 		std::stringstream ss;
 		ss << "DbThread::init mysql_connector connect error, " << options.host << ":" << options.user << ":" << options.passwd << ":" << options.db << ":" << options.port;
-		fatalExit(ss.str().c_str());
+		PANIC_ABORT(ss.str().c_str());
 	}
 }
 

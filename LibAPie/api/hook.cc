@@ -67,7 +67,7 @@ namespace Hook {
 						continue;
 					}
 
-					fatalExit(ss.str().c_str());
+					PANIC_ABORT(ss.str().c_str());
 				}
 			}
 		}

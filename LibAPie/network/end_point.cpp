@@ -44,7 +44,7 @@ void SelfRegistration::registerEndpoint()
 		ss << "service_registry empty";
 
 		ASYNC_PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
-		fatalExit(ss.str().c_str());
+		PANIC_ABORT(ss.str().c_str());
 	}
 
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","address" }, "");
