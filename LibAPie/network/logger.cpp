@@ -55,6 +55,11 @@ std::string getLogLevelName(int level)
 			sLevelName = "PIE_ERROR";
 			break;
 		}
+	case PIE_PANIC:
+	{
+		sLevelName = "PIE_PANIC";
+		break;
+	}
 	default:
 		{
 			char temp[64] = {'\0'};
@@ -118,7 +123,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 	fflush(ptrFile->pFile);
 
 	bool bShowConsole = APie::CtxSingleton::get().yamlAs<bool>({ "log","show_console" }, false);
-	if (bShowConsole)
+	if (bShowConsole || level >= PIE_ERROR)
 	{
 #ifdef WIN32
 		switch (level)
@@ -144,15 +149,23 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 			break;
 		}
+		case PIE_PANIC:
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | BACKGROUND_GREEN);
+			break;
+		}
 		default:
 			break;
 		}
-#endif
-
 		printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
 
-#ifdef WIN32
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+#else
+		bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({ "daemon" }, true);
+		if (!bDaemon)
+		{
+			printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
+		}
 #endif
 	}
 }

@@ -12,6 +12,7 @@
 #define PIE_NOTICE 2
 #define PIE_WARNING 3
 #define PIE_ERROR 4
+#define PIE_PANIC 5
 
 #define PIE_CYCLE_MINUTE 0
 #define PIE_CYCLE_HOUR 1
@@ -57,19 +58,14 @@ void logFileClose();
 #define PANIC_ABORT(format, ...) do { \
 	std::string formatStr("%s:%d|"); \
 	formatStr = formatStr + format; \
-	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_ERROR, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED); \
-	fprintf(stderr, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
-	fflush(stderr); \
+	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
 	abort(); \
 } while (0);
 #else
 #define PANIC_ABORT(format, args...) do { \
 	std::string formatStr("%s:%d|"); \
 	formatStr = formatStr + format; \
-	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_ERROR, formatStr.c_str(), __FILE__, __LINE__, ##args); \
-	fprintf(stderr, formatStr.c_str(), __FILE__, __LINE__, ##args); \
-	fflush(stderr); \
+	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr.c_str(), __FILE__, __LINE__, ##args); \
 	abort(); \
 } while (0);
 #endif
