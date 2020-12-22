@@ -20,7 +20,7 @@
 
 namespace APie {
 
-	enum class REDIS_CLIENT_TYPE
+	enum REDIS_CLIENT_TYPE
 	{
 		RCT_None = 0,
 		RCT_Role = 1,
@@ -37,7 +37,7 @@ namespace APie {
 			RS_Disconnect = 3,
 		};
 
-		using Key = std::tuple<REDIS_CLIENT_TYPE, uint32_t>;
+		using Key = std::tuple<uint32_t, uint32_t>;
 		using Cb = std::function<void(const std::string &host, std::size_t port, cpp_redis::connect_state status)>;
 
 		RedisClient(Key key, const std::string &host, std::size_t port, const std::string &password, Cb cb);

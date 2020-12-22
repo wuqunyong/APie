@@ -298,8 +298,7 @@ void Ctx::init(const std::string& configFile)
 			auto iPort = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","port" }, 0);
 			auto sPasswd = APie::CtxSingleton::get().nodeYamlAs<std::string>(item, { "client","passwd" }, "");
 
-			auto type = (APie::REDIS_CLIENT_TYPE)iType;
-			std::tuple<APie::REDIS_CLIENT_TYPE, uint32_t> key = std::make_tuple(type, iId);
+			auto key = std::make_tuple(iType, iId);
 
 			auto ptrCb = [](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
 				std::stringstream ss;

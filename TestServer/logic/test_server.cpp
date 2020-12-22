@@ -145,8 +145,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 
 		std::string sTable = command.params()[0];
 
-		REDIS_CLIENT_TYPE type = (APie::REDIS_CLIENT_TYPE)1;
-		auto key = std::make_tuple(type, 1);
+		auto key = std::make_tuple(1, 1);
 
 		auto redisClient = RedisClientFactorySingleton::get().getClient(key);
 		if (redisClient == nullptr)
