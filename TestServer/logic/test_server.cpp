@@ -1,5 +1,7 @@
 #include "test_server.h"
 #include "../../PBMsg/login_msg.pb.h"
+#include "../../LibAPie/redis_driver/redis_client.h"
+#include "../jsoncpp/include/json/writer.h"
 
 namespace APie {
 
@@ -133,6 +135,85 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
+	}
+	else if (command.cmd() == "redis")
+	{
+		if (command.params_size() < 1)
+		{
+			return;
+		}
+
+		std::string sTable = command.params()[0];
+
+		REDIS_CLIENT_TYPE type = (APie::REDIS_CLIENT_TYPE)1;
+		auto key = std::make_tuple(type, 1);
+
+		auto redisClient = RedisClientFactorySingleton::get().getClient(key);
+		if (redisClient == nullptr)
+		{
+			return;
+		}
+
+		if (!redisClient->client().is_connected())
+		{
+			return;
+		}
+
+		auto cb = [sTable](cpp_redis::reply &reply) {
+			if (reply.is_error())
+			{
+				return;
+			}
+
+			if (!reply.is_array())
+			{
+				return;
+			}
+
+			Json::Value root;
+
+			Json::Value data;
+
+			bool bKey = false;
+			std::string sKey;
+			for (const auto& items : reply.as_array())
+			{
+				bKey = !bKey;
+				
+				if (bKey)
+				{
+					data.clear();
+					sKey = items.as_string();
+				}
+				else
+				{
+					std::string sValue = items.as_string();
+
+					data["power"] = std::stoll(sValue);
+					root[sKey] = data;
+				}
+			}
+
+			Json::StreamWriterBuilder builder;
+			const std::string json_file = Json::writeString(builder, root);
+			std::cout << json_file << std::endl;
+
+			FILE * pFile = fopen(sTable.c_str(), "a");
+			if (!pFile)
+			{
+				return;
+			}
+
+			//fprintf(pFile, "%s", json_file.c_str());
+			fwrite(json_file.data(), sizeof(char), json_file.length(), pFile);
+			fflush(pFile);
+			fclose(pFile);
+
+		};
+		redisClient->client().hgetall(sTable, cb);
+		redisClient->client().commit();
+
+
 	}
 	else if (command.cmd() == "client")
 	{

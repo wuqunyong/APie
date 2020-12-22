@@ -35,5 +35,18 @@ uint32_t GatewayRole::getMaskFlag()
 	return m_iMaskFlag;
 }
 
+uint64_t GatewayRole::addRequestPerUnit(uint64_t iValue)
+{
+	m_iRequests += iValue;
+	m_iRequestPerUnit += iValue;
+
+	return m_iRequestPerUnit;
+}
+
+void GatewayRole::resetRequestPerUnit()
+{
+	m_iRequestPerUnit = 0;
+}
+
 }
 

@@ -19,3 +19,10 @@ metrics:
   enable: true
   ip: "127.0.0.1"
   udp_port: 8089
+redis_clients:
+- client:
+    type: 1
+    id: 1
+    host: "10.0.16.71"
+    port: 6379
+    passwd: "" 

@@ -62,3 +62,6 @@ redis_clients:
     host: "127.0.0.1"
     port: 6379
     passwd: ""
+limited:
+  requests_per_unit: 10   #限制的请求数(0:没有限制，默认：0)
+  uint: 1                 #限制的间隔单位(秒数，默认:3)
