@@ -1,7 +1,7 @@
 #include "test_server.h"
 #include "../../PBMsg/login_msg.pb.h"
 #include "../../LibAPie/redis_driver/redis_client.h"
-#include "../jsoncpp/include/json/writer.h"
+#include "json/json.h"
 
 namespace APie {
 
