@@ -14,7 +14,7 @@ INCLUDES = -I /usr/local/include \
 			-I $(top_srcdir)/LibAPie \
 			-I $(top_srcdir)/SharedDir
 			
-apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4
+apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie
 
 service_registry_sources = \
 	$(top_srcdir)/ServiceRegistry/main.cpp \
