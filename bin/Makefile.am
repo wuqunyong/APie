@@ -6,6 +6,8 @@ INCLUDES = -I /usr/local/include \
 			-I /usr/include/mysql \
 			-I /root/yaml-cpp-master/include \
 			-I /root/protobuf-3.11.4/src \
+			-I $(top_srcdir)/ThirdParty/cpp_redis/includes \
+			-I $(top_srcdir)/ThirdParty/cpp_redis/tacopie/includes \
 			-I $(top_srcdir)/ThirdParty/http-parser \
 			-I $(top_srcdir)/ThirdParty/jsoncpp/include \
 			-I $(top_srcdir)/ThirdParty/tinyxml2 \
@@ -24,6 +26,18 @@ apie_sources = \
 	$(top_srcdir)/PBMsg/rpc_msg.pb.cc  \
 	$(top_srcdir)/PBMsg/service_discovery.pb.cc  \
 	$(top_srcdir)/ThirdParty/http-parser/http_parser.c  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/BucketPriorityQueue.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/DijkstraFloodfill.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/Entry.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/FastStack.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/FPUtil.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/GenericHeap.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/JPSPlus.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/Map.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/PrecomputeMap.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/ScenarioLoader.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/SimpleUnsortedPriorityQueue.cpp  \
+	$(top_srcdir)/ThirdParty/JPSPlusGoalBounding/lib_json/UnsortedPriorityQueue.cpp  \
 	$(top_srcdir)/ThirdParty/jsoncpp/src/lib_json/json_writer.cpp  \
 	$(top_srcdir)/ThirdParty/jsoncpp/src/lib_json/json_reader.cpp  \
 	$(top_srcdir)/ThirdParty/jsoncpp/src/lib_json/json_value.cpp  \
@@ -78,7 +92,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/network/output_stream.cc  \
 	$(top_srcdir)/LibAPie/network/server_connection.cpp  \
 	$(top_srcdir)/LibAPie/network/signaler.cpp  \
-	$(top_srcdir)/LibAPie/rpc/redis_driver/redis_client.cpp  \
+	$(top_srcdir)/LibAPie/redis_driver/redis_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/client/rpc_client.cpp  \
 	$(top_srcdir)/LibAPie/rpc/server/rpc_server.cpp  \
 	$(top_srcdir)/LibAPie/rpc/init.cpp  \

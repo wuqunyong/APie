@@ -4,6 +4,8 @@ INCLUDES = -I /usr/local/include \
 			-I /usr/include/mysql \
 			-I /root/yaml-cpp-master/include \
 			-I /root/protobuf-3.11.4/src \
+			-I $(top_srcdir)/ThirdParty/cpp_redis/includes \
+			-I $(top_srcdir)/ThirdParty/cpp_redis/tacopie/includes \
 			-I $(top_srcdir)/ThirdParty/http-parser \
 			-I $(top_srcdir)/ThirdParty/jsoncpp/include \
 			-I $(top_srcdir)/ThirdParty/tinyxml2 \
