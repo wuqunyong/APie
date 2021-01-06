@@ -369,13 +369,13 @@ namespace APie {
 
 ## 协议注册
 
- - GatewayServer
+ - GatewayServer(直连)
 ```
  	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
 ```
-- SceneServer
+- SceneServer(非直连，默认转发目的)
 ```
 	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
 	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
