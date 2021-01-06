@@ -156,6 +156,14 @@ int main(int argc, char **argv)
 	TestJsonCpp();
 	TestXML();
 
+	using SentinalType = std::tuple<uint32_t, uint32_t, std::shared_ptr<uint32_t>>;
+	std::shared_ptr<SentinalType> ptrTuple(new SentinalType);
+	std::get<0>(*ptrTuple) = 1;
+	std::get<1>(*ptrTuple) = 2;
+	std::get<2>(*ptrTuple).reset(new uint32_t);
+	*(std::get<2>(*ptrTuple)) = 10;
+
+
 	std::string data;
 	auto optResult = doCompress(data, 0);
 	if (optResult.has_value())
@@ -175,7 +183,7 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		PANIC_ABORT("usage: exe <ConfFile>");
+		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
 
 	std::string configFile = argv[1];

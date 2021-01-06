@@ -162,11 +162,12 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 	::rpc_msg::CHANNEL server;
 	server.set_type(common::EPT_Scene_Server);
 	server.set_id(1);
-
-	auto rpcCB = [](const rpc_msg::STATUS& status, const std::string& replyData)
+	 
+	auto rpcCB = [opcodes, iGWId, iUserId](const rpc_msg::STATUS& status, const std::string& replyData)
 	{
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
+			ASYNC_PIE_LOG("ForwordMsg", PIE_CYCLE_DAY, PIE_ERROR, "Forword Msg Error|code:%d|opcodes:%d|iGWId:%d|iUserId:%ll", status.code(), opcodes, iGWId, iUserId);
 			return;
 		}
 	};

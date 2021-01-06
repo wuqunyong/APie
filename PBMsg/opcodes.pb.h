@@ -79,7 +79,7 @@ enum OPCODE_ID : int {
 };
 bool OPCODE_ID_IsValid(int value);
 constexpr OPCODE_ID OPCODE_ID_MIN = OP_None;
-constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_RESPONSE_CLIENT_LOGIN;
+constexpr OPCODE_ID OPCODE_ID_MAX = OP_MSG_RESPONSE_ECHO;
 constexpr int OPCODE_ID_ARRAYSIZE = OPCODE_ID_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* OPCODE_ID_descriptor();

@@ -55,7 +55,7 @@ message RoleIdentifier
 {
 	uint64 user_id = 1;
 	uint32 gw_id = 2;
-	uint64 channel_serial_num = 3;
+	uint64 channel_serial_num = 3; // 收到请求时的SOCKET序列号
 }
 
 message CLIENT_IDENTIFIER
@@ -64,7 +64,7 @@ message CLIENT_IDENTIFIER
 	uint64 seq_id = 2;
 	bool required_reply = 3;
 	CHANNEL router = 4;
-	uint64 channel_serial_num = 5;
+	uint64 channel_serial_num = 5; // 收到请求时的SOCKET序列号
 	RoleIdentifier role_identifier = 6;
 }
 
@@ -75,8 +75,8 @@ message SERVER_IDENTIFIER
 
 message RPC_REQUEST
 {
-	CLIENT_IDENTIFIER client = 1;
-	SERVER_IDENTIFIER server = 2;
+	CLIENT_IDENTIFIER client = 1;  // 调用方
+	SERVER_IDENTIFIER server = 2;  // 被调用方
 	RPC_OPCODES opcodes = 3;
 	bytes args_data = 4;
 	bool server_stream = 5;
@@ -92,8 +92,8 @@ message STATUS
 
 message RPC_RESPONSE
 {
-	CLIENT_IDENTIFIER client = 1;
-	SERVER_IDENTIFIER server = 2;
+	CLIENT_IDENTIFIER client = 1; // 调用方（与请求时一致）
+	SERVER_IDENTIFIER server = 2; // 被调用方
 	STATUS status = 3;
 	bytes result_data = 4;
 	bool has_more = 5;
