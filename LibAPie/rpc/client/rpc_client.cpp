@@ -95,60 +95,10 @@ namespace RPC {
 			controller = controllerOpt.value();
 		}
 
-		rpc_msg::STATUS status;
-		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
-		if (routeList.empty())
-		{
-			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route list empty|server:%s|opcodes:%d|args:%s",
-				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
-
-			status.set_code(opcodes::SC_Rpc_RouteEmpty);
-			if (reply)
-			{
-				reply(status, "");
-			}
-			return false;
-		}
-
-		auto establishedList = EndPointMgrSingleton::get().getEstablishedEndpointsByType(::common::EPT_Route_Proxy);
-		if (establishedList.empty())
-		{
-			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route established empty|server:%s|opcodes:%d|args:%s",
-				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
-
-			status.set_code(opcodes::SC_Rpc_RouteEstablishedEmpty);
-			if (reply)
-			{
-				reply(status, "");
-			}
-			return false;
-		}
-
-		EndPoint target;
-		target.type = server.type();
-		target.id = server.id();
-		uint32_t iHash = CtxSingleton::get().generateHash(target);
-
-		uint32_t index = iHash % establishedList.size();
-		EndPoint route = establishedList[index];
-
-		auto serialOpt = EndPointMgrSingleton::get().getSerialNum(route);
-		if (!serialOpt.has_value())
-		{
-			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed|server:%s|opcodes:%d|args:%s",
-				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
-
-			status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
-			if (reply)
-			{
-				reply(status, "");
-			}
-			return false;
-		}
-
-		controller.set_serial_num(serialOpt.value());
 		controller.set_server_stream(true);
-		return this->call(controller, server, opcodes, args, reply);
+
+		std::optional<::rpc_msg::CONTROLLER> opt = std::make_optional(controller);
+		return this->callByRoute(server, opcodes, args, reply, opt);
 	}
 
 	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, 
@@ -215,11 +165,7 @@ namespace RPC {
 			return false;
 		}
 
-		auto sharedPtrPending = std::make_shared<MultiCallPending>();
-		sharedPtrPending->iCount = methods.size();
-		sharedPtrPending->iCompleted = 0;
-
-		uint32_t iIndex = 0;
+		// check
 		for (const auto& methon : methods)
 		{
 			EndPoint target;
@@ -238,35 +184,42 @@ namespace RPC {
 				status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
 				if (reply)
 				{
-					for (const auto& seqId : sharedPtrPending->seqIdVec)
-					{
-						auto findIte = sharedPtrPending->replyData.find(seqId);
-						if (findIte != sharedPtrPending->replyData.end())
-						{
-							sharedPtrPending->result.push_back(findIte->second);
-						}
-						else
-						{
-							rpc_msg::STATUS responseStatus;
-							responseStatus.set_code(opcodes::SC_Rpc_Timeout);
-
-							std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
-							sharedPtrPending->result.push_back(response);
-						}
-					}
-
-					while (sharedPtrPending->result.size() < methods.size())
+					while (replyData.size() < methods.size())
 					{
 						rpc_msg::STATUS responseStatus;
 						responseStatus.set_code(opcodes::SC_RPC_NotSend);
 
 						std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
-						sharedPtrPending->result.push_back(response);
+						replyData.push_back(response);
 					}
-
-					reply(status, sharedPtrPending->result);
+					reply(status, replyData);
 				}
+
 				return false;
+			}
+		}
+
+		auto sharedPtrPending = std::make_shared<MultiCallPending>();
+		sharedPtrPending->iCount = methods.size();
+		sharedPtrPending->iCompleted = 0;
+
+		for (const auto& methon : methods)
+		{
+			EndPoint target;
+			target.type = std::get<0>(methon).type();
+			target.id = std::get<0>(methon).id();
+			uint32_t iHash = CtxSingleton::get().generateHash(target);
+
+			uint32_t index = iHash % establishedList.size();
+			EndPoint route = establishedList[index];
+
+			auto serialOpt = EndPointMgrSingleton::get().getSerialNum(route);
+			if (!serialOpt.has_value())
+			{
+				ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed, set serialNum:0");
+
+				// ·¢ËÍÊ§°Ü
+				serialOpt = std::make_optional(0);
 			}
 
 			m_iSeqId++;
@@ -277,7 +230,6 @@ namespace RPC {
 
 			sharedPtrPending->seqIdVec.push_back(iCurSeqId);
 
-			iIndex++;
 			auto pendingCb = [sharedPtrPending, iCurSeqId, reply](const rpc_msg::STATUS& status, const std::string& replyData) mutable {
 				sharedPtrPending->iCompleted = sharedPtrPending->iCompleted + 1;
 				sharedPtrPending->replyData[iCurSeqId] = std::make_tuple(status, replyData);
@@ -290,12 +242,17 @@ namespace RPC {
 						auto findIte = sharedPtrPending->replyData.find(seqId);
 						if (findIte != sharedPtrPending->replyData.end())
 						{
+							if (std::get<0>(findIte->second).code() != opcodes::SC_Ok)
+							{
+								bHasError = true;
+							}
+
 							sharedPtrPending->result.push_back(findIte->second);
 						}
 						else
 						{
 							rpc_msg::STATUS responseStatus;
-							responseStatus.set_code(opcodes::SC_Rpc_Timeout);
+							responseStatus.set_code(opcodes::SC_RPC_NotReceivedReply);
 
 							std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
 							sharedPtrPending->result.push_back(response);
@@ -307,7 +264,7 @@ namespace RPC {
 					resultStatus.set_code(opcodes::SC_Ok);
 					if (bHasError)
 					{
-						resultStatus.set_code(opcodes::SC_Rpc_Timeout);
+						resultStatus.set_code(opcodes::SC_RPC_Partial_Error);
 					}
 
 					if (reply)
@@ -457,19 +414,6 @@ namespace RPC {
 
 		return bResult;
 	}
-
-	//void RpcClient::setOneshotController(::rpc_msg::CONTROLLER controller)
-	//{
-	//	m_controller = controller;
-	//}
-
-	//::rpc_msg::CONTROLLER RpcClient::getAndResetController()
-	//{
-	//	auto oldMsg = m_controller;
-	//	m_controller = ::rpc_msg::CONTROLLER::default_instance();
-
-	//	return oldMsg;
-	//}
 
 	void RpcClient::handleTimeout()
 	{

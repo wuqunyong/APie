@@ -36,7 +36,7 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "REQUEST\020\255\002\022\024\n\017OP_RPC_RESPONSE\020\256\002\022 \n\033OP_M"
   "SG_REQUEST_CLIENT_LOGIN\020\320\017\022!\n\034OP_MSG_RES"
   "PONSE_CLIENT_LOGIN\020\321\017\022\030\n\023OP_MSG_REQUEST_"
-  "ECHO\020\322\017\022\031\n\024OP_MSG_RESPONSE_ECHO\020\323\017*\235\005\n\nS"
+  "ECHO\020\322\017\022\031\n\024OP_MSG_RESPONSE_ECHO\020\323\017*\270\005\n\nS"
   "tatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_Discovery_Aut"
   "hError\020\350\007\022\037\n\032SC_Discovery_DuplicateNode\020"
   "\351\007\022\036\n\031SC_Discovery_Unregistered\020\352\007\022\032\n\025SC"
@@ -47,13 +47,14 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "C_RPC_RouteSerialNumInvalid\020\273\027\022\032\n\025SC_RPC"
   "_RouteSendError\020\274\027\022\034\n\027SC_RPC_NotReceived"
   "Reply\020\275\027\022\023\n\016SC_RPC_NotSend\020\276\027\022$\n\037SC_RPC_"
-  "InvalidArgs_MethodsEmpty\020\277\027\022&\n!SC_Client"
-  "Proxy_SerialNumEqualZero\020\240\037\022)\n$SC_Client"
-  "Proxy_SerialNumNotEqualZero\020\241\037\022\037\n\032SC_Cli"
-  "entProxy_Established\020\242\037\022\"\n\035SC_ClientProx"
-  "y_NotEstablished\020\243\037\022\034\n\027SC_ClientProxy_Ba"
-  "dAlloc\020\244\037\022\036\n\031SC_ClientProxy_NoIOThread\020\245"
-  "\037\022\027\n\022SC_BindTable_Error\020\210\'b\006proto3"
+  "InvalidArgs_MethodsEmpty\020\277\027\022\031\n\024SC_RPC_Pa"
+  "rtial_Error\020\300\027\022&\n!SC_ClientProxy_SerialN"
+  "umEqualZero\020\240\037\022)\n$SC_ClientProxy_SerialN"
+  "umNotEqualZero\020\241\037\022\037\n\032SC_ClientProxy_Esta"
+  "blished\020\242\037\022\"\n\035SC_ClientProxy_NotEstablis"
+  "hed\020\243\037\022\034\n\027SC_ClientProxy_BadAlloc\020\244\037\022\036\n\031"
+  "SC_ClientProxy_NoIOThread\020\245\037\022\027\n\022SC_BindT"
+  "able_Error\020\210\'b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -62,7 +63,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1194,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1221,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -120,6 +121,7 @@ bool StatusCode_IsValid(int value) {
     case 3005:
     case 3006:
     case 3007:
+    case 3008:
     case 4000:
     case 4001:
     case 4002:

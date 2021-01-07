@@ -48,9 +48,6 @@ namespace RPC {
 		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, 
 			RpcMultiReplyCb reply = nullptr, std::optional<::rpc_msg::CONTROLLER> controllerOpt = std::nullopt);
 
-		//void setOneshotController(::rpc_msg::CONTROLLER controller);
-		//::rpc_msg::CONTROLLER getAndResetController();
-
 		void handleTimeout();
 
 	public:
@@ -79,8 +76,6 @@ namespace RPC {
 
 		uint64_t m_iSeqId = 0;
 		uint64_t m_iCheckTimeoutAt = 60;
-
-		//::rpc_msg::CONTROLLER m_controller;
 
 		static uint64_t TIMEOUT_DURATION;
 		static uint64_t CHECK_INTERVAL;
