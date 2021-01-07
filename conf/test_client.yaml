@@ -23,6 +23,6 @@ redis_clients:
 - client:
     type: 1
     id: 1
-    host: "10.0.16.71"
+    host: "127.0.0.1"
     port: 6379
     passwd: "" 

@@ -54,7 +54,6 @@ namespace RPC {
 		static void handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response);
 
 	private:
-
 		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
 		bool callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, const std::string& args, RpcReplyCb reply = nullptr);
 
