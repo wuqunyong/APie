@@ -135,8 +135,17 @@ void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 	{
 		return;
 	}
-
-	handler(msg);
+	
+	try
+	{
+		handler(msg);
+	}
+	catch (std::exception& e)
+	{
+		std::stringstream ss;
+		ss << "Unexpected exception: " << e.what();
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
+	}
 }
 
 void MockRole::clearMsg()
