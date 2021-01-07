@@ -43,6 +43,7 @@ namespace APie {
 		void handleMsg(::pubsub::LOGIC_CMD& msg);
 
 		void handleLogin(::pubsub::LOGIC_CMD& msg);
+		void handleEcho(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 
 		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
@@ -55,6 +56,7 @@ namespace APie {
 		std::shared_ptr<ClientProxy> m_clientProxy;
 		Event::TimerPtr m_cmdTimer;
 
+		bool m_bInit = false;
 		uint64_t m_iCurIndex = 0;
 		std::vector<::pubsub::LOGIC_CMD> m_configCmd;
 

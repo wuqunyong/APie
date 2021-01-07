@@ -22,9 +22,16 @@ MockRole::~MockRole()
 
 void MockRole::setUp()
 {
+	if (m_bInit)
+	{
+		return;
+	}
+
+	m_bInit = true;
 	TestServerMgrSingleton::get().addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
 
 	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
+	this->addHandler("echo", std::bind(&MockRole::handleEcho, this, std::placeholders::_1));
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
 	this->processCmd();
@@ -65,11 +72,11 @@ void MockRole::start()
 		if (ptrShared)
 		{
 			ptrShared->processCmd();
-			ptrShared->addTimer(1000);
+			ptrShared->addTimer(100);
 		}
 	};
 	this->m_cmdTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(cmdCb);
-	this->addTimer(1000);
+	this->addTimer(100);
 }
 
 uint64_t MockRole::getRoleId()
@@ -85,6 +92,11 @@ void MockRole::processCmd()
 	}
 
 	if (!m_clientProxy->isConnectted())
+	{
+		return;
+	}
+
+	if (!m_bInit)
 	{
 		return;
 	}
@@ -163,8 +175,45 @@ MockRole::HandlerCb MockRole::findHandler(const std::string& name)
 
 void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
+	std::string sData;
+
+	switch (opcodes)
+	{
+	case ::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN:
+	{
+		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
+		bool bResult = response.ParseFromString(msg);
+		if (!bResult)
+		{
+			sData = "parse error";
+			return;
+		}
+		
+		sData = response.ShortDebugString();
+		break;
+	}
+	case ::opcodes::OP_MSG_RESPONSE_ECHO:
+	{
+		::login_msg::MSG_RESPONSE_ECHO response;
+		bool bResult = response.ParseFromString(msg);
+		if (!bResult)
+		{
+			sData = "parse error";
+			return;
+		}
+
+		sData = response.ShortDebugString();
+		break;
+	}
+	default:
+	{
+		sData = msg;
+		break;
+	}
+	}
+
 	std::stringstream ss;
-	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << "|msg:" << msg;
+	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << "|msg:" << sData;
 	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
 	std::cout << ss.str() << std::endl;
@@ -185,6 +234,15 @@ void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 	this->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 }
 
+void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
+{
+	::login_msg::MSG_REQUEST_ECHO request;
+	request.set_value1(std::stoi(msg.params()[0]));
+	request.set_value2(msg.params()[1]);
+
+	this->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
+}
+
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
 	TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
@@ -192,7 +250,7 @@ void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
-	m_clientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, msg);
+	m_clientProxy->sendMsg(iOpcode, msg);
 }
 
 }

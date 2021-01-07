@@ -78,6 +78,8 @@ std::tuple<uint32_t, std::string> GatewayMgr::ready()
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
 
+	// PubSub
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, GatewayMgr::onServerPeerClose);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -114,6 +116,17 @@ std::shared_ptr<GatewayRole> GatewayMgr::findGatewayRoleBySerialNum(uint64_t iSe
 	return findIte->second;
 }
 
+std::optional<uint64_t> GatewayMgr::findRoleIdBySerialNum(uint64_t iSerialNum)
+{
+	auto findIte = m_serialNumMap.find(iSerialNum);
+	if (findIte == m_serialNumMap.end())
+	{
+		return std::nullopt;
+	}
+
+	return findIte->second->getRoleId();
+}
+
 bool GatewayMgr::addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole)
 {
 	if (ptrGatewayRole == nullptr)
@@ -142,11 +155,25 @@ bool GatewayMgr::addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole)
 	return true;
 }
 
+bool GatewayMgr::removeGateWayRole(uint64_t iRoleId)
+{
+	auto findIte = m_roleIdMapSerialNum.find(iRoleId);
+	if (findIte == m_roleIdMapSerialNum.end())
+	{
+		return false;
+	}
+
+	m_serialNumMap.erase(findIte->second);
+	m_roleIdMapSerialNum.erase(findIte);
+	return true;
+}
+
 void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {	
 	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(serialNum);
 	if (ptrGatewayRole == nullptr)
 	{
+		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", serialNum, opcodes);
 		return;
 	}
 
@@ -710,13 +737,33 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 		else
 		{
 			response.set_is_newbie(false);
-
-			auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, iSerialNum);
-			GatewayMgrSingleton::get().addGatewayRole(ptrGatewayRole);
 		}
+
+		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, iSerialNum);
+		GatewayMgrSingleton::get().addGatewayRole(ptrGatewayRole);
+
 		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 	};
 	LoadFromDb<ModelUser>(server, user, cb);
+}
+
+void GatewayMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	std::stringstream ss;
+
+	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
+	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ASYNC_PIE_LOG("GatewayMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+	uint64_t iSerialNum = refMsg.serial_num();
+
+	auto optRoleId = GatewayMgrSingleton::get().findRoleIdBySerialNum(iSerialNum);
+	if (!optRoleId.has_value())
+	{
+		return;
+	}
+
+	GatewayMgrSingleton::get().removeGateWayRole(optRoleId.value());
 }
 
 }

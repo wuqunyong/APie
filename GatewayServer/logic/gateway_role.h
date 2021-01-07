@@ -18,6 +18,7 @@ namespace APie {
 	{
 	public:
 		GatewayRole(uint64_t iRoleId, uint64_t iSerialNum);
+		~GatewayRole();
 
 		uint64_t getSerailNum();
 		uint64_t getRoleId();
@@ -30,6 +31,9 @@ namespace APie {
 
 	public:
 		static std::shared_ptr<GatewayRole> createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum);
+
+	private:
+		void destroy();
 
 	private:
 		uint64_t m_iSerialNum = 0;

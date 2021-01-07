@@ -15,6 +15,16 @@ GatewayRole::GatewayRole(uint64_t iRoleId, uint64_t iSerialNum) :
 
 }
 
+GatewayRole::~GatewayRole()
+{
+	this->destroy();
+}
+
+void GatewayRole::destroy()
+{
+
+}
+
 uint64_t GatewayRole::getSerailNum()
 {
 	return m_iSerialNum;

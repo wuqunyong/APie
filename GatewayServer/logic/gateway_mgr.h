@@ -26,7 +26,10 @@ namespace APie {
 
 		std::shared_ptr<GatewayRole> findGatewayRoleById(uint64_t iRoleId);
 		std::shared_ptr<GatewayRole> findGatewayRoleBySerialNum(uint64_t iSerialNum);
+		std::optional<uint64_t> findRoleIdBySerialNum(uint64_t iSerialNum);
+
 		bool addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole);
+		bool removeGateWayRole(uint64_t iRoleId);
 
 	public:
 		// CMD
@@ -47,8 +50,12 @@ namespace APie {
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
 
+
+		// PubSub
+		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+
 	private:
-		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap;
+		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum
 		std::map<uint64_t, uint64_t> m_roleIdMapSerialNum;
 	};
 

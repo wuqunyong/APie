@@ -244,7 +244,6 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 				*ptrAdd = command.params()[i];
 			}
 		}
-		//ptrMockRole->clearMsg();
 		ptrMockRole->pushMsg(newMsg);
 	}
 
