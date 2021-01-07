@@ -22,9 +22,14 @@ namespace RPC {
 		return true;
 	}
 
-	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
+	bool RpcClient::callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, 
+		RpcReplyCb reply, std::optional<::rpc_msg::CONTROLLER> controllerOpt)
 	{
-		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+		::rpc_msg::CONTROLLER controller;
+		if (controllerOpt.has_value())
+		{
+			controller = controllerOpt.value();
+		}
 
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
@@ -81,9 +86,14 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply)
+	bool RpcClient::callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, 
+		RpcReplyCb reply, std::optional<::rpc_msg::CONTROLLER> controllerOpt)
 	{
-		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+		::rpc_msg::CONTROLLER controller;
+		if (controllerOpt.has_value())
+		{
+			controller = controllerOpt.value();
+		}
 
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
@@ -141,9 +151,14 @@ namespace RPC {
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
-	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, RpcMultiReplyCb reply)
+	bool RpcClient::multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, 
+		RpcMultiReplyCb reply, std::optional<::rpc_msg::CONTROLLER> controllerOpt)
 	{
-		::rpc_msg::CONTROLLER controller = this->getAndResetController();
+		::rpc_msg::CONTROLLER controller;
+		if (controllerOpt.has_value())
+		{
+			controller = controllerOpt.value();
+		}
 
 		std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData;
 
@@ -443,18 +458,18 @@ namespace RPC {
 		return bResult;
 	}
 
-	void RpcClient::setOneshotController(::rpc_msg::CONTROLLER controller)
-	{
-		m_controller = controller;
-	}
+	//void RpcClient::setOneshotController(::rpc_msg::CONTROLLER controller)
+	//{
+	//	m_controller = controller;
+	//}
 
-	::rpc_msg::CONTROLLER RpcClient::getAndResetController()
-	{
-		auto oldMsg = m_controller;
-		m_controller = ::rpc_msg::CONTROLLER::default_instance();
+	//::rpc_msg::CONTROLLER RpcClient::getAndResetController()
+	//{
+	//	auto oldMsg = m_controller;
+	//	m_controller = ::rpc_msg::CONTROLLER::default_instance();
 
-		return oldMsg;
-	}
+	//	return oldMsg;
+	//}
 
 	void RpcClient::handleTimeout()
 	{
