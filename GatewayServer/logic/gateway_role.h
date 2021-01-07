@@ -42,7 +42,6 @@ namespace APie {
 
 		uint64_t m_iRequests = 0;
 		uint64_t m_iRequestPerUnit = 0;
-
 		uint64_t m_iRequestUnitExpiresAt = 0;
 	};
 }

@@ -26,6 +26,7 @@ void SelfRegistration::init()
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, SelfRegistration::handleRouteHeartbeat, ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT::default_instance());
 
+	//PubSub
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, SelfRegistration::onServerPeerClose);
 
