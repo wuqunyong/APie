@@ -56,7 +56,7 @@ namespace RPC {
 	private:
 
 		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
-		bool callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, std::string args, RpcReplyCb reply = nullptr);
+		bool callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, const std::string& args, RpcReplyCb reply = nullptr);
 
 		RpcReplyCb find(uint64_t seqId);
 		void del(uint64_t seqId);

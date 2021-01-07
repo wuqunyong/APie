@@ -166,11 +166,11 @@ namespace RPC {
 		}
 
 		// check
-		for (const auto& methon : methods)
+		for (const auto& method : methods)
 		{
 			EndPoint target;
-			target.type = std::get<0>(methon).type();
-			target.id = std::get<0>(methon).id();
+			target.type = std::get<0>(method).type();
+			target.id = std::get<0>(method).id();
 			uint32_t iHash = CtxSingleton::get().generateHash(target);
 
 			uint32_t index = iHash % establishedList.size();
@@ -203,11 +203,11 @@ namespace RPC {
 		sharedPtrPending->iCount = methods.size();
 		sharedPtrPending->iCompleted = 0;
 
-		for (const auto& methon : methods)
+		for (const auto& method : methods)
 		{
 			EndPoint target;
-			target.type = std::get<0>(methon).type();
-			target.id = std::get<0>(methon).id();
+			target.type = std::get<0>(method).type();
+			target.id = std::get<0>(method).id();
 			uint32_t iHash = CtxSingleton::get().generateHash(target);
 
 			uint32_t index = iHash % establishedList.size();
@@ -275,7 +275,7 @@ namespace RPC {
 				}
 
 			};
-			this->callWithStrArgs(controller, std::get<0>(methon), std::get<1>(methon), std::get<2>(methon), pendingCb);
+			this->callWithStrArgs(controller, std::get<0>(method), std::get<1>(method), std::get<2>(method), pendingCb);
 		}
 
 		return true;
@@ -296,7 +296,7 @@ namespace RPC {
 		return bResult;
 	}
 
-	bool RpcClient::callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, std::string args, RpcReplyCb reply)
+	bool RpcClient::callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, const std::string& args, RpcReplyCb reply)
 	{
 		rpc_msg::STATUS status;
 
