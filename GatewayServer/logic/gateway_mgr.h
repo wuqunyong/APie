@@ -46,17 +46,19 @@ namespace APie {
 		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request);
 
 
-		// CLIENT OPCODE
-		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
-
-
 		// PubSub
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
+
+		// CLIENT OPCODE
+		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+
+		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
+
+
 	private:
-		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum
-		std::map<uint64_t, uint64_t> m_roleIdMapSerialNum;
+		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum, value:shared_ptr
+		std::map<uint64_t, uint64_t> m_roleIdMapSerialNum;               // key:roleId, value:serialNum
 	};
 
 	using GatewayMgrSingleton = ThreadSafeSingleton<GatewayMgr>;

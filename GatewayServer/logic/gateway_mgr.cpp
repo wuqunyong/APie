@@ -73,13 +73,15 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 
 std::tuple<uint32_t, std::string> GatewayMgr::ready()
 {
+	// PubSub
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, GatewayMgr::onServerPeerClose);
+
+
 	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
 
-	// PubSub
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, GatewayMgr::onServerPeerClose);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
