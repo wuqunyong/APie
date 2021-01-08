@@ -19,6 +19,7 @@ namespace APie
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
+		//iResult:0(连接成功)
 		using HandleConnectCB = std::function<bool(APie::ClientProxy* ptrClient, uint32_t iResult)>;
 		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
 
@@ -72,11 +73,11 @@ namespace APie
 		static uint64_t generatorId();
 
 	public:
-		static bool registerClient(std::shared_ptr<ClientProxy> ptrClient);
-		static void unregisterClient(uint64_t iSerialNum);
-		static std::shared_ptr<ClientProxy> findClient(uint64_t iSerialNum);
+		static bool registerClientProxy(std::shared_ptr<ClientProxy> ptrClient);
+		static void unregisterClientProxy(uint64_t iSerialNum);
+		static std::shared_ptr<ClientProxy> findClientProxy(uint64_t iSerialNum);
 
-		static void clearClientProxy();
+		static void clearAllClientProxy();
 
 		static std::shared_ptr<ClientProxy> createClientProxy();
 
@@ -87,8 +88,8 @@ namespace APie
 
 		std::string m_ip;
 		uint16_t m_port;
-		ProtocolType m_codecType;
-		uint32_t m_maskFlag = 0;
+		ProtocolType m_codecType;  //协议：1(PB√),2(HTTP)
+		uint32_t m_maskFlag = 0;   //按位表示：0b1u(压缩√,客户端<->Gateway),0b10u(加密×)
 		HandleConnectCB m_cb;
 
 		uint32_t m_hadEstablished; //当前的连接状态：0：未连接，1：已连上
@@ -99,7 +100,7 @@ namespace APie
 		Event::TimerPtr m_heartbeatTimer;
 		HeartbeatCB m_heartbeatCb;
 
-		uint32_t m_tId;
+		uint32_t m_tId;            //附着IO线程ID
 
 		static std::mutex m_sync;
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;

@@ -668,11 +668,19 @@ void DispatcherImpl::handleDial(DialParameters* ptrCmd)
 
 void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 {
-	auto clientProxy = APie::ClientProxy::findClient(ptrCmd->iSerialNum);
+	auto clientProxy = APie::ClientProxy::findClientProxy(ptrCmd->iSerialNum);
 	if (clientProxy)
 	{
 		clientProxy->setLocalIp(ptrCmd->sLocalIp);
 		clientProxy->onConnect(ptrCmd->iResult);
+	}
+	else
+	{
+		uint32_t iResult;
+		std::string sLocalIp;
+
+		ASYNC_PIE_LOG("DispatcherImpl/handleDialResult", PIE_CYCLE_HOUR, PIE_ERROR, "iSerialNum:%lld|iResult:%d|sLocalIp:%s", 
+			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp.c_str());
 	}
 }
 

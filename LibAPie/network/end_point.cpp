@@ -418,7 +418,7 @@ void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Mes
 	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = refMsg.serial_num();
-	auto clientProxy = APie::ClientProxy::findClient(iSerialNum);
+	auto clientProxy = APie::ClientProxy::findClientProxy(iSerialNum);
 	if (clientProxy)
 	{
 		clientProxy->setHadEstablished(ClientProxy::CONNECT_CLOSE);

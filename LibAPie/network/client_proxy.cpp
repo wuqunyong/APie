@@ -76,7 +76,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	this->m_cb = cb;
 
 	auto ptrProxy = shared_from_this();
-	ClientProxy::registerClient(ptrProxy);
+	ClientProxy::registerClientProxy(ptrProxy);
 
 	return this->sendConnect();
 }
@@ -316,7 +316,7 @@ void ClientProxy::close()
 	ss << "close|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< "peerIp:" << this->m_ip << ":" << this->m_port;
 	ASYNC_PIE_LOG("ClientProxy/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
-	ClientProxy::unregisterClient(this->m_curSerialNum);
+	ClientProxy::unregisterClientProxy(this->m_curSerialNum);
 }
 
 uint64_t ClientProxy::generatorId()
@@ -332,20 +332,20 @@ void ClientProxy::onRecvPackage(uint64_t iSerialNum, ::google::protobuf::Message
 	ASYNC_PIE_LOG("ClientProxy/onRecvPackage", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 }
 
-bool ClientProxy::registerClient(std::shared_ptr<ClientProxy> ptrClient)
+bool ClientProxy::registerClientProxy(std::shared_ptr<ClientProxy> ptrClient)
 {
 	std::lock_guard<std::mutex> guard(m_sync);
 	m_clientProxy[ptrClient->getSerialNum()] = ptrClient;
 	return true;
 }
 
-void ClientProxy::unregisterClient(uint64_t iSerialNum)
+void ClientProxy::unregisterClientProxy(uint64_t iSerialNum)
 {
 	std::lock_guard<std::mutex> guard(m_sync);
 	m_clientProxy.erase(iSerialNum);
 }
 
-std::shared_ptr<ClientProxy> ClientProxy::findClient(uint64_t iSerialNum)
+std::shared_ptr<ClientProxy> ClientProxy::findClientProxy(uint64_t iSerialNum)
 {
 	std::lock_guard<std::mutex> guard(m_sync);
 	auto findIte = m_clientProxy.find(iSerialNum);
@@ -357,7 +357,7 @@ std::shared_ptr<ClientProxy> ClientProxy::findClient(uint64_t iSerialNum)
 	return findIte->second;
 }
 
-void ClientProxy::clearClientProxy()
+void ClientProxy::clearAllClientProxy()
 {
 	std::lock_guard<std::mutex> guard(m_sync);
 	m_clientProxy.clear();

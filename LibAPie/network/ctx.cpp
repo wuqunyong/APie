@@ -395,7 +395,7 @@ void Ctx::start()
 void Ctx::destroy()
 {
 	APie::Event::DispatcherImpl::clearAllConnection();
-	ClientProxy::clearClientProxy();
+	ClientProxy::clearAllClientProxy();
 
 	//----------------------1:stop----------------------------
 	for (auto& items : thread_id_)
