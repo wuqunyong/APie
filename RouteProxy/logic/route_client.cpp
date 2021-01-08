@@ -160,7 +160,7 @@ void RouteClient::sendAddRoute(APie::ClientProxy* ptrClient)
 
 void RouteClient::sendHeartbeat(APie::ClientProxy* ptrClient)
 {
-	::route_register::ROUTE_MSG_REQUEST_HEARTBEAT request;
+	::route_register::MSG_REQUEST_HEARTBEAT request;
 
 	ptrClient->sendMsg(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, request);
 }
