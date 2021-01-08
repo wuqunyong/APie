@@ -55,7 +55,10 @@ namespace APie
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
+		static std::shared_ptr<SelfRegistration> createSelfRegistration();
+
 	private:
+
 		State m_state = { Unregistered };
 		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
 	};

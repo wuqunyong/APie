@@ -36,7 +36,15 @@ void SelfRegistration::init()
 void SelfRegistration::registerEndpoint()
 {
 	auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-	if (identityType == ::common::EndPointType::EPT_Service_Registry || identityType == ::common::EndPointType::EPT_Test_Client)
+
+	std::set<uint32_t> needRegister;
+	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
+	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
+	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
+	needRegister.insert(::common::EndPointType::EPT_DB_Proxy);
+	needRegister.insert(::common::EndPointType::EPT_Login_Server);
+
+	if (needRegister.count(identityType) == 0)
 	{
 		return;
 	}
@@ -46,7 +54,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "service_registry empty";
 
-		ASYNC_PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 
@@ -54,7 +62,9 @@ void SelfRegistration::registerEndpoint()
 	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","port_value" }, 0);
 	std::string registryAuth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","type" }, 0);
-	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({"service_registry", "mask_flag" }, 0);
+	
+	//uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({"service_registry", "mask_flag" }, 0);
+	uint32_t maskFlag = 0;
 
 	auto ptrSelf = this->shared_from_this();
 	auto ptrClient = APie::ClientProxy::createClientProxy();
@@ -108,6 +118,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	request.mutable_instance()->set_ip(ip);
 	request.mutable_instance()->set_port(port);
 	request.mutable_instance()->set_codec_type(codec_type);
+	request.mutable_instance()->set_mask_flag(0); // 节点间不需要压缩，加密
 	request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
@@ -441,6 +452,11 @@ void SelfRegistration::onServerPeerClose(uint64_t topic, ::google::protobuf::Mes
 
 	uint64_t iSerialNum = refMsg.serial_num();
 	EndPointMgrSingleton::get().delRoute(iSerialNum);
+}
+
+std::shared_ptr<SelfRegistration> SelfRegistration::createSelfRegistration()
+{
+	return std::make_shared<SelfRegistration>();
 }
 
 }

@@ -193,7 +193,7 @@ void Ctx::init(const std::string& configFile)
 
 	APie::Event::Libevent::Global::initialize();
 
-	endpoint_ = std::make_shared<SelfRegistration>();
+	endpoint_ = SelfRegistration::createSelfRegistration();
 
 	try {
 		this->node_ = YAML::LoadFile(configFile);
