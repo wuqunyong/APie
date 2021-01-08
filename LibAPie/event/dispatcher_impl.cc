@@ -676,9 +676,6 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	}
 	else
 	{
-		uint32_t iResult;
-		std::string sLocalIp;
-
 		ASYNC_PIE_LOG("DispatcherImpl/handleDialResult", PIE_CYCLE_HOUR, PIE_ERROR, "iSerialNum:%lld|iResult:%d|sLocalIp:%s", 
 			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp.c_str());
 	}

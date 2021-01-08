@@ -19,8 +19,10 @@ namespace APie
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
-		//iResult:0(连接成功)
+		//参数：iResult:0(连接成功)
+		//返回值：true:出错后进程尝试，false:出错后调用close
 		using HandleConnectCB = std::function<bool(APie::ClientProxy* ptrClient, uint32_t iResult)>;
+
 		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
 
 		enum CONNECT_STATE
