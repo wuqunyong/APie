@@ -47,7 +47,6 @@ namespace APie {
 		static void onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg);
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
-
 		// Inner Protocols
 		static void handleRespAddRoute(uint64_t iSerialNum, const ::route_register::MSG_RESP_ADD_ROUTE& response);
 		static void handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_RESP_HEARTBEAT& response);

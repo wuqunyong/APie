@@ -267,6 +267,8 @@ void RouteProxy::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& 
 	if (routeClient)
 	{
 		routeClient->setState(APie::RouteClient::Closed);
+
+		ASYNC_PIE_LOG("RouteProxy/onClientPeerClose", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
 	}
 }
 
