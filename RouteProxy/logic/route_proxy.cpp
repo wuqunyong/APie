@@ -181,6 +181,8 @@ void RouteProxy::onShowTopology(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	ASYNC_PIE_LOG("show_topology:%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	std::cout << "show_topology:" << ss.str() << std::flush;
+
 }
 
 void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& msg)
@@ -219,7 +221,8 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 			{
 				bool bChange = false;
 				if (items.ip() != ptrClient->getInstance().ip()
-					|| items.port() != ptrClient->getInstance().port())
+					|| items.port() != ptrClient->getInstance().port()
+					|| items.codec_type() != ptrClient->getInstance().codec_type())
 				{
 					bChange = true;
 				}
@@ -229,7 +232,6 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 					RouteProxySingleton::get().delRouteClient(point);
 					RouteProxySingleton::get().addRouteClient(items);
 				}
-				//ptrClient->setInstance(items);
 			}
 		}
 
