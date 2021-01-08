@@ -18,7 +18,9 @@ std::tuple<uint32_t, std::string> RouteProxy::init()
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_ADD_ROUTE, RouteProxy::handleRespAddRoute, ::route_register::MSG_RESP_ADD_ROUTE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::MSG_RESP_HEARTBEAT::default_instance());
 
+	// PubSub
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_DiscoveryNotice, RouteProxy::onDiscoveryNotice);
+	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, RouteProxy::onClientPeerClose);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -250,6 +252,21 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 	}
 	default:
 		break;
+	}
+}
+
+void RouteProxy::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	std::stringstream ss;
+	auto& refMsg = dynamic_cast<::pubsub::CLIENT_PEER_CLOSE&>(msg);
+	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ASYNC_PIE_LOG("RouteProxy/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+	uint64_t iSerialNum = refMsg.serial_num();
+	auto routeClient = RouteProxySingleton::get().findRouteClient(iSerialNum);
+	if (routeClient)
+	{
+		routeClient->setState(APie::RouteClient::Closed);
 	}
 }
 

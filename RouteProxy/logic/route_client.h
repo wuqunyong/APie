@@ -28,6 +28,7 @@ namespace APie {
 			Unregistered = 0,
 			Registering,
 			Registered,
+			Closed,
 		};
 
 		void init();
