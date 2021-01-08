@@ -59,24 +59,24 @@ namespace route_register {
 class MSG_REQUEST_ADD_ROUTE;
 class MSG_REQUEST_ADD_ROUTEDefaultTypeInternal;
 extern MSG_REQUEST_ADD_ROUTEDefaultTypeInternal _MSG_REQUEST_ADD_ROUTE_default_instance_;
+class MSG_REQUEST_HEARTBEAT;
+class MSG_REQUEST_HEARTBEATDefaultTypeInternal;
+extern MSG_REQUEST_HEARTBEATDefaultTypeInternal _MSG_REQUEST_HEARTBEAT_default_instance_;
 class MSG_RESP_ADD_ROUTE;
 class MSG_RESP_ADD_ROUTEDefaultTypeInternal;
 extern MSG_RESP_ADD_ROUTEDefaultTypeInternal _MSG_RESP_ADD_ROUTE_default_instance_;
-class ROUTE_MSG_REQUEST_HEARTBEAT;
-class ROUTE_MSG_REQUEST_HEARTBEATDefaultTypeInternal;
-extern ROUTE_MSG_REQUEST_HEARTBEATDefaultTypeInternal _ROUTE_MSG_REQUEST_HEARTBEAT_default_instance_;
-class ROUTE_MSG_RESP_HEARTBEAT;
-class ROUTE_MSG_RESP_HEARTBEATDefaultTypeInternal;
-extern ROUTE_MSG_RESP_HEARTBEATDefaultTypeInternal _ROUTE_MSG_RESP_HEARTBEAT_default_instance_;
+class MSG_RESP_HEARTBEAT;
+class MSG_RESP_HEARTBEATDefaultTypeInternal;
+extern MSG_RESP_HEARTBEATDefaultTypeInternal _MSG_RESP_HEARTBEAT_default_instance_;
 class RouteInstance;
 class RouteInstanceDefaultTypeInternal;
 extern RouteInstanceDefaultTypeInternal _RouteInstance_default_instance_;
 }  // namespace route_register
 PROTOBUF_NAMESPACE_OPEN
 template<> ::route_register::MSG_REQUEST_ADD_ROUTE* Arena::CreateMaybeMessage<::route_register::MSG_REQUEST_ADD_ROUTE>(Arena*);
+template<> ::route_register::MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage<::route_register::MSG_REQUEST_HEARTBEAT>(Arena*);
 template<> ::route_register::MSG_RESP_ADD_ROUTE* Arena::CreateMaybeMessage<::route_register::MSG_RESP_ADD_ROUTE>(Arena*);
-template<> ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage<::route_register::ROUTE_MSG_REQUEST_HEARTBEAT>(Arena*);
-template<> ::route_register::ROUTE_MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage<::route_register::ROUTE_MSG_RESP_HEARTBEAT>(Arena*);
+template<> ::route_register::MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage<::route_register::MSG_RESP_HEARTBEAT>(Arena*);
 template<> ::route_register::RouteInstance* Arena::CreateMaybeMessage<::route_register::RouteInstance>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace route_register {
@@ -536,23 +536,23 @@ class MSG_RESP_ADD_ROUTE :
 };
 // -------------------------------------------------------------------
 
-class ROUTE_MSG_REQUEST_HEARTBEAT :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:route_register.ROUTE_MSG_REQUEST_HEARTBEAT) */ {
+class MSG_REQUEST_HEARTBEAT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:route_register.MSG_REQUEST_HEARTBEAT) */ {
  public:
-  ROUTE_MSG_REQUEST_HEARTBEAT();
-  virtual ~ROUTE_MSG_REQUEST_HEARTBEAT();
+  MSG_REQUEST_HEARTBEAT();
+  virtual ~MSG_REQUEST_HEARTBEAT();
 
-  ROUTE_MSG_REQUEST_HEARTBEAT(const ROUTE_MSG_REQUEST_HEARTBEAT& from);
-  ROUTE_MSG_REQUEST_HEARTBEAT(ROUTE_MSG_REQUEST_HEARTBEAT&& from) noexcept
-    : ROUTE_MSG_REQUEST_HEARTBEAT() {
+  MSG_REQUEST_HEARTBEAT(const MSG_REQUEST_HEARTBEAT& from);
+  MSG_REQUEST_HEARTBEAT(MSG_REQUEST_HEARTBEAT&& from) noexcept
+    : MSG_REQUEST_HEARTBEAT() {
     *this = ::std::move(from);
   }
 
-  inline ROUTE_MSG_REQUEST_HEARTBEAT& operator=(const ROUTE_MSG_REQUEST_HEARTBEAT& from) {
+  inline MSG_REQUEST_HEARTBEAT& operator=(const MSG_REQUEST_HEARTBEAT& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ROUTE_MSG_REQUEST_HEARTBEAT& operator=(ROUTE_MSG_REQUEST_HEARTBEAT&& from) noexcept {
+  inline MSG_REQUEST_HEARTBEAT& operator=(MSG_REQUEST_HEARTBEAT&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -570,37 +570,37 @@ class ROUTE_MSG_REQUEST_HEARTBEAT :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const ROUTE_MSG_REQUEST_HEARTBEAT& default_instance();
+  static const MSG_REQUEST_HEARTBEAT& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ROUTE_MSG_REQUEST_HEARTBEAT* internal_default_instance() {
-    return reinterpret_cast<const ROUTE_MSG_REQUEST_HEARTBEAT*>(
-               &_ROUTE_MSG_REQUEST_HEARTBEAT_default_instance_);
+  static inline const MSG_REQUEST_HEARTBEAT* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_HEARTBEAT*>(
+               &_MSG_REQUEST_HEARTBEAT_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(ROUTE_MSG_REQUEST_HEARTBEAT& a, ROUTE_MSG_REQUEST_HEARTBEAT& b) {
+  friend void swap(MSG_REQUEST_HEARTBEAT& a, MSG_REQUEST_HEARTBEAT& b) {
     a.Swap(&b);
   }
-  inline void Swap(ROUTE_MSG_REQUEST_HEARTBEAT* other) {
+  inline void Swap(MSG_REQUEST_HEARTBEAT* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline ROUTE_MSG_REQUEST_HEARTBEAT* New() const final {
-    return CreateMaybeMessage<ROUTE_MSG_REQUEST_HEARTBEAT>(nullptr);
+  inline MSG_REQUEST_HEARTBEAT* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_HEARTBEAT>(nullptr);
   }
 
-  ROUTE_MSG_REQUEST_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<ROUTE_MSG_REQUEST_HEARTBEAT>(arena);
+  MSG_REQUEST_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_HEARTBEAT>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const ROUTE_MSG_REQUEST_HEARTBEAT& from);
-  void MergeFrom(const ROUTE_MSG_REQUEST_HEARTBEAT& from);
+  void CopyFrom(const MSG_REQUEST_HEARTBEAT& from);
+  void MergeFrom(const MSG_REQUEST_HEARTBEAT& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -614,10 +614,10 @@ class ROUTE_MSG_REQUEST_HEARTBEAT :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(ROUTE_MSG_REQUEST_HEARTBEAT* other);
+  void InternalSwap(MSG_REQUEST_HEARTBEAT* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "route_register.ROUTE_MSG_REQUEST_HEARTBEAT";
+    return "route_register.MSG_REQUEST_HEARTBEAT";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -641,7 +641,7 @@ class ROUTE_MSG_REQUEST_HEARTBEAT :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:route_register.ROUTE_MSG_REQUEST_HEARTBEAT)
+  // @@protoc_insertion_point(class_scope:route_register.MSG_REQUEST_HEARTBEAT)
  private:
   class _Internal;
 
@@ -651,23 +651,23 @@ class ROUTE_MSG_REQUEST_HEARTBEAT :
 };
 // -------------------------------------------------------------------
 
-class ROUTE_MSG_RESP_HEARTBEAT :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:route_register.ROUTE_MSG_RESP_HEARTBEAT) */ {
+class MSG_RESP_HEARTBEAT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:route_register.MSG_RESP_HEARTBEAT) */ {
  public:
-  ROUTE_MSG_RESP_HEARTBEAT();
-  virtual ~ROUTE_MSG_RESP_HEARTBEAT();
+  MSG_RESP_HEARTBEAT();
+  virtual ~MSG_RESP_HEARTBEAT();
 
-  ROUTE_MSG_RESP_HEARTBEAT(const ROUTE_MSG_RESP_HEARTBEAT& from);
-  ROUTE_MSG_RESP_HEARTBEAT(ROUTE_MSG_RESP_HEARTBEAT&& from) noexcept
-    : ROUTE_MSG_RESP_HEARTBEAT() {
+  MSG_RESP_HEARTBEAT(const MSG_RESP_HEARTBEAT& from);
+  MSG_RESP_HEARTBEAT(MSG_RESP_HEARTBEAT&& from) noexcept
+    : MSG_RESP_HEARTBEAT() {
     *this = ::std::move(from);
   }
 
-  inline ROUTE_MSG_RESP_HEARTBEAT& operator=(const ROUTE_MSG_RESP_HEARTBEAT& from) {
+  inline MSG_RESP_HEARTBEAT& operator=(const MSG_RESP_HEARTBEAT& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ROUTE_MSG_RESP_HEARTBEAT& operator=(ROUTE_MSG_RESP_HEARTBEAT&& from) noexcept {
+  inline MSG_RESP_HEARTBEAT& operator=(MSG_RESP_HEARTBEAT&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -685,37 +685,37 @@ class ROUTE_MSG_RESP_HEARTBEAT :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const ROUTE_MSG_RESP_HEARTBEAT& default_instance();
+  static const MSG_RESP_HEARTBEAT& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ROUTE_MSG_RESP_HEARTBEAT* internal_default_instance() {
-    return reinterpret_cast<const ROUTE_MSG_RESP_HEARTBEAT*>(
-               &_ROUTE_MSG_RESP_HEARTBEAT_default_instance_);
+  static inline const MSG_RESP_HEARTBEAT* internal_default_instance() {
+    return reinterpret_cast<const MSG_RESP_HEARTBEAT*>(
+               &_MSG_RESP_HEARTBEAT_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     4;
 
-  friend void swap(ROUTE_MSG_RESP_HEARTBEAT& a, ROUTE_MSG_RESP_HEARTBEAT& b) {
+  friend void swap(MSG_RESP_HEARTBEAT& a, MSG_RESP_HEARTBEAT& b) {
     a.Swap(&b);
   }
-  inline void Swap(ROUTE_MSG_RESP_HEARTBEAT* other) {
+  inline void Swap(MSG_RESP_HEARTBEAT* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline ROUTE_MSG_RESP_HEARTBEAT* New() const final {
-    return CreateMaybeMessage<ROUTE_MSG_RESP_HEARTBEAT>(nullptr);
+  inline MSG_RESP_HEARTBEAT* New() const final {
+    return CreateMaybeMessage<MSG_RESP_HEARTBEAT>(nullptr);
   }
 
-  ROUTE_MSG_RESP_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<ROUTE_MSG_RESP_HEARTBEAT>(arena);
+  MSG_RESP_HEARTBEAT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_RESP_HEARTBEAT>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const ROUTE_MSG_RESP_HEARTBEAT& from);
-  void MergeFrom(const ROUTE_MSG_RESP_HEARTBEAT& from);
+  void CopyFrom(const MSG_RESP_HEARTBEAT& from);
+  void MergeFrom(const MSG_RESP_HEARTBEAT& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -729,10 +729,10 @@ class ROUTE_MSG_RESP_HEARTBEAT :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(ROUTE_MSG_RESP_HEARTBEAT* other);
+  void InternalSwap(MSG_RESP_HEARTBEAT* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "route_register.ROUTE_MSG_RESP_HEARTBEAT";
+    return "route_register.MSG_RESP_HEARTBEAT";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -768,7 +768,7 @@ class ROUTE_MSG_RESP_HEARTBEAT :
   void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:route_register.ROUTE_MSG_RESP_HEARTBEAT)
+  // @@protoc_insertion_point(class_scope:route_register.MSG_RESP_HEARTBEAT)
  private:
   class _Internal;
 
@@ -1098,30 +1098,30 @@ inline void MSG_RESP_ADD_ROUTE::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 
 
 // -------------------------------------------------------------------
 
-// ROUTE_MSG_REQUEST_HEARTBEAT
+// MSG_REQUEST_HEARTBEAT
 
 // -------------------------------------------------------------------
 
-// ROUTE_MSG_RESP_HEARTBEAT
+// MSG_RESP_HEARTBEAT
 
 // uint32 status_code = 1;
-inline void ROUTE_MSG_RESP_HEARTBEAT::clear_status_code() {
+inline void MSG_RESP_HEARTBEAT::clear_status_code() {
   status_code_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ROUTE_MSG_RESP_HEARTBEAT::_internal_status_code() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_HEARTBEAT::_internal_status_code() const {
   return status_code_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ROUTE_MSG_RESP_HEARTBEAT::status_code() const {
-  // @@protoc_insertion_point(field_get:route_register.ROUTE_MSG_RESP_HEARTBEAT.status_code)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_HEARTBEAT::status_code() const {
+  // @@protoc_insertion_point(field_get:route_register.MSG_RESP_HEARTBEAT.status_code)
   return _internal_status_code();
 }
-inline void ROUTE_MSG_RESP_HEARTBEAT::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void MSG_RESP_HEARTBEAT::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   status_code_ = value;
 }
-inline void ROUTE_MSG_RESP_HEARTBEAT::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void MSG_RESP_HEARTBEAT::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_status_code(value);
-  // @@protoc_insertion_point(field_set:route_register.ROUTE_MSG_RESP_HEARTBEAT.status_code)
+  // @@protoc_insertion_point(field_set:route_register.MSG_RESP_HEARTBEAT.status_code)
 }
 
 #ifdef __GNUC__

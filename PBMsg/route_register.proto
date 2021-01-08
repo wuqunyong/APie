@@ -25,11 +25,11 @@ message MSG_RESP_ADD_ROUTE
 	uint32 status_code = 3;
 }
 
-message ROUTE_MSG_REQUEST_HEARTBEAT
+message MSG_REQUEST_HEARTBEAT
 {
 }
 
-message ROUTE_MSG_RESP_HEARTBEAT
+message MSG_RESP_HEARTBEAT
 {
 	uint32 status_code = 1;
 }

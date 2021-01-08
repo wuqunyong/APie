@@ -16,7 +16,7 @@ std::tuple<uint32_t, std::string> RouteProxy::init()
 	APie::RPC::rpcInit();
 
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_ADD_ROUTE, RouteProxy::handleRespAddRoute, ::route_register::MSG_RESP_ADD_ROUTE::default_instance());
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::ROUTE_MSG_RESP_HEARTBEAT::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, RouteProxy::handleRespHeartbeat, ::route_register::MSG_RESP_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_DiscoveryNotice, RouteProxy::onDiscoveryNotice);
 
@@ -143,7 +143,7 @@ void RouteProxy::handleRespAddRoute(uint64_t iSerialNum, const ::route_register:
 	}
 }
 
-void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_RESP_HEARTBEAT& response)
+void RouteProxy::handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_RESP_HEARTBEAT& response)
 {
 	std::stringstream ss;
 	ss << "handleRespHeartbeat|" << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();

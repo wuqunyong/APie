@@ -49,7 +49,7 @@ namespace APie
 		
 
 		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
-		static void handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT& request);
+		static void handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_HEARTBEAT& request);
 		
 
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);

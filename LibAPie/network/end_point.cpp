@@ -24,7 +24,7 @@ void SelfRegistration::init()
 
 	//RouteProxy
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute, ::route_register::MSG_REQUEST_ADD_ROUTE::default_instance());
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, SelfRegistration::handleRouteHeartbeat, ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, SelfRegistration::handleRouteHeartbeat, ::route_register::MSG_REQUEST_HEARTBEAT::default_instance());
 
 	//PubSub
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
@@ -405,11 +405,11 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
 }
 
-void SelfRegistration::handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_REQUEST_HEARTBEAT& request)
+void SelfRegistration::handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_HEARTBEAT& request)
 {
 	auto optPoint = EndPointMgrSingleton::get().findRoute(iSerialNum);
 
-	::route_register::ROUTE_MSG_RESP_HEARTBEAT response;
+	::route_register::MSG_RESP_HEARTBEAT response;
 	if (optPoint)
 	{
 		response.set_status_code(opcodes::SC_Ok);

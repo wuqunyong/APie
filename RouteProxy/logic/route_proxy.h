@@ -48,7 +48,7 @@ namespace APie {
 
 
 		static void handleRespAddRoute(uint64_t iSerialNum, const ::route_register::MSG_RESP_ADD_ROUTE& response);
-		static void handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::ROUTE_MSG_RESP_HEARTBEAT& response);
+		static void handleRespHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_RESP_HEARTBEAT& response);
 		
 
 	private:
