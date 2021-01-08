@@ -24,37 +24,38 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\ropcodes.proto\022\007opcodes*\361\003\n\tOPCODE_ID\022\013"
-  "\n\007OP_None\020\000\022$\n OP_MSG_REQUEST_REGISTER_I"
-  "NSTANCE\020e\022!\n\035OP_MSG_RESP_REGISTER_INSTAN"
-  "CE\020f\022\032\n\026OP_MSG_NOTICE_INSTANCE\020g\022&\n\"OP_D"
-  "ISCOVERY_MSG_REQUEST_HEARTBEAT\020h\022#\n\037OP_D"
-  "ISCOVERY_MSG_RESP_HEARTBEAT\020i\022\035\n\030OP_MSG_"
-  "REQUEST_ADD_ROUTE\020\311\001\022\032\n\025OP_MSG_RESP_ADD_"
-  "ROUTE\020\312\001\022#\n\036OP_ROUTE_MSG_REQUEST_HEARTBE"
-  "AT\020\313\001\022 \n\033OP_ROUTE_MSG_RESP_HEARTBEAT\020\314\001\022"
-  "\023\n\016OP_RPC_REQUEST\020\255\002\022\024\n\017OP_RPC_RESPONSE\020"
-  "\256\002\022 \n\033OP_MSG_REQUEST_CLIENT_LOGIN\020\320\017\022!\n\034"
-  "OP_MSG_RESPONSE_CLIENT_LOGIN\020\321\017\022\030\n\023OP_MS"
-  "G_REQUEST_ECHO\020\322\017\022\031\n\024OP_MSG_RESPONSE_ECH"
-  "O\020\323\017*\270\005\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_Dis"
-  "covery_AuthError\020\350\007\022\037\n\032SC_Discovery_Dupl"
-  "icateNode\020\351\007\022\036\n\031SC_Discovery_Unregistere"
-  "d\020\352\007\022\032\n\025SC_Route_InvalidPoint\020\320\017\022\027\n\022SC_R"
-  "oute_AuthError\020\321\017\022\032\n\025SC_Route_Unregister"
-  "ed\020\322\017\022\023\n\016SC_Rpc_Timeout\020\270\027\022\026\n\021SC_Rpc_Rou"
-  "teEmpty\020\271\027\022!\n\034SC_Rpc_RouteEstablishedEmp"
-  "ty\020\272\027\022!\n\034SC_RPC_RouteSerialNumInvalid\020\273\027"
-  "\022\032\n\025SC_RPC_RouteSendError\020\274\027\022\034\n\027SC_RPC_N"
-  "otReceivedReply\020\275\027\022\023\n\016SC_RPC_NotSend\020\276\027\022"
-  "$\n\037SC_RPC_InvalidArgs_MethodsEmpty\020\277\027\022\031\n"
-  "\024SC_RPC_Partial_Error\020\300\027\022&\n!SC_ClientPro"
-  "xy_SerialNumEqualZero\020\240\037\022)\n$SC_ClientPro"
-  "xy_SerialNumNotEqualZero\020\241\037\022\037\n\032SC_Client"
-  "Proxy_Established\020\242\037\022\"\n\035SC_ClientProxy_N"
-  "otEstablished\020\243\037\022\034\n\027SC_ClientProxy_BadAl"
-  "loc\020\244\037\022\036\n\031SC_ClientProxy_NoIOThread\020\245\037\022\027"
-  "\n\022SC_BindTable_Error\020\210\'b\006proto3"
+  "\n\ropcodes.proto\022\007opcodes*\233\004\n\tOPCODE_ID\022\013"
+  "\n\007OP_None\020\000\022.\n*OP_DISCOVERY_MSG_REQUEST_"
+  "REGISTER_INSTANCE\020e\022+\n\'OP_DISCOVERY_MSG_"
+  "RESP_REGISTER_INSTANCE\020f\022$\n OP_DISCOVERY"
+  "_MSG_NOTICE_INSTANCE\020g\022&\n\"OP_DISCOVERY_M"
+  "SG_REQUEST_HEARTBEAT\020h\022#\n\037OP_DISCOVERY_M"
+  "SG_RESP_HEARTBEAT\020i\022#\n\036OP_ROUTE_MSG_REQU"
+  "EST_ADD_ROUTE\020\311\001\022 \n\033OP_ROUTE_MSG_RESP_AD"
+  "D_ROUTE\020\312\001\022#\n\036OP_ROUTE_MSG_REQUEST_HEART"
+  "BEAT\020\313\001\022 \n\033OP_ROUTE_MSG_RESP_HEARTBEAT\020\314"
+  "\001\022\023\n\016OP_RPC_REQUEST\020\255\002\022\024\n\017OP_RPC_RESPONS"
+  "E\020\256\002\022 \n\033OP_MSG_REQUEST_CLIENT_LOGIN\020\320\017\022!"
+  "\n\034OP_MSG_RESPONSE_CLIENT_LOGIN\020\321\017\022\030\n\023OP_"
+  "MSG_REQUEST_ECHO\020\322\017\022\031\n\024OP_MSG_RESPONSE_E"
+  "CHO\020\323\017*\270\005\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_D"
+  "iscovery_AuthError\020\350\007\022\037\n\032SC_Discovery_Du"
+  "plicateNode\020\351\007\022\036\n\031SC_Discovery_Unregiste"
+  "red\020\352\007\022\032\n\025SC_Route_InvalidPoint\020\320\017\022\027\n\022SC"
+  "_Route_AuthError\020\321\017\022\032\n\025SC_Route_Unregist"
+  "ered\020\322\017\022\023\n\016SC_Rpc_Timeout\020\270\027\022\026\n\021SC_Rpc_R"
+  "outeEmpty\020\271\027\022!\n\034SC_Rpc_RouteEstablishedE"
+  "mpty\020\272\027\022!\n\034SC_RPC_RouteSerialNumInvalid\020"
+  "\273\027\022\032\n\025SC_RPC_RouteSendError\020\274\027\022\034\n\027SC_RPC"
+  "_NotReceivedReply\020\275\027\022\023\n\016SC_RPC_NotSend\020\276"
+  "\027\022$\n\037SC_RPC_InvalidArgs_MethodsEmpty\020\277\027\022"
+  "\031\n\024SC_RPC_Partial_Error\020\300\027\022&\n!SC_ClientP"
+  "roxy_SerialNumEqualZero\020\240\037\022)\n$SC_ClientP"
+  "roxy_SerialNumNotEqualZero\020\241\037\022\037\n\032SC_Clie"
+  "ntProxy_Established\020\242\037\022\"\n\035SC_ClientProxy"
+  "_NotEstablished\020\243\037\022\034\n\027SC_ClientProxy_Bad"
+  "Alloc\020\244\037\022\036\n\031SC_ClientProxy_NoIOThread\020\245\037"
+  "\022\027\n\022SC_BindTable_Error\020\210\'b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -63,7 +64,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1231,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1273,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,

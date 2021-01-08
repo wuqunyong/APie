@@ -155,7 +155,7 @@ void RouteClient::sendAddRoute(APie::ClientProxy* ptrClient)
 	ptrAdd->set_type(static_cast<::common::EndPointType>(type));
 	ptrAdd->set_id(id);
 	ptrAdd->set_auth(auth);
-	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_ROUTE, request);
+	ptrClient->sendMsg(::opcodes::OP_ROUTE_MSG_REQUEST_ADD_ROUTE, request);
 }
 
 void RouteClient::sendHeartbeat(APie::ClientProxy* ptrClient)
