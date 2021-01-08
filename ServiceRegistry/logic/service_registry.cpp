@@ -4,6 +4,13 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> ServiceRegistry::init()
 {
+	// CMD
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistry::onLogicCommnad);
+
+	LogicCmdHandlerSingleton::get().init();
+
+
+	// RPC
 	APie::RPC::rpcInit();
 
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance, ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE::default_instance());
@@ -174,6 +181,18 @@ void ServiceRegistry::broadcast()
 	{
 		APie::Network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_NOTICE_INSTANCE, notice);
 	}
+}
+
+void ServiceRegistry::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	if (!handlerOpt.has_value())
+	{
+		return;
+	}
+
+	handlerOpt.value()(command);
 }
 
 void ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE& request)

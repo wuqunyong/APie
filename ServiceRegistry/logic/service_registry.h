@@ -31,6 +31,11 @@ namespace APie {
 		void exit();
 
 	public:
+		// CMD
+		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+
+
+		// Inner Protocols
 		static void handleRequestRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE& request);
 		static void handleRequestHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_HEARTBEAT& request);
 		

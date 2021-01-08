@@ -9,6 +9,12 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> DBProxyMgr::init()
 {
+	// CMD
+	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, DBProxyMgr::onLogicCommnad);
+
+	LogicCmdHandlerSingleton::get().init();
+
+	// RPC
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlDescribeRequest>(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
 	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlQueryRequest>(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
@@ -95,6 +101,18 @@ std::tuple<uint32_t, std::string> DBProxyMgr::ready()
 void DBProxyMgr::exit()
 {
 
+}
+
+void DBProxyMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+{
+	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	if (!handlerOpt.has_value())
+	{
+		return;
+	}
+
+	handlerOpt.value()(command);
 }
 
 std::tuple<uint32_t, std::string> DBProxyMgr::RPC_handleMysqlDescTable(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlDescribeRequest& request)

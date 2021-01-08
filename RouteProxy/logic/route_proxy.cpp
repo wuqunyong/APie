@@ -180,8 +180,8 @@ void RouteProxy::onShowTopology(::pubsub::LOGIC_CMD& cmd)
 		ss << "--> " << "type:" << items.first.type << "|id:" << items.first.id << "|status:" << (uint32_t)items.second->state() << "|isConnectted:" << items.second->isConnectted() << std::endl;
 	}
 
-	ASYNC_PIE_LOG("show_topology:%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-	std::cout << "show_topology:" << ss.str() << std::flush;
+	ASYNC_PIE_LOG("show_topology:\n%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	std::cout << "show_topology:\n" << ss.str() << std::flush;
 
 }
 

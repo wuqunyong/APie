@@ -8,6 +8,7 @@ namespace APie {
 std::tuple<uint32_t, std::string> SceneMgr::init()
 {
 	// CMD
+	LogicCmdHandlerSingleton::get().init();
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgr::onLogicCommnad);
 
 
