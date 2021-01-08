@@ -36,32 +36,32 @@ service_registry:    # 服务注册地址
 topology:
   1: [2,3,4]
   2: [3,4]
-log:
-  merge: true
-  level: 0
-  show_pos: false
-  split_size: 128
-  backup: "/usr/local/apie/logs/backup"
-  name: "apie"
-  show_console: false  # 控制台是否显示日志
-metrics:
-  enable: true
-  ip: "127.0.0.1"
-  udp_port: 8089
-mysql:
-  enable: true
-  host: "127.0.0.1"
-  port: 3306
-  user: "root"
-  passwd: "root"
-  db: "apie"  
-redis_clients:
-- client:
-    type: 1
-    id: 1
-    host: "127.0.0.1"
-    port: 6379
-    passwd: ""
-limited:
-  requests_per_unit: 10   # 限制的请求数(0:没有限制，默认：0)
-  uint: 1                 # 限制的间隔单位(秒数，默认:3)
+log:                 # 日志
+  merge: true            # 合并文件, 默认true
+  level: 0               # 等级, 默认2
+  show_pos: false        # 显示文件位置, 默认true
+  split_size: 128        # 文件最大字节,单位M,超过生成新文件, 默认128M
+  backup: "/usr/local/apie/logs/backup" # 文件备份文件
+  name: "apie"           # 文件名
+  show_console: false    # 控制台是否显示, 默认false
+metrics:             # 度量
+  enable: true           # 是否开启
+  ip: "127.0.0.1"        # influxdb ip
+  udp_port: 8089         # influxdb port
+mysql:               # mysql数据库
+  enable: true           # 是否连接, 默认false
+  host: "127.0.0.1"      # ip
+  port: 3306             # port
+  user: "root"           # 用户名
+  passwd: "root"         # 密码
+  db: "apie"             # 数据库名
+redis_clients:       # redis客户端列表
+- client:                # 单个redis客户端
+    type: 1                  # 类型
+    id: 1                    # ID
+    host: "127.0.0.1"        # redis server ip
+    port: 6379               # redis server port
+    passwd: ""               # redis server passwd
+limited:             # 限制
+  requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
+  uint: 1                # 客户端间隔单位(秒数，默认:3)

@@ -63,26 +63,26 @@ extern EndPointInstanceDefaultTypeInternal _EndPointInstance_default_instance_;
 class MSG_NOTICE_INSTANCE;
 class MSG_NOTICE_INSTANCEDefaultTypeInternal;
 extern MSG_NOTICE_INSTANCEDefaultTypeInternal _MSG_NOTICE_INSTANCE_default_instance_;
-class MSG_REQUEST_ADD_INSTANCE;
-class MSG_REQUEST_ADD_INSTANCEDefaultTypeInternal;
-extern MSG_REQUEST_ADD_INSTANCEDefaultTypeInternal _MSG_REQUEST_ADD_INSTANCE_default_instance_;
 class MSG_REQUEST_HEARTBEAT;
 class MSG_REQUEST_HEARTBEATDefaultTypeInternal;
 extern MSG_REQUEST_HEARTBEATDefaultTypeInternal _MSG_REQUEST_HEARTBEAT_default_instance_;
-class MSG_RESP_ADD_INSTANCE;
-class MSG_RESP_ADD_INSTANCEDefaultTypeInternal;
-extern MSG_RESP_ADD_INSTANCEDefaultTypeInternal _MSG_RESP_ADD_INSTANCE_default_instance_;
+class MSG_REQUEST_REGISTER_INSTANCE;
+class MSG_REQUEST_REGISTER_INSTANCEDefaultTypeInternal;
+extern MSG_REQUEST_REGISTER_INSTANCEDefaultTypeInternal _MSG_REQUEST_REGISTER_INSTANCE_default_instance_;
 class MSG_RESP_HEARTBEAT;
 class MSG_RESP_HEARTBEATDefaultTypeInternal;
 extern MSG_RESP_HEARTBEATDefaultTypeInternal _MSG_RESP_HEARTBEAT_default_instance_;
+class MSG_RESP_REGISTER_INSTANCE;
+class MSG_RESP_REGISTER_INSTANCEDefaultTypeInternal;
+extern MSG_RESP_REGISTER_INSTANCEDefaultTypeInternal _MSG_RESP_REGISTER_INSTANCE_default_instance_;
 }  // namespace service_discovery
 PROTOBUF_NAMESPACE_OPEN
 template<> ::service_discovery::EndPointInstance* Arena::CreateMaybeMessage<::service_discovery::EndPointInstance>(Arena*);
 template<> ::service_discovery::MSG_NOTICE_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_NOTICE_INSTANCE>(Arena*);
-template<> ::service_discovery::MSG_REQUEST_ADD_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_REQUEST_ADD_INSTANCE>(Arena*);
 template<> ::service_discovery::MSG_REQUEST_HEARTBEAT* Arena::CreateMaybeMessage<::service_discovery::MSG_REQUEST_HEARTBEAT>(Arena*);
-template<> ::service_discovery::MSG_RESP_ADD_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_RESP_ADD_INSTANCE>(Arena*);
+template<> ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>(Arena*);
 template<> ::service_discovery::MSG_RESP_HEARTBEAT* Arena::CreateMaybeMessage<::service_discovery::MSG_RESP_HEARTBEAT>(Arena*);
+template<> ::service_discovery::MSG_RESP_REGISTER_INSTANCE* Arena::CreateMaybeMessage<::service_discovery::MSG_RESP_REGISTER_INSTANCE>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace service_discovery {
 
@@ -333,23 +333,23 @@ class EndPointInstance :
 };
 // -------------------------------------------------------------------
 
-class MSG_REQUEST_ADD_INSTANCE :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_REQUEST_ADD_INSTANCE) */ {
+class MSG_REQUEST_REGISTER_INSTANCE :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_REQUEST_REGISTER_INSTANCE) */ {
  public:
-  MSG_REQUEST_ADD_INSTANCE();
-  virtual ~MSG_REQUEST_ADD_INSTANCE();
+  MSG_REQUEST_REGISTER_INSTANCE();
+  virtual ~MSG_REQUEST_REGISTER_INSTANCE();
 
-  MSG_REQUEST_ADD_INSTANCE(const MSG_REQUEST_ADD_INSTANCE& from);
-  MSG_REQUEST_ADD_INSTANCE(MSG_REQUEST_ADD_INSTANCE&& from) noexcept
-    : MSG_REQUEST_ADD_INSTANCE() {
+  MSG_REQUEST_REGISTER_INSTANCE(const MSG_REQUEST_REGISTER_INSTANCE& from);
+  MSG_REQUEST_REGISTER_INSTANCE(MSG_REQUEST_REGISTER_INSTANCE&& from) noexcept
+    : MSG_REQUEST_REGISTER_INSTANCE() {
     *this = ::std::move(from);
   }
 
-  inline MSG_REQUEST_ADD_INSTANCE& operator=(const MSG_REQUEST_ADD_INSTANCE& from) {
+  inline MSG_REQUEST_REGISTER_INSTANCE& operator=(const MSG_REQUEST_REGISTER_INSTANCE& from) {
     CopyFrom(from);
     return *this;
   }
-  inline MSG_REQUEST_ADD_INSTANCE& operator=(MSG_REQUEST_ADD_INSTANCE&& from) noexcept {
+  inline MSG_REQUEST_REGISTER_INSTANCE& operator=(MSG_REQUEST_REGISTER_INSTANCE&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -367,37 +367,37 @@ class MSG_REQUEST_ADD_INSTANCE :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const MSG_REQUEST_ADD_INSTANCE& default_instance();
+  static const MSG_REQUEST_REGISTER_INSTANCE& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MSG_REQUEST_ADD_INSTANCE* internal_default_instance() {
-    return reinterpret_cast<const MSG_REQUEST_ADD_INSTANCE*>(
-               &_MSG_REQUEST_ADD_INSTANCE_default_instance_);
+  static inline const MSG_REQUEST_REGISTER_INSTANCE* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_REGISTER_INSTANCE*>(
+               &_MSG_REQUEST_REGISTER_INSTANCE_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(MSG_REQUEST_ADD_INSTANCE& a, MSG_REQUEST_ADD_INSTANCE& b) {
+  friend void swap(MSG_REQUEST_REGISTER_INSTANCE& a, MSG_REQUEST_REGISTER_INSTANCE& b) {
     a.Swap(&b);
   }
-  inline void Swap(MSG_REQUEST_ADD_INSTANCE* other) {
+  inline void Swap(MSG_REQUEST_REGISTER_INSTANCE* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MSG_REQUEST_ADD_INSTANCE* New() const final {
-    return CreateMaybeMessage<MSG_REQUEST_ADD_INSTANCE>(nullptr);
+  inline MSG_REQUEST_REGISTER_INSTANCE* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_REGISTER_INSTANCE>(nullptr);
   }
 
-  MSG_REQUEST_ADD_INSTANCE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<MSG_REQUEST_ADD_INSTANCE>(arena);
+  MSG_REQUEST_REGISTER_INSTANCE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_REGISTER_INSTANCE>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const MSG_REQUEST_ADD_INSTANCE& from);
-  void MergeFrom(const MSG_REQUEST_ADD_INSTANCE& from);
+  void CopyFrom(const MSG_REQUEST_REGISTER_INSTANCE& from);
+  void MergeFrom(const MSG_REQUEST_REGISTER_INSTANCE& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -411,10 +411,10 @@ class MSG_REQUEST_ADD_INSTANCE :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MSG_REQUEST_ADD_INSTANCE* other);
+  void InternalSwap(MSG_REQUEST_REGISTER_INSTANCE* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "service_discovery.MSG_REQUEST_ADD_INSTANCE";
+    return "service_discovery.MSG_REQUEST_REGISTER_INSTANCE";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -473,7 +473,7 @@ class MSG_REQUEST_ADD_INSTANCE :
   ::service_discovery::EndPointInstance* _internal_mutable_instance();
   public:
 
-  // @@protoc_insertion_point(class_scope:service_discovery.MSG_REQUEST_ADD_INSTANCE)
+  // @@protoc_insertion_point(class_scope:service_discovery.MSG_REQUEST_REGISTER_INSTANCE)
  private:
   class _Internal;
 
@@ -485,23 +485,23 @@ class MSG_REQUEST_ADD_INSTANCE :
 };
 // -------------------------------------------------------------------
 
-class MSG_RESP_ADD_INSTANCE :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_RESP_ADD_INSTANCE) */ {
+class MSG_RESP_REGISTER_INSTANCE :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service_discovery.MSG_RESP_REGISTER_INSTANCE) */ {
  public:
-  MSG_RESP_ADD_INSTANCE();
-  virtual ~MSG_RESP_ADD_INSTANCE();
+  MSG_RESP_REGISTER_INSTANCE();
+  virtual ~MSG_RESP_REGISTER_INSTANCE();
 
-  MSG_RESP_ADD_INSTANCE(const MSG_RESP_ADD_INSTANCE& from);
-  MSG_RESP_ADD_INSTANCE(MSG_RESP_ADD_INSTANCE&& from) noexcept
-    : MSG_RESP_ADD_INSTANCE() {
+  MSG_RESP_REGISTER_INSTANCE(const MSG_RESP_REGISTER_INSTANCE& from);
+  MSG_RESP_REGISTER_INSTANCE(MSG_RESP_REGISTER_INSTANCE&& from) noexcept
+    : MSG_RESP_REGISTER_INSTANCE() {
     *this = ::std::move(from);
   }
 
-  inline MSG_RESP_ADD_INSTANCE& operator=(const MSG_RESP_ADD_INSTANCE& from) {
+  inline MSG_RESP_REGISTER_INSTANCE& operator=(const MSG_RESP_REGISTER_INSTANCE& from) {
     CopyFrom(from);
     return *this;
   }
-  inline MSG_RESP_ADD_INSTANCE& operator=(MSG_RESP_ADD_INSTANCE&& from) noexcept {
+  inline MSG_RESP_REGISTER_INSTANCE& operator=(MSG_RESP_REGISTER_INSTANCE&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -519,37 +519,37 @@ class MSG_RESP_ADD_INSTANCE :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const MSG_RESP_ADD_INSTANCE& default_instance();
+  static const MSG_RESP_REGISTER_INSTANCE& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MSG_RESP_ADD_INSTANCE* internal_default_instance() {
-    return reinterpret_cast<const MSG_RESP_ADD_INSTANCE*>(
-               &_MSG_RESP_ADD_INSTANCE_default_instance_);
+  static inline const MSG_RESP_REGISTER_INSTANCE* internal_default_instance() {
+    return reinterpret_cast<const MSG_RESP_REGISTER_INSTANCE*>(
+               &_MSG_RESP_REGISTER_INSTANCE_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(MSG_RESP_ADD_INSTANCE& a, MSG_RESP_ADD_INSTANCE& b) {
+  friend void swap(MSG_RESP_REGISTER_INSTANCE& a, MSG_RESP_REGISTER_INSTANCE& b) {
     a.Swap(&b);
   }
-  inline void Swap(MSG_RESP_ADD_INSTANCE* other) {
+  inline void Swap(MSG_RESP_REGISTER_INSTANCE* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MSG_RESP_ADD_INSTANCE* New() const final {
-    return CreateMaybeMessage<MSG_RESP_ADD_INSTANCE>(nullptr);
+  inline MSG_RESP_REGISTER_INSTANCE* New() const final {
+    return CreateMaybeMessage<MSG_RESP_REGISTER_INSTANCE>(nullptr);
   }
 
-  MSG_RESP_ADD_INSTANCE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<MSG_RESP_ADD_INSTANCE>(arena);
+  MSG_RESP_REGISTER_INSTANCE* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_RESP_REGISTER_INSTANCE>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const MSG_RESP_ADD_INSTANCE& from);
-  void MergeFrom(const MSG_RESP_ADD_INSTANCE& from);
+  void CopyFrom(const MSG_RESP_REGISTER_INSTANCE& from);
+  void MergeFrom(const MSG_RESP_REGISTER_INSTANCE& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -563,10 +563,10 @@ class MSG_RESP_ADD_INSTANCE :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MSG_RESP_ADD_INSTANCE* other);
+  void InternalSwap(MSG_RESP_REGISTER_INSTANCE* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "service_discovery.MSG_RESP_ADD_INSTANCE";
+    return "service_discovery.MSG_RESP_REGISTER_INSTANCE";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -602,7 +602,7 @@ class MSG_RESP_ADD_INSTANCE :
   void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:service_discovery.MSG_RESP_ADD_INSTANCE)
+  // @@protoc_insertion_point(class_scope:service_discovery.MSG_RESP_REGISTER_INSTANCE)
  private:
   class _Internal;
 
@@ -1295,38 +1295,38 @@ inline void EndPointInstance::set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// MSG_REQUEST_ADD_INSTANCE
+// MSG_REQUEST_REGISTER_INSTANCE
 
 // .service_discovery.EndPointInstance instance = 1;
-inline bool MSG_REQUEST_ADD_INSTANCE::_internal_has_instance() const {
+inline bool MSG_REQUEST_REGISTER_INSTANCE::_internal_has_instance() const {
   return this != internal_default_instance() && instance_ != nullptr;
 }
-inline bool MSG_REQUEST_ADD_INSTANCE::has_instance() const {
+inline bool MSG_REQUEST_REGISTER_INSTANCE::has_instance() const {
   return _internal_has_instance();
 }
-inline void MSG_REQUEST_ADD_INSTANCE::clear_instance() {
+inline void MSG_REQUEST_REGISTER_INSTANCE::clear_instance() {
   if (GetArenaNoVirtual() == nullptr && instance_ != nullptr) {
     delete instance_;
   }
   instance_ = nullptr;
 }
-inline const ::service_discovery::EndPointInstance& MSG_REQUEST_ADD_INSTANCE::_internal_instance() const {
+inline const ::service_discovery::EndPointInstance& MSG_REQUEST_REGISTER_INSTANCE::_internal_instance() const {
   const ::service_discovery::EndPointInstance* p = instance_;
   return p != nullptr ? *p : *reinterpret_cast<const ::service_discovery::EndPointInstance*>(
       &::service_discovery::_EndPointInstance_default_instance_);
 }
-inline const ::service_discovery::EndPointInstance& MSG_REQUEST_ADD_INSTANCE::instance() const {
-  // @@protoc_insertion_point(field_get:service_discovery.MSG_REQUEST_ADD_INSTANCE.instance)
+inline const ::service_discovery::EndPointInstance& MSG_REQUEST_REGISTER_INSTANCE::instance() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.instance)
   return _internal_instance();
 }
-inline ::service_discovery::EndPointInstance* MSG_REQUEST_ADD_INSTANCE::release_instance() {
-  // @@protoc_insertion_point(field_release:service_discovery.MSG_REQUEST_ADD_INSTANCE.instance)
+inline ::service_discovery::EndPointInstance* MSG_REQUEST_REGISTER_INSTANCE::release_instance() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.instance)
   
   ::service_discovery::EndPointInstance* temp = instance_;
   instance_ = nullptr;
   return temp;
 }
-inline ::service_discovery::EndPointInstance* MSG_REQUEST_ADD_INSTANCE::_internal_mutable_instance() {
+inline ::service_discovery::EndPointInstance* MSG_REQUEST_REGISTER_INSTANCE::_internal_mutable_instance() {
   
   if (instance_ == nullptr) {
     auto* p = CreateMaybeMessage<::service_discovery::EndPointInstance>(GetArenaNoVirtual());
@@ -1334,11 +1334,11 @@ inline ::service_discovery::EndPointInstance* MSG_REQUEST_ADD_INSTANCE::_interna
   }
   return instance_;
 }
-inline ::service_discovery::EndPointInstance* MSG_REQUEST_ADD_INSTANCE::mutable_instance() {
-  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_REQUEST_ADD_INSTANCE.instance)
+inline ::service_discovery::EndPointInstance* MSG_REQUEST_REGISTER_INSTANCE::mutable_instance() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.instance)
   return _internal_mutable_instance();
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_allocated_instance(::service_discovery::EndPointInstance* instance) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_allocated_instance(::service_discovery::EndPointInstance* instance) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
     delete instance_;
@@ -1354,91 +1354,91 @@ inline void MSG_REQUEST_ADD_INSTANCE::set_allocated_instance(::service_discovery
     
   }
   instance_ = instance;
-  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_ADD_INSTANCE.instance)
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.instance)
 }
 
 // string auth = 2;
-inline void MSG_REQUEST_ADD_INSTANCE::clear_auth() {
+inline void MSG_REQUEST_REGISTER_INSTANCE::clear_auth() {
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline const std::string& MSG_REQUEST_ADD_INSTANCE::auth() const {
-  // @@protoc_insertion_point(field_get:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+inline const std::string& MSG_REQUEST_REGISTER_INSTANCE::auth() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
   return _internal_auth();
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const std::string& value) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_auth(const std::string& value) {
   _internal_set_auth(value);
-  // @@protoc_insertion_point(field_set:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
 }
-inline std::string* MSG_REQUEST_ADD_INSTANCE::mutable_auth() {
-  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+inline std::string* MSG_REQUEST_REGISTER_INSTANCE::mutable_auth() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
   return _internal_mutable_auth();
 }
-inline const std::string& MSG_REQUEST_ADD_INSTANCE::_internal_auth() const {
+inline const std::string& MSG_REQUEST_REGISTER_INSTANCE::_internal_auth() const {
   return auth_.GetNoArena();
 }
-inline void MSG_REQUEST_ADD_INSTANCE::_internal_set_auth(const std::string& value) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::_internal_set_auth(const std::string& value) {
   
   auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_auth(std::string&& value) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_auth(std::string&& value) {
   
   auth_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const char* value) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_auth(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_auth(const char* value, size_t size) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_auth(const char* value, size_t size) {
   
   auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
 }
-inline std::string* MSG_REQUEST_ADD_INSTANCE::_internal_mutable_auth() {
+inline std::string* MSG_REQUEST_REGISTER_INSTANCE::_internal_mutable_auth() {
   
   return auth_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* MSG_REQUEST_ADD_INSTANCE::release_auth() {
-  // @@protoc_insertion_point(field_release:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+inline std::string* MSG_REQUEST_REGISTER_INSTANCE::release_auth() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
   
   return auth_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void MSG_REQUEST_ADD_INSTANCE::set_allocated_auth(std::string* auth) {
+inline void MSG_REQUEST_REGISTER_INSTANCE::set_allocated_auth(std::string* auth) {
   if (auth != nullptr) {
     
   } else {
     
   }
   auth_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), auth);
-  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_ADD_INSTANCE.auth)
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_REQUEST_REGISTER_INSTANCE.auth)
 }
 
 // -------------------------------------------------------------------
 
-// MSG_RESP_ADD_INSTANCE
+// MSG_RESP_REGISTER_INSTANCE
 
 // uint32 status_code = 1;
-inline void MSG_RESP_ADD_INSTANCE::clear_status_code() {
+inline void MSG_RESP_REGISTER_INSTANCE::clear_status_code() {
   status_code_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_ADD_INSTANCE::_internal_status_code() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_REGISTER_INSTANCE::_internal_status_code() const {
   return status_code_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_ADD_INSTANCE::status_code() const {
-  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESP_ADD_INSTANCE.status_code)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESP_REGISTER_INSTANCE::status_code() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESP_REGISTER_INSTANCE.status_code)
   return _internal_status_code();
 }
-inline void MSG_RESP_ADD_INSTANCE::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void MSG_RESP_REGISTER_INSTANCE::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   status_code_ = value;
 }
-inline void MSG_RESP_ADD_INSTANCE::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void MSG_RESP_REGISTER_INSTANCE::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_status_code(value);
-  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESP_ADD_INSTANCE.status_code)
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESP_REGISTER_INSTANCE.status_code)
 }
 
 // -------------------------------------------------------------------

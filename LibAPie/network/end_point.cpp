@@ -18,7 +18,7 @@ namespace APie{
 void SelfRegistration::init()
 {
 	//ServiceRegistry
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_ADD_INSTANCE, SelfRegistration::handleRespAddInstance, ::service_discovery::MSG_RESP_ADD_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESP_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance, ::service_discovery::MSG_RESP_REGISTER_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat, ::service_discovery::MSG_RESP_HEARTBEAT::default_instance());
 
@@ -101,7 +101,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
 	uint32_t db_id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","db_id" }, 0);
 
-	::service_discovery::MSG_REQUEST_ADD_INSTANCE request;
+	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
 	request.mutable_instance()->set_id(id);
 	request.mutable_instance()->set_auth(auth);
@@ -111,7 +111,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
-	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_ADD_INSTANCE, request);
+	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
 }
 
 void SelfRegistration::sendHeartbeat(APie::ClientProxy* ptrClient)
@@ -297,19 +297,19 @@ void EndPointMgr::clear()
 }
 
 
-void SelfRegistration::handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response)
+void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_REGISTER_INSTANCE& response)
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
 
 	if (response.status_code() != opcodes::StatusCode::SC_Ok)
 	{
-		ASYNC_PIE_LOG("SelfRegistration/handleRespAddInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 		return;
 	}
 	else
 	{
-		ASYNC_PIE_LOG("SelfRegistration/handleRespAddInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 		APie::CtxSingleton::get().getEndpoint()->setState(APie::SelfRegistration::Registered);
 	}
 }

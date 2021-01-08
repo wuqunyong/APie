@@ -24,13 +24,13 @@ message EndPointInstance
 }
 
 // 注册服务节点 register
-message MSG_REQUEST_ADD_INSTANCE
+message MSG_REQUEST_REGISTER_INSTANCE
 {
 	EndPointInstance instance = 1;
 	string auth = 2;
 }
 
-message MSG_RESP_ADD_INSTANCE
+message MSG_RESP_REGISTER_INSTANCE
 {
 	uint32 status_code = 1;
 }

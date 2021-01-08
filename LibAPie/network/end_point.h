@@ -43,7 +43,7 @@ namespace APie
 		void sendHeartbeat(APie::ClientProxy* ptrClient);
 
 	public:
-		static void handleRespAddInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_ADD_INSTANCE& response);
+		static void handleRespRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_REGISTER_INSTANCE& response);
 		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
 		static void handleRespHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_HEARTBEAT& response);
 		
