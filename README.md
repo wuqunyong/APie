@@ -1,12 +1,13 @@
 [# Welcome to APie!](https://github.com/wuqunyong/APie)
 
-
+# CentOS 7 x64安装
 ## 依赖
 
  - libevent
  - protobuf
  - yaml
  - lz4
+ - [cpp_redis](https://github.com/cpp-redis/cpp_redis)
 
 ## 安装依赖
 ```shell
@@ -46,7 +47,28 @@ make
 make test
 make install
 ```
-
+## 安装git
+```
+yum install -y git
+git --version
+```
+## 安装cpp_redis
+```
+# Clone the project
+git clone https://github.com/cpp-redis/cpp_redis.git
+# Go inside the project directory
+cd cpp_redis
+# Get tacopie submodule
+git submodule init && git submodule update
+# Create a build directory and move into it
+mkdir build && cd build
+# Generate the Makefile using CMake
+cmake .. -DCMAKE_BUILD_TYPE=Release
+# Build the library
+make
+# Install the library
+make install
+```
 ## 编译
 ```shell
 ./bootstrap.sh
