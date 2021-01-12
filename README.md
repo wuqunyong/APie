@@ -115,6 +115,8 @@ mysql_secure_installation
 mysqladmin -u root -p version
 ```
 
+# Windows安装
+
 ## 架构图
 ![架构图](https://github.com/wuqunyong/APie/blob/master/docs/topology.png)
 
