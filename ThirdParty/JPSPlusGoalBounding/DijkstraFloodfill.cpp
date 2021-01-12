@@ -37,6 +37,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
+#include <stdio.h>
+#include <string.h>
 #include "DijkstraFloodfill.h"
 
 #define ONLY_VISIT_REASONABLE_NEIGHBORS	// 3% to 17% speed-up
@@ -100,7 +102,8 @@ void DijkstraFloodfill::Flood(int r, int c)
 {
 	// Create 2048 entry function pointer lookup table
 	// This greatly speeds up processing by up to 40% by eliminating calculations and conditionals
-	#define CASE(x) &DijkstraFloodfill::Explore_ ## x ## ,
+	//#define CASE(x) &DijkstraFloodfill::Explore_ ## x ,
+	#define CASE(x) &DijkstraFloodfill::Explore_ ## x ,
 	static const DijkstraFloodFunctionPointer exploreDirectionsDijkstraFlood[2048] = 
 	{ 
 		#include "Cases.h"

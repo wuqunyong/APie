@@ -37,7 +37,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-#include "StdAfx.h"
+//#include "StdAfx.h"
 #include "SimpleUnsortedPriorityQueue.h"
 
 PathfindingNode* SimpleUnsortedPriorityQueue::Pop(void)

@@ -37,6 +37,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
+#include <stdlib.h>
+#include <algorithm>
+#include <string.h>
+
 #include "PrecomputeMap.h"
 #include "DijkstraFloodfill.h"
 #include "JPSPlus.h"

@@ -37,6 +37,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
+#include <stdio.h>
 #include <vector>
 #include "Entry.h"
 #include "PrecomputeMap.h"

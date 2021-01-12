@@ -36,6 +36,7 @@ EXTRA_DIST =  \
 	ServiceRegistry \
 	TestServer \
 	ThirdParty/http-parser \
+	ThirdParty/JPSPlusGoalBounding \
 	ThirdParty/influxdb-cpp \
 	ThirdParty/jsoncpp \
 	ThirdParty/tinyxml2 \

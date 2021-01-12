@@ -9,6 +9,7 @@ INCLUDES = -I /usr/local/include \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/includes \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/tacopie/includes \
 			-I $(top_srcdir)/ThirdParty/http-parser \
+			-I $(top_srcdir)/ThirdParty/JPSPlusGoalBounding \
 			-I $(top_srcdir)/ThirdParty/jsoncpp/include \
 			-I $(top_srcdir)/ThirdParty/tinyxml2 \
 			-I $(top_srcdir)/ThirdParty/influxdb-cpp \
@@ -103,7 +104,7 @@ apie_sources = \
 lib_LTLIBRARIES = libapie.la
 libapie_la_SOURCES = $(apie_sources)
 libapie_la_LIBADD = -lmysqlclient
-libapie_la_LDFLAGS = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl
+libapie_la_LDFLAGS = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -lcpp_redis -ltacopie
 
 
 # apie_module_ldflags = -L/usr/lib64/mysql/ -L/root/protobuf-3.11.4/build -L/root/yaml-cpp-master/build -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl

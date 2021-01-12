@@ -37,6 +37,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
+#include <stdlib.h>
+#include <algorithm>
+#include <string.h>
+
 #include "JPSPlus.h"
 
 // Ideal choice of fixed-point equivalent to 1.0 that can almost perfectly represent sqrt(2) and (sqrt(2) - 1) in whole numbers
@@ -164,7 +168,8 @@ bool JPSPlus::GetPath(xyLocJPS& s, xyLocJPS& g, std::vector<xyLocJPS> &path)
 PathStatus JPSPlus::SearchLoop(PathfindingNode* startNode)
 {
 	// Create 2048 entry function pointer lookup table
-	#define CASE(x) &JPSPlus::Explore_ ## x ## ,
+	//#define CASE(x) &JPSPlus::Explore_ ## x ## ,
+	#define CASE(x) &JPSPlus::Explore_ ## x ,
 	static const FunctionPointer exploreDirections[2048] = 
 	{ 
 		#include "Cases.h"
