@@ -117,13 +117,13 @@ mysqladmin -u root -p version
 
 # Windows安装
 
-## 架构图
+# 架构图
 ![架构图](https://github.com/wuqunyong/APie/blob/master/docs/topology.png)
 
-## 框架图
+# 框架图
  [nio reactor](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
 
-## Demo
+# Demo
 ```cpp
 #include <cstdlib>
 #include <string>
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 ```
 
 
-## MysqlORM Demo
+# MysqlORM Demo
 ```cpp
 namespace APie {
 
@@ -391,7 +391,7 @@ namespace APie {
 
 ```
 
-## 协议注册
+# 协议注册
 
  - GatewayServer(直连)
 ```
