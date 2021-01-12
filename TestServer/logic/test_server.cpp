@@ -188,7 +188,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 				{
 					std::string sValue = items.as_string();
 
-					data["power"] = std::stoll(sValue);
+					data["power"] = (uint64_t)std::stoll(sValue);
 					root[sKey] = data;
 				}
 			}
