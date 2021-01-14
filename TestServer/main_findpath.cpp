@@ -55,26 +55,6 @@ int world_map[ MAP_WIDTH * MAP_HEIGHT ] =
 
 };
 
-template <typename T>
-class AStarSearchImpl : public AStarSearch<T>
-{
-public:
-	AStarSearchImpl(Map* ptrMap, uint32_t maxNode) :
-		m_prtMap(ptrMap),
-		AStarSearch<T>(maxNode)
-	{
-
-	}
-
-	Map* getMap()
-	{
-		return m_prtMap;
-	}
-
-private:
-	Map* m_prtMap;
-};
-
 
 // map helper functions
 
@@ -106,14 +86,15 @@ class MapSearchNode
 public:
 	int x;	 // the (x,y) positions of the node
 	int y;	
+	Map* m_prtMap = nullptr;
 	
 	MapSearchNode() { x = y = 0; }
-	MapSearchNode( int px, int py ) { x=px; y=py; }
+	MapSearchNode(int px, int py, Map* ptrMap) { x = px; y = py; m_prtMap = ptrMap; }
 
 	float GoalDistanceEstimate( MapSearchNode &nodeGoal );
 	bool IsGoal( MapSearchNode &nodeGoal );
 	bool GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode *parent_node );
-	float GetCost(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode &successor );
+	float GetCost(MapSearchNode &successor );
 	bool IsSameState( MapSearchNode &rhs );
 
 	void PrintNodeInfo(); 
@@ -171,9 +152,6 @@ bool MapSearchNode::IsGoal( MapSearchNode &nodeGoal )
 // is specific to the application
 bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode *parent_node )
 {
-	AStarSearchImpl<MapSearchNode>* ptrImpt = static_cast<AStarSearchImpl<MapSearchNode>*>(astarsearch);
-
-
 	int parent_x = -1; 
 	int parent_y = -1; 
 
@@ -188,36 +166,36 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
 	// push each possible move except allowing the search to go backwards
 
-	if( (GetMap(ptrImpt->getMap(), x-1, y ) > kOutOfBounds2)
+	if( (GetMap(m_prtMap, x-1, y ) > kOutOfBounds2)
 		&& !((parent_x == x-1) && (parent_y == y))
 	  ) 
 	{
-		NewNode = MapSearchNode( x-1, y );
+		NewNode = MapSearchNode( x-1, y, m_prtMap);
 		astarsearch->AddSuccessor( NewNode );
 	}	
 
-	if( (GetMap(ptrImpt->getMap(), x, y-1 ) > kOutOfBounds2)
+	if( (GetMap(m_prtMap, x, y-1 ) > kOutOfBounds2)
 		&& !((parent_x == x) && (parent_y == y-1))
 	  ) 
 	{
-		NewNode = MapSearchNode( x, y-1 );
+		NewNode = MapSearchNode( x, y-1, m_prtMap);
 		astarsearch->AddSuccessor( NewNode );
 	}	
 
-	if( (GetMap(ptrImpt->getMap(), x+1, y ) > kOutOfBounds2)
+	if( (GetMap(m_prtMap, x+1, y ) > kOutOfBounds2)
 		&& !((parent_x == x+1) && (parent_y == y))
 	  ) 
 	{
-		NewNode = MapSearchNode( x+1, y );
+		NewNode = MapSearchNode( x+1, y, m_prtMap);
 		astarsearch->AddSuccessor( NewNode );
 	}	
 
 		
-	if( (GetMap(ptrImpt->getMap(), x, y+1 ) > kOutOfBounds2)
+	if( (GetMap(m_prtMap, x, y+1 ) > kOutOfBounds2)
 		&& !((parent_x == x) && (parent_y == y+1))
 		)
 	{
-		NewNode = MapSearchNode( x, y+1 );
+		NewNode = MapSearchNode( x, y+1, m_prtMap);
 		astarsearch->AddSuccessor( NewNode );
 	}	
 
@@ -228,12 +206,9 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 // of our map the answer is the map terrain value at this node since that is 
 // conceptually where we're moving
 
-float MapSearchNode::GetCost(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode &successor )
+float MapSearchNode::GetCost(MapSearchNode &successor )
 {
-	AStarSearchImpl<MapSearchNode>* ptrImpt = static_cast<AStarSearchImpl<MapSearchNode>*>(astarsearch);
-
-	return (float) GetMap(ptrImpt->getMap(), x, y );
-
+	return (float) GetMap(m_prtMap, x, y );
 }
 
 
@@ -255,7 +230,7 @@ int main( int argc, char *argv[] )
 	// Create an instance of the search class...
 
 
-	AStarSearchImpl<MapSearchNode> astarsearch(ptrMap, 10000);
+	AStarSearch<MapSearchNode> astarsearch(10000);
 
 	unsigned int SearchCount = 0;
 
@@ -267,14 +242,16 @@ int main( int argc, char *argv[] )
 		srand(time(NULL));
 
 		// Create a start state
-		MapSearchNode nodeStart;
-		nodeStart.x = rand()%ptrMap->GetMapWidth();
-		nodeStart.y = rand()%ptrMap->GetMapHeight();
+		uint32_t x = rand()%ptrMap->GetMapWidth();
+		uint32_t y = rand()%ptrMap->GetMapHeight();
+
+		MapSearchNode nodeStart(x, y, ptrMap);
 
 		// Define the goal state
-		MapSearchNode nodeEnd;
-		nodeEnd.x = rand()%ptrMap->GetMapWidth();
-		nodeEnd.y = rand()%ptrMap->GetMapWidth();
+		x = rand() % ptrMap->GetMapWidth();
+		y = rand() % ptrMap->GetMapHeight();
+
+		MapSearchNode nodeEnd(x, y, ptrMap);
 		
 		// Set Start and goal states
 		

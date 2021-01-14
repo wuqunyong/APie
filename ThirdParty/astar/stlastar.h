@@ -289,7 +289,7 @@ public: // methods
 			{
 
 				// 	The g value for this successor ...
-				float newg = n->g + n->m_UserState.GetCost( this, (*successor)->m_UserState );
+				float newg = n->g + n->m_UserState.GetCost( (*successor)->m_UserState );
 
 				// Now we need to find whether the node is on the open or closed lists
 				// If it is but the node that is already on them is better (lower g)
