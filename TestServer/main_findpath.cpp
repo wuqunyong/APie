@@ -152,6 +152,11 @@ bool MapSearchNode::IsGoal( MapSearchNode &nodeGoal )
 // is specific to the application
 bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode *parent_node )
 {
+	if (m_prtMap == nullptr)
+	{
+		return false;
+	}
+
 	int parent_x = -1; 
 	int parent_y = -1; 
 
