@@ -82,6 +82,9 @@
     <Filter Include="redis_driver">
       <UniqueIdentifier>{d98221eb-6553-4ade-8052-c770c14d833e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\astar">
+      <UniqueIdentifier>{2bb075f9-31cc-4381-b52e-a0b9a255f9d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -438,6 +441,12 @@
     </ClInclude>
     <ClInclude Include="redis_driver\redis_client.h">
       <Filter>redis_driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\astar\fsa.h">
+      <Filter>third_party\astar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\astar\stlastar.h">
+      <Filter>third_party\astar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

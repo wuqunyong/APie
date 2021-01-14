@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="test_client.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\test_server.cpp">
       <Filter>logic</Filter>
@@ -9,6 +8,8 @@
     <ClCompile Include="logic\mock_role.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="main_findpath.cpp" />
+    <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
@@ -18,6 +19,7 @@
     <ClInclude Include="logic\mock_role.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
