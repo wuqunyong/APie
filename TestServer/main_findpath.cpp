@@ -8,6 +8,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "apie.h"
+
 #include "stlastar.h" // See header for copyright and usage information
 #include "Map.h"
 
@@ -343,7 +345,7 @@ int main( int argc, char *argv[] )
 		MapSearchNode nodeEnd(x, y, ptrMap);
 		
 
-		auto result = BresenhamLine(nodeStart.x, nodeStart.y, nodeEnd.x, nodeEnd.y);
+		auto result = APie::Common::BresenhamLine(nodeStart.x, nodeStart.y, nodeEnd.x, nodeEnd.y);
 
 		// Set Start and goal states
 		

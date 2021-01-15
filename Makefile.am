@@ -35,6 +35,7 @@ EXTRA_DIST =  \
 	SceneServer \
 	ServiceRegistry \
 	TestServer \
+	ThirdParty/astar \
 	ThirdParty/http-parser \
 	ThirdParty/JPSPlusGoalBounding \
 	ThirdParty/influxdb-cpp \

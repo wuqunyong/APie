@@ -448,6 +448,9 @@
     <ClInclude Include="..\ThirdParty\astar\stlastar.h">
       <Filter>third_party\astar</Filter>
     </ClInclude>
+    <ClInclude Include="common\graphics_utility.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -692,6 +695,9 @@
     </ClCompile>
     <ClCompile Include="redis_driver\redis_client.cpp">
       <Filter>redis_driver</Filter>
+    </ClCompile>
+    <ClCompile Include="common\graphics_utility.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

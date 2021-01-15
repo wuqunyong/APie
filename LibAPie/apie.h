@@ -31,6 +31,7 @@
 
 #include "common/message_traits.h"
 #include "common/exception_trap.h"
+#include "common/graphics_utility.h"
 
 #include "filesystem/directory.h"
 

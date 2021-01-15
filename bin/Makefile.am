@@ -6,6 +6,7 @@ INCLUDES = -I /usr/local/include \
 			-I /usr/include/mysql \
 			-I /root/yaml-cpp-master/include \
 			-I /root/protobuf-3.11.4/src \
+			-I $(top_srcdir)/ThirdParty/astar \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/includes \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/tacopie/includes \
 			-I $(top_srcdir)/ThirdParty/http-parser \
@@ -52,6 +53,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/api/pubsub.cc  \
 	$(top_srcdir)/LibAPie/common/exception_trap.cpp  \
 	$(top_srcdir)/LibAPie/common/file.cc  \
+	$(top_srcdir)/LibAPie/common/graphics_utility.cc  \
 	$(top_srcdir)/LibAPie/common/string_utils.cpp  \
 	$(top_srcdir)/LibAPie/common/utility.cc  \
 	$(top_srcdir)/LibAPie/compressor/lz4_compressor_impl.cc  \
