@@ -11,6 +11,8 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
+
 
 
 namespace APie
@@ -84,5 +86,39 @@ std::string& ReplaceStrAll(std::string& str, const std::string& old_value, const
 char* URLDecode(const char *in);
 
 std::string randomStr(int32_t iCount);
+
+
+template <typename S, typename T>
+struct is_streamable {
+	template <typename SS, typename TT>
+	static auto test(int)
+		-> decltype(std::declval<SS&>() << std::declval<TT>(), std::true_type());
+
+	template <typename, typename>
+	static auto test(...)->std::false_type;
+
+	static const bool value = decltype(test<S, T>(0))::value;
+};
+
+template<typename Key, bool Streamable>
+struct streamable_to_string {
+	static std::string impl(const Key& key) {
+		std::stringstream ss;
+		ss << key;
+		return ss.str();
+	}
+};
+
+template<typename Key>
+struct streamable_to_string<Key, false> {
+	static std::string impl(const Key&) {
+		return "undefined";
+	}
+};
+
+template<typename Key>
+std::string key_to_string(const Key& key) {
+	return streamable_to_string<Key, is_streamable<std::stringstream, Key>::value>().impl(key);
+}
 
 }  // namespace APie

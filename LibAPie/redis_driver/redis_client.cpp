@@ -103,6 +103,7 @@ namespace APie {
 				if (shared_this->getPassword().empty())
 				{
 					shared_this->setState(RS_Established);
+					shared_this->getCb()(shared_this);
 					return;
 				}
 
@@ -113,6 +114,8 @@ namespace APie {
 						std::stringstream ss;
 						ss << "host:" << host << "|port:" << port << "|auth shared_this null";
 						ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+
+						PANIC_ABORT(ss.str().c_str());
 						return;
 					}
 
@@ -136,6 +139,7 @@ namespace APie {
 
 						shared_this->setAuth(RA_Ok);
 						shared_this->setState(RS_Established);
+						shared_this->getCb()(shared_this);
 					}
 					else
 					{

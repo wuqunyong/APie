@@ -71,6 +71,12 @@ namespace APie {
 		RedisStatus getState();
 		void setState(RedisStatus status);
 
+		friend std::ostream& operator<<(std::ostream& out, const RedisClient& client) {
+			out  << "{" << client.m_host << std::string(":") << client.m_port << std::string(":") << client.m_password 
+				<< std::string(":") << client.m_status << std::string(":") << client.m_auth << "}";
+			return out;
+		}
+
 	private:
 		Key m_key;
 		std::string m_host;

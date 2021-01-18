@@ -302,7 +302,7 @@ void Ctx::init(const std::string& configFile)
 
 			auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
 				std::stringstream ss;
-				ss << "status:" << (uint32_t)ptrClient->getState();
+				ss << key_to_string(*ptrClient);
 				ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 			};
 			auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
