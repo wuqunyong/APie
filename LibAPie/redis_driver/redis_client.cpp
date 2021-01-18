@@ -162,6 +162,7 @@ namespace APie {
 			case cpp_redis::connect_state::stopped:
 			{
 				shared_this->setState(RS_Closed);
+				shared_this->setAuth(RA_None);
 				break;
 			}
 			default:
