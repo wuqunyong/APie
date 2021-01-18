@@ -28,7 +28,7 @@ namespace APie {
 			ss << "host:" << m_host << "|port:" << m_port << "|is_reconnecting:" << this->client().is_reconnecting();
 			ASYNC_PIE_LOG("Redis/ReconnectTimer", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
 
-			if (this->getState() == RS_Disconnect)
+			if (this->getState() == RS_Closed)
 			{
 				try {
 					auto ptrCb = this->getAdapterCb();
@@ -53,6 +53,11 @@ namespace APie {
 		ASYNC_PIE_LOG("Redis/RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, "destructor|key:%d-%d", (uint32_t)std::get<0>(m_key), std::get<1>(m_key));
 
 		this->disableReconnectTimer();
+
+		if (m_client.is_connected())
+		{
+			m_client.disconnect();
+		}
 	}
 
 	void RedisClient::start()
@@ -72,7 +77,7 @@ namespace APie {
 			if (shared_this == nullptr) {
 				std::stringstream ss;
 				ss << "host:" << host << "|port:" << port << "|shared_this null";
-				ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+				PANIC_ABORT("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 				return;
 			}
 
@@ -80,8 +85,6 @@ namespace APie {
 			std::stringstream ss;
 			ss << "host:" << host << "|port:" << port << "|status:" << (uint32_t)status;
 			ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
-
-			shared_this->getCb()(host, port, status);
 
 			switch (status)
 			{
@@ -95,10 +98,11 @@ namespace APie {
 				break;
 			case cpp_redis::connect_state::ok:
 			{
-				shared_this->setState(RS_Establish);
+				shared_this->setState(RS_Auth);
 
 				if (shared_this->getPassword().empty())
 				{
+					shared_this->setState(RS_Established);
 					return;
 				}
 
@@ -114,7 +118,7 @@ namespace APie {
 
 					if (reply.is_error())
 					{
-						shared_this->setAuth(3);
+						shared_this->setAuth(RA_Error);
 
 						std::stringstream ss;
 						ss << "redis reply:" << reply.error();
@@ -124,17 +128,31 @@ namespace APie {
 						return;
 					}
 
-					if (reply.is_bulk_string())
+					if (reply.is_bulk_string() && reply.as_string() == "OK")
 					{
 						std::stringstream ss;
 						ss << "redis reply:" << reply.as_string();
 						ASYNC_PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+
+						shared_this->setAuth(RA_Ok);
+						shared_this->setState(RS_Established);
 					}
-					shared_this->setAuth(2);
+					else
+					{
+						std::stringstream ss;
+						ss << "redis reply auth|type:" << (uint32_t)reply.get_type();
+						if (reply.is_bulk_string())
+						{
+							ss << "string Value:" << reply.as_string();
+						}
+						PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+
+						PANIC_ABORT(ss.str().c_str());
+					}
 				};
 				shared_this->client().auth(shared_this->getPassword(), ptrAuth);
 				shared_this->client().commit();
-				shared_this->setAuth(1);
+				shared_this->setAuth(RA_Doing);
 				break;
 			}
 			case cpp_redis::connect_state::failed:
@@ -143,12 +161,14 @@ namespace APie {
 				break;
 			case cpp_redis::connect_state::stopped:
 			{
-				shared_this->setState(RS_Disconnect);
+				shared_this->setState(RS_Closed);
 				break;
 			}
 			default:
 				break;
 			}
+
+			shared_this->getCb()(host, port, status);
 		};
 
 		m_adapterCb = ptrCb;
@@ -201,7 +221,7 @@ namespace APie {
 		return m_key;
 	}
 
-	void RedisClient::setAuth(uint32_t value)
+	void RedisClient::setAuth(RedisAuth value)
 	{
 		m_auth = value;
 	}

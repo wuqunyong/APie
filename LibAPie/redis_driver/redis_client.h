@@ -33,8 +33,17 @@ namespace APie {
 		{
 			RS_None = 0,
 			RS_Connect = 1,
-			RS_Establish = 2,
-			RS_Disconnect = 3,
+			RS_Auth = 2,
+			RS_Established = 3,
+			RS_Closed = 4,
+		};
+
+		enum RedisAuth
+		{
+			RA_None = 0,  // 
+			RA_Doing = 1, // 进行认证
+			RA_Ok = 2,    // 认证错误
+			RA_Error = 3, // 认证成功
 		};
 
 		using Key = std::tuple<uint32_t, uint32_t>;
@@ -54,7 +63,7 @@ namespace APie {
 		Key getKey();
 		
 		
-		void setAuth(uint32_t value);
+		void setAuth(RedisAuth value);
 		void addReconnectTimer(uint64_t interval);
 		void disableReconnectTimer();
 
@@ -70,7 +79,7 @@ namespace APie {
 		Cb m_adapterCb;
 		
 		uint32_t m_started = 0;
-		uint32_t m_auth = 0;
+		RedisAuth m_auth = RA_None;
 		RedisStatus m_status = RS_None;
 
 		cpp_redis::client m_client;
