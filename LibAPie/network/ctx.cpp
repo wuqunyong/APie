@@ -300,9 +300,9 @@ void Ctx::init(const std::string& configFile)
 
 			auto key = std::make_tuple(iType, iId);
 
-			auto ptrCb = [](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
+			auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
 				std::stringstream ss;
-				ss << "host:" << host << "|port:" << port << "|status:" << (uint32_t)status;
+				ss << "status:" << (uint32_t)ptrClient->getState();
 				ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 			};
 			auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);

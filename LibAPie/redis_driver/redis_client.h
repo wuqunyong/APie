@@ -42,12 +42,13 @@ namespace APie {
 		{
 			RA_None = 0,  // 
 			RA_Doing = 1, // 进行认证
-			RA_Ok = 2,    // 认证错误
-			RA_Error = 3, // 认证成功
+			RA_Ok = 2,    // 认证成功
+			RA_Error = 3, // 认证失败
 		};
 
 		using Key = std::tuple<uint32_t, uint32_t>;
-		using Cb = std::function<void(const std::string &host, std::size_t port, cpp_redis::connect_state status)>;
+		using Cb = std::function<void(std::shared_ptr<RedisClient> ptrClient)>;
+		using AdapterCb = std::function<void(const std::string &host, std::size_t port, cpp_redis::connect_state status)>;
 
 		RedisClient(Key key, const std::string &host, std::size_t port, const std::string &password, Cb cb);
 		~RedisClient();
@@ -57,7 +58,7 @@ namespace APie {
 		cpp_redis::client& client();
 
 		Cb& getCb();
-		Cb& getAdapterCb();
+		AdapterCb& getAdapterCb();
 
 		std::string& getPassword();
 		Key getKey();
@@ -75,8 +76,9 @@ namespace APie {
 		std::string m_host;
 		std::size_t m_port;
 		std::string m_password;
+
 		Cb m_cb;
-		Cb m_adapterCb;
+		AdapterCb m_adapterCb;
 		
 		uint32_t m_started = 0;
 		RedisAuth m_auth = RA_None;

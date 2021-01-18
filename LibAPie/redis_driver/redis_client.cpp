@@ -168,7 +168,7 @@ namespace APie {
 				break;
 			}
 
-			shared_this->getCb()(host, port, status);
+			shared_this->getCb()(shared_this);
 		};
 
 		m_adapterCb = ptrCb;
@@ -206,7 +206,7 @@ namespace APie {
 		return m_cb;
 	}
 
-	RedisClient::Cb& RedisClient::getAdapterCb()
+	RedisClient::AdapterCb& RedisClient::getAdapterCb()
 	{
 		return m_adapterCb;
 	}
