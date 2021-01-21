@@ -216,7 +216,9 @@ void Ctx::init(const std::string& configFile)
 		enableCoreFiles();
 
 		uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
+		uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
 		APie::CtxSingleton::get().setServerId(id);
+		APie::CtxSingleton::get().setServerType(type);
 
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
 
@@ -692,6 +694,16 @@ uint32_t Ctx::getServerId()
 void Ctx::setServerId(uint32_t id)
 {
 	m_server_id = id;
+}
+
+uint32_t Ctx::getServerType()
+{
+	return m_server_type;
+}
+
+void Ctx::setServerType(uint32_t type)
+{
+	m_server_type = type;
 }
 
 std::string Ctx::logName()

@@ -4,11 +4,21 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> ServiceRegistry::init()
 {
+	auto type = APie::CtxSingleton::get().getServerType();
+
+	std::set<uint32_t> validType;
+	validType.insert(common::EPT_Service_Registry);
+
+	if (validType.count(type) == 0)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
+
 	// CMD
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistry::onLogicCommnad);
 
 	LogicCmdHandlerSingleton::get().init();
-
+	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistry::onShowProvider);
 
 	// RPC
 	APie::RPC::rpcInit();
@@ -52,6 +62,19 @@ void ServiceRegistry::exit()
 	this->disableUpdateTimer();
 }
 
+void ServiceRegistry::onShowProvider(::pubsub::LOGIC_CMD& cmd)
+{
+	std::stringstream ss;
+	for (const auto& items : ServiceRegistrySingleton::get().registered())
+	{
+		ss << "--> " << "addTime:" << items.second.addTime << "|modifiedTime:" << items.second.modifyTime << "|node:" << items.second.instance.ShortDebugString() << std::endl;
+	}
+
+	ASYNC_PIE_LOG("show_provider:\n%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	std::cout << "show_provider:\n" << ss.str() << std::flush;
+
+}
+
 void ServiceRegistry::addUpdateTimer(uint64_t interval)
 {
 	this->m_updateTimer->enableTimer(std::chrono::milliseconds(interval));
@@ -60,6 +83,11 @@ void ServiceRegistry::addUpdateTimer(uint64_t interval)
 void ServiceRegistry::disableUpdateTimer()
 {
 	this->m_updateTimer->disableTimer();
+}
+
+std::map<uint64_t, RegisteredEndPoint>& ServiceRegistry::registered()
+{
+	return m_registered;
 }
 
 void ServiceRegistry::update()

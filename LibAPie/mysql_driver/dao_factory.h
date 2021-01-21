@@ -48,6 +48,7 @@ namespace APie {
 		DAOFactory* getDAOFactory(DeclarativeBase::DBType type);
 
 	private:
+		DAOFactory account;
 		DAOFactory role;
 	};
 

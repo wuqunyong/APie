@@ -451,6 +451,9 @@
     <ClInclude Include="common\graphics_utility.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\role_server_msg.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -698,6 +701,9 @@
     </ClCompile>
     <ClCompile Include="common\graphics_utility.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\role_server_msg.pb.cc">
+      <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

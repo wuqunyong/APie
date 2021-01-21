@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\SharedDir\dao\model_account.h" />
     <ClInclude Include="logic\login_mgr.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>

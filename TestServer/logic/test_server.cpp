@@ -1,5 +1,7 @@
 #include "test_server.h"
 #include "../../PBMsg/login_msg.pb.h"
+#include "../../PBMsg/role_server_msg.pb.h"
+
 #include "../../LibAPie/redis_driver/redis_client.h"
 #include "json/json.h"
 
@@ -8,6 +10,16 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> TestServerMgr::init()
 {
+	auto type = APie::CtxSingleton::get().getServerType();
+
+	std::set<uint32_t> validType;
+	validType.insert(common::EPT_Test_Client);
+
+	if (validType.count(type) == 0)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
+
 	APie::RPC::rpcInit();
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::onLogicCommnad);
@@ -143,9 +155,10 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 			return;
 		}
 
-		std::string sTable = command.params()[0];
-
 		auto key = std::make_tuple(1, 1);
+
+		std::string sTable = "hs_player_summary";  //command.params()[0];
+		std::string field = command.params()[0];
 
 		auto redisClient = RedisClientFactorySingleton::get().getClient(key);
 		if (redisClient == nullptr)
@@ -164,52 +177,28 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 				return;
 			}
 
-			if (!reply.is_array())
+
+			if (reply.is_null())
 			{
 				return;
 			}
 
-			Json::Value root;
-
-			Json::Value data;
-
-			bool bKey = false;
-			std::string sKey;
-			for (const auto& items : reply.as_array())
-			{
-				bKey = !bKey;
-				
-				if (bKey)
-				{
-					data.clear();
-					sKey = items.as_string();
-				}
-				else
-				{
-					std::string sValue = items.as_string();
-
-					data["power"] = (uint64_t)std::stoll(sValue);
-					root[sKey] = data;
-				}
-			}
-
-			Json::StreamWriterBuilder builder;
-			const std::string json_file = Json::writeString(builder, root);
-			std::cout << json_file << std::endl;
-
-			FILE * pFile = fopen(sTable.c_str(), "a");
-			if (!pFile)
+			if (!reply.is_bulk_string())
 			{
 				return;
 			}
 
-			//fprintf(pFile, "%s", json_file.c_str());
-			fwrite(json_file.data(), sizeof(char), json_file.length(), pFile);
-			fflush(pFile);
-			fclose(pFile);
+			::role_msg::ROLE_SUMMARY summary;
 
+			std::string content = reply.as_string();
+			if (!summary.ParseFromString(content))
+			{
+				return;
+			}
+
+			std::cout << summary.DebugString() << std::endl;
 		};
-		redisClient->client().hgetall(sTable, cb);
+		redisClient->client().hget(sTable, field, cb);
 		redisClient->client().commit();
 
 

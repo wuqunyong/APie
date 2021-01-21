@@ -7,5 +7,7 @@ protoc opcodes.proto --cpp_out=./
 protoc service_discovery.proto --cpp_out=./
 protoc route_register.proto --cpp_out=./
 protoc common.proto --cpp_out=./
+protoc role_server_msg.proto --cpp_out=./
+
 
 pause

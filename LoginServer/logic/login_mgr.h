@@ -10,6 +10,8 @@
 
 #include "apie.h"
 
+#include "../../PBMsg/login_msg.pb.h"
+
 
 namespace APie {
 
@@ -22,6 +24,14 @@ namespace APie {
 		void exit();
 
 	public:
+		// CMD
+		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+
+		// PubSub
+		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+
+		// CLIENT OPCODE
+		static void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request);
 
 	private:
 	};

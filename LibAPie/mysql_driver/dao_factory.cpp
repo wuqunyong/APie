@@ -63,6 +63,10 @@ bool DAOFactoryType::registerRequiredTable(DeclarativeBase::DBType type, const s
 {
 	switch (type)
 	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		return DAOFactoryTypeSingleton::get().account.registerFactory(name, funcCreate);
+	}
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return DAOFactoryTypeSingleton::get().role.registerFactory(name, funcCreate);
@@ -80,6 +84,10 @@ std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::
 {
 	switch (type)
 	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		return std::make_optional(this->account.getMethods());
+	}
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return std::make_optional(this->role.getMethods());
@@ -94,6 +102,10 @@ std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DeclarativeBase::
 {
 	switch (type)
 	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		return this->account.create(name);
+	}
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return this->role.create(name);
@@ -109,6 +121,10 @@ bool DAOFactoryType::addLoadedTable(DeclarativeBase::DBType type, const std::str
 {
 	switch (type)
 	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		return this->account.addTable(name, table);
+	}
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return this->role.addTable(name, table);
@@ -124,6 +140,10 @@ DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 {
 	switch (type)
 	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		return &account;
+	}
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return &role;
@@ -210,7 +230,7 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 				return;
 			}
 
-			DAOFactoryTypeSingleton::get().addLoadedTable(DeclarativeBase::DBType::DBT_Role, tableData.first, table);
+			DAOFactoryTypeSingleton::get().addLoadedTable(dbType, tableData.first, table);
 		}
 
 		cb(true, response.error_info(), iCallCount);

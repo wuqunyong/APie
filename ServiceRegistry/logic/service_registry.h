@@ -34,6 +34,7 @@ namespace APie {
 		// CMD
 		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
 
+		static void onShowProvider(::pubsub::LOGIC_CMD& cmd);
 
 		// Inner Protocols
 		static void handleRequestRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE& request);
@@ -54,6 +55,8 @@ namespace APie {
 
 		void addUpdateTimer(uint64_t interval);
 		void disableUpdateTimer();
+
+		std::map<uint64_t, RegisteredEndPoint>& registered();
 
 	public:
 		std::map<uint64_t, RegisteredEndPoint> m_registered;

@@ -40,7 +40,8 @@ public:
 	enum class DBType
 	{
 		DBT_None = 0,
-		DBT_Role = 1,
+		DBT_Account = 1,
+		DBT_Role = 2,
 	};
 
 	//virtual uint32_t blockSize() = 0;

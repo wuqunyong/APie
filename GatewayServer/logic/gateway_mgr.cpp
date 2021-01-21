@@ -10,6 +10,16 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> GatewayMgr::init()
 {
+	auto type = APie::CtxSingleton::get().getServerType();
+
+	std::set<uint32_t> validType;
+	validType.insert(common::EPT_Gateway_Server);
+
+	if (validType.count(type) == 0)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
+
 	// CMD
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgr::onLogicCommnad);
 
@@ -39,12 +49,14 @@ std::tuple<uint32_t, std::string> GatewayMgr::start()
 	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(dbType);
 	if (!requiredTableOpt.has_value())
 	{
+		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+
 		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 	}
 
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	std::vector<std::string> tables;
@@ -257,7 +269,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		*ptrAdd = tableName;
 
 		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
+		server.set_type(common::EPT_DB_ROLE_Proxy);
 		server.set_id(1);
 
 		auto rpcCB = [tableName, userId](const rpc_msg::STATUS& status, const std::string& replyData)
@@ -297,7 +309,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 			queryRequest = user.generateQuery();
 
 			::rpc_msg::CHANNEL server;
-			server.set_type(common::EPT_DB_Proxy);
+			server.set_type(common::EPT_DB_ROLE_Proxy);
 			server.set_id(1);
 
 			auto queryCB = [user](const rpc_msg::STATUS& status, const std::string& replyData) mutable
@@ -370,7 +382,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		mysql_proxy_msg::MysqlInsertRequest insertRequest = loadedUser.generateInsert();
 
 		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
+		server.set_type(common::EPT_DB_ROLE_Proxy);
 		server.set_id(1);
 
 		auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
@@ -422,7 +434,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		mysql_proxy_msg::MysqlUpdateRequest insertRequest = loadedUser.generateUpdate();
 
 		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
+		server.set_type(common::EPT_DB_ROLE_Proxy);
 		server.set_id(1);
 
 		auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
@@ -473,7 +485,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		mysql_proxy_msg::MysqlDeleteRequest insertRequest = loadedUser.generateDelete();
 
 		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
+		server.set_type(common::EPT_DB_ROLE_Proxy);
 		server.set_id(1);
 
 		auto insertCB = [](const rpc_msg::STATUS& status, const std::string& replyData) mutable
@@ -506,7 +518,7 @@ void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg
 		std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods;
 
 		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
+		server.set_type(common::EPT_DB_ROLE_Proxy);
 		server.set_id(1);
 
 		for (const auto& items : command.params())
@@ -554,7 +566,7 @@ void GatewayMgr::onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
@@ -588,7 +600,7 @@ void GatewayMgr::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	user.markFilter({ 1, 2 });
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser>& userList) {
@@ -622,7 +634,7 @@ void GatewayMgr::onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	user.markDirty({ 2 });
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
@@ -655,7 +667,7 @@ void GatewayMgr::onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) {
@@ -685,7 +697,7 @@ void GatewayMgr::onMysqlDeleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
@@ -714,7 +726,7 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 	}
 
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_Proxy);
+	server.set_type(common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
 	auto cb = [iSerialNum, request](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {

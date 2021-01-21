@@ -1,13 +1,13 @@
 identify:
-  type: 7
+  type: 8
   id: 1
 io_threads: 2
 clients:
     socket_address:
       address: "127.0.0.1"
-      port_value: 14007
+      port_value: 16007
       type: 1
-      mask_flag : 1
+      mask_flag : 0
 log:
   merge: true
   level: 0
@@ -23,6 +23,7 @@ redis_clients:
 - client:
     type: 1
     id: 1
-    host: "127.0.0.1"
+    #host: "10.0.16.59"
+    host: "10.0.16.165"
     port: 6379
     passwd: "" 

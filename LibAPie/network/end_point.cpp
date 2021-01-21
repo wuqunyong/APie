@@ -39,10 +39,11 @@ void SelfRegistration::registerEndpoint()
 
 	std::set<uint32_t> needRegister;
 	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
-	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
-	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
-	needRegister.insert(::common::EndPointType::EPT_DB_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
+	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
+	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
+	needRegister.insert(::common::EndPointType::EPT_DB_ACCOUNT_Proxy);
+	needRegister.insert(::common::EndPointType::EPT_DB_ROLE_Proxy);
 
 	if (needRegister.count(identityType) == 0)
 	{

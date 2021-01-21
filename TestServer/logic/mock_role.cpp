@@ -30,9 +30,13 @@ void MockRole::setUp()
 	m_bInit = true;
 	TestServerMgrSingleton::get().addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
 
+	this->addHandler("account_login", std::bind(&MockRole::handleAccountLogin, this, std::placeholders::_1));
 	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
 	this->addHandler("echo", std::bind(&MockRole::handleEcho, this, std::placeholders::_1));
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
+
+
+	this->addResponseHandler(::opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
 
 	this->processCmd();
 }
@@ -66,6 +70,7 @@ void MockRole::start()
 	};
 	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
 	m_clientProxy->addReconnectTimer(1000);
+	m_target = CT_Login;
 
 	auto cmdCb = [ptrSelf]() mutable {
 		auto ptrShared = ptrSelf.lock();
@@ -86,17 +91,17 @@ uint64_t MockRole::getRoleId()
 
 void MockRole::processCmd()
 {
+	if (!m_bInit)
+	{
+		return;
+	}
+
 	if (!m_clientProxy)
 	{
 		return;
 	}
 
 	if (!m_clientProxy->isConnectted())
-	{
-		return;
-	}
-
-	if (!m_bInit)
 	{
 		return;
 	}
@@ -108,6 +113,11 @@ void MockRole::processCmd()
 
 	while (m_iCurIndex < m_configCmd.size())
 	{
+		if (m_bPauseProcess)
+		{
+			break;
+		}
+
 		auto iOldIndex = m_iCurIndex;
 
 		auto& msg = m_configCmd[m_iCurIndex];
@@ -182,8 +192,44 @@ MockRole::HandlerCb MockRole::findHandler(const std::string& name)
 	return findIte->second;
 }
 
+bool MockRole::addResponseHandler(uint32_t opcodes, HandleResponseCB cb)
+{
+	auto findIte = m_responseHandler.find(opcodes);
+	if (findIte != m_responseHandler.end())
+	{
+		return false;
+	}
+
+	m_responseHandler[opcodes] = cb;
+	return true;
+}
+
+MockRole::HandleResponseCB MockRole::findResponseHandler(uint32_t opcodes)
+{
+	auto findIte = m_responseHandler.find(opcodes);
+	if (findIte == m_responseHandler.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+void MockRole::setPauseProcess(bool flag)
+{
+	m_bPauseProcess = false;
+}
+
 void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
+	auto findIte = findResponseHandler(opcodes);
+	if (findIte != nullptr)
+	{
+		findIte(this, serialNum, opcodes, msg);
+		return;
+	}
+
+
 	std::string sData;
 
 	switch (opcodes)
@@ -233,6 +279,14 @@ std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
 	return std::make_shared<MockRole>(iRoleId);
 }
 
+void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
+{
+	::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L request;
+	request.set_account_id(m_iRoleId);
+
+	this->sendMsg(::opcodes::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
+}
+
 void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 {
 	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
@@ -255,6 +309,33 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
 	TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+}
+
+void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	std::stringstream ss;
+	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
+	
+
+	::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		return;
+	}
+
+	ss << "data|" << response.ShortDebugString();
+	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+	std::string ip = response.ip();
+	uint32_t port = response.port();
+
+	this->m_clientProxy->onActiveClose();
+	this->m_clientProxy->resetConnect(ip, port, APie::ProtocolType::PT_PB);
+	this->m_clientProxy->reconnect();
 }
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)

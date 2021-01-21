@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package role_msg;
+
+//-------------服务器内部通信-------------------------------
+
+// 玩家摘要信息
+message ROLE_SUMMARY
+{
+	uint64 user_id = 1;					// 玩家ID
+	string name = 2;					// 玩家名
+	int32 level = 3;					// 账号等级
+	uint64 fighting_power = 4;			// 战斗力	
+	string face = 5;					// 头像
+	bool online_flag = 6;               // 是否在线：false(不在线)，true(在线)
+	uint64 guild_id = 7;                // 联盟ID，ID==0时，未加入联盟
+	string guild_name = 8;              // 联盟名字
+	int32 language_type = 9;		    // 语言类型
+	uint64 hero_power = 10;             // 英雄战力
+	uint64 soldier_power = 11;          // 士兵战力
+	uint64 building_power = 12;         // 建筑战力
+	uint32 guild_rank = 13;             // 联盟职位
+	uint64 survey_expire_time = 14;     // 调查邮件冷却到期时间
+	int32 power_rank = 15;			    // 战力排行
+	int32 best_power_rank = 16;		    // 历史最佳战力排行
+	bool record_power_rank = 17;        // 是否设置过战力排行
+	int32 guild_server_id = 18;		    // 联盟服对应服务ID
+	int32 guild_language = 19;		    // 联盟语言
+	string guild_short_name = 20;		// 联盟缩写名字
+	uint32 city_center_level = 21;		// 主城等级
+	uint64 loot_defense_time = 22;      // 掠夺防御时间
+	uint64 loot_attack_time = 23;       // 掠夺攻击时间
+
+	uint64 loot_lock_owner = 24;        // 被那个玩家锁定
+	uint64 loot_lock_at = 25;           // 锁定时间
+
+	repeated uint64 loot_history = 26;  // 掠夺历史记录
+
+	uint32 online_server_type = 27;  // 在线服务器类型
+	uint32 online_server_id = 28;  // 在线服id
+
+	uint32 fantasia_chapter = 29;       // 试炼幻境，完成章节(章*1000+关)
+	uint64 fantasia_chapter_pass = 30;  // 试炼幻境，第一次通关时间
+	uint64 register_time = 31;          // 注册时间
+	int32 season_point_peak	= 32;		// 巅峰对决赛季积分(匹配离线玩家显示用)
+	uint32 loot_win_times = 33;         // 掠夺胜利次数
+	uint64 excluded_power = 34;			// 去除共鸣水晶战斗力	
+	uint32 login_main_logic_id = 35;    // 登录的主逻辑ID 
+	uint64 login_time = 36;             // 登录时间
+
+
+}
+
+
+
+message AGENT_SEQ_ID
+{
+	uint64 seq_id = 1;
+}

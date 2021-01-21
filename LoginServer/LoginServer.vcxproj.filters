@@ -5,6 +5,9 @@
     <ClInclude Include="logic\login_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\SharedDir\dao\model_account.h">
+      <Filter>SharedDir\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -16,6 +19,12 @@
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{48ecb0b7-fcb7-4067-9052-4ca376e37ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir">
+      <UniqueIdentifier>{996697be-5657-49df-8186-9f67dd5d7b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedDir\dao">
+      <UniqueIdentifier>{8a2f3ea7-ced2-4fe2-82f1-8079bbce50f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

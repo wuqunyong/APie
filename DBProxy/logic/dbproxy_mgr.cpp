@@ -2,13 +2,26 @@
 
 #include "table_cache_mgr.h"
 
-#include "../../SharedDir/dao/model_user.h"
 #include "../../LibAPie/rpc/server/rpc_server.h"
+
+#include "../../SharedDir/dao/model_account.h"
+#include "../../SharedDir/dao/model_user.h"
 
 namespace APie {
 
 std::tuple<uint32_t, std::string> DBProxyMgr::init()
 {
+	auto type = APie::CtxSingleton::get().getServerType();
+
+	std::set<uint32_t> validType;
+	validType.insert(common::EPT_DB_ACCOUNT_Proxy);
+	validType.insert(common::EPT_DB_ROLE_Proxy);
+
+	if (validType.count(type) == 0)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
+
 	// CMD
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, DBProxyMgr::onLogicCommnad);
 
@@ -28,9 +41,28 @@ std::tuple<uint32_t, std::string> DBProxyMgr::init()
 
 std::tuple<uint32_t, std::string> DBProxyMgr::start()
 {
-	auto dbType = DeclarativeBase::DBType::DBT_Role;
-	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
+	DeclarativeBase::DBType dbType = DeclarativeBase::DBType::DBT_None;
 
+	auto type = APie::CtxSingleton::get().getServerType();
+	switch (type)
+	{
+	case common::EPT_DB_ACCOUNT_Proxy:
+	{
+		dbType = DeclarativeBase::DBType::DBT_Account;
+		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccount::getFactoryName(), ModelAccount::createMethod);
+
+		break;
+	}
+	case common::EPT_DB_ROLE_Proxy:
+	{
+		dbType = DeclarativeBase::DBType::DBT_Role;
+		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
+
+		break;
+	}
+	default:
+		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
@@ -85,7 +117,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
 std::tuple<uint32_t, std::string> DBProxyMgr::ready()

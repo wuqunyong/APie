@@ -1,5 +1,5 @@
 identify:
-  type: 6
+  type: 3
   id: 1
   auth: "hello"
   ip: "127.0.0.1"
@@ -24,7 +24,7 @@ log:
   show_pos: true
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
-  name: "scene_server"
+  name: "login_server"
 metrics:
   enable: true
   ip: "127.0.0.1"
