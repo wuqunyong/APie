@@ -34,6 +34,7 @@ namespace APie {
 		static void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request);
 
 	private:
+
 	};
 
 	using LoginMgrSingleton = ThreadSafeSingleton<LoginMgr>;

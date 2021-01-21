@@ -57,5 +57,7 @@ namespace APie {
 
 	using CallMysqlDescTableCB = std::function<void(bool bResul, std::string sInfo, uint64_t iCallCount)>;
 
+
+	// 加载表结构到已加载列表；RPC调用失败会一直重试，直到调用成功，调用成功后才会触发回调
 	bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, CallMysqlDescTableCB cb, uint64_t iCallCount = 0);
 }

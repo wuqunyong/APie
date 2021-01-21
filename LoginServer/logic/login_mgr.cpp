@@ -119,10 +119,10 @@ void LoginMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& ms
 
 void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)
 {
-	ModelAccount user;
-	user.fields.account_id = request.account_id();
+	ModelAccount accountData;
+	accountData.fields.account_id = request.account_id();
 
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Account, ModelAccount::getFactoryName());
+	bool bResult = accountData.bindTable(DeclarativeBase::DBType::DBT_Account, ModelAccount::getFactoryName());
 	if (!bResult)
 	{
 		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
@@ -136,7 +136,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 	server.set_type(common::EPT_DB_ACCOUNT_Proxy);
 	server.set_id(1);
 
-	auto cb = [iSerialNum, request](rpc_msg::STATUS status, ModelAccount user, uint32_t iRows) {
+	auto cb = [iSerialNum, request, server](rpc_msg::STATUS status, ModelAccount account, uint32_t iRows) {
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{
 			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
@@ -155,9 +155,23 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 			return;
 		}
 
-		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		auto curTime = time(NULL);
+		account.fields.register_time = curTime;
+		account.fields.modified_time = curTime;
+
+		auto cb = [iSerialNum, response](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+			if (status.code() != ::rpc_msg::CODE_Ok)
+			{
+				response.set_status_code(status.code());
+				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+				return;
+			}
+
+			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		};
+		InsertToDb<ModelAccount>(server, account, cb);
 	};
-	LoadFromDb<ModelAccount>(server, user, cb);
+	LoadFromDb<ModelAccount>(server, accountData, cb);
 }
 
 }
