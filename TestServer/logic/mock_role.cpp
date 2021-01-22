@@ -148,6 +148,7 @@ void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 	auto handler = this->findHandler(sCmd);
 	if (handler == nullptr)
 	{
+		std::cout << "invalid cmd:" << sCmd << std::endl;
 		return;
 	}
 	

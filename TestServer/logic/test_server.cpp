@@ -207,6 +207,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 	{
 		if (command.params_size() < 2)
 		{
+			std::cout << "invalid params" << std::endl;
 			return;
 		}
 
@@ -214,10 +215,18 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		auto ptrMockRole = TestServerMgrSingleton::get().findMockRole(iRoleId);
 		if (ptrMockRole == nullptr)
 		{
-			ptrMockRole = MockRole::createMockRole(iRoleId);
-			ptrMockRole->start();
+			if (command.params()[1] == "account_login")
+			{
+				ptrMockRole = MockRole::createMockRole(iRoleId);
+				ptrMockRole->start();
 
-			TestServerMgrSingleton::get().addMockRole(ptrMockRole);
+				TestServerMgrSingleton::get().addMockRole(ptrMockRole);
+			}
+			else
+			{
+				std::cout << "not login|account:" << iRoleId << std::endl;
+				return;
+			}
 		}
 
 		::pubsub::LOGIC_CMD newMsg;

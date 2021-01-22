@@ -177,6 +177,22 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 
 		if (iRows != 0)
 		{
+			auto iAccountId = request.account_id();
+
+			auto curTime = time(NULL);
+			account.fields.modified_time = curTime;
+			account.markDirty({ ModelAccountFields::modified_time });
+			auto cb = [iAccountId](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
+				if (status.code() != ::rpc_msg::CODE_Ok)
+				{
+					std::stringstream ss;
+					ss << "UpdateToDb Error|accountId:" << iAccountId;
+					ASYNC_PIE_LOG("LoginMgr/handleAccountLogin", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+					return;
+				}
+			};
+			UpdateToDb<ModelAccount>(server, account, cb);
+
 			::rpc_msg::CHANNEL server;
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());

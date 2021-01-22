@@ -13,6 +13,14 @@
 
 namespace APie {
 
+	enum ModelAccountFields
+	{
+		account_id = 0,
+		db_id,
+		register_time,
+		modified_time
+	}; 
+
 	class ModelAccount : public DeclarativeBase {
 	public:
 		PACKED_STRUCT(struct db_fields {
