@@ -706,6 +706,16 @@ void Ctx::setServerType(uint32_t type)
 	m_server_type = type;
 }
 
+bool Ctx::checkIsValidServerType(std::set<uint32_t> validSet)
+{
+	if (validSet.count(m_server_type) == 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 std::string Ctx::logName()
 {
 	return s_log_name;

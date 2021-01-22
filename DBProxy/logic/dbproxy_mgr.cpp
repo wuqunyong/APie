@@ -11,13 +11,8 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> DBProxyMgr::init()
 {
-	auto type = APie::CtxSingleton::get().getServerType();
-
-	std::set<uint32_t> validType;
-	validType.insert(common::EPT_DB_ACCOUNT_Proxy);
-	validType.insert(common::EPT_DB_ROLE_Proxy);
-
-	if (validType.count(type) == 0)
+	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_DB_ACCOUNT_Proxy, common::EPT_DB_ROLE_Proxy });
+	if (!bResult)
 	{
 		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
 	}

@@ -164,6 +164,8 @@ namespace APie
 		uint32_t getServerType();
 		void setServerType(uint32_t type);
 
+		bool checkIsValidServerType(std::set<uint32_t> validSet);
+
 	public:
 		static std::string logName();
 		static std::string logPostfix();

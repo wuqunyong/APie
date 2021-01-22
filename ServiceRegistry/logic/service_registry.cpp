@@ -4,12 +4,8 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> ServiceRegistry::init()
 {
-	auto type = APie::CtxSingleton::get().getServerType();
-
-	std::set<uint32_t> validType;
-	validType.insert(common::EPT_Service_Registry);
-
-	if (validType.count(type) == 0)
+	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Service_Registry });
+	if (!bResult)
 	{
 		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
 	}

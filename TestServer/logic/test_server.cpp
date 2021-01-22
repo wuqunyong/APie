@@ -10,12 +10,8 @@ namespace APie {
 
 std::tuple<uint32_t, std::string> TestServerMgr::init()
 {
-	auto type = APie::CtxSingleton::get().getServerType();
-
-	std::set<uint32_t> validType;
-	validType.insert(common::EPT_Test_Client);
-
-	if (validType.count(type) == 0)
+	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Test_Client });
+	if (!bResult)
 	{
 		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
 	}
