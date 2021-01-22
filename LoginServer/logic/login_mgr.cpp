@@ -181,7 +181,8 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 
 			auto curTime = time(NULL);
 			account.fields.modified_time = curTime;
-			account.markDirty({ ModelAccountFields::modified_time });
+
+			account.markDirty({ ModelAccount::modified_time });
 			auto cb = [iAccountId](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
 				if (status.code() != ::rpc_msg::CODE_Ok)
 				{

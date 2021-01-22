@@ -23,15 +23,18 @@ namespace APie {
 			int64_t login_time = 2;
 			int64_t offline_time = 3;
 			std::string name = "hello";
-			std::string role_info;
-			std::string magic_slot_info;
-			std::string magic_info;
-			std::string guild_quest;
-			std::string match_info;
-			std::string global_mails_info;
-			std::string treasure_info;
-			std::string feats_info;
 		});
+
+		enum Fields
+		{
+			user_id = 0,
+			game_id,
+			level,
+			register_time,
+			login_time,
+			offline_time,
+			name
+		};
 
 		virtual void* layoutAddress() override
 		{
@@ -48,14 +51,6 @@ namespace APie {
 				offsetof(db_fields, login_time),
 				offsetof(db_fields, offline_time),
 				offsetof(db_fields, name),
-				offsetof(db_fields, role_info),
-				offsetof(db_fields, magic_slot_info),
-				offsetof(db_fields, magic_info),
-				offsetof(db_fields, guild_quest),
-				offsetof(db_fields, match_info),
-				offsetof(db_fields, global_mails_info),
-				offsetof(db_fields, treasure_info),
-				offsetof(db_fields, feats_info),
 			};
 
 			return layout;
@@ -71,14 +66,6 @@ namespace APie {
 				get_field_type(fields.login_time),
 				get_field_type(fields.offline_time),
 				get_field_type(fields.name),
-				get_field_type(fields.role_info),
-				get_field_type(fields.magic_slot_info),
-				get_field_type(fields.magic_info),
-				get_field_type(fields.guild_quest),
-				get_field_type(fields.match_info),
-				get_field_type(fields.global_mails_info),
-				get_field_type(fields.treasure_info),
-				get_field_type(fields.feats_info),
 			};
 
 			return layout;

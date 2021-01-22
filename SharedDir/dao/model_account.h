@@ -13,14 +13,6 @@
 
 namespace APie {
 
-	enum ModelAccountFields
-	{
-		account_id = 0,
-		db_id,
-		register_time,
-		modified_time
-	}; 
-
 	class ModelAccount : public DeclarativeBase {
 	public:
 		PACKED_STRUCT(struct db_fields {
@@ -29,6 +21,14 @@ namespace APie {
 			int64_t register_time = 0;
 			int64_t modified_time = 0;
 		});
+
+		enum Fields
+		{
+			account_id = 0,
+			db_id,
+			register_time,
+			modified_time,
+		};
 
 		virtual void* layoutAddress() override
 		{
