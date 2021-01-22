@@ -34,7 +34,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 	// RPC
 	APie::RPC::rpcInit();
 	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_DeMultiplexer_Forward_Args>(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
-
+	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_login::L2G_LoginPendingRequest>(rpc_msg::RPC_L2G_LoginPending, GatewayMgr::RPC_handleLoginPending);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
@@ -141,6 +141,27 @@ std::optional<uint64_t> GatewayMgr::findRoleIdBySerialNum(uint64_t iSerialNum)
 	return findIte->second->getRoleId();
 }
 
+void GatewayMgr::addPendingRole(const PendingLoginRole &role)
+{
+	m_pendingRole[role.role_id] = role;
+}
+
+std::optional<PendingLoginRole> GatewayMgr::getPendingRole(uint64_t iRoleId)
+{
+	auto findIte = m_pendingRole.find(iRoleId);
+	if (findIte == m_pendingRole.end())
+	{
+		return std::nullopt;
+	}
+
+	return findIte->second;
+}
+
+void GatewayMgr::removePendingRole(uint64_t iRoleId)
+{
+	m_pendingRole.erase(iRoleId);
+}
+
 bool GatewayMgr::addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole)
 {
 	if (ptrGatewayRole == nullptr)
@@ -235,6 +256,25 @@ std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleDeMultiplexerForward(con
 		Network::OutputStream::sendMsgByStrByFlag(iSerialNum, request.opcodes(), request.body_msg(), iMaskFlag, APie::ConnetionType::CT_SERVER);
 	}
 	return std::make_tuple(::rpc_msg::CODE_Ok, "DeMultiplexer success");
+}
+
+std::tuple<uint32_t, std::string> GatewayMgr::RPC_handleLoginPending(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_login::L2G_LoginPendingRequest& request)
+{
+	auto curTime = time(nullptr);
+
+	PendingLoginRole role;
+	role.role_id = request.account_id();
+	role.session_key = request.session_key();
+	role.db_id = request.db_id();
+	role.expires_at = curTime + 30;
+
+	GatewayMgrSingleton::get().addPendingRole(role);
+
+	::rpc_login::L2G_LoginPendingResponse response;
+	response.set_status_code(opcodes::SC_Ok);
+	response.set_account_id(request.account_id());
+
+	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
 }
 
 void GatewayMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)

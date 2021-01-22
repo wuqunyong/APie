@@ -454,6 +454,9 @@
     <ClInclude Include="..\PBMsg\role_server_msg.pb.h">
       <Filter>pb</Filter>
     </ClInclude>
+    <ClInclude Include="..\PBMsg\rpc_login.pb.h">
+      <Filter>pb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -703,6 +706,9 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\PBMsg\role_server_msg.pb.cc">
+      <Filter>pb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\rpc_login.pb.cc">
       <Filter>pb</Filter>
     </ClCompile>
   </ItemGroup>

@@ -103,6 +103,8 @@ enum StatusCode : int {
   SC_Discovery_AuthError = 1000,
   SC_Discovery_DuplicateNode = 1001,
   SC_Discovery_Unregistered = 1002,
+  SC_Discovery_ServerListEmpty = 1003,
+  SC_Discovery_InvalidPoint = 1004,
   SC_Route_InvalidPoint = 2000,
   SC_Route_AuthError = 2001,
   SC_Route_Unregistered = 2002,

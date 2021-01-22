@@ -15,6 +15,8 @@ enum RPC_OPCODES {
 	RPC_MysqlUpdate = 404;
 	RPC_MysqlDelete = 405;
 	RPC_MysqlQueryByFilter = 406;
+
+	RPC_L2G_LoginPending = 1001;
 }
 
 enum RPC_CODE {

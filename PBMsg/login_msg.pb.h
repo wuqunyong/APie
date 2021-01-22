@@ -536,9 +536,9 @@ class MSG_REQUEST_ACCOUNT_LOGIN_L :
   enum : int {
     kPlatformIdFieldNumber = 1,
     kProgramIdFieldNumber = 2,
-    kVersionFieldNumber = 3,
     kAuthFieldNumber = 5,
     kAccountIdFieldNumber = 4,
+    kVersionFieldNumber = 3,
   };
   // string platform_id = 1;
   void clear_platform_id();
@@ -572,22 +572,6 @@ class MSG_REQUEST_ACCOUNT_LOGIN_L :
   std::string* _internal_mutable_program_id();
   public:
 
-  // string version = 3;
-  void clear_version();
-  const std::string& version() const;
-  void set_version(const std::string& value);
-  void set_version(std::string&& value);
-  void set_version(const char* value);
-  void set_version(const char* value, size_t size);
-  std::string* mutable_version();
-  std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
   // string auth = 5;
   void clear_auth();
   const std::string& auth() const;
@@ -613,6 +597,15 @@ class MSG_REQUEST_ACCOUNT_LOGIN_L :
   void _internal_set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // int32 version = 3;
+  void clear_version();
+  ::PROTOBUF_NAMESPACE_ID::int32 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L)
  private:
   class _Internal;
@@ -620,9 +613,9 @@ class MSG_REQUEST_ACCOUNT_LOGIN_L :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr platform_id_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr program_id_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
   ::PROTOBUF_NAMESPACE_ID::uint64 account_id_;
+  ::PROTOBUF_NAMESPACE_ID::int32 version_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_login_5fmsg_2eproto;
 };
@@ -924,13 +917,13 @@ class MSG_REQUEST_CLIENT_LOGIN :
     kUserIdFieldNumber = 1,
     kVersionFieldNumber = 3,
   };
-  // bytes session_key = 2;
+  // string session_key = 2;
   void clear_session_key();
   const std::string& session_key() const;
   void set_session_key(const std::string& value);
   void set_session_key(std::string&& value);
   void set_session_key(const char* value);
-  void set_session_key(const void* value, size_t size);
+  void set_session_key(const char* value, size_t size);
   std::string* mutable_session_key();
   std::string* release_session_key();
   void set_allocated_session_key(std::string* session_key);
@@ -1800,64 +1793,24 @@ inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_allocated_program_id(std::string* p
   // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.program_id)
 }
 
-// string version = 3;
+// int32 version = 3;
 inline void MSG_REQUEST_ACCOUNT_LOGIN_L::clear_version() {
-  version_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  version_ = 0;
 }
-inline const std::string& MSG_REQUEST_ACCOUNT_LOGIN_L::version() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_REQUEST_ACCOUNT_LOGIN_L::_internal_version() const {
+  return version_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_REQUEST_ACCOUNT_LOGIN_L::version() const {
   // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
   return _internal_version();
 }
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_version(const std::string& value) {
+inline void MSG_REQUEST_ACCOUNT_LOGIN_L::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  version_ = value;
+}
+inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_version(value);
   // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-}
-inline std::string* MSG_REQUEST_ACCOUNT_LOGIN_L::mutable_version() {
-  // @@protoc_insertion_point(field_mutable:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-  return _internal_mutable_version();
-}
-inline const std::string& MSG_REQUEST_ACCOUNT_LOGIN_L::_internal_version() const {
-  return version_.GetNoArena();
-}
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::_internal_set_version(const std::string& value) {
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-}
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_version(std::string&& value) {
-  
-  version_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-}
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_version(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-}
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_version(const char* value, size_t size) {
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-}
-inline std::string* MSG_REQUEST_ACCOUNT_LOGIN_L::_internal_mutable_version() {
-  
-  return version_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* MSG_REQUEST_ACCOUNT_LOGIN_L::release_version() {
-  // @@protoc_insertion_point(field_release:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
-  
-  return version_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void MSG_REQUEST_ACCOUNT_LOGIN_L::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  version_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), version);
-  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version)
 }
 
 // uint64 account_id = 4;
@@ -2148,7 +2101,7 @@ inline void MSG_REQUEST_CLIENT_LOGIN::set_user_id(::PROTOBUF_NAMESPACE_ID::uint6
   // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_CLIENT_LOGIN.user_id)
 }
 
-// bytes session_key = 2;
+// string session_key = 2;
 inline void MSG_REQUEST_CLIENT_LOGIN::clear_session_key() {
   session_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -2183,7 +2136,7 @@ inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const char* value) {
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key)
 }
-inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const void* value, size_t size) {
+inline void MSG_REQUEST_CLIENT_LOGIN::set_session_key(const char* value, size_t size) {
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

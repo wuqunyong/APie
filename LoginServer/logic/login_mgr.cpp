@@ -1,5 +1,8 @@
 #include "login_mgr.h"
+
+#include "../../LibAPie/common/string_utils.h"
 #include "../../SharedDir/dao/model_account.h"
+
 
 namespace APie {
 
@@ -111,9 +114,9 @@ void LoginMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& ms
 
 	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
 	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
-	ASYNC_PIE_LOG("GatewayMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG("LoginMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	uint64_t iSerialNum = refMsg.serial_num();
+	//uint64_t iSerialNum = refMsg.serial_num();
 
 }
 
@@ -149,25 +152,88 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
 		response.set_status_code(status.code());
 		response.set_account_id(request.account_id());
-		if (iRows != 0)
+
+		auto gatewayOpt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_Gateway_Server, request.account_id());
+		if (!gatewayOpt.has_value())
 		{
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
+			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
+
+		std::string ip = gatewayOpt.value().ip();
+		uint32_t port = gatewayOpt.value().port();
+		std::string sessionKey = APie::randomStr(16);
+
+		response.set_ip(ip);
+		response.set_port(port);
+		response.set_session_key(sessionKey);
+
+		::rpc_login::L2G_LoginPendingRequest rpcRequest;
+		rpcRequest.set_account_id(request.account_id());
+		rpcRequest.set_session_key(sessionKey);
+		rpcRequest.set_db_id(account.fields.db_id);
+		rpcRequest.set_version(request.version());
+
+		if (iRows != 0)
+		{
+			::rpc_msg::CHANNEL server;
+			server.set_type(gatewayOpt.value().type());
+			server.set_id(gatewayOpt.value().id());
+
+			auto rpcCB = [iSerialNum, response](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+			{
+				if (status.code() != ::rpc_msg::CODE_Ok)
+				{
+					response.set_status_code(status.code());
+					Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					return;
+				}
+
+				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			};
+			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
+			return;
+		}
+
+		auto roleDBopt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_DB_ROLE_Proxy, request.account_id());
+		if (!roleDBopt.has_value())
+		{
+			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
+			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			return;
+		}
+
 
 		auto curTime = time(NULL);
 		account.fields.register_time = curTime;
 		account.fields.modified_time = curTime;
+		account.fields.db_id = roleDBopt.value().id();
 
-		auto cb = [iSerialNum, response](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+		auto cb = [iSerialNum, response, gatewayOpt, rpcRequest](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
 				response.set_status_code(status.code());
-				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 				return;
 			}
 
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+			::rpc_msg::CHANNEL server;
+			server.set_type(gatewayOpt.value().type());
+			server.set_id(gatewayOpt.value().id());
+
+			auto rpcCB = [iSerialNum, response](const rpc_msg::STATUS& status, const std::string& replyData) mutable
+			{
+				if (status.code() != ::rpc_msg::CODE_Ok)
+				{
+					response.set_status_code(status.code());
+					Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					return;
+				}
+
+				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			};
+			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
 		};
 		InsertToDb<ModelAccount>(server, account, cb);
 	};

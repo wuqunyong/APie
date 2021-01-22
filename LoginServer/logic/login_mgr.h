@@ -11,7 +11,7 @@
 #include "apie.h"
 
 #include "../../PBMsg/login_msg.pb.h"
-
+#include "../../PBMsg/rpc_login.pb.h"
 
 namespace APie {
 

@@ -78,22 +78,24 @@ namespace APie
 		void unregisterEndpoint(EndPoint point);
 		std::optional<::service_discovery::EndPointInstance> findEndpoint(EndPoint point);
 
-		//id:低3位对应db_id
-		std::optional<EndPoint> findDbEndpointById(uint32_t type, uint64_t id);
+		std::optional<::service_discovery::EndPointInstance> modulusEndpointById(uint32_t type, uint64_t matchId);
 
 		std::map<EndPoint, ::service_discovery::EndPointInstance>& getEndpoints();
 		std::vector<EndPoint> getEndpointsByType(uint32_t type);
-		std::vector<EndPoint> getEstablishedEndpointsByType(uint32_t type);
 		std::optional<uint64_t> getSerialNum(EndPoint point);
 
 		void addRoute(const EndPoint& point, uint64_t iSerialNum);
 		void delRoute(uint64_t iSerialNum);
+		std::vector<EndPoint> getEstablishedEndpointsByType(uint32_t type);
 		std::optional<EndPoint> findRoute(uint64_t iSerialNum);
 
 		void clear();
 
 	private:
+		//在注册中心已注册的节点
 		std::map<EndPoint, ::service_discovery::EndPointInstance> m_endpoints;
+
+		//已连接上的路由节点
 		std::map<EndPoint, EstablishedState> m_establishedPoints;
 		std::map<uint64_t, EndPoint> m_reversePoints; 
 	};

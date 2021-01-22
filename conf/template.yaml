@@ -5,7 +5,7 @@ identify:            # 节点标识
   ip: "127.0.0.1"        # 节点作为Server,监听的IP
   port: 5007             # 节点作为Server,监听的端口
   codec_type: 1          # 节点协议：1(PB√),2(HTTP)
-  db_id : 1              # 节点作为代理数据库时，表示数据库ID
+  db_id : 1              # 节点作为代理数据库时，表示数据库ID, db_id一致时代表连接到用一个数据库
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
 service_timeout: 600 # 服务发现超时时间，默认：300, 单位秒

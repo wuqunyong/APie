@@ -267,13 +267,13 @@ const char descriptor_table_protodef_login_5fmsg_2eproto[] PROTOBUF_SECTION_VARI
   "tList\0221\n\rgame_accounts\030\001 \003(\0132\032.login_msg"
   ".GameAccountInfo\"y\n\033MSG_REQUEST_ACCOUNT_"
   "LOGIN_L\022\023\n\013platform_id\030\001 \001(\t\022\022\n\nprogram_"
-  "id\030\002 \001(\t\022\017\n\007version\030\003 \001(\t\022\022\n\naccount_id\030"
+  "id\030\002 \001(\t\022\017\n\007version\030\003 \001(\005\022\022\n\naccount_id\030"
   "\004 \001(\004\022\014\n\004auth\030\005 \001(\t\"v\n\034MSG_RESPONSE_ACCO"
   "UNT_LOGIN_L\022\023\n\013status_code\030\001 \001(\005\022\022\n\nacco"
   "unt_id\030\002 \001(\004\022\023\n\013session_key\030\003 \001(\t\022\n\n\002ip\030"
   "\004 \001(\t\022\014\n\004port\030\005 \001(\005\"Q\n\030MSG_REQUEST_CLIEN"
   "T_LOGIN\022\017\n\007user_id\030\001 \001(\004\022\023\n\013session_key\030"
-  "\002 \001(\014\022\017\n\007version\030\003 \001(\005\"e\n\031MSG_RESPONSE_C"
+  "\002 \001(\t\022\017\n\007version\030\003 \001(\005\"e\n\031MSG_RESPONSE_C"
   "LIENT_LOGIN\022\023\n\013status_code\030\001 \001(\005\022\017\n\007user"
   "_id\030\002 \001(\004\022\017\n\007version\030\003 \001(\005\022\021\n\tis_newbie\030"
   "\004 \001(\010\"2\n\020MSG_REQUEST_ECHO\022\016\n\006value1\030\001 \001("
@@ -860,15 +860,13 @@ MSG_REQUEST_ACCOUNT_LOGIN_L::MSG_REQUEST_ACCOUNT_LOGIN_L(const MSG_REQUEST_ACCOU
   if (!from._internal_program_id().empty()) {
     program_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.program_id_);
   }
-  version_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (!from._internal_version().empty()) {
-    version_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.version_);
-  }
   auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_auth().empty()) {
     auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
   }
-  account_id_ = from.account_id_;
+  ::memcpy(&account_id_, &from.account_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&version_) -
+    reinterpret_cast<char*>(&account_id_)) + sizeof(version_));
   // @@protoc_insertion_point(copy_constructor:login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L)
 }
 
@@ -876,9 +874,10 @@ void MSG_REQUEST_ACCOUNT_LOGIN_L::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_REQUEST_ACCOUNT_LOGIN_L_login_5fmsg_2eproto.base);
   platform_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   program_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  version_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  account_id_ = PROTOBUF_ULONGLONG(0);
+  ::memset(&account_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&version_) -
+      reinterpret_cast<char*>(&account_id_)) + sizeof(version_));
 }
 
 MSG_REQUEST_ACCOUNT_LOGIN_L::~MSG_REQUEST_ACCOUNT_LOGIN_L() {
@@ -889,7 +888,6 @@ MSG_REQUEST_ACCOUNT_LOGIN_L::~MSG_REQUEST_ACCOUNT_LOGIN_L() {
 void MSG_REQUEST_ACCOUNT_LOGIN_L::SharedDtor() {
   platform_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   program_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  version_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   auth_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -910,9 +908,10 @@ void MSG_REQUEST_ACCOUNT_LOGIN_L::Clear() {
 
   platform_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   program_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  version_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  account_id_ = PROTOBUF_ULONGLONG(0);
+  ::memset(&account_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&version_) -
+      reinterpret_cast<char*>(&account_id_)) + sizeof(version_));
   _internal_metadata_.Clear();
 }
 
@@ -941,12 +940,10 @@ const char* MSG_REQUEST_ACCOUNT_LOGIN_L::_InternalParse(const char* ptr, ::PROTO
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // string version = 3;
+      // int32 version = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_version();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version"));
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          version_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1012,14 +1009,10 @@ failure:
         2, this->_internal_program_id(), target);
   }
 
-  // string version = 3;
-  if (this->version().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "login_msg.MSG_REQUEST_ACCOUNT_LOGIN_L.version");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_version(), target);
+  // int32 version = 3;
+  if (this->version() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_version(), target);
   }
 
   // uint64 account_id = 4;
@@ -1068,13 +1061,6 @@ size_t MSG_REQUEST_ACCOUNT_LOGIN_L::ByteSizeLong() const {
         this->_internal_program_id());
   }
 
-  // string version = 3;
-  if (this->version().size() > 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_version());
-  }
-
   // string auth = 5;
   if (this->auth().size() > 0) {
     total_size += 1 +
@@ -1087,6 +1073,13 @@ size_t MSG_REQUEST_ACCOUNT_LOGIN_L::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_account_id());
+  }
+
+  // int32 version = 3;
+  if (this->version() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_version());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1128,16 +1121,15 @@ void MSG_REQUEST_ACCOUNT_LOGIN_L::MergeFrom(const MSG_REQUEST_ACCOUNT_LOGIN_L& f
 
     program_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.program_id_);
   }
-  if (from.version().size() > 0) {
-
-    version_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.version_);
-  }
   if (from.auth().size() > 0) {
 
     auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
   }
   if (from.account_id() != 0) {
     _internal_set_account_id(from._internal_account_id());
+  }
+  if (from.version() != 0) {
+    _internal_set_version(from._internal_version());
   }
 }
 
@@ -1166,11 +1158,10 @@ void MSG_REQUEST_ACCOUNT_LOGIN_L::InternalSwap(MSG_REQUEST_ACCOUNT_LOGIN_L* othe
     GetArenaNoVirtual());
   program_id_.Swap(&other->program_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  version_.Swap(&other->version_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
   auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(account_id_, other->account_id_);
+  swap(version_, other->version_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata MSG_REQUEST_ACCOUNT_LOGIN_L::GetMetadata() const {
@@ -1577,11 +1568,12 @@ const char* MSG_REQUEST_CLIENT_LOGIN::_InternalParse(const char* ptr, ::PROTOBUF
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bytes session_key = 2;
+      // string session_key = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_session_key();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1624,9 +1616,13 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_user_id(), target);
   }
 
-  // bytes session_key = 2;
+  // string session_key = 2;
   if (this->session_key().size() > 0) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_session_key().data(), static_cast<int>(this->_internal_session_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "login_msg.MSG_REQUEST_CLIENT_LOGIN.session_key");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_session_key(), target);
   }
 
@@ -1652,10 +1648,10 @@ size_t MSG_REQUEST_CLIENT_LOGIN::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes session_key = 2;
+  // string session_key = 2;
   if (this->session_key().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_session_key());
   }
 

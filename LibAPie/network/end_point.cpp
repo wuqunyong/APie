@@ -174,7 +174,7 @@ std::optional<::service_discovery::EndPointInstance> EndPointMgr::findEndpoint(E
 	return std::nullopt;
 }
 
-std::optional<EndPoint> EndPointMgr::findDbEndpointById(uint32_t type, uint64_t id)
+std::optional<::service_discovery::EndPointInstance> EndPointMgr::modulusEndpointById(uint32_t type, uint64_t matchId)
 {
 	std::vector<EndPoint> pointList = this->getEndpointsByType(type);
 	if (pointList.empty())
@@ -182,35 +182,9 @@ std::optional<EndPoint> EndPointMgr::findDbEndpointById(uint32_t type, uint64_t 
 		return std::nullopt;
 	}
 
-	const uint32_t iFactor = 1000;
-
-	uint32_t iDbId = id % iFactor;
-	uint64_t iIndex = id / iFactor;
-
-	std::vector<EndPoint> candidate;
-	for (const auto& point : pointList)
-	{
-		auto findIte = m_endpoints.find(point);
-		if (findIte == m_endpoints.end())
-		{
-			continue;
-		}
-
-		if (findIte->second.db_id() == iDbId)
-		{
-			candidate.push_back(point);
-		}
-	}
-
-	if (candidate.empty())
-	{
-		return std::nullopt;
-	}
-
-	auto iSize = candidate.size();
-	auto iCurIndex = iIndex % iSize;
-
-	return std::make_optional(candidate[iCurIndex]);
+	uint32_t iSize = pointList.size();
+	uint32_t iIndex = matchId % iSize;
+	return findEndpoint(pointList[iIndex]);
 }
 
 std::map<EndPoint, ::service_discovery::EndPointInstance>& EndPointMgr::getEndpoints()

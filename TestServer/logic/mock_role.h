@@ -57,7 +57,7 @@ namespace APie {
 
 		void handleAccountLogin(::pubsub::LOGIC_CMD& msg);
 
-		void handleLogin(::pubsub::LOGIC_CMD& msg);
+		//void handleLogin(::pubsub::LOGIC_CMD& msg);
 		void handleEcho(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 
@@ -80,6 +80,7 @@ namespace APie {
 		std::vector<::pubsub::LOGIC_CMD> m_configCmd;
 
 		bool m_bPauseProcess = false;
+
 
 		std::map<std::string, HandlerCb> m_cmdHandler;
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;

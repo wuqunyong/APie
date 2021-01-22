@@ -40,24 +40,26 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   " \n\033OP_MSG_REQUEST_CLIENT_LOGIN\020\270\027\022!\n\034OP_"
   "MSG_RESPONSE_CLIENT_LOGIN\020\271\027\022\030\n\023OP_MSG_R"
   "EQUEST_ECHO\020\242\037\022\031\n\024OP_MSG_RESPONSE_ECHO\020\243"
-  "\037*\270\005\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_Discov"
+  "\037*\373\005\n\nStatusCode\022\t\n\005SC_Ok\020\000\022\033\n\026SC_Discov"
   "ery_AuthError\020\350\007\022\037\n\032SC_Discovery_Duplica"
   "teNode\020\351\007\022\036\n\031SC_Discovery_Unregistered\020\352"
-  "\007\022\032\n\025SC_Route_InvalidPoint\020\320\017\022\027\n\022SC_Rout"
-  "e_AuthError\020\321\017\022\032\n\025SC_Route_Unregistered\020"
-  "\322\017\022\023\n\016SC_Rpc_Timeout\020\270\027\022\026\n\021SC_Rpc_RouteE"
-  "mpty\020\271\027\022!\n\034SC_Rpc_RouteEstablishedEmpty\020"
-  "\272\027\022!\n\034SC_RPC_RouteSerialNumInvalid\020\273\027\022\032\n"
-  "\025SC_RPC_RouteSendError\020\274\027\022\034\n\027SC_RPC_NotR"
-  "eceivedReply\020\275\027\022\023\n\016SC_RPC_NotSend\020\276\027\022$\n\037"
-  "SC_RPC_InvalidArgs_MethodsEmpty\020\277\027\022\031\n\024SC"
-  "_RPC_Partial_Error\020\300\027\022&\n!SC_ClientProxy_"
-  "SerialNumEqualZero\020\240\037\022)\n$SC_ClientProxy_"
-  "SerialNumNotEqualZero\020\241\037\022\037\n\032SC_ClientPro"
-  "xy_Established\020\242\037\022\"\n\035SC_ClientProxy_NotE"
-  "stablished\020\243\037\022\034\n\027SC_ClientProxy_BadAlloc"
-  "\020\244\037\022\036\n\031SC_ClientProxy_NoIOThread\020\245\037\022\027\n\022S"
-  "C_BindTable_Error\020\210\'b\006proto3"
+  "\007\022!\n\034SC_Discovery_ServerListEmpty\020\353\007\022\036\n\031"
+  "SC_Discovery_InvalidPoint\020\354\007\022\032\n\025SC_Route"
+  "_InvalidPoint\020\320\017\022\027\n\022SC_Route_AuthError\020\321"
+  "\017\022\032\n\025SC_Route_Unregistered\020\322\017\022\023\n\016SC_Rpc_"
+  "Timeout\020\270\027\022\026\n\021SC_Rpc_RouteEmpty\020\271\027\022!\n\034SC"
+  "_Rpc_RouteEstablishedEmpty\020\272\027\022!\n\034SC_RPC_"
+  "RouteSerialNumInvalid\020\273\027\022\032\n\025SC_RPC_Route"
+  "SendError\020\274\027\022\034\n\027SC_RPC_NotReceivedReply\020"
+  "\275\027\022\023\n\016SC_RPC_NotSend\020\276\027\022$\n\037SC_RPC_Invali"
+  "dArgs_MethodsEmpty\020\277\027\022\031\n\024SC_RPC_Partial_"
+  "Error\020\300\027\022&\n!SC_ClientProxy_SerialNumEqua"
+  "lZero\020\240\037\022)\n$SC_ClientProxy_SerialNumNotE"
+  "qualZero\020\241\037\022\037\n\032SC_ClientProxy_Establishe"
+  "d\020\242\037\022\"\n\035SC_ClientProxy_NotEstablished\020\243\037"
+  "\022\034\n\027SC_ClientProxy_BadAlloc\020\244\037\022\036\n\031SC_Cli"
+  "entProxy_NoIOThread\020\245\037\022\027\n\022SC_BindTable_E"
+  "rror\020\210\'b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -66,7 +68,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1348,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1415,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -115,6 +117,8 @@ bool StatusCode_IsValid(int value) {
     case 1000:
     case 1001:
     case 1002:
+    case 1003:
+    case 1004:
     case 2000:
     case 2001:
     case 2002:

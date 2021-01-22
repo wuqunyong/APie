@@ -145,6 +145,7 @@
     <ClInclude Include="..\PBMsg\pubsub.pb.h" />
     <ClInclude Include="..\PBMsg\role_server_msg.pb.h" />
     <ClInclude Include="..\PBMsg\route_register.pb.h" />
+    <ClInclude Include="..\PBMsg\rpc_login.pb.h" />
     <ClInclude Include="..\PBMsg\rpc_msg.pb.h" />
     <ClInclude Include="..\PBMsg\service_discovery.pb.h" />
     <ClInclude Include="..\ThirdParty\astar\fsa.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="..\PBMsg\pubsub.pb.cc" />
     <ClCompile Include="..\PBMsg\role_server_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\route_register.pb.cc" />
+    <ClCompile Include="..\PBMsg\rpc_login.pb.cc" />
     <ClCompile Include="..\PBMsg\rpc_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\service_discovery.pb.cc" />
     <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
