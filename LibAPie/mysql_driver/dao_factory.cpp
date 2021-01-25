@@ -238,4 +238,51 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 
 	return RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
 }
+
+bool RegisterRequiredTable(DeclarativeBase::DBType type, uint32_t iServerId, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)
+{
+	for (const auto& items : loadTables)
+	{
+		DAOFactoryTypeSingleton::get().registerRequiredTable(type, items.first, items.second);
+	}
+
+	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(type);
+	if (!requiredTableOpt.has_value())
+	{
+		cb(true,"", 0);
+		return true;
+	}
+
+
+	::rpc_msg::CHANNEL server;
+	switch (type)
+	{
+	case DeclarativeBase::DBType::DBT_Account:
+	{
+		server.set_type(common::EPT_DB_ACCOUNT_Proxy);
+		break;
+	}
+	case DeclarativeBase::DBType::DBT_Role:
+	{
+		server.set_type(common::EPT_DB_ROLE_Proxy);
+		break;
+	}
+	default:
+	{
+		return false;
+	}
+	}
+	server.set_id(iServerId);
+
+	std::vector<std::string> tables;
+	for (const auto& items : requiredTableOpt.value())
+	{
+		tables.push_back(items.first);
+	}
+
+	CallMysqlDescTable(server, type, tables, cb);
+
+	return true;
+}
+
 }

@@ -27,31 +27,9 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 
 std::tuple<uint32_t, std::string> LoginMgr::start()
 {
-	// 加载，数据表结构
+	// 加载:数据表结构
 	auto dbType = DeclarativeBase::DBType::DBT_Account;
-	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccount::getFactoryName(), ModelAccount::createMethod);
-
-	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(dbType);
-	if (!requiredTableOpt.has_value())
-	{
-		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
-
-		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
-	}
-
-
-	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_ACCOUNT_Proxy);
-	server.set_id(1);
-
-	std::vector<std::string> tables;
-	for (const auto& items : requiredTableOpt.value())
-	{
-		tables.push_back(items.first);
-	}
-
-	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount)
-	{
+	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount) {
 		if (!bResul)
 		{
 			std::stringstream ss;
@@ -63,9 +41,16 @@ std::tuple<uint32_t, std::string> LoginMgr::start()
 		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
 
 	};
-	CallMysqlDescTable(server, DeclarativeBase::DBType::DBT_Account, tables, ptrReadyCb);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+	bool bResult = RegisterRequiredTable(dbType, 1, { {ModelAccount::getFactoryName(), ModelAccount::createMethod} }, ptrReadyCb);
+	if (bResult)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+	}
+	else
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, "HR_Error");
+	}
 }
 
 std::tuple<uint32_t, std::string> LoginMgr::ready()
