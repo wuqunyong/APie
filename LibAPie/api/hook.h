@@ -41,7 +41,8 @@ public:
 
 	using HookCallbackMap = std::map<HookPoint, std::vector<HookEntry>>;
 
-	void appendHook(HookPoint point, HookCallback cb, uint32_t priority = 0);
+	//register
+	void registerHook(HookPoint point, HookCallback cb, uint32_t priority = 0);
 	std::optional<std::vector<HookEntry>> getHook(HookPoint point);
 
 	void triggerHook(HookPoint point);

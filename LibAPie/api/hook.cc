@@ -12,7 +12,7 @@
 namespace APie {
 namespace Hook {
 
-	void HookRegistry::appendHook(HookPoint point, HookCallback cb, uint32_t priority)
+	void HookRegistry::registerHook(HookPoint point, HookCallback cb, uint32_t priority)
 	{
 		HookEntry entry;
 		entry.cb = cb;
