@@ -130,6 +130,7 @@ mysqladmin -u root -p version
 ```
 
 # Windows安装
+安装依赖库，直接visual studio启动，编译
 
 # 架构图
 ![架构图](https://github.com/wuqunyong/APie/blob/master/docs/topology.png)
