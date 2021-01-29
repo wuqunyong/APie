@@ -48,7 +48,8 @@ pwd
 %{__install} -d %{buildroot}/etc/rc.d/init.d
 
 
-%{__install} -c -m 644 conf/db_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_proxy.yaml
+%{__install} -c -m 644 conf/db_account_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_account_proxy.yaml
+%{__install} -c -m 644 conf/db_role_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_role_proxy.yaml
 %{__install} -c -m 644 conf/gateway_server.yaml %{buildroot}/usr/local/%{name}/conf/gateway_server.yaml
 %{__install} -c -m 644 conf/login_server.yaml %{buildroot}/usr/local/%{name}/conf/login_server.yaml
 %{__install} -c -m 644 conf/route_proxy.yaml %{buildroot}/usr/local/%{name}/conf/route_proxy.yaml
