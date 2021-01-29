@@ -52,7 +52,7 @@ apie_sources = \
 	$(top_srcdir)/LibAPie/api/pubsub.cc  \
 	$(top_srcdir)/LibAPie/common/exception_trap.cpp  \
 	$(top_srcdir)/LibAPie/common/file.cc  \
-	$(top_srcdir)/LibAPie/common/graphics_utility.cc  \
+	$(top_srcdir)/LibAPie/common/graphics_utility.cpp  \
 	$(top_srcdir)/LibAPie/common/string_utils.cpp  \
 	$(top_srcdir)/LibAPie/common/utility.cc  \
 	$(top_srcdir)/LibAPie/compressor/lz4_compressor_impl.cc  \
