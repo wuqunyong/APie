@@ -1,6 +1,7 @@
 #include "scene_mgr.h"
 
 #include "../../PBMsg/opcodes.pb.h"
+#include "../../SharedDir/opcodes.h"
 
 
 namespace APie {
@@ -37,7 +38,7 @@ std::tuple<uint32_t, std::string> SceneMgr::ready()
 {
 	// CLIENT OPCODE
 	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
+	forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
 
 
 	std::stringstream ss;
@@ -116,7 +117,7 @@ void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::log
 	::login_msg::MSG_RESPONSE_ECHO response;
 	response.set_value1(iCurMS);
 	response.set_value2(request.value2() + "|response");
-	Network::OutputStream::sendMsgToUserByGateway(roleIdentifier, opcodes::OP_MSG_RESPONSE_ECHO, response);
+	Network::OutputStream::sendMsgToUserByGateway(roleIdentifier, APie::OP_MSG_RESPONSE_ECHO, response);
 }
 
 }

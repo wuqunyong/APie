@@ -3,6 +3,8 @@
 #include <functional>
 #include "test_server.h"
 
+#include "../../SharedDir/opcodes.h"
+
 namespace APie {
 
 MockRole::MockRole(uint64_t iRoleId) :
@@ -41,7 +43,7 @@ void MockRole::setUp()
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
 
-	this->addResponseHandler(::opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
+	this->addResponseHandler(::APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
 
 	this->processCmd();
 }
@@ -240,7 +242,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 
 	switch (opcodes)
 	{
-	case ::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN:
+	case ::APie::OP_MSG_RESPONSE_CLIENT_LOGIN:
 	{
 		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
 		bool bResult = response.ParseFromString(msg);
@@ -253,7 +255,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		sData = response.ShortDebugString();
 		break;
 	}
-	case ::opcodes::OP_MSG_RESPONSE_ECHO:
+	case ::APie::OP_MSG_RESPONSE_ECHO:
 	{
 		::login_msg::MSG_RESPONSE_ECHO response;
 		bool bResult = response.ParseFromString(msg);
@@ -290,7 +292,7 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 	::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L request;
 	request.set_account_id(m_iRoleId);
 
-	this->sendMsg(::opcodes::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
+	this->sendMsg(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
 }
 
 //void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
@@ -300,7 +302,7 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 //	request.set_version(std::stoi(msg.params()[0]));
 //	request.set_session_key(msg.params()[1]);
 //
-//	this->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+//	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 //}
 
 void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
@@ -309,7 +311,7 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 	request.set_value1(std::stoi(msg.params()[0]));
 	request.set_value2(msg.params()[1]);
 
-	this->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
+	this->sendMsg(::APie::OP_MSG_REQUEST_ECHO, request);
 }
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
@@ -364,7 +366,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 				request.set_user_id(response.account_id());
 				request.set_session_key(response.session_key());
 
-				ptrShared->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+				ptrShared->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 			}
 		}
 		return true;

@@ -1,7 +1,9 @@
 #include "test_server.h"
 
-#include "../../LibAPie/redis_driver/redis_client.h"
 #include "json/json.h"
+
+#include "../../LibAPie/redis_driver/redis_client.h"
+#include "../../SharedDir/opcodes.h"
 
 namespace APie {
 
@@ -20,8 +22,8 @@ std::tuple<uint32_t, std::string> TestServerMgr::init()
 	
 	Api::OpcodeHandlerSingleton::get().client.setDefaultFunc(TestServerMgr::handleDefaultOpcodes);
 
-	//Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
-	//Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
+	//Api::OpcodeHandlerSingleton::get().client.bind(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
+	//Api::OpcodeHandlerSingleton::get().client.bind(::APie::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
@@ -121,7 +123,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_version(std::stoi(command.params()[1]));
 		request.set_session_key(command.params()[2]);
 
-		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}
@@ -138,7 +140,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_value1(iCurMS);
 		request.set_value2(command.params()[0]);
 
-		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::opcodes::OP_MSG_REQUEST_ECHO, request);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::APie::OP_MSG_REQUEST_ECHO, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}

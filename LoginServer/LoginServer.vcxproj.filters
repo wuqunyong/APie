@@ -14,6 +14,9 @@
     <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h">
       <Filter>PBMsg\BusinessMsg</Filter>
     </ClInclude>
+    <ClInclude Include="..\SharedDir\opcodes.h">
+      <Filter>SharedDir</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

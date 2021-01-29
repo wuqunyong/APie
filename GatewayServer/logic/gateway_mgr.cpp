@@ -2,6 +2,7 @@
 #include "../../SharedDir/dao/model_user.h"
 #include "../../LibAPie/common/message_traits.h"
 #include "gateway_role.h"
+#include "../../SharedDir/opcodes.h"
 
 
 namespace APie {
@@ -72,7 +73,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::ready()
 	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
-	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
 
 
 	std::stringstream ss;
@@ -741,7 +742,7 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 		response.set_status_code(opcodes::SC_BindTable_Error);
 		response.set_user_id(request.user_id());
 		response.set_version(request.version());
-		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 		return;
 	}
 
@@ -756,7 +757,7 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 			response.set_status_code(status.code());
 			response.set_user_id(request.user_id());
 			response.set_version(request.version());
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 			return;
 		}
 
@@ -776,7 +777,7 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, iSerialNum);
 		GatewayMgrSingleton::get().addGatewayRole(ptrGatewayRole);
 
-		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 	};
 	LoadFromDb<ModelUser>(server, user, cb);
 }

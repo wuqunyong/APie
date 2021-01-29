@@ -2,6 +2,7 @@
 
 #include "../../LibAPie/common/string_utils.h"
 #include "../../SharedDir/dao/model_account.h"
+#include "../../SharedDir/opcodes.h"
 
 
 namespace APie {
@@ -61,7 +62,7 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 
 	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
-	serverPB.bind(::opcodes::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin, ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin, ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L::default_instance());
 
 
 	std::stringstream ss;
@@ -112,7 +113,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
 		response.set_status_code(opcodes::SC_BindTable_Error);
 		response.set_account_id(request.account_id());
-		Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 		return;
 	}
 
@@ -126,7 +127,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
 			response.set_status_code(status.code());
 			response.set_account_id(request.account_id());
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -138,7 +139,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 		if (!gatewayOpt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -184,11 +185,11 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 				if (status.code() != ::rpc_msg::CODE_Ok)
 				{
 					response.set_status_code(status.code());
-					Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
 
-				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
 			return;
@@ -198,7 +199,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 		if (!roleDBopt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -212,7 +213,7 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 			if (status.code() != ::rpc_msg::CODE_Ok)
 			{
 				response.set_status_code(status.code());
-				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 				return;
 			}
 
@@ -225,11 +226,11 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 				if (status.code() != ::rpc_msg::CODE_Ok)
 				{
 					response.set_status_code(status.code());
-					Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
 
-				Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
 			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
 		};
