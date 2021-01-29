@@ -135,8 +135,6 @@ mysqladmin -u root -p version
 
 #include "apie.h"
 
-#include "service_init.h"
-
 std::tuple<uint32_t, std::string> initHook()
 {
 	return //TODO;
