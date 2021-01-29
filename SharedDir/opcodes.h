@@ -27,4 +27,11 @@ namespace APie {
 	};
 
 
+
+	enum ReturnCode : uint32_t
+	{
+		RC_OK = 0,
+
+		//业务返回码，从1000开始
+	};
 }
