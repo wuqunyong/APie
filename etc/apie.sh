@@ -13,22 +13,25 @@ fi
 RETVAL=0
 
 SERVER[0]=/usr/local/apie/bin/db_proxy_server 
-SERVER_ARGS[0]=/usr/local/apie/conf/db_proxy.yaml
+SERVER_ARGS[0]=/usr/local/apie/conf/db_account_proxy.yaml
 
-SERVER[1]=/usr/local/apie/bin/gateway_server 
-SERVER_ARGS[1]=/usr/local/apie/conf/gateway_server.yaml
+SERVER[1]=/usr/local/apie/bin/db_proxy_server 
+SERVER_ARGS[1]=/usr/local/apie/conf/db_role_proxy.yaml
 
-SERVER[2]=/usr/local/apie/bin/login_server 
-SERVER_ARGS[2]=/usr/local/apie/conf/login_server.yaml
+SERVER[2]=/usr/local/apie/bin/gateway_server 
+SERVER_ARGS[2]=/usr/local/apie/conf/gateway_server.yaml
 
-SERVER[3]=/usr/local/apie/bin/route_proxy 
-SERVER_ARGS[3]=/usr/local/apie/conf/route_proxy.yaml
+SERVER[3]=/usr/local/apie/bin/login_server 
+SERVER_ARGS[3]=/usr/local/apie/conf/login_server.yaml
 
-SERVER[4]=/usr/local/apie/bin/scene_server 
-SERVER_ARGS[4]=/usr/local/apie/conf/scene_server.yaml
+SERVER[4]=/usr/local/apie/bin/route_proxy 
+SERVER_ARGS[4]=/usr/local/apie/conf/route_proxy.yaml
 
-SERVER[5]=/usr/local/apie/bin/service_registry 
-SERVER_ARGS[5]=/usr/local/apie/conf/service_registry.yaml
+SERVER[5]=/usr/local/apie/bin/scene_server 
+SERVER_ARGS[5]=/usr/local/apie/conf/scene_server.yaml
+
+SERVER[6]=/usr/local/apie/bin/service_registry 
+SERVER_ARGS[6]=/usr/local/apie/conf/service_registry.yaml
 
 
 # This is our service name
