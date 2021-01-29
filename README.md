@@ -85,6 +85,20 @@ apie-debuginfo-1.0.0-1.x86_64.rpm
 rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
 ```
 
+## 服务操作
+### 状态查看
+```shell
+service status apie
+```
+### 启动
+```shell
+service start apie
+```
+### 关闭
+```shell
+service stop apie
+```
+
 ## CentOS7 x64安装MySQL
 [# How To Install MySQL on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7)
 In a web browser, visit:
