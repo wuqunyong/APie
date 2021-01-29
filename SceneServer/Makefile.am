@@ -22,8 +22,12 @@ scene_server_sources = \
 	$(top_srcdir)/SceneServer/service_init.cpp \
 	$(top_srcdir)/SceneServer/logic/scene_mgr.cpp 
 
+pb_sources = \
+	$(top_srcdir)/PBMsg/BusinessMsg/login_msg.pb.cc \
+	$(top_srcdir)/PBMsg/BusinessMsg/rpc_login.pb.cc
+
 bin_PROGRAMS = scene_server
 
-scene_server_SOURCES = $(scene_server_sources)
+scene_server_SOURCES = $(scene_server_sources) $(pb_sources)
 scene_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
 scene_server_LDFLAGS = $(apie_module_ldflags)

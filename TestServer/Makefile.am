@@ -23,9 +23,13 @@ test_client_sources = \
 	$(top_srcdir)/TestServer/logic/mock_role.cpp \
 	$(top_srcdir)/TestServer/logic/test_server.cpp 
 
+pb_sources = \
+	$(top_srcdir)/PBMsg/BusinessMsg/login_msg.pb.cc \
+	$(top_srcdir)/PBMsg/BusinessMsg/rpc_login.pb.cc \
+	$(top_srcdir)/PBMsg/BusinessMsg/role_server_msg.pb.cc
 
 bin_PROGRAMS = test_client
 
-test_client_SOURCES = $(test_client_sources)
+test_client_SOURCES = $(test_client_sources) $(pb_sources)
 test_client_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
 test_client_LDFLAGS = $(apie_module_ldflags)
