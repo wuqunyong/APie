@@ -106,7 +106,7 @@ case "$1" in
     while(( $curValue<$length ))
     do
         echo "curValue:$curValue"
-        echo "status:${SERVER[$curValue]}"
+        echo "status:${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}"
         status ${SERVER[$curValue]}
 
         let "curValue++"
