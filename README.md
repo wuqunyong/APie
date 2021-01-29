@@ -86,17 +86,17 @@ rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
 ```
 
 ## 服务操作
-### 状态查看
+### 查看状态
 ```shell
-service status apie
+service apie status
 ```
 ### 启动
 ```shell
-service start apie
+service apie start
 ```
 ### 关闭
 ```shell
-service stop apie
+service apie stop
 ```
 
 ## CentOS7 x64安装MySQL
