@@ -139,14 +139,17 @@ mysqladmin -u root -p version
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	//TODO
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return //TODO;
 }
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	//TODO
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return //TODO;
+}
+
+std::tuple<uint32_t, std::string> readyHook()
+{
+	return //TODO;
 }
 
 std::tuple<uint32_t, std::string> exitHook()
@@ -155,18 +158,20 @@ std::tuple<uint32_t, std::string> exitHook()
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
 
+
 int main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		fatalExit("usage: exe <ConfFile>");
+		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
 
 	std::string configFile = argv[1];
 
-	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Init, initHook);
-	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Start, startHook);
-	APie::Hook::HookRegistrySingleton::get().appendHook(APie::Hook::HookPoint::HP_Exit, exitHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, APie::initHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, APie::startHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, APie::readyHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, APie::exitHook);
 
 	APie::CtxSingleton::get().init(configFile);
 	APie::CtxSingleton::get().start();
