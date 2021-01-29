@@ -1,6 +1,4 @@
 #include "test_server.h"
-#include "../../PBMsg/login_msg.pb.h"
-#include "../../PBMsg/role_server_msg.pb.h"
 
 #include "../../LibAPie/redis_driver/redis_client.h"
 #include "json/json.h"

@@ -125,12 +125,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\PBMsg\BusinessMsg\login_msg.pb.h" />
+    <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h" />
     <ClInclude Include="..\SharedDir\dao\model_user.h" />
     <ClInclude Include="logic\gateway_mgr.h" />
     <ClInclude Include="logic\gateway_role.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\PBMsg\BusinessMsg\login_msg.pb.cc" />
+    <ClCompile Include="..\PBMsg\BusinessMsg\rpc_login.pb.cc" />
     <ClCompile Include="logic\gateway_mgr.cpp" />
     <ClCompile Include="logic\gateway_role.cpp" />
     <ClCompile Include="main.cpp" />

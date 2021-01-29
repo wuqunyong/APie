@@ -4,11 +4,23 @@
     <Filter Include="logic">
       <UniqueIdentifier>{698a48ab-249e-4908-a2a2-017451d63b37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PBMsg">
+      <UniqueIdentifier>{988182ac-bd7d-44e9-8689-332e80b9b6ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBMsg\BusinessMsg">
+      <UniqueIdentifier>{33cd7f22-5f05-4bc8-8be3-5107c575590d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
     <ClInclude Include="logic\scene_mgr.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PBMsg\BusinessMsg\login_msg.pb.h">
+      <Filter>PBMsg\BusinessMsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h">
+      <Filter>PBMsg\BusinessMsg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -16,6 +28,12 @@
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\scene_mgr.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\BusinessMsg\login_msg.pb.cc">
+      <Filter>PBMsg\BusinessMsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PBMsg\BusinessMsg\rpc_login.pb.cc">
+      <Filter>PBMsg\BusinessMsg</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

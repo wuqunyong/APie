@@ -1,7 +1,6 @@
 #include "gateway_mgr.h"
 #include "../../SharedDir/dao/model_user.h"
 #include "../../LibAPie/common/message_traits.h"
-#include "../../PBMsg/login_msg.pb.h"
 #include "gateway_role.h"
 
 

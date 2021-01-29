@@ -19,12 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\PBMsg\BusinessMsg\login_msg.pb.cc" />
+    <ClCompile Include="..\PBMsg\BusinessMsg\role_server_msg.pb.cc" />
+    <ClCompile Include="..\PBMsg\BusinessMsg\rpc_login.pb.cc" />
     <ClCompile Include="logic\mock_role.cpp" />
     <ClCompile Include="logic\test_server.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\PBMsg\BusinessMsg\login_msg.pb.h" />
+    <ClInclude Include="..\PBMsg\BusinessMsg\role_server_msg.pb.h" />
+    <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h" />
     <ClInclude Include="logic\mock_role.h" />
     <ClInclude Include="logic\test_server.h" />
     <ClInclude Include="service_init.h" />

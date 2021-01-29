@@ -10,7 +10,7 @@
 #include <memory>
 
 #include "apie.h"
-#include "../../PBMsg/login_msg.pb.h"
+#include "../../PBMsg/BusinessMsg/login_msg.pb.h"
 
 
 namespace APie {

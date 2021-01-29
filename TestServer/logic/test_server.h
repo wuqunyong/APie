@@ -9,7 +9,10 @@
 #include <tuple>
 
 #include "apie.h"
-#include "../../PBMsg/login_msg.pb.h"
+
+#include "../../PBMsg/BusinessMsg/login_msg.pb.h"
+#include "../../PBMsg/BusinessMsg/role_server_msg.pb.h"
+
 #include "mock_role.h"
 
 
