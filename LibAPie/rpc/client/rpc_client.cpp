@@ -74,7 +74,7 @@ namespace RPC {
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed|server:%s|opcodes:%d|args:%s",
 				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
 
-			status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
+			status.set_code(opcodes::SC_Rpc_RouteSerialNumInvalid);
 			if (reply)
 			{
 				reply(status, "");
@@ -117,7 +117,7 @@ namespace RPC {
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "methods empty");
 			
-			status.set_code(opcodes::SC_RPC_InvalidArgs_MethodsEmpty);
+			status.set_code(opcodes::SC_Rpc_InvalidArgs_MethodsEmpty);
 			reply(status, replyData);
 
 			return false;
@@ -134,7 +134,7 @@ namespace RPC {
 				while (replyData.size() < methods.size())
 				{
 					rpc_msg::STATUS responseStatus;
-					responseStatus.set_code(opcodes::SC_RPC_NotSend);
+					responseStatus.set_code(opcodes::SC_Rpc_NotSend);
 
 					std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
 					replyData.push_back(response);
@@ -155,7 +155,7 @@ namespace RPC {
 				while (replyData.size() < methods.size())
 				{
 					rpc_msg::STATUS responseStatus;
-					responseStatus.set_code(opcodes::SC_RPC_NotSend);
+					responseStatus.set_code(opcodes::SC_Rpc_NotSend);
 
 					std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
 					replyData.push_back(response);
@@ -181,13 +181,13 @@ namespace RPC {
 			{
 				ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "route closed");
 
-				status.set_code(opcodes::SC_RPC_RouteSerialNumInvalid);
+				status.set_code(opcodes::SC_Rpc_RouteSerialNumInvalid);
 				if (reply)
 				{
 					while (replyData.size() < methods.size())
 					{
 						rpc_msg::STATUS responseStatus;
-						responseStatus.set_code(opcodes::SC_RPC_NotSend);
+						responseStatus.set_code(opcodes::SC_Rpc_NotSend);
 
 						std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
 						replyData.push_back(response);
@@ -252,7 +252,7 @@ namespace RPC {
 						else
 						{
 							rpc_msg::STATUS responseStatus;
-							responseStatus.set_code(opcodes::SC_RPC_NotReceivedReply);
+							responseStatus.set_code(opcodes::SC_Rpc_NotReceivedReply);
 
 							std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
 							sharedPtrPending->result.push_back(response);
@@ -264,7 +264,7 @@ namespace RPC {
 					resultStatus.set_code(opcodes::SC_Ok);
 					if (bHasError)
 					{
-						resultStatus.set_code(opcodes::SC_RPC_Partial_Error);
+						resultStatus.set_code(opcodes::SC_Rpc_Partial_Error);
 					}
 
 					if (reply)
@@ -352,7 +352,7 @@ namespace RPC {
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d", server.ShortDebugString().c_str(), opcodes);
 
-			status.set_code(opcodes::SC_RPC_RouteSendError);
+			status.set_code(opcodes::SC_Rpc_RouteSendError);
 			if (reply)
 			{
 				reply(status, "");
