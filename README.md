@@ -85,7 +85,7 @@ apie-debuginfo-1.0.0-1.x86_64.rpm
 rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
 ```
 
-## 服务操作
+## 服务管理
 ### 查看状态
 ```shell
 service apie status
