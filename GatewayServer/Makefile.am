@@ -17,6 +17,10 @@ INCLUDES = -I /usr/local/include \
 			
 apie_module_ldflags = -L/usr/lib64/mysql -L/usr/local/lib64 -L/usr/local/lib -L/usr/local/protobuf/lib -L$(top_srcdir)/bin -Wl,-rpath,/usr/local/apie/lib -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie
 
+pb_sources = \
+	$(top_srcdir)/PBMsg/BusinessMsg/login_msg.pb.cc \
+	$(top_srcdir)/PBMsg/BusinessMsg/rpc_login.pb.cc
+
 shared_dir_sources = 
 
 gateway_server_sources = \
@@ -27,6 +31,6 @@ gateway_server_sources = \
 
 bin_PROGRAMS = gateway_server
 
-gateway_server_SOURCES = $(gateway_server_sources) $(shared_dir_sources)
+gateway_server_SOURCES = $(gateway_server_sources) $(pb_sources) $(shared_dir_sources)
 gateway_server_LDADD = -lapie -lmysqlclient -lprotobuf -lyaml-cpp
 gateway_server_LDFLAGS = $(apie_module_ldflags)
