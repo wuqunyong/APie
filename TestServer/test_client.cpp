@@ -16,6 +16,10 @@
 #include <lz4hc.h>
 #include <lz4frame.h>
 
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+
 using namespace tinyxml2;
 using namespace std;
 
@@ -150,11 +154,119 @@ int TestXML()
 	return doc.ErrorID();
 }
 
+bool TestEncrypt(std::string plainText, std::string *ptrCipherText)
+{
+	if (ptrCipherText == nullptr)
+	{
+		return false;
+	}
+
+	std::string key_path("E:\\APie\\conf\\key.pub");
+
+	/// 打开 公钥 文件
+	FILE *_file;
+	_file = fopen(key_path.c_str(), "rb");
+	if (_file == nullptr) {
+		perror("open public file failed !!! \n");
+		return false;
+	}
+
+	/// 从文件中获取 公钥
+	RSA  *p_rsa = nullptr;
+	p_rsa = PEM_read_RSA_PUBKEY(_file, NULL, NULL, NULL);
+	if (p_rsa == nullptr) {
+		perror("PEM_read_RSA_PUBKEY failed !!! \n");
+		return false;
+	}
+
+	auto iRSASize = RSA_size(p_rsa);
+	ptrCipherText->resize(iRSASize);
+
+	/// 对内容进行加密
+	int encrypted_size = RSA_public_encrypt(plainText.size(),
+		(uint8_t *)plainText.data(),
+		reinterpret_cast<uint8_t*>(&(*ptrCipherText)[0]),
+		p_rsa,
+		RSA_PKCS1_OAEP_PADDING);
+
+	if (encrypted_size != static_cast<int>(iRSASize)) 
+	{
+		std::stringstream ss;
+		ss << "RSA public encrypt failure: " << ERR_error_string(ERR_get_error(), NULL);
+		return false;
+	}
+
+	if (p_rsa)    RSA_free(p_rsa);
+	if (_file)     fclose(_file);
+
+	return true;
+}
+
+bool TestDecrypt(const std::string& encrypted_message, std::string* decrypted_message) {
+	std::string key_path("E:\\APie\\conf\\key.pem");
+
+	// 打开 私钥 文件
+	FILE *_file;
+	_file = fopen(key_path.c_str(), "rb");
+	if (_file == nullptr) {
+		perror("open private file failed !!! \n");
+		return false;
+	}
+
+	/// 从文件中获取 私钥
+	RSA  *p_rsa = nullptr;
+	p_rsa = PEM_read_RSAPrivateKey(_file, NULL, NULL, NULL);
+	if (p_rsa == nullptr) {
+		perror("PEM_read_RSAPrivateKey failed !!! \n");
+		return false;
+	}
+
+
+
+	size_t rsa_size = RSA_size(p_rsa);
+	if (encrypted_message.size() != rsa_size) {
+		std::stringstream ss;
+		ss << "Encrypted RSA message has the wrong size (expected "
+			<< rsa_size << ", actual " << encrypted_message.size() << ").";
+		return false;
+	}
+
+	decrypted_message->resize(rsa_size);
+	int decrypted_size = RSA_private_decrypt(
+		rsa_size, reinterpret_cast<const uint8_t*>(encrypted_message.data()),
+		reinterpret_cast<uint8_t*>(&(*decrypted_message)[0]), p_rsa,
+		RSA_PKCS1_OAEP_PADDING);
+
+	if (decrypted_size == -1) {
+		std::stringstream ss;
+		ss << "RSA private decrypt failure: " << ERR_error_string(
+			ERR_get_error(), NULL);
+		return false;
+	}
+	decrypted_message->resize(decrypted_size);
+	return true;
+}
 
 int main(int argc, char **argv)
 {
+	std::string plainMsg("hello");
+	std::string encryptedMsg;
+	std::string decryptedMsg;
+
 	TestJsonCpp();
 	TestXML();
+	//TestEncrypt(plainMsg, &encryptedMsg);
+	//TestDecrypt(encryptedMsg, &decryptedMsg);
+
+	std::string errInfo;
+	bool bResult = APie::Crypto::RSAUtilitySingleton::get().init("E:\\APie\\conf\\key.pub", "E:\\APie\\conf\\key.pem", errInfo);
+	if (!bResult)
+	{
+		return 1;
+	}
+
+	APie::Crypto::RSAUtilitySingleton::get().encrypt(plainMsg, &encryptedMsg);
+	APie::Crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
 
 	std::string data;
 	auto optResult = doCompress(data, 0);
