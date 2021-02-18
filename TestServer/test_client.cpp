@@ -247,8 +247,19 @@ bool TestDecrypt(const std::string& encrypted_message, std::string* decrypted_me
 	return true;
 }
 
+uint64_t MakeKey(uint32_t high, uint32_t low)
+{
+	uint32_t factor = 100000000;
+
+	uint64_t result = high;
+	result = result * factor + low;
+	return result;
+}
+
 int main(int argc, char **argv)
 {
+	auto iR = MakeKey(9000001, 123);
+
 	std::string plainMsg("hello");
 	std::string encryptedMsg;
 	std::string decryptedMsg;

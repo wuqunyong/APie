@@ -146,57 +146,109 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 	}
 	else if (command.cmd() == "redis")
 	{
-		if (command.params_size() < 1)
+		if (command.params_size() < 2)
 		{
 			return;
 		}
+
 
 		auto key = std::make_tuple(1, 1);
+		std::string sTable = command.params()[0];  //command.params()[0];
+		std::string field = command.params()[1];
 
-		std::string sTable = "hs_player_summary";  //command.params()[0];
-		std::string field = command.params()[0];
 
-		auto redisClient = RedisClientFactorySingleton::get().getClient(key);
-		if (redisClient == nullptr)
+		if (sTable == "hs_player_summary")
 		{
-			return;
-		}
+			auto redisClient = RedisClientFactorySingleton::get().getClient(key);
+			if (redisClient == nullptr)
+			{
+				return;
+			}
 
-		if (!redisClient->client().is_connected())
+			if (!redisClient->client().is_connected())
+			{
+				return;
+			}
+
+			auto cb = [sTable](cpp_redis::reply &reply) {
+				if (reply.is_error())
+				{
+					return;
+				}
+
+
+				if (reply.is_null())
+				{
+					return;
+				}
+
+				if (!reply.is_bulk_string())
+				{
+					return;
+				}
+
+				::role_msg::ROLE_SUMMARY summary;
+
+				std::string content = reply.as_string();
+				if (!summary.ParseFromString(content))
+				{
+					return;
+				}
+
+				std::cout << summary.DebugString() << std::endl;
+			};
+			redisClient->client().hget(sTable, field, cb);
+			redisClient->client().commit();
+		}
+		else if (sTable == "order_info")
 		{
-			return;
+			field = command.params()[1] + "|" + command.params()[2];
+
+			auto redisClient = RedisClientFactorySingleton::get().getClient(key);
+			if (redisClient == nullptr)
+			{
+				return;
+			}
+
+			if (!redisClient->client().is_connected())
+			{
+				return;
+			}
+
+			auto cb = [sTable](cpp_redis::reply &reply) {
+				if (reply.is_error())
+				{
+					return;
+				}
+
+
+				if (reply.is_null())
+				{
+					return;
+				}
+
+				if (!reply.is_bulk_string())
+				{
+					return;
+				}
+
+				//::gm_msg::ORDER_INFO order;
+
+				//std::string content = reply.as_string();
+				//if (!order.ParseFromString(content))
+				//{
+				//	return;
+				//}
+
+				//std::cout << order.DebugString() << std::endl;
+			};
+			redisClient->client().hget(sTable, field, cb);
+			redisClient->client().commit();
 		}
+		else
+		{
 
-		auto cb = [sTable](cpp_redis::reply &reply) {
-			if (reply.is_error())
-			{
-				return;
-			}
-
-
-			if (reply.is_null())
-			{
-				return;
-			}
-
-			if (!reply.is_bulk_string())
-			{
-				return;
-			}
-
-			::role_msg::ROLE_SUMMARY summary;
-
-			std::string content = reply.as_string();
-			if (!summary.ParseFromString(content))
-			{
-				return;
-			}
-
-			std::cout << summary.DebugString() << std::endl;
-		};
-		redisClient->client().hget(sTable, field, cb);
-		redisClient->client().commit();
-
+		}
 
 	}
 	else if (command.cmd() == "client")

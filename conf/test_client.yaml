@@ -13,7 +13,7 @@ log:
   level: 0
   show_pos: false
   split_size: 128
-  show_console: true
+  show_console: false
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 metrics:
@@ -25,6 +25,6 @@ redis_clients:
     type: 1
     id: 1
     #host: "10.0.16.59"
-    host: "10.0.16.165"
+    host: "127.0.0.1"
     port: 6379
     passwd: "" 

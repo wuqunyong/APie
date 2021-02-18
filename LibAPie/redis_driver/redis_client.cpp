@@ -260,6 +260,22 @@ namespace APie {
 		return findIte->second;
 	}
 
+	std::shared_ptr<RedisClient> RedisClientFactory::getConnectedClient(RedisClient::Key key)
+	{
+		auto ptrClient = this->getClient(key);
+		if (ptrClient == nullptr)
+		{
+			return nullptr;
+		}
+
+		if (!ptrClient->client().is_connected())
+		{
+			return nullptr;
+		}
+
+		return ptrClient;
+	}
+
 	std::shared_ptr<RedisClient> RedisClientFactory::createClient(RedisClient::Key key, const std::string &host, std::size_t port, const std::string &password, RedisClient::Cb cb)
 	{
 		auto sharedPtr = std::make_shared<RedisClient>(key, host, port, password, cb);

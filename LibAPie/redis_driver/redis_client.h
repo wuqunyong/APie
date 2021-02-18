@@ -99,7 +99,9 @@ namespace APie {
 	{
 	public:
 		bool registerClient(std::shared_ptr<RedisClient> ptrClient);
+
 		std::shared_ptr<RedisClient> getClient(RedisClient::Key key);
+		std::shared_ptr<RedisClient> getConnectedClient(RedisClient::Key key);
 
 	public:
 		static std::shared_ptr<RedisClient> createClient(RedisClient::Key key, const std::string &host, std::size_t port, const std::string &password, RedisClient::Cb cb);
