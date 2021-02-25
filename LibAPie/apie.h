@@ -32,6 +32,7 @@
 #include "common/message_traits.h"
 #include "common/exception_trap.h"
 #include "common/graphics_utility.h"
+#include "common/enum_to_int.h"
 
 #include "filesystem/directory.h"
 

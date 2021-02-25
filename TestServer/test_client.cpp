@@ -256,9 +256,17 @@ uint64_t MakeKey(uint32_t high, uint32_t low)
 	return result;
 }
 
+enum MyEnum : uint32_t
+{
+	ME_None = 0,
+	ME_Hehlo = 1,
+};
+
 int main(int argc, char **argv)
 {
 	auto iR = MakeKey(9000001, 123);
+
+	auto iValue = APie::toUnderlyingType(MyEnum::ME_Hehlo);
 
 	std::string plainMsg("hello");
 	std::string encryptedMsg;
