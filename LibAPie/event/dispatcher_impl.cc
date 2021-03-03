@@ -608,7 +608,7 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 			return;
 		}
 
-		// 先压缩后加密
+		//先压缩后加密
 		std::string sBody = itemPtr->sBody;
 		if (itemPtr->head.iFlags & PH_COMPRESSED)
 		{
