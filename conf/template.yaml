@@ -4,7 +4,7 @@ identify:            # 节点标识
   auth: "hello"          # 节点认证秘钥
   ip: "127.0.0.1"        # 节点作为Server,监听的IP
   port: 5007             # 节点作为Server,监听的端口
-  codec_type: 1          # 节点协议：1(PB√),2(HTTP)
+  codec_type: 1          # 节点协议：1(PB√),2(HTTP×)
   db_id : 1              # 节点作为代理数据库时，表示数据库ID, db_id一致时代表连接到用一个数据库
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
@@ -14,8 +14,8 @@ listeners:           # 服务端监听列表
     socket_address:          # 套接字字段
       address: "127.0.0.1"       # "*":INADDR_ANY,绑定都所有的本地IP
       port_value: 5007           # 端口
-      type: 1                    # 协议：1(PB√),2(HTTP)
-      mask_flag : 0              # 按位表示：0b1u(压缩√,客户端<->Gateway),0b10u(加密×)
+      type: 1                    # 协议：1(PB√),2(HTTP×)
+      mask_flag : 0              # 按位表示：0b1u(压缩√,客户端<->Gateway),0b10u(加密√)
 - address:
     socket_address:
       address: "*"      
@@ -26,13 +26,13 @@ clients:             # 客户端连接列表
     socket_address:      # 单个连接地址 
       address: "127.0.0.1"   # ip
       port_value: 5007       # port
-      type: 1                # 协议：1(PB√),2(HTTP)
-      mask_flag : 0          # 按位表示：0b1u(压缩√,客户端<->Gateway),0b10u(加密×)
+      type: 1                # 协议：1(PB√),2(HTTP×)
+      mask_flag : 0          # 按位表示：0b1u(压缩√,客户端<->Gateway),0b10u(加密√)
 service_registry:    # 服务注册地址
   address: "127.0.0.1"   # ip
   port_value: 5007       # port
   auth: "hello"          # 认证秘钥
-  type: 1                # 协议：1(PB√),2(HTTP)
+  type: 1                # 协议：1(PB√),2(HTTP×)
 topology:
   1: [2,3,4]
   2: [3,4]

@@ -17,6 +17,8 @@
 
 
 namespace APie {
+	class Command;
+
 namespace Network {
 
 	class OutputStream
@@ -28,6 +30,9 @@ namespace Network {
 		static bool sendMsgByStrByFlag(uint64_t iSerialNum, uint32_t iOpcode, const std::string& msg, uint32_t iFlag, ConnetionType type = ConnetionType::CT_NONE);
 		
 		static bool sendMsgToUserByGateway(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg);
+
+
+		static bool sendCommand(ConnetionType type, uint64_t iSerialNum, APie::Command& cmd);
 	};
 
 

@@ -3,6 +3,7 @@
 #include "../../LibAPie/common/message_traits.h"
 #include "gateway_role.h"
 #include "../../SharedDir/opcodes.h"
+#include "../../LibAPie/common/file.h"
 
 
 namespace APie {
@@ -14,6 +15,13 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 	if (!bResult)
 	{
 		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+	}
+
+	std::string errInfo;
+	bResult = APie::Crypto::RSAUtilitySingleton::get().init("E:\\APie\\conf\\key.pub", "E:\\APie\\conf\\key.pem", errInfo);
+	if (!bResult)
+	{
+		return std::make_tuple(Hook::HookResult::HR_Error, errInfo);
 	}
 
 	// CMD
@@ -74,7 +82,9 @@ std::tuple<uint32_t, std::string> GatewayMgr::ready()
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
 	serverPB.bind(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
-
+	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, GatewayMgr::handleRequestHandshakeInit, ::login_msg::MSG_REQUEST_HANDSHAKE_INIT::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, GatewayMgr::handleRequestHandshakeEstablished, ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED::default_instance());
+	
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -780,6 +790,75 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 	};
 	LoadFromDb<ModelUser>(server, user, cb);
+}
+
+void GatewayMgr::handleRequestHandshakeInit(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_INIT& request)
+{
+	std::string content;
+	bool bResult = APie::Common::GetContent("E:\\APie\\conf\\key.pub", &content);
+
+	std::string sServerRandom("server");
+
+	::login_msg::MSG_RESPONSE_HANDSHAKE_INIT response;
+
+	if (bResult)
+	{
+		response.set_status_code(opcodes::SC_Ok);
+	}
+	else
+	{
+		response.set_status_code(opcodes::SC_Auth_LoadPubFileError);
+	}
+	response.set_server_random(sServerRandom);
+	response.set_public_key(content);
+	Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_HANDSHAKE_INIT, response);
+
+	APie::SetServerSessionAttr *ptr = new APie::SetServerSessionAttr;
+	ptr->iSerialNum = iSerialNum;
+	ptr->optClientRandom = request.client_random();
+	ptr->optServerRandom = sServerRandom;
+
+	Command cmd;
+	cmd.type = Command::set_server_session_attr;
+	cmd.args.set_server_session_attr.ptrData = ptr;
+	Network::OutputStream::sendCommand(ConnetionType::CT_SERVER, iSerialNum, cmd);
+}
+
+void GatewayMgr::handleRequestHandshakeEstablished(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED& request)
+{
+	std::string decryptedMsg;
+	bool bResult = APie::Crypto::RSAUtilitySingleton::get().decrypt(request.encrypted_key(), &decryptedMsg);
+	if (!bResult)
+	{
+		::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED response;
+		response.set_status_code(opcodes::SC_Auth_DecryptError);
+		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, response);
+		return;
+	}
+
+	auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+	if (ptrConnection == nullptr)
+	{
+		return;
+	}
+
+	std::string sClientRandom = ptrConnection->getClientRandom();
+	std::string sServerRandom = ptrConnection->getServerRandom();
+
+	std::string sSessionKey = sClientRandom + sServerRandom + decryptedMsg;
+
+	::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED response;
+	response.set_status_code(opcodes::SC_Ok);
+	Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, response);
+
+	APie::SetServerSessionAttr *ptr = new APie::SetServerSessionAttr;
+	ptr->iSerialNum = iSerialNum;
+	ptr->optKey = sSessionKey;
+
+	Command cmd;
+	cmd.type = Command::set_server_session_attr;
+	cmd.args.set_server_session_attr.ptrData = ptr;
+	Network::OutputStream::sendCommand(ConnetionType::CT_SERVER, iSerialNum, cmd);
 }
 
 void GatewayMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)

@@ -47,7 +47,7 @@ struct TableStruct_login_5fmsg_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -70,6 +70,12 @@ extern MSG_REQUEST_CLIENT_LOGINDefaultTypeInternal _MSG_REQUEST_CLIENT_LOGIN_def
 class MSG_REQUEST_ECHO;
 class MSG_REQUEST_ECHODefaultTypeInternal;
 extern MSG_REQUEST_ECHODefaultTypeInternal _MSG_REQUEST_ECHO_default_instance_;
+class MSG_REQUEST_HANDSHAKE_ESTABLISHED;
+class MSG_REQUEST_HANDSHAKE_ESTABLISHEDDefaultTypeInternal;
+extern MSG_REQUEST_HANDSHAKE_ESTABLISHEDDefaultTypeInternal _MSG_REQUEST_HANDSHAKE_ESTABLISHED_default_instance_;
+class MSG_REQUEST_HANDSHAKE_INIT;
+class MSG_REQUEST_HANDSHAKE_INITDefaultTypeInternal;
+extern MSG_REQUEST_HANDSHAKE_INITDefaultTypeInternal _MSG_REQUEST_HANDSHAKE_INIT_default_instance_;
 class MSG_RESPONSE_ACCOUNT_LOGIN_L;
 class MSG_RESPONSE_ACCOUNT_LOGIN_LDefaultTypeInternal;
 extern MSG_RESPONSE_ACCOUNT_LOGIN_LDefaultTypeInternal _MSG_RESPONSE_ACCOUNT_LOGIN_L_default_instance_;
@@ -79,6 +85,12 @@ extern MSG_RESPONSE_CLIENT_LOGINDefaultTypeInternal _MSG_RESPONSE_CLIENT_LOGIN_d
 class MSG_RESPONSE_ECHO;
 class MSG_RESPONSE_ECHODefaultTypeInternal;
 extern MSG_RESPONSE_ECHODefaultTypeInternal _MSG_RESPONSE_ECHO_default_instance_;
+class MSG_RESPONSE_HANDSHAKE_ESTABLISHED;
+class MSG_RESPONSE_HANDSHAKE_ESTABLISHEDDefaultTypeInternal;
+extern MSG_RESPONSE_HANDSHAKE_ESTABLISHEDDefaultTypeInternal _MSG_RESPONSE_HANDSHAKE_ESTABLISHED_default_instance_;
+class MSG_RESPONSE_HANDSHAKE_INIT;
+class MSG_RESPONSE_HANDSHAKE_INITDefaultTypeInternal;
+extern MSG_RESPONSE_HANDSHAKE_INITDefaultTypeInternal _MSG_RESPONSE_HANDSHAKE_INIT_default_instance_;
 }  // namespace login_msg
 PROTOBUF_NAMESPACE_OPEN
 template<> ::login_msg::GameAccountInfo* Arena::CreateMaybeMessage<::login_msg::GameAccountInfo>(Arena*);
@@ -86,9 +98,13 @@ template<> ::login_msg::GameAccountList* Arena::CreateMaybeMessage<::login_msg::
 template<> ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(Arena*);
 template<> ::login_msg::MSG_REQUEST_CLIENT_LOGIN* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_CLIENT_LOGIN>(Arena*);
 template<> ::login_msg::MSG_REQUEST_ECHO* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_ECHO>(Arena*);
+template<> ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>(Arena*);
+template<> ::login_msg::MSG_REQUEST_HANDSHAKE_INIT* Arena::CreateMaybeMessage<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>(Arena*);
 template<> ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L* Arena::CreateMaybeMessage<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(Arena*);
 template<> ::login_msg::MSG_RESPONSE_CLIENT_LOGIN* Arena::CreateMaybeMessage<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>(Arena*);
 template<> ::login_msg::MSG_RESPONSE_ECHO* Arena::CreateMaybeMessage<::login_msg::MSG_RESPONSE_ECHO>(Arena*);
+template<> ::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED* Arena::CreateMaybeMessage<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>(Arena*);
+template<> ::login_msg::MSG_RESPONSE_HANDSHAKE_INIT* Arena::CreateMaybeMessage<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace login_msg {
 
@@ -807,6 +823,568 @@ class MSG_RESPONSE_ACCOUNT_LOGIN_L :
 };
 // -------------------------------------------------------------------
 
+class MSG_REQUEST_HANDSHAKE_INIT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_REQUEST_HANDSHAKE_INIT) */ {
+ public:
+  MSG_REQUEST_HANDSHAKE_INIT();
+  virtual ~MSG_REQUEST_HANDSHAKE_INIT();
+
+  MSG_REQUEST_HANDSHAKE_INIT(const MSG_REQUEST_HANDSHAKE_INIT& from);
+  MSG_REQUEST_HANDSHAKE_INIT(MSG_REQUEST_HANDSHAKE_INIT&& from) noexcept
+    : MSG_REQUEST_HANDSHAKE_INIT() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_REQUEST_HANDSHAKE_INIT& operator=(const MSG_REQUEST_HANDSHAKE_INIT& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_REQUEST_HANDSHAKE_INIT& operator=(MSG_REQUEST_HANDSHAKE_INIT&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_REQUEST_HANDSHAKE_INIT& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_REQUEST_HANDSHAKE_INIT* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_HANDSHAKE_INIT*>(
+               &_MSG_REQUEST_HANDSHAKE_INIT_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(MSG_REQUEST_HANDSHAKE_INIT& a, MSG_REQUEST_HANDSHAKE_INIT& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_REQUEST_HANDSHAKE_INIT* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_REQUEST_HANDSHAKE_INIT* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_HANDSHAKE_INIT>(nullptr);
+  }
+
+  MSG_REQUEST_HANDSHAKE_INIT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_HANDSHAKE_INIT>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_REQUEST_HANDSHAKE_INIT& from);
+  void MergeFrom(const MSG_REQUEST_HANDSHAKE_INIT& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_REQUEST_HANDSHAKE_INIT* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.MSG_REQUEST_HANDSHAKE_INIT";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_login_5fmsg_2eproto);
+    return ::descriptor_table_login_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kClientRandomFieldNumber = 1,
+  };
+  // string client_random = 1;
+  void clear_client_random();
+  const std::string& client_random() const;
+  void set_client_random(const std::string& value);
+  void set_client_random(std::string&& value);
+  void set_client_random(const char* value);
+  void set_client_random(const char* value, size_t size);
+  std::string* mutable_client_random();
+  std::string* release_client_random();
+  void set_allocated_client_random(std::string* client_random);
+  private:
+  const std::string& _internal_client_random() const;
+  void _internal_set_client_random(const std::string& value);
+  std::string* _internal_mutable_client_random();
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.MSG_REQUEST_HANDSHAKE_INIT)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr client_random_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MSG_RESPONSE_HANDSHAKE_INIT :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_RESPONSE_HANDSHAKE_INIT) */ {
+ public:
+  MSG_RESPONSE_HANDSHAKE_INIT();
+  virtual ~MSG_RESPONSE_HANDSHAKE_INIT();
+
+  MSG_RESPONSE_HANDSHAKE_INIT(const MSG_RESPONSE_HANDSHAKE_INIT& from);
+  MSG_RESPONSE_HANDSHAKE_INIT(MSG_RESPONSE_HANDSHAKE_INIT&& from) noexcept
+    : MSG_RESPONSE_HANDSHAKE_INIT() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_RESPONSE_HANDSHAKE_INIT& operator=(const MSG_RESPONSE_HANDSHAKE_INIT& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_RESPONSE_HANDSHAKE_INIT& operator=(MSG_RESPONSE_HANDSHAKE_INIT&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_RESPONSE_HANDSHAKE_INIT& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_RESPONSE_HANDSHAKE_INIT* internal_default_instance() {
+    return reinterpret_cast<const MSG_RESPONSE_HANDSHAKE_INIT*>(
+               &_MSG_RESPONSE_HANDSHAKE_INIT_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(MSG_RESPONSE_HANDSHAKE_INIT& a, MSG_RESPONSE_HANDSHAKE_INIT& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_RESPONSE_HANDSHAKE_INIT* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_RESPONSE_HANDSHAKE_INIT* New() const final {
+    return CreateMaybeMessage<MSG_RESPONSE_HANDSHAKE_INIT>(nullptr);
+  }
+
+  MSG_RESPONSE_HANDSHAKE_INIT* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_RESPONSE_HANDSHAKE_INIT>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_RESPONSE_HANDSHAKE_INIT& from);
+  void MergeFrom(const MSG_RESPONSE_HANDSHAKE_INIT& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_RESPONSE_HANDSHAKE_INIT* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.MSG_RESPONSE_HANDSHAKE_INIT";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_login_5fmsg_2eproto);
+    return ::descriptor_table_login_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kServerRandomFieldNumber = 2,
+    kPublicKeyFieldNumber = 3,
+    kStatusCodeFieldNumber = 1,
+  };
+  // string server_random = 2;
+  void clear_server_random();
+  const std::string& server_random() const;
+  void set_server_random(const std::string& value);
+  void set_server_random(std::string&& value);
+  void set_server_random(const char* value);
+  void set_server_random(const char* value, size_t size);
+  std::string* mutable_server_random();
+  std::string* release_server_random();
+  void set_allocated_server_random(std::string* server_random);
+  private:
+  const std::string& _internal_server_random() const;
+  void _internal_set_server_random(const std::string& value);
+  std::string* _internal_mutable_server_random();
+  public:
+
+  // string public_key = 3;
+  void clear_public_key();
+  const std::string& public_key() const;
+  void set_public_key(const std::string& value);
+  void set_public_key(std::string&& value);
+  void set_public_key(const char* value);
+  void set_public_key(const char* value, size_t size);
+  std::string* mutable_public_key();
+  std::string* release_public_key();
+  void set_allocated_public_key(std::string* public_key);
+  private:
+  const std::string& _internal_public_key() const;
+  void _internal_set_public_key(const std::string& value);
+  std::string* _internal_mutable_public_key();
+  public:
+
+  // int32 status_code = 1;
+  void clear_status_code();
+  ::PROTOBUF_NAMESPACE_ID::int32 status_code() const;
+  void set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_status_code() const;
+  void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.MSG_RESPONSE_HANDSHAKE_INIT)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr server_random_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr public_key_;
+  ::PROTOBUF_NAMESPACE_ID::int32 status_code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MSG_REQUEST_HANDSHAKE_ESTABLISHED :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED) */ {
+ public:
+  MSG_REQUEST_HANDSHAKE_ESTABLISHED();
+  virtual ~MSG_REQUEST_HANDSHAKE_ESTABLISHED();
+
+  MSG_REQUEST_HANDSHAKE_ESTABLISHED(const MSG_REQUEST_HANDSHAKE_ESTABLISHED& from);
+  MSG_REQUEST_HANDSHAKE_ESTABLISHED(MSG_REQUEST_HANDSHAKE_ESTABLISHED&& from) noexcept
+    : MSG_REQUEST_HANDSHAKE_ESTABLISHED() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_REQUEST_HANDSHAKE_ESTABLISHED& operator=(const MSG_REQUEST_HANDSHAKE_ESTABLISHED& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_REQUEST_HANDSHAKE_ESTABLISHED& operator=(MSG_REQUEST_HANDSHAKE_ESTABLISHED&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_REQUEST_HANDSHAKE_ESTABLISHED& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_REQUEST_HANDSHAKE_ESTABLISHED* internal_default_instance() {
+    return reinterpret_cast<const MSG_REQUEST_HANDSHAKE_ESTABLISHED*>(
+               &_MSG_REQUEST_HANDSHAKE_ESTABLISHED_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(MSG_REQUEST_HANDSHAKE_ESTABLISHED& a, MSG_REQUEST_HANDSHAKE_ESTABLISHED& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_REQUEST_HANDSHAKE_ESTABLISHED* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_REQUEST_HANDSHAKE_ESTABLISHED* New() const final {
+    return CreateMaybeMessage<MSG_REQUEST_HANDSHAKE_ESTABLISHED>(nullptr);
+  }
+
+  MSG_REQUEST_HANDSHAKE_ESTABLISHED* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_REQUEST_HANDSHAKE_ESTABLISHED>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_REQUEST_HANDSHAKE_ESTABLISHED& from);
+  void MergeFrom(const MSG_REQUEST_HANDSHAKE_ESTABLISHED& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_REQUEST_HANDSHAKE_ESTABLISHED* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_login_5fmsg_2eproto);
+    return ::descriptor_table_login_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEncryptedKeyFieldNumber = 1,
+  };
+  // bytes encrypted_key = 1;
+  void clear_encrypted_key();
+  const std::string& encrypted_key() const;
+  void set_encrypted_key(const std::string& value);
+  void set_encrypted_key(std::string&& value);
+  void set_encrypted_key(const char* value);
+  void set_encrypted_key(const void* value, size_t size);
+  std::string* mutable_encrypted_key();
+  std::string* release_encrypted_key();
+  void set_allocated_encrypted_key(std::string* encrypted_key);
+  private:
+  const std::string& _internal_encrypted_key() const;
+  void _internal_set_encrypted_key(const std::string& value);
+  std::string* _internal_mutable_encrypted_key();
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr encrypted_key_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MSG_RESPONSE_HANDSHAKE_ESTABLISHED :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED) */ {
+ public:
+  MSG_RESPONSE_HANDSHAKE_ESTABLISHED();
+  virtual ~MSG_RESPONSE_HANDSHAKE_ESTABLISHED();
+
+  MSG_RESPONSE_HANDSHAKE_ESTABLISHED(const MSG_RESPONSE_HANDSHAKE_ESTABLISHED& from);
+  MSG_RESPONSE_HANDSHAKE_ESTABLISHED(MSG_RESPONSE_HANDSHAKE_ESTABLISHED&& from) noexcept
+    : MSG_RESPONSE_HANDSHAKE_ESTABLISHED() {
+    *this = ::std::move(from);
+  }
+
+  inline MSG_RESPONSE_HANDSHAKE_ESTABLISHED& operator=(const MSG_RESPONSE_HANDSHAKE_ESTABLISHED& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MSG_RESPONSE_HANDSHAKE_ESTABLISHED& operator=(MSG_RESPONSE_HANDSHAKE_ESTABLISHED&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MSG_RESPONSE_HANDSHAKE_ESTABLISHED& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MSG_RESPONSE_HANDSHAKE_ESTABLISHED* internal_default_instance() {
+    return reinterpret_cast<const MSG_RESPONSE_HANDSHAKE_ESTABLISHED*>(
+               &_MSG_RESPONSE_HANDSHAKE_ESTABLISHED_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(MSG_RESPONSE_HANDSHAKE_ESTABLISHED& a, MSG_RESPONSE_HANDSHAKE_ESTABLISHED& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MSG_RESPONSE_HANDSHAKE_ESTABLISHED* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MSG_RESPONSE_HANDSHAKE_ESTABLISHED* New() const final {
+    return CreateMaybeMessage<MSG_RESPONSE_HANDSHAKE_ESTABLISHED>(nullptr);
+  }
+
+  MSG_RESPONSE_HANDSHAKE_ESTABLISHED* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MSG_RESPONSE_HANDSHAKE_ESTABLISHED>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MSG_RESPONSE_HANDSHAKE_ESTABLISHED& from);
+  void MergeFrom(const MSG_RESPONSE_HANDSHAKE_ESTABLISHED& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MSG_RESPONSE_HANDSHAKE_ESTABLISHED* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_login_5fmsg_2eproto);
+    return ::descriptor_table_login_5fmsg_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStatusCodeFieldNumber = 1,
+  };
+  // int32 status_code = 1;
+  void clear_status_code();
+  ::PROTOBUF_NAMESPACE_ID::int32 status_code() const;
+  void set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_status_code() const;
+  void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 status_code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
 class MSG_REQUEST_CLIENT_LOGIN :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.MSG_REQUEST_CLIENT_LOGIN) */ {
  public:
@@ -849,7 +1427,7 @@ class MSG_REQUEST_CLIENT_LOGIN :
                &_MSG_REQUEST_CLIENT_LOGIN_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    8;
 
   friend void swap(MSG_REQUEST_CLIENT_LOGIN& a, MSG_REQUEST_CLIENT_LOGIN& b) {
     a.Swap(&b);
@@ -1006,7 +1584,7 @@ class MSG_RESPONSE_CLIENT_LOGIN :
                &_MSG_RESPONSE_CLIENT_LOGIN_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    9;
 
   friend void swap(MSG_RESPONSE_CLIENT_LOGIN& a, MSG_RESPONSE_CLIENT_LOGIN& b) {
     a.Swap(&b);
@@ -1167,7 +1745,7 @@ class MSG_REQUEST_ECHO :
                &_MSG_REQUEST_ECHO_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    10;
 
   friend void swap(MSG_REQUEST_ECHO& a, MSG_REQUEST_ECHO& b) {
     a.Swap(&b);
@@ -1313,7 +1891,7 @@ class MSG_RESPONSE_ECHO :
                &_MSG_RESPONSE_ECHO_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    11;
 
   friend void swap(MSG_RESPONSE_ECHO& a, MSG_RESPONSE_ECHO& b) {
     a.Swap(&b);
@@ -2079,6 +2657,302 @@ inline void MSG_RESPONSE_ACCOUNT_LOGIN_L::set_port(::PROTOBUF_NAMESPACE_ID::int3
 
 // -------------------------------------------------------------------
 
+// MSG_REQUEST_HANDSHAKE_INIT
+
+// string client_random = 1;
+inline void MSG_REQUEST_HANDSHAKE_INIT::clear_client_random() {
+  client_random_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_REQUEST_HANDSHAKE_INIT::client_random() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+  return _internal_client_random();
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::set_client_random(const std::string& value) {
+  _internal_set_client_random(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_INIT::mutable_client_random() {
+  // @@protoc_insertion_point(field_mutable:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+  return _internal_mutable_client_random();
+}
+inline const std::string& MSG_REQUEST_HANDSHAKE_INIT::_internal_client_random() const {
+  return client_random_.GetNoArena();
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::_internal_set_client_random(const std::string& value) {
+  
+  client_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::set_client_random(std::string&& value) {
+  
+  client_random_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::set_client_random(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  client_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::set_client_random(const char* value, size_t size) {
+  
+  client_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_INIT::_internal_mutable_client_random() {
+  
+  return client_random_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_INIT::release_client_random() {
+  // @@protoc_insertion_point(field_release:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+  
+  return client_random_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_REQUEST_HANDSHAKE_INIT::set_allocated_client_random(std::string* client_random) {
+  if (client_random != nullptr) {
+    
+  } else {
+    
+  }
+  client_random_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), client_random);
+  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_REQUEST_HANDSHAKE_INIT.client_random)
+}
+
+// -------------------------------------------------------------------
+
+// MSG_RESPONSE_HANDSHAKE_INIT
+
+// int32 status_code = 1;
+inline void MSG_RESPONSE_HANDSHAKE_INIT::clear_status_code() {
+  status_code_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_RESPONSE_HANDSHAKE_INIT::_internal_status_code() const {
+  return status_code_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_RESPONSE_HANDSHAKE_INIT::status_code() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.status_code)
+  return _internal_status_code();
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  status_code_ = value;
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_status_code(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.status_code)
+}
+
+// string server_random = 2;
+inline void MSG_RESPONSE_HANDSHAKE_INIT::clear_server_random() {
+  server_random_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_HANDSHAKE_INIT::server_random() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+  return _internal_server_random();
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_server_random(const std::string& value) {
+  _internal_set_server_random(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::mutable_server_random() {
+  // @@protoc_insertion_point(field_mutable:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+  return _internal_mutable_server_random();
+}
+inline const std::string& MSG_RESPONSE_HANDSHAKE_INIT::_internal_server_random() const {
+  return server_random_.GetNoArena();
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::_internal_set_server_random(const std::string& value) {
+  
+  server_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_server_random(std::string&& value) {
+  
+  server_random_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_server_random(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  server_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_server_random(const char* value, size_t size) {
+  
+  server_random_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::_internal_mutable_server_random() {
+  
+  return server_random_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::release_server_random() {
+  // @@protoc_insertion_point(field_release:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+  
+  return server_random_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_allocated_server_random(std::string* server_random) {
+  if (server_random != nullptr) {
+    
+  } else {
+    
+  }
+  server_random_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), server_random);
+  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.server_random)
+}
+
+// string public_key = 3;
+inline void MSG_RESPONSE_HANDSHAKE_INIT::clear_public_key() {
+  public_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_HANDSHAKE_INIT::public_key() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+  return _internal_public_key();
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_public_key(const std::string& value) {
+  _internal_set_public_key(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::mutable_public_key() {
+  // @@protoc_insertion_point(field_mutable:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+  return _internal_mutable_public_key();
+}
+inline const std::string& MSG_RESPONSE_HANDSHAKE_INIT::_internal_public_key() const {
+  return public_key_.GetNoArena();
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::_internal_set_public_key(const std::string& value) {
+  
+  public_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_public_key(std::string&& value) {
+  
+  public_key_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_public_key(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  public_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_public_key(const char* value, size_t size) {
+  
+  public_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::_internal_mutable_public_key() {
+  
+  return public_key_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_HANDSHAKE_INIT::release_public_key() {
+  // @@protoc_insertion_point(field_release:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+  
+  return public_key_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_HANDSHAKE_INIT::set_allocated_public_key(std::string* public_key) {
+  if (public_key != nullptr) {
+    
+  } else {
+    
+  }
+  public_key_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), public_key);
+  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_RESPONSE_HANDSHAKE_INIT.public_key)
+}
+
+// -------------------------------------------------------------------
+
+// MSG_REQUEST_HANDSHAKE_ESTABLISHED
+
+// bytes encrypted_key = 1;
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::clear_encrypted_key() {
+  encrypted_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_REQUEST_HANDSHAKE_ESTABLISHED::encrypted_key() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+  return _internal_encrypted_key();
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::set_encrypted_key(const std::string& value) {
+  _internal_set_encrypted_key(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_ESTABLISHED::mutable_encrypted_key() {
+  // @@protoc_insertion_point(field_mutable:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+  return _internal_mutable_encrypted_key();
+}
+inline const std::string& MSG_REQUEST_HANDSHAKE_ESTABLISHED::_internal_encrypted_key() const {
+  return encrypted_key_.GetNoArena();
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::_internal_set_encrypted_key(const std::string& value) {
+  
+  encrypted_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::set_encrypted_key(std::string&& value) {
+  
+  encrypted_key_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::set_encrypted_key(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  encrypted_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::set_encrypted_key(const void* value, size_t size) {
+  
+  encrypted_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_ESTABLISHED::_internal_mutable_encrypted_key() {
+  
+  return encrypted_key_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_REQUEST_HANDSHAKE_ESTABLISHED::release_encrypted_key() {
+  // @@protoc_insertion_point(field_release:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+  
+  return encrypted_key_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_REQUEST_HANDSHAKE_ESTABLISHED::set_allocated_encrypted_key(std::string* encrypted_key) {
+  if (encrypted_key != nullptr) {
+    
+  } else {
+    
+  }
+  encrypted_key_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), encrypted_key);
+  // @@protoc_insertion_point(field_set_allocated:login_msg.MSG_REQUEST_HANDSHAKE_ESTABLISHED.encrypted_key)
+}
+
+// -------------------------------------------------------------------
+
+// MSG_RESPONSE_HANDSHAKE_ESTABLISHED
+
+// int32 status_code = 1;
+inline void MSG_RESPONSE_HANDSHAKE_ESTABLISHED::clear_status_code() {
+  status_code_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_RESPONSE_HANDSHAKE_ESTABLISHED::_internal_status_code() const {
+  return status_code_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MSG_RESPONSE_HANDSHAKE_ESTABLISHED::status_code() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED.status_code)
+  return _internal_status_code();
+}
+inline void MSG_RESPONSE_HANDSHAKE_ESTABLISHED::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  status_code_ = value;
+}
+inline void MSG_RESPONSE_HANDSHAKE_ESTABLISHED::set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_status_code(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED.status_code)
+}
+
+// -------------------------------------------------------------------
+
 // MSG_REQUEST_CLIENT_LOGIN
 
 // uint64 user_id = 1;
@@ -2436,6 +3310,14 @@ inline void MSG_RESPONSE_ECHO::set_allocated_value2(std::string* value2) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

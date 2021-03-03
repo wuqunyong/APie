@@ -69,7 +69,9 @@ namespace APie {
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 
 		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
-
+		static void handleRequestHandshakeInit(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_INIT& request);
+		static void handleRequestHandshakeEstablished(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED& request);
+		
 
 	private:
 		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum, value:shared_ptr

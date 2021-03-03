@@ -15,6 +15,8 @@
 
 namespace APie
 {
+	struct SetClientSessionAttr;
+
     class ClientConnection :
         public i_poll_events
     {
@@ -30,6 +32,9 @@ namespace APie
 		void eventcb(short what);
 
 		void SetConnectTo(const std::string& sAddress, uint16_t iPort);
+
+		void handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd);
+		std::optional<std::string> getSessionKey();
 
 		void close(std::string sInfo, int iCode=0, int iActive=0);
         ~ClientConnection();
@@ -54,6 +59,7 @@ namespace APie
 		integer_t iSerialNum;
 		bufferevent *bev;
 		ProtocolType iType;
+		std::optional<std::string>  m_optSessionKey;
 
 		std::string sListenAddress;
 		uint16_t iListenPort;

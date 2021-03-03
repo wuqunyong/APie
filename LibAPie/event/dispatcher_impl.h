@@ -83,6 +83,8 @@ private:
 
   void handleDial(DialParameters* ptrCmd);
   void handleDialResult(DialResult* ptrCmd);
+  void handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd);
+  void handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd);
   void handleLogicCmd(LogicCmd* ptrCmd);
   void handleAsyncCallFunctor(LogicAsyncCallFunctor* ptrCmd);
   void handleCloseLocalClient(CloseLocalClient* ptrCmd);

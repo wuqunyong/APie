@@ -37,6 +37,27 @@ message MSG_RESPONSE_ACCOUNT_LOGIN_L
 	int32 port = 5;
 }
 
+message MSG_REQUEST_HANDSHAKE_INIT
+{
+	string client_random = 1;
+}
+
+message MSG_RESPONSE_HANDSHAKE_INIT
+{
+	int32 status_code = 1;
+	string server_random = 2;
+	string public_key = 3;
+}
+
+message MSG_REQUEST_HANDSHAKE_ESTABLISHED
+{
+	bytes encrypted_key = 1;
+}
+
+message MSG_RESPONSE_HANDSHAKE_ESTABLISHED
+{
+	int32 status_code = 1;
+}
 
 message MSG_REQUEST_CLIENT_LOGIN
 {

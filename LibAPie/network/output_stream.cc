@@ -11,6 +11,8 @@
 #include "../serialization/protocol_head.h"
 #include "../rpc/client/rpc_client.h"
 
+#include "command.h"
+
 namespace APie {
 namespace Network {
 
@@ -354,6 +356,49 @@ namespace Network {
 		::rpc_msg::CONTROLLER controller;
 		controller.set_serial_num(roleIdentifier.channel_serial_num());
 		return APie::RPC::RpcClientSingleton::get().call(controller, server, ::rpc_msg::RPC_DeMultiplexer_Forward, args, rpcCB);
+	}
+
+	bool OutputStream::sendCommand(ConnetionType type, uint64_t iSerialNum, APie::Command& cmd)
+	{
+		uint32_t iThreadId = 0;
+
+		switch (type)
+		{
+		case APie::ConnetionType::CT_SERVER:
+		{
+			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		case APie::ConnetionType::CT_CLIENT:
+		{
+			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		default:
+			break;
+		}
+
+		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
+		if (ptrThread == nullptr)
+		{
+			return false;
+		}
+
+		ptrThread->push(cmd);
+
+		return true;
 	}
 
 } // namespace Network

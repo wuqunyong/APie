@@ -4,6 +4,7 @@
 #include "test_server.h"
 
 #include "../../SharedDir/opcodes.h"
+#include "../../LibAPie/common/file.h"
 
 namespace APie {
 
@@ -44,6 +45,9 @@ void MockRole::setUp()
 
 
 	this->addResponseHandler(::APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
+	this->addResponseHandler(::APie::OP_MSG_RESPONSE_HANDSHAKE_INIT, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT);
+	this->addResponseHandler(::APie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED);
+
 
 	this->processCmd();
 }
@@ -362,11 +366,20 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 				ptrShared->setPauseProcess(false);
 
 
-				::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
-				request.set_user_id(response.account_id());
-				request.set_session_key(response.session_key());
+				ptrShared->m_clientRandom = "client";
 
-				ptrShared->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+				::login_msg::MSG_REQUEST_HANDSHAKE_INIT request;
+				request.set_client_random(ptrShared->m_clientRandom);
+				ptrShared->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, request);
+
+				ptrShared->m_account_id = response.account_id();
+				ptrShared->m_session_key = response.session_key();
+
+				//::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
+				//request.set_user_id(response.account_id());
+				//request.set_session_key(response.session_key());
+
+				//ptrShared->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 			}
 		}
 		return true;
@@ -375,6 +388,79 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 	m_clientProxy->addReconnectTimer(1000);
 	m_target = CT_Gateway;
 
+}
+
+void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	std::stringstream ss;
+	ss << "handle_MSG_RESPONSE_HANDSHAKE_INIT|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
+
+
+	::login_msg::MSG_RESPONSE_HANDSHAKE_INIT response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		return;
+	}
+
+	std::string plainMsg("client_key");
+	std::string encryptedMsg;
+
+	std::string content = response.public_key();
+
+	const std::vector<uint8_t> keyDer(content.begin(), content.end());
+
+	BIO* ptrBIO = BIO_new_mem_buf(&content[0], content.size());
+	std::unique_ptr<BIO, decltype(BIO_free)*> bio(ptrBIO, BIO_free);
+
+	RSA* ptrRSA = PEM_read_bio_RSA_PUBKEY(bio.get(), NULL, NULL, NULL);
+	std::unique_ptr<RSA, decltype(RSA_free)*> rsa(ptrRSA, RSA_free);
+
+	APie::Crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
+
+
+	this->m_sharedKey = this->m_clientRandom + response.server_random() + plainMsg;
+
+
+	::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED request;
+	request.set_encrypted_key(encryptedMsg);
+	this->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, request);
+
+
+	APie::SetClientSessionAttr *ptr = new APie::SetClientSessionAttr;
+	ptr->iSerialNum = this->m_clientProxy->getSerialNum();
+	ptr->optKey = this->m_sharedKey;
+
+	Command cmd;
+	cmd.type = Command::set_client_session_attr;
+	cmd.args.set_client_session_attr.ptrData = ptr;
+	Network::OutputStream::sendCommand(ConnetionType::CT_CLIENT, ptr->iSerialNum, cmd);
+
+}
+
+void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	std::stringstream ss;
+	ss << "handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
+
+
+	::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		return;
+	}
+
+	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
+	request.set_user_id(this->m_account_id);
+	request.set_session_key(this->m_session_key);
+	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 }
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)

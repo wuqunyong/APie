@@ -35,6 +35,8 @@ namespace APie
 		~ClientProxy();
 		bool checkTag();
 
+		uint32_t getTId();
+
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb=nullptr);
 		void resetConnect(const std::string& ip, uint16_t port, ProtocolType type);
 		int reconnect();

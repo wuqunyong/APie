@@ -61,6 +61,11 @@ bool ClientProxy::checkTag()
 	return this->m_tag == 0xbadcafe0;
 }
 
+uint32_t ClientProxy::getTId()
+{
+	return m_tId;
+}
+
 int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb)
 {
 	if (this->m_curSerialNum != 0)

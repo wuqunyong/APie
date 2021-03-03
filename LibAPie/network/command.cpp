@@ -85,6 +85,24 @@ void APie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::set_server_session_attr:
+	{
+		if (NULL != cmd->args.set_server_session_attr.ptrData)
+		{
+			delete cmd->args.set_server_session_attr.ptrData;
+			cmd->args.set_server_session_attr.ptrData = NULL;
+		}
+		break;
+	}
+	case Command::set_client_session_attr:
+	{
+		if (NULL != cmd->args.set_client_session_attr.ptrData)
+		{
+			delete cmd->args.set_client_session_attr.ptrData;
+			cmd->args.set_client_session_attr.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::logic_cmd:
 	{
 		if (NULL != cmd->args.logic_cmd.ptrData)

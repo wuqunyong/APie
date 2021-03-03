@@ -55,4 +55,7 @@ enum StatusCode {
 
 	SC_BindTable_Error = 500;
 
+	SC_Auth_LoadPubFileError = 600;  //加载公钥文件出错
+	SC_Auth_DecryptError = 601;
+
 }

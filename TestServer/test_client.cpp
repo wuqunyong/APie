@@ -19,6 +19,9 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
+#include <openssl/rc4.h>
+
+#include "../LibAPie/common/file.h"
 
 using namespace tinyxml2;
 using namespace std;
@@ -262,6 +265,56 @@ enum MyEnum : uint32_t
 	ME_Hehlo = 1,
 };
 
+string decode_rc4(const std::string& sharedKey, const std::string& data) {
+	if (data.empty())
+	{
+		return data;
+	}
+
+	RC4_KEY key;
+
+	int len = data.size();
+
+	string decode_data;
+	decode_data.resize(len);
+
+	//unsigned char *obuf = (unsigned char*)malloc(len + 1);
+	//memset(obuf, 0, len + 1);
+
+	RC4_set_key(&key, sharedKey.size(), (const unsigned char*)&sharedKey[0]);
+	RC4(&key, len, (const unsigned char*)data.c_str(), (unsigned char *)&decode_data[0]);
+
+	//string decode_data((char*)obuf, len);
+	//free(obuf);
+
+	return decode_data;
+}
+
+string encode_rc4(const std::string& sharedKey, const string& data) {
+	
+	if (data.empty())
+	{
+		return data;
+	}
+
+	RC4_KEY key;
+	int len = data.size();
+
+	string encode_data;
+	encode_data.resize(len);
+
+	//unsigned char *obuf = (unsigned char*)malloc(len + 1);
+	//memset(obuf, 0, len + 1);
+
+	RC4_set_key(&key, sharedKey.size(), (const unsigned char*)&sharedKey[0]);
+	RC4(&key, len, (const unsigned char*)data.c_str(), (unsigned char *)&encode_data[0]);
+
+	//string encode_data((char*)obuf, len);
+	//free(obuf);
+
+	return encode_data;
+}
+
 int main(int argc, char **argv)
 {
 	auto iR = MakeKey(9000001, 123);
@@ -284,8 +337,32 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	{
+
+		std::string content;
+		bool bResult = APie::Common::GetContent("E:\\APie\\conf\\key.pub", &content);
+
+		const std::vector<uint8_t> keyDer(content.begin(), content.end());
+
+		BIO* ptrBIO = BIO_new_mem_buf(&content[0], content.size());
+		std::unique_ptr<BIO, decltype(BIO_free)*> bio(ptrBIO, BIO_free);
+
+		RSA* ptrRSA = PEM_read_bio_RSA_PUBKEY(bio.get(), NULL, NULL, NULL);
+		std::unique_ptr<RSA, decltype(RSA_free)*> rsa(ptrRSA, RSA_free);
+
+		APie::Crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
+		APie::Crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
+
+		ERR_clear_error();
+	}
+
+
 	APie::Crypto::RSAUtilitySingleton::get().encrypt(plainMsg, &encryptedMsg);
 	APie::Crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
+
+
+	std::string symCipher = encode_rc4("", "sssssssfsfsfsfs");
+	std::string symPlain = decode_rc4("", symCipher);
 
 	std::string data;
 	auto optResult = doCompress(data, 0);

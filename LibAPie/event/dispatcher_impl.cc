@@ -35,6 +35,7 @@
 #include "event2/event.h"
 #include "influxdb.hpp"
 #include "../compressor/lz4_compressor_impl.h"
+#include "../crypto/crypto_utility.h"
 
 
 namespace APie {
@@ -271,6 +272,16 @@ void DispatcherImpl::handleCommand()
 		case Command::dial_result:
 		{
 			this->handleDialResult(cmd.args.dial_result.ptrData);
+			break;
+		}
+		case Command::set_server_session_attr:
+		{
+			this->handleSetServerSessionAttr(cmd.args.set_server_session_attr.ptrData);
+			break;
+		}
+		case Command::set_client_session_attr:
+		{
+			this->handleSetClientSessionAttr(cmd.args.set_client_session_attr.ptrData);
 			break;
 		}
 		case Command::logic_cmd:
@@ -597,11 +608,12 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 			return;
 		}
 
-		std::string sData;
+		// 先压缩后加密
+		std::string sBody = itemPtr->sBody;
 		if (itemPtr->head.iFlags & PH_COMPRESSED)
 		{
 			Compressor::LZ4CompressorImpl compressor;
-			auto optData = compressor.compress(itemPtr->sBody, 0);
+			auto optData = compressor.compress(sBody, 0);
 			if (!optData.has_value())
 			{
 				return;
@@ -610,14 +622,25 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 			auto iBodyLen = optData.value().size();
 			itemPtr->head.iBodyLen = iBodyLen;
 
-			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
-			sData.append(optData.value());
+			sBody = optData.value();
 		}
-		else
+
+		if (itemPtr->head.iFlags & PH_CRYPTO)
 		{
-			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
-			sData.append(itemPtr->sBody);
+			if (ptrConnection->getSessionKey().has_value())
+			{
+				sBody = APie::Crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
+			}
+			else
+			{
+				uint8_t iFlag = ~PH_CRYPTO;
+				itemPtr->head.iFlags = itemPtr->head.iFlags & iFlag;
+			}
 		}
+
+		std::string sData;
+		sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+		sData.append(sBody);
 
 		ptrConnection->handleSend(sData.data(), sData.size());
 		break;
@@ -630,11 +653,12 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 			return;
 		}
 
-		std::string sData;
+		// 先压缩后加密
+		std::string sBody = itemPtr->sBody;
 		if (itemPtr->head.iFlags & PH_COMPRESSED)
 		{
 			Compressor::LZ4CompressorImpl compressor;
-			auto optData = compressor.compress(itemPtr->sBody, 0);
+			auto optData = compressor.compress(sBody, 0);
 			if (!optData.has_value())
 			{
 				return;
@@ -643,14 +667,25 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 			auto iBodyLen = optData.value().size();
 			itemPtr->head.iBodyLen = iBodyLen;
 
-			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
-			sData.append(optData.value());
+			sBody = optData.value();
 		}
-		else
+
+		if (itemPtr->head.iFlags & PH_CRYPTO)
 		{
-			sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
-			sData.append(itemPtr->sBody);
+			if (ptrConnection->getSessionKey().has_value())
+			{
+				sBody = APie::Crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
+			}
+			else
+			{
+				uint8_t iFlag = ~PH_CRYPTO;
+				itemPtr->head.iFlags = itemPtr->head.iFlags & iFlag;
+			}
 		}
+
+		std::string sData;
+		sData.append(reinterpret_cast<char*>(&itemPtr->head), sizeof(ProtocolHead));
+		sData.append(sBody);
 
 		ptrConnection->handleSend(sData.data(), sData.size());
 		break;
@@ -678,6 +713,36 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	{
 		ASYNC_PIE_LOG("DispatcherImpl/handleDialResult", PIE_CYCLE_HOUR, PIE_ERROR, "iSerialNum:%lld|iResult:%d|sLocalIp:%s", 
 			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp.c_str());
+	}
+}
+
+void DispatcherImpl::handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd)
+{
+	auto ptrServer = APie::Event::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
+	if (ptrServer != nullptr)
+	{
+		ptrServer->handleSetServerSessionAttr(ptrCmd);
+	}
+	else
+	{
+		std::stringstream ss;
+		ss << "null|iSerialNum:" << ptrCmd->iSerialNum;
+		ASYNC_PIE_LOG("DispatcherImpl/handleSetServerSessionAttr", PIE_CYCLE_HOUR, PIE_ERROR, ss.str().c_str());
+	}
+}
+
+void DispatcherImpl::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
+{
+	auto ptrClient = APie::Event::DispatcherImpl::getClientConnection(ptrCmd->iSerialNum);
+	if (ptrClient != nullptr)
+	{
+		ptrClient->handleSetClientSessionAttr(ptrCmd);
+	}
+	else
+	{
+		std::stringstream ss;
+		ss << "null|iSerialNum:" << ptrCmd->iSerialNum;
+		ASYNC_PIE_LOG("DispatcherImpl/handleSetClientSessionAttr", PIE_CYCLE_HOUR, PIE_ERROR, ss.str().c_str());
 	}
 }
 

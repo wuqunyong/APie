@@ -15,7 +15,8 @@
 
 #include "../decompressor/lz4_decompressor_impl.h"
 
-
+#include "Command.h"
+#include "../crypto/crypto_utility.h"
 
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
@@ -150,26 +151,44 @@ void ServerConnection::readPB()
 		evbuffer_remove(input, pBuf, iBodyLen);
 		pBuf[iBodyLen] = '\0';
 
-		std::string requestStr(pBuf, iBodyLen);
+		std::string sBody(pBuf, iBodyLen);
 		free(pBuf);
 
-		if (head.iFlags & PH_COMPRESSED)
+		do 
 		{
-			Decompressor::LZ4DecompressorImpl decompressor;
-			auto optDate = decompressor.decompress(requestStr);
-			if (optDate.has_value())
+			if (head.iFlags & PH_CRYPTO)
 			{
-				this->recv(this->iSerialNum, head.iOpcode, optDate.value());
+				if (this->getSessionKey().has_value())
+				{
+					sBody = APie::Crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
+				}
+				else
+				{
+					std::stringstream ss;
+					ss << "active|" << "iOpcode:" << head.iOpcode << "|PH_CRYPTO error|Connection closed.";
+					this->close(ss.str());
+					return;
+				}
 			}
-			else
+
+			if (head.iFlags & PH_COMPRESSED)
 			{
-				//Error
+				Decompressor::LZ4DecompressorImpl decompressor;
+				auto optDate = decompressor.decompress(sBody);
+				if (!optDate.has_value())
+				{
+					//Error
+					std::stringstream ss;
+					ss << "active|" << "iOpcode:" << head.iOpcode << "|PH_COMPRESSED error|Connection closed.";
+					this->close(ss.str());
+					return;
+				}
+
+				sBody = optDate.value();
 			}
-		}
-		else
-		{
-			this->recv(this->iSerialNum, head.iOpcode, requestStr);
-		}
+	
+			this->recv(this->iSerialNum, head.iOpcode, sBody);
+		} while (false);
 
 
 		size_t iCurLen = evbuffer_get_length(input);
@@ -327,12 +346,40 @@ void ServerConnection::setIp(std::string ip, std::string peerIp)
 
 void ServerConnection::setMaskFlag(uint32_t iFlag)
 {
-	this->iMaskFlag = iFlag;
+	this->m_iMaskFlag = iFlag;
 }
 
 uint32_t ServerConnection::getMaskFlag()
 {
-	return this->iMaskFlag;
+	return this->m_iMaskFlag;
+}
+
+std::optional<std::string> ServerConnection::getSessionKey()
+{
+	return m_optSessionKey;
+}
+
+void ServerConnection::handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd)
+{
+	if (ptrCmd == nullptr)
+	{
+		return;
+	}
+
+	if (ptrCmd->optClientRandom.has_value())
+	{
+		m_clientRandom = ptrCmd->optClientRandom.value();
+	}
+
+	if (ptrCmd->optServerRandom.has_value())
+	{
+		m_serverRandom = ptrCmd->optServerRandom.value();
+	}
+
+	if (ptrCmd->optKey.has_value())
+	{
+		m_optSessionKey = ptrCmd->optKey.value();
+	}
 }
 
 std::string ServerConnection::ip()
@@ -343,6 +390,16 @@ std::string ServerConnection::ip()
 std::string ServerConnection::peerIp()
 {
 	return this->sPeerIp;
+}
+
+std::string ServerConnection::getClientRandom()
+{
+	return m_clientRandom;
+}
+
+std::string ServerConnection::getServerRandom()
+{
+	return m_serverRandom;
 }
 
 void ServerConnection::handleSend(const char *data, size_t size)

@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <optional>
 
 #include <stdlib.h>
 
@@ -137,6 +138,20 @@ namespace APie
 		std::string sInfo;
 		uint32_t iActive;
 	};
+	
+	struct SetServerSessionAttr
+	{
+		uint64_t iSerialNum;
+		std::optional<std::string> optClientRandom;
+		std::optional<std::string> optServerRandom;
+		std::optional<std::string> optKey;
+	};
+
+	struct SetClientSessionAttr
+	{
+		uint64_t iSerialNum;
+		std::optional<std::string> optKey;
+	};
 
 	struct LogicCmd
 	{
@@ -165,9 +180,11 @@ namespace APie
 			pb_reqeust,
 			pb_forward,
 			send_data,
-			send_data_by_flag, // PH_COMPRESSED
+			send_data_by_flag, // PH_COMPRESSED, PH_CRYPTO
 			dial,
 			dial_result,
+			set_server_session_attr,
+			set_client_session_attr,
 
 			async_log,
 			metric_data,
@@ -232,6 +249,14 @@ namespace APie
 			struct {
 				DialResult* ptrData;
 			} dial_result;
+
+			struct {
+				SetServerSessionAttr* ptrData;
+			} set_server_session_attr;
+
+			struct {
+				SetClientSessionAttr* ptrData;
+			} set_client_session_attr;
 
 			struct {
 				LogicCmd* ptrData;

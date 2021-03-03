@@ -22,6 +22,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <optional>
 
 #include "../network/i_poll_events.hpp"
 #include "../network/object.hpp"
@@ -30,8 +31,11 @@
 
 #include <event2/bufferevent.h>
 
+
 namespace APie
 {
+	struct SetServerSessionAttr;
+
     class ServerConnection :
         public i_poll_events
     {
@@ -48,9 +52,15 @@ namespace APie
 		void setIp(std::string ip, std::string peerIp);
 		void setMaskFlag(uint32_t iFlag);
 		uint32_t getMaskFlag();
+		std::optional<std::string> getSessionKey();
+
+		void handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd);
 
 		std::string ip();
 		std::string peerIp();
+
+		std::string getClientRandom();
+		std::string getServerRandom();
 
 		void close(std::string sInfo, uint32_t iCode = 0, uint32_t iActive = 0);
         ~ServerConnection();
@@ -71,7 +81,11 @@ namespace APie
     private:
 		uint32_t tid_;
 		ProtocolType iType;
-		uint32_t iMaskFlag = 0;
+		uint32_t m_iMaskFlag = 0;
+		std::string m_clientRandom;
+		std::string m_serverRandom;
+		std::optional<std::string>  m_optSessionKey;
+
 		uint64_t iSerialNum;
 		bufferevent *bev;
 

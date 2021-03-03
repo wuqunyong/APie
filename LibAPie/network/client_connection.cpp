@@ -10,6 +10,7 @@
 #include "../api/pb_handler.h"
 #include "address.h"
 #include "../decompressor/lz4_decompressor_impl.h"
+#include "../crypto/crypto_utility.h"
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
@@ -181,26 +182,44 @@ void APie::ClientConnection::readPB()
 		evbuffer_remove(input, pBuf, iBodyLen);
 		pBuf[iBodyLen] = '\0';
 
-		std::string requestStr(pBuf, iBodyLen);
+		std::string sBody(pBuf, iBodyLen);
 		free(pBuf);
 
-		if (head.iFlags & PH_COMPRESSED)
+		do
 		{
-			Decompressor::LZ4DecompressorImpl decompressor;
-			auto optDate = decompressor.decompress(requestStr);
-			if (optDate.has_value())
+			if (head.iFlags & PH_CRYPTO)
 			{
-				this->recv(this->iSerialNum, head.iOpcode, optDate.value());
+				if (this->getSessionKey().has_value())
+				{
+					sBody = APie::Crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
+				}
+				else
+				{
+					std::stringstream ss;
+					ss << "active|" << "iOpcode:" << head.iOpcode << "|PH_CRYPTO error|Connection closed.";
+					this->close(ss.str());
+					return;
+				}
 			}
-			else
+
+			if (head.iFlags & PH_COMPRESSED)
 			{
-				//Error
+				Decompressor::LZ4DecompressorImpl decompressor;
+				auto optDate = decompressor.decompress(sBody);
+				if (!optDate.has_value())
+				{
+					//Error
+					std::stringstream ss;
+					ss << "active|" << "iOpcode:" << head.iOpcode << "|PH_COMPRESSED error|Connection closed.";
+					this->close(ss.str());
+					return;
+				}
+
+				sBody = optDate.value();
 			}
-		}
-		else
-		{
-			this->recv(this->iSerialNum, head.iOpcode, requestStr);
-		}
+
+			this->recv(this->iSerialNum, head.iOpcode, sBody);
+		} while (false);
 
 
 		size_t iCurLen = evbuffer_get_length(input);
@@ -339,6 +358,24 @@ void APie::ClientConnection::SetConnectTo(const std::string& sAddress, uint16_t 
 {
 	this->sListenAddress = sAddress;
 	this->iListenPort = iPort;
+}
+
+void APie::ClientConnection::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
+{
+	if (ptrCmd == nullptr)
+	{
+		return;
+	}
+
+	if (ptrCmd->optKey.has_value())
+	{
+		m_optSessionKey = ptrCmd->optKey.value();
+	}
+}
+
+std::optional<std::string> APie::ClientConnection::getSessionKey()
+{
+	return m_optSessionKey;
 }
 
 void APie::ClientConnection::handleSend(const char *data, size_t size)

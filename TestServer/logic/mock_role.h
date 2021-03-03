@@ -62,12 +62,22 @@ namespace APie {
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 
 		void handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		
+
 
 		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 	public:
 		static std::shared_ptr<MockRole> createMockRole(uint64_t iRoleId);
 
+
+		uint64_t m_account_id;
+		std::string m_session_key;
+
+		std::string m_clientRandom;
+		std::string m_sharedKey;
 	private:
 		uint64_t m_iRoleId;
 		std::shared_ptr<ClientProxy> m_clientProxy;
@@ -80,7 +90,6 @@ namespace APie {
 		std::vector<::pubsub::LOGIC_CMD> m_configCmd;
 
 		bool m_bPauseProcess = false;
-
 
 		std::map<std::string, HandlerCb> m_cmdHandler;
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;

@@ -55,6 +55,56 @@ namespace Crypto {
 		return hex(digest, MD5_DIGEST_LENGTH);
 	}
 
+	std::string Utility::decode_rc4(const std::string& sharedKey, const std::string& data) 
+	{
+		if (data.empty())
+		{
+			return data;
+		}
+
+		RC4_KEY key;
+
+		int len = data.size();
+
+		std::string decode_data;
+		decode_data.resize(len);
+
+		//unsigned char *obuf = (unsigned char*)malloc(len + 1);
+		//memset(obuf, 0, len + 1);
+
+		RC4_set_key(&key, sharedKey.size(), (const unsigned char*)&sharedKey[0]);
+		RC4(&key, len, (const unsigned char*)data.c_str(), (unsigned char *)&decode_data[0]);
+
+		//string decode_data((char*)obuf, len);
+		//free(obuf);
+
+		return decode_data;
+	}
+
+	std::string Utility::encode_rc4(const std::string& sharedKey, const std::string& data) {
+
+		if (data.empty())
+		{
+			return data;
+		}
+
+		RC4_KEY key;
+		int len = data.size();
+
+		std::string encode_data;
+		encode_data.resize(len);
+
+		//unsigned char *obuf = (unsigned char*)malloc(len + 1);
+		//memset(obuf, 0, len + 1);
+
+		RC4_set_key(&key, sharedKey.size(), (const unsigned char*)&sharedKey[0]);
+		RC4(&key, len, (const unsigned char*)data.c_str(), (unsigned char *)&encode_data[0]);
+
+		//string encode_data((char*)obuf, len);
+		//free(obuf);
+
+		return encode_data;
+	}
 
 	RSAUtility::~RSAUtility()
 	{
@@ -152,6 +202,33 @@ namespace Crypto {
 			reinterpret_cast<const uint8_t*>(plainMsg.data()),
 			reinterpret_cast<uint8_t*>(&(*encryptedMsg)[0]),
 			m_pub_key,
+			RSA_PKCS1_OAEP_PADDING);
+
+		if (encrypted_size != static_cast<int>(iRSASize))
+		{
+			std::stringstream ss;
+			ss << "RSA public encrypt failure: " << ERR_error_string(ERR_get_error(), NULL);
+			return false;
+		}
+
+		return true;
+	}
+
+	bool RSAUtility::encryptByPub(RSA* ptrPubKey, const std::string& plainMsg, std::string *encryptedMsg)
+	{
+		if (ptrPubKey == nullptr)
+		{
+			return false;
+		}
+
+		auto iRSASize = RSA_size(ptrPubKey);
+		encryptedMsg->resize(iRSASize);
+
+		/// 对内容进行加密
+		int encrypted_size = RSA_public_encrypt(plainMsg.size(),
+			reinterpret_cast<const uint8_t*>(plainMsg.data()),
+			reinterpret_cast<uint8_t*>(&(*encryptedMsg)[0]),
+			ptrPubKey,
 			RSA_PKCS1_OAEP_PADDING);
 
 		if (encrypted_size != static_cast<int>(iRSASize))
