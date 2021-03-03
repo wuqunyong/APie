@@ -257,6 +257,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		auto typeOpt = getPbNameByOpcode(opcodes);
 		if (!typeOpt.has_value())
 		{
+			sMsg = "******unregisterPbMap******";
 			break;
 		}
 
@@ -264,6 +265,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		auto ptrMsg = Api::PBHandler::createMessage(sType);
 		if (ptrMsg == nullptr)
 		{
+			sMsg = "******createMessageError******";
 			break;
 		}
 
@@ -271,6 +273,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		bool bResult = newMsg->ParseFromString(msg);
 		if (!bResult)
 		{
+			sMsg = "******ParseFromStringError******";
 			break;
 		}
 
@@ -397,7 +400,6 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 			if (ptrShared)
 			{
 				TestServerMgrSingleton::get().addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iRoleId);
-				ptrShared->setPauseProcess(true);
 
 
 				ptrShared->m_clientRandom = "client";
@@ -408,12 +410,6 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 
 				ptrShared->m_account_id = response.account_id();
 				ptrShared->m_session_key = response.session_key();
-
-				//::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
-				//request.set_user_id(response.account_id());
-				//request.set_session_key(response.session_key());
-
-				//ptrShared->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 			}
 		}
 		return true;
@@ -496,6 +492,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uin
 	request.set_session_key(this->m_session_key);
 	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 
+	this->setPauseProcess(false);
 	this->addWaitResponse(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
 }
 
