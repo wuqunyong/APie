@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <tuple>
 #include <memory>
+#include <set>
 
 #include "apie.h"
 #include "../../PBMsg/BusinessMsg/login_msg.pb.h"
@@ -52,6 +53,9 @@ namespace APie {
 
 		void setPauseProcess(bool flag);
 
+		void addWaitResponse(uint32_t iOpcode, uint32_t iNeedCheck);
+		void removeWaitResponse(uint32_t iOpcode);
+
 	private:
 		void handleMsg(::pubsub::LOGIC_CMD& msg);
 
@@ -72,6 +76,8 @@ namespace APie {
 	public:
 		static std::shared_ptr<MockRole> createMockRole(uint64_t iRoleId);
 
+		static bool registerPbOpcodeName(uint32_t iOpcode, const std::string& sName);
+		static std::optional<std::string> getPbNameByOpcode(uint32_t iOpcode);
 
 		uint64_t m_account_id;
 		std::string m_session_key;
@@ -93,5 +99,9 @@ namespace APie {
 
 		std::map<std::string, HandlerCb> m_cmdHandler;
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;
+
+		std::map<uint32_t, uint32_t> m_waitResponse; // key:opcode, value:need check status_code
+
+		static std::map<uint32_t, std::string> s_pbReflect;
 	};
 }

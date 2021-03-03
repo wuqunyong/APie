@@ -8,6 +8,8 @@
 
 namespace APie {
 
+std::map<uint32_t, std::string> MockRole::s_pbReflect;
+
 MockRole::MockRole(uint64_t iRoleId) :
 	m_iRoleId(iRoleId)
 {
@@ -129,6 +131,11 @@ void MockRole::processCmd()
 			break;
 		}
 
+		if (!m_waitResponse.empty())
+		{
+			break;
+		}
+
 		auto iOldIndex = m_iCurIndex;
 
 		auto& msg = m_configCmd[m_iCurIndex];
@@ -165,7 +172,7 @@ void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 	catch (std::exception& e)
 	{
 		std::stringstream ss;
-		ss << "Unexpected exception: " << e.what();
+		ss << "roleId:" << m_iRoleId << "|Unexpected exception: " << e.what();
 		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 	}
 }
@@ -232,8 +239,54 @@ void MockRole::setPauseProcess(bool flag)
 	m_bPauseProcess = false;
 }
 
+void MockRole::addWaitResponse(uint32_t iOpcode, uint32_t iNeedCheck)
+{
+	m_waitResponse[iOpcode] = iNeedCheck;
+}
+
+void MockRole::removeWaitResponse(uint32_t iOpcode)
+{
+	m_waitResponse.erase(iOpcode);
+}
+
 void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
+	std::string sMsg = msg;
+	do 
+	{
+		auto typeOpt = getPbNameByOpcode(opcodes);
+		if (!typeOpt.has_value())
+		{
+			break;
+		}
+
+		std::string sType = typeOpt.value();
+		auto ptrMsg = Api::PBHandler::createMessage(sType);
+		if (ptrMsg == nullptr)
+		{
+			break;
+		}
+
+		std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg);
+		bool bResult = newMsg->ParseFromString(msg);
+		if (!bResult)
+		{
+			break;
+		}
+
+		sMsg = newMsg->ShortDebugString();
+	} while (false);
+
+	std::stringstream ss;
+	ss << "traffic/" << m_iRoleId;
+	std::string fileName = ss.str();
+
+	ss.str("");
+	ss << "recv|iSerialNum:" << serialNum << "|iOpcode:" << opcodes << "|data:" << sMsg;
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+	this->removeWaitResponse(opcodes);
+
 	auto findIte = findResponseHandler(opcodes);
 	if (findIte != nullptr)
 	{
@@ -241,54 +294,35 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		return;
 	}
 
-
-	std::string sData;
-
-	switch (opcodes)
-	{
-	case ::APie::OP_MSG_RESPONSE_CLIENT_LOGIN:
-	{
-		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-		bool bResult = response.ParseFromString(msg);
-		if (!bResult)
-		{
-			sData = "parse error";
-			return;
-		}
-		
-		sData = response.ShortDebugString();
-		break;
-	}
-	case ::APie::OP_MSG_RESPONSE_ECHO:
-	{
-		::login_msg::MSG_RESPONSE_ECHO response;
-		bool bResult = response.ParseFromString(msg);
-		if (!bResult)
-		{
-			sData = "parse error";
-			return;
-		}
-
-		sData = response.ShortDebugString();
-		break;
-	}
-	default:
-	{
-		sData = msg;
-		break;
-	}
-	}
-
-	std::stringstream ss;
-	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << "|msg:" << sData;
-	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
-
 	std::cout << ss.str() << std::endl;
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
 {
 	return std::make_shared<MockRole>(iRoleId);
+}
+
+bool MockRole::registerPbOpcodeName(uint32_t iOpcode, const std::string& sName)
+{
+	auto findIte = s_pbReflect.find(iOpcode);
+	if (findIte != s_pbReflect.end())
+	{
+		return false;
+	}
+
+	s_pbReflect[iOpcode] = sName;
+	return true;
+}
+
+std::optional<std::string> MockRole::getPbNameByOpcode(uint32_t iOpcode)
+{
+	auto findIte = s_pbReflect.find(iOpcode);
+	if (findIte == s_pbReflect.end())
+	{
+		return std::nullopt;
+	}
+
+	return findIte->second;
 }
 
 void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
@@ -363,7 +397,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 			if (ptrShared)
 			{
 				TestServerMgrSingleton::get().addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iRoleId);
-				ptrShared->setPauseProcess(false);
+				ptrShared->setPauseProcess(true);
 
 
 				ptrShared->m_clientRandom = "client";
@@ -461,11 +495,23 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uin
 	request.set_user_id(this->m_account_id);
 	request.set_session_key(this->m_session_key);
 	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+
+	this->addWaitResponse(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
 }
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	m_clientProxy->sendMsg(iOpcode, msg);
+
+	auto iSerialNum = m_clientProxy->getSerialNum();
+
+	std::stringstream ss;
+	ss << "traffic/" << m_iRoleId;
+	std::string fileName = ss.str();
+
+	ss.str("");
+	ss << "send|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|data:" << msg.ShortDebugString();
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 }
 
 }

@@ -88,6 +88,7 @@ namespace APie
 		int iCycle;
 		int iLevel;
 		std::string sMsg;
+		bool bIgnoreMore = false;
 	};
 
 	struct DialParameters

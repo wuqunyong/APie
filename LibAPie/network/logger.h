@@ -36,10 +36,10 @@ struct LogFile
 extern std::map<std::string, LogFile*> cacheMap;
 
 std::string getLogLevelName(int level);
-void pieLogRaw(const char* file, int cycle, int level, const char* msg);
+void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge);
 void pieLog(const char* file, int cycle, int level, const char *fmt, ...);
 void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
-
+void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
 
 LogFile* openFile(std::string file, int cycle);
 void closeFile(LogFile* ptrFile);
@@ -132,4 +132,32 @@ void logFileClose();
 } while (0);
 #endif
 
-
+#ifdef WIN32
+#define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, ...) do { \
+	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);                                                 \
+	if (bShowPos) \
+	{ \
+		std::string formatStr("%s:%d|"); \
+		formatStr = formatStr + format; \
+		asyncPieLogIgnoreMerge(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+	} \
+	else \
+	{ \
+		asyncPieLogIgnoreMerge(file, cycle, level, format, __VA_ARGS__); \
+	} \
+} while (0);
+#else
+#define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, args...) do { \
+	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);  \
+	if (bShowPos) \
+	{ \
+		std::string formatStr("%s:%d|"); \
+		formatStr = formatStr + format; \
+		asyncPieLogIgnoreMerge(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+	} \
+	else \
+	{ \
+		asyncPieLogIgnoreMerge(file, cycle, level, format, ##args); \
+	} \
+} while (0);
+#endif

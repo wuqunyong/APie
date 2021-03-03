@@ -71,7 +71,7 @@ std::string getLogLevelName(int level)
 	return sLevelName;
 }
 
-void pieLogRaw(const char* file, int cycle, int level, const char* msg)
+void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge)
 {
 	// 多线程，同时访问所以要加锁
 	assert(file != NULL);
@@ -84,7 +84,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 
 	LogFile* ptrFile = NULL;
 	bool bMerge = APie::CtxSingleton::get().yamlAs<bool>({"log","merge"}, true); 
-	if (bMerge)
+	if (bMerge && !ignoreMerge)
 	{
 		bMergeFlag = true;
 		logFileName = APie::Ctx::logName() + "-" + APie::Ctx::logPostfix();
@@ -186,7 +186,7 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	vsnprintf(msg, sizeof(msg), fmt, ap);
 	va_end(ap);
 
-	pieLogRaw(file,cycle,level,msg);
+	pieLogRaw(file,cycle,level,msg,false);
 }
 
 void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
@@ -206,7 +206,7 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 
 	if (NULL == APie::CtxSingleton::get().getLogThread())
 	{
-		pieLogRaw(file, cycle, level, msg);
+		pieLogRaw(file, cycle, level, msg, false);
 		return;
 	}
 
@@ -215,6 +215,7 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	ptrCmd->iCycle = cycle;
 	ptrCmd->iLevel = level;
 	ptrCmd->sMsg = msg;
+	ptrCmd->bIgnoreMore = false;
 
 	APie::Command cmd;
 	cmd.type = APie::Command::async_log;
@@ -222,6 +223,39 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	APie::CtxSingleton::get().getLogThread()->push(cmd);
 }
 
+void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...)
+{
+	va_list ap;
+	char msg[PIE_MAX_LOGMSG_LEN] = { '\0' };
+
+	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
+	if ((level & 0xff) < iConfigLogLevel)
+	{
+		return;
+	}
+
+	va_start(ap, fmt);
+	vsnprintf(msg, sizeof(msg), fmt, ap);
+	va_end(ap);
+
+	if (NULL == APie::CtxSingleton::get().getLogThread())
+	{
+		pieLogRaw(file, cycle, level, msg, true);
+		return;
+	}
+
+	APie::LogCmd* ptrCmd = new APie::LogCmd;
+	ptrCmd->sFile = file;
+	ptrCmd->iCycle = cycle;
+	ptrCmd->iLevel = level;
+	ptrCmd->sMsg = msg;
+	ptrCmd->bIgnoreMore = true;
+
+	APie::Command cmd;
+	cmd.type = APie::Command::async_log;
+	cmd.args.async_log.ptrData = ptrCmd;
+	APie::CtxSingleton::get().getLogThread()->push(cmd);
+}
 
 LogFile* openFile(std::string file, int cycle)
 {
