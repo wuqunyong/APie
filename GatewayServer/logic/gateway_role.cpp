@@ -1,4 +1,5 @@
 #include "gateway_role.h"
+#include "gateway_mgr.h"
 
 namespace APie {
 
@@ -45,17 +46,53 @@ uint32_t GatewayRole::getMaskFlag()
 	return m_iMaskFlag;
 }
 
-uint64_t GatewayRole::addRequestPerUnit(uint64_t iValue)
+bool GatewayRole::addRequestPerUnit(uint64_t iValue)
 {
+	auto iCurTime = APie::CtxSingleton::get().getCurSeconds();
+	uint32_t iLimit = APie::CtxSingleton::get().yamlAs<uint32_t>({ "limited", "requests_per_unit" }, 0);
+
+	if (iCurTime > m_iRequestUnitExpiresAt)
+	{
+		this->resetRequestPerUnit();
+	}
+
+	if (m_iRequestUnitExpiresAt == 0)
+	{
+		uint32_t iDuration = APie::CtxSingleton::get().yamlAs<uint32_t>({ "limited", "uint" }, 60);
+		m_iRequestUnitExpiresAt = iCurTime + iDuration;
+	}
+
 	m_iRequests += iValue;
 	m_iRequestPerUnit += iValue;
 
-	return m_iRequestPerUnit;
+	if (m_iRequestPerUnit > iLimit)
+	{
+		if (iLimit == 0)
+		{
+			return true;
+		}
+
+		std::stringstream ss;
+		ss << "recv package out limited|userId:" << m_iRoleId << "|m_iRequestPerUnit:" << m_iRequestPerUnit;
+		ASYNC_PIE_LOG("addRequestPerUnit", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+		this->close();
+		return false;
+	}
+
+	return true;
 }
 
 void GatewayRole::resetRequestPerUnit()
 {
 	m_iRequestPerUnit = 0;
+	m_iRequestUnitExpiresAt = 0;
+}
+
+void GatewayRole::close()
+{
+	GatewayMgrSingleton::get().removeGateWayRole(m_iRoleId);
+	ServerConnection::sendCloseLocalServer(m_iSerialNum);
 }
 
 }

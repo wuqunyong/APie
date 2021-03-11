@@ -140,7 +140,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 			return;
 		}
 
-		uint64_t iCurMS = Ctx::getNowMilliseconds();
+		uint64_t iCurMS = Ctx::getCurMilliseconds();
 
 		::login_msg::MSG_REQUEST_ECHO request;
 		request.set_value1(iCurMS);

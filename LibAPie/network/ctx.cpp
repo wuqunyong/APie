@@ -144,7 +144,7 @@ std::shared_ptr<SelfRegistration> Ctx::getEndpoint()
 	return endpoint_;
 }
 
-uint64_t Ctx::getNowMilliseconds()
+uint64_t Ctx::getCurMilliseconds()
 {
 	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 	auto duration = now.time_since_epoch();
@@ -152,7 +152,7 @@ uint64_t Ctx::getNowMilliseconds()
 	return milliseconds.count();
 }
 
-uint64_t Ctx::getNowSeconds()
+uint64_t Ctx::getCurSeconds()
 {
 	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 	auto duration = now.time_since_epoch();

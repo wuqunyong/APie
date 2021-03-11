@@ -67,4 +67,4 @@ redis_clients:       # redis客户端列表
     passwd: ""               # redis server passwd
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
-  uint: 1                # 客户端间隔单位(秒数，默认:3)
+  uint: 1                # 客户端间隔单位(秒数，默认:60)

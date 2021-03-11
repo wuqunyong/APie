@@ -170,8 +170,8 @@ namespace APie
 		static std::string logName();
 		static std::string logPostfix();
 		
-		static uint64_t getNowMilliseconds();
-		static uint64_t getNowSeconds();
+		static uint64_t getCurMilliseconds();
+		static uint64_t getCurSeconds();
 
     private:
 		void daemonize();

@@ -12,7 +12,7 @@ namespace RPC {
 
 	bool RpcClient::init()
 	{
-		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
+		uint64_t curTime = CtxSingleton::get().getCurMilliseconds();
 		m_iSeqId = 0;
 		m_iCheckTimeoutAt = curTime + CHECK_INTERVAL;
 
@@ -312,7 +312,7 @@ namespace RPC {
 		}
 
 
-		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
+		uint64_t curTime = CtxSingleton::get().getCurMilliseconds();
 
 		uint64_t iExpireAt = curTime + TIMEOUT_DURATION;
 		if (controller.timeout_ms() != 0)
@@ -364,7 +364,7 @@ namespace RPC {
 
 	void RpcClient::handleTimeout()
 	{
-		uint64_t curTime = CtxSingleton::get().getNowMilliseconds();
+		uint64_t curTime = CtxSingleton::get().getCurMilliseconds();
 
 		if (curTime > m_iCheckTimeoutAt)
 		{

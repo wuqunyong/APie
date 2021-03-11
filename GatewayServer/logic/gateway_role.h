@@ -26,13 +26,16 @@ namespace APie {
 		void setMaskFlag(uint32_t iFlag);
 		uint32_t getMaskFlag();
 
-		uint64_t addRequestPerUnit(uint64_t iValue);
-		void resetRequestPerUnit();
+		bool addRequestPerUnit(uint64_t iValue);
+		void close();
+
+
 
 	public:
 		static std::shared_ptr<GatewayRole> createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum);
 
 	private:
+		void resetRequestPerUnit();
 		void destroy();
 
 	private:

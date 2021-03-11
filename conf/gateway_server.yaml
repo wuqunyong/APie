@@ -40,3 +40,7 @@ redis_clients:
     host: "127.0.0.1"
     port: 6379
     passwd: ""
+
+limited:
+  requests_per_unit: 3 
+  uint: 10             

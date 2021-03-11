@@ -209,6 +209,12 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 	uint32_t iGWId = APie::CtxSingleton::get().getServerId();
 	uint64_t iUserId = ptrGatewayRole->getRoleId();
 
+	bool bResult = ptrGatewayRole->addRequestPerUnit(1);
+	if (!bResult)
+	{
+		return;
+	}
+
 	::rpc_msg::PRC_Multiplexer_Forward_Args args;
 	args.mutable_role_id()->set_gw_id(iGWId);
 	args.mutable_role_id()->set_user_id(iUserId);

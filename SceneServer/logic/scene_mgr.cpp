@@ -112,7 +112,7 @@ void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::log
 {
 	PIE_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request.DebugString().c_str());
 
-	uint64_t iCurMS = Ctx::getNowMilliseconds();
+	uint64_t iCurMS = Ctx::getCurMilliseconds();
 
 	::login_msg::MSG_RESPONSE_ECHO response;
 	response.set_value1(iCurMS);

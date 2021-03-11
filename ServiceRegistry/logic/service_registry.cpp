@@ -93,7 +93,7 @@ void ServiceRegistry::update()
 
 bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
 {
-	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+	auto curTime = APie::CtxSingleton::get().getCurSeconds();
 
 	EndPoint point;
 	point.type = instance.type();
@@ -129,7 +129,7 @@ bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 
 bool ServiceRegistry::updateHeartbeat(uint64_t iSerialNum)
 {
-	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+	auto curTime = APie::CtxSingleton::get().getCurSeconds();
 
 	auto findIte = m_registered.find(iSerialNum);
 	if (findIte != m_registered.end())
@@ -163,7 +163,7 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 
 void ServiceRegistry::checkTimeout()
 {
-	auto curTime = APie::CtxSingleton::get().getNowSeconds();
+	auto curTime = APie::CtxSingleton::get().getCurSeconds();
 
 	std::vector<uint64_t> delSerial;
 	for (const auto& items : m_registered)
