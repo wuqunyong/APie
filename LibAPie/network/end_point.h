@@ -60,7 +60,7 @@ namespace APie
 	private:
 
 		State m_state = { Unregistered };
-		std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
+		//std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
 	};
 
 
