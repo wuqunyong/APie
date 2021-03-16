@@ -18,7 +18,7 @@ namespace APie{
 void SelfRegistration::init()
 {
 	//ServiceRegistry
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance, ::service_discovery::MSG_RESP_REGISTER_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance, ::service_discovery::MSG_RESP_REGISTER_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance, ::service_discovery::MSG_NOTICE_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat, ::service_discovery::MSG_RESP_HEARTBEAT::default_instance());
 
@@ -123,7 +123,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
-	ptrClient->sendMsg(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, request);
+	ptrClient->sendMsg(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, request);
 }
 
 void SelfRegistration::sendHeartbeat(APie::ClientProxy* ptrClient)

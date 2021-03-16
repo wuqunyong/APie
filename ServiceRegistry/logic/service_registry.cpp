@@ -19,7 +19,7 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 	// RPC
 	APie::RPC::rpcInit();
 
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance, ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance, ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE::default_instance());
 	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat, ::service_discovery::MSG_REQUEST_HEARTBEAT::default_instance());
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
@@ -230,7 +230,7 @@ void ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const :
 	if (!auth.empty() && auth != request.auth())
 	{
 		response.set_status_code(opcodes::SC_Discovery_AuthError);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, response);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
 
 		ss << ",auth:error";
 		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
@@ -241,7 +241,7 @@ void ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const :
 	if (!bResult)
 	{
 		response.set_status_code(opcodes::SC_Discovery_DuplicateNode);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, response);
+		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
 
 		ss << ",node:duplicate";
 		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
@@ -251,7 +251,7 @@ void ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const :
 	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 	response.set_status_code(::opcodes::StatusCode::SC_Ok);
-	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, response);
+	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
 
 	ServiceRegistrySingleton::get().broadcast();
 }
