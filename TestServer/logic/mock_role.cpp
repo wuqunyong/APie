@@ -286,7 +286,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 
 	ss.str("");
 	ss << "recv|iSerialNum:" << serialNum << "|iOpcode:" << opcodes << "|data:" << sMsg;
-	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 
 	this->removeWaitResponse(opcodes);
 
@@ -508,7 +508,7 @@ void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 
 	ss.str("");
 	ss << "send|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|data:" << msg.ShortDebugString();
-	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 }
 
 }
