@@ -265,8 +265,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, client_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, server_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, opcodes_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, args_data_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, server_stream_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_REQUEST, args_data_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::STATUS, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -284,9 +284,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, client_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, server_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, status_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, result_data_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, has_more_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, offset_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_RESPONSE, result_data_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_Multiplexer_Forward_Args, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -346,15 +346,15 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "msg.CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006client\030\001 "
   "\001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serve"
   "r\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022%\n\007o"
-  "pcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\021\n\tar"
-  "gs_data\030\004 \001(\014\022\025\n\rserver_stream\030\005 \001(\010\"E\n\006"
+  "pcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\025\n\rse"
+  "rver_stream\030\004 \001(\010\022\021\n\targs_data\030\005 \001(\014\"E\n\006"
   "STATUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\022\020\n\010has"
   "_more\030\003 \001(\010\022\016\n\006offset\030\004 \001(\r\"\276\001\n\014RPC_RESP"
   "ONSE\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CLIENT_ID"
   "ENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SERVE"
   "R_IDENTIFIER\022\037\n\006status\030\003 \001(\0132\017.rpc_msg.S"
-  "TATUS\022\023\n\013result_data\030\004 \001(\014\022\020\n\010has_more\030\005"
-  " \001(\010\022\016\n\006offset\030\006 \001(\r\"k\n\034PRC_Multiplexer_"
+  "TATUS\022\020\n\010has_more\030\004 \001(\010\022\016\n\006offset\030\005 \001(\r\022"
+  "\023\n\013result_data\030\006 \001(\014\"k\n\034PRC_Multiplexer_"
   "Forward_Args\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg."
   "RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_"
   "msg\030\003 \001(\014\"m\n\036PRC_DeMultiplexer_Forward_A"
@@ -1872,18 +1872,18 @@ const char* RPC_REQUEST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           _internal_set_opcodes(static_cast<::rpc_msg::RPC_OPCODES>(val));
         } else goto handle_unusual;
         continue;
-      // bytes args_data = 4;
+      // bool server_stream = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          auto str = _internal_mutable_args_data();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          server_stream_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bool server_stream = 5;
+      // bytes args_data = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          server_stream_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_args_data();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1936,16 +1936,16 @@ failure:
       3, this->_internal_opcodes(), target);
   }
 
-  // bytes args_data = 4;
-  if (this->args_data().size() > 0) {
-    target = stream->WriteBytesMaybeAliased(
-        4, this->_internal_args_data(), target);
-  }
-
-  // bool server_stream = 5;
+  // bool server_stream = 4;
   if (this->server_stream() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_server_stream(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_server_stream(), target);
+  }
+
+  // bytes args_data = 5;
+  if (this->args_data().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        5, this->_internal_args_data(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1964,7 +1964,7 @@ size_t RPC_REQUEST::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes args_data = 4;
+  // bytes args_data = 5;
   if (this->args_data().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
@@ -1991,7 +1991,7 @@ size_t RPC_REQUEST::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_opcodes());
   }
 
-  // bool server_stream = 5;
+  // bool server_stream = 4;
   if (this->server_stream() != 0) {
     total_size += 1 + 1;
   }
@@ -2502,25 +2502,25 @@ const char* RPC_RESPONSE::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bytes result_data = 4;
+      // bool has_more = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          auto str = _internal_mutable_result_data();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // bool has_more = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           has_more_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // uint32 offset = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+      // uint32 offset = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           offset_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes result_data = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          auto str = _internal_mutable_result_data();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2574,22 +2574,22 @@ failure:
         3, _Internal::status(this), target, stream);
   }
 
-  // bytes result_data = 4;
-  if (this->result_data().size() > 0) {
-    target = stream->WriteBytesMaybeAliased(
-        4, this->_internal_result_data(), target);
-  }
-
-  // bool has_more = 5;
+  // bool has_more = 4;
   if (this->has_more() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_has_more(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_has_more(), target);
   }
 
-  // uint32 offset = 6;
+  // uint32 offset = 5;
   if (this->offset() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_offset(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_offset(), target);
+  }
+
+  // bytes result_data = 6;
+  if (this->result_data().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        6, this->_internal_result_data(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2608,7 +2608,7 @@ size_t RPC_RESPONSE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes result_data = 4;
+  // bytes result_data = 6;
   if (this->result_data().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
@@ -2636,12 +2636,12 @@ size_t RPC_RESPONSE::ByteSizeLong() const {
         *status_);
   }
 
-  // bool has_more = 5;
+  // bool has_more = 4;
   if (this->has_more() != 0) {
     total_size += 1 + 1;
   }
 
-  // uint32 offset = 6;
+  // uint32 offset = 5;
   if (this->offset() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(

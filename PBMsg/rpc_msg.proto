@@ -80,8 +80,8 @@ message RPC_REQUEST
 	CLIENT_IDENTIFIER client = 1;  // 调用方
 	SERVER_IDENTIFIER server = 2;  // 被调用方
 	RPC_OPCODES opcodes = 3;
-	bytes args_data = 4;
-	bool server_stream = 5;
+	bool server_stream = 4;
+	bytes args_data = 5;
 }
 
 message STATUS
@@ -97,9 +97,9 @@ message RPC_RESPONSE
 	CLIENT_IDENTIFIER client = 1; // 调用方（与请求时一致）
 	SERVER_IDENTIFIER server = 2; // 被调用方
 	STATUS status = 3;
-	bytes result_data = 4;
-	bool has_more = 5;
-	uint32 offset = 6;
+	bool has_more = 4;
+	uint32 offset = 5;
+	bytes result_data = 6;
 }
 
 message PRC_Multiplexer_Forward_Args
