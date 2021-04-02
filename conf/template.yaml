@@ -5,7 +5,6 @@ identify:            # 节点标识
   ip: "127.0.0.1"        # 节点作为Server,监听的IP
   port: 5007             # 节点作为Server,监听的端口
   codec_type: 1          # 节点协议：1(PB√),2(HTTP×)
-  db_id : 1              # 节点作为代理数据库时，表示数据库ID, db_id一致时代表连接到用一个数据库
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
 service_timeout: 600 # 服务发现超时时间，默认：300, 单位秒
@@ -36,9 +35,6 @@ service_registry:    # 服务注册地址
   port_value: 5007       # port
   auth: "hello"          # 认证秘钥
   type: 1                # 协议：1(PB√),2(HTTP×)
-topology:
-  1: [2,3,4]
-  2: [3,4]
 log:                 # 日志
   merge: true            # 合并文件, 默认true
   level: 0               # 等级, 默认2

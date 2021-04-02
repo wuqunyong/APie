@@ -20,7 +20,6 @@ message EndPointInstance
 	uint32 port = 5;
 	uint32 codec_type = 6;
 	uint32 mask_flag = 7;
-	uint32 db_id = 8;
 }
 
 // 注册服务节点 register

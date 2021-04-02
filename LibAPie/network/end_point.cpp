@@ -120,7 +120,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	request.mutable_instance()->set_port(port);
 	request.mutable_instance()->set_codec_type(codec_type);
 	request.mutable_instance()->set_mask_flag(0); // 节点间不需要压缩，加密
-	request.mutable_instance()->set_db_id(db_id);
+	//request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
 	ptrClient->sendMsg(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, request);
