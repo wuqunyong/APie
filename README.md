@@ -147,30 +147,45 @@ mysqladmin -u root -p version
 #include <vector>
 #include <algorithm>
 #include <tuple>
-
 #include "apie.h"
+
+#include "../../SharedDir/opcodes.h"
+#include "../../PBMsg/BusinessMsg/login_msg.pb.h"
+#include "../../PBMsg/BusinessMsg/rpc_login.pb.h"
+
+void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)
+{
+	::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+	response.set_status_code(opcodes::SC_Ok);
+	response.set_account_id(request.account_id());
+	APie::Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+}
+
 
 std::tuple<uint32_t, std::string> initHook()
 {
-	return //TODO;
+	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
 }
 
 std::tuple<uint32_t, std::string> startHook()
 {
-	return //TODO;
+	APie::Hook::HookRegistrySingleton::get().triggerHook(APie::Hook::HookPoint::HP_Ready);
+	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
 }
 
 std::tuple<uint32_t, std::string> readyHook()
 {
-	return //TODO;
+	// CLIENT OPCODE
+	APie::Api::PBHandler& serverPB = APie::Api::OpcodeHandlerSingleton::get().server;
+	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccountLogin, ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L::default_instance());
+
+	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
 }
 
 std::tuple<uint32_t, std::string> exitHook()
 {
-	//TODO
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
 }
-
 
 int main(int argc, char **argv)
 {
@@ -181,16 +196,16 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, APie::initHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, APie::startHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, APie::readyHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, APie::exitHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, initHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, startHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, readyHook);
+	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, exitHook);
 
 	APie::CtxSingleton::get().init(configFile);
 	APie::CtxSingleton::get().start();
 	APie::CtxSingleton::get().waitForShutdown();
 
-    return 0;
+	return 0;
 }
 ```
 
