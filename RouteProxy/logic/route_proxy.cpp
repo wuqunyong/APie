@@ -241,6 +241,11 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 			}
 		}
 
+		if (refMsg.notice().status() == service_discovery::RS_Learning)
+		{
+			break;
+		}
+
 		std::vector<EndPoint> delInstance;
 
 		for (const auto& items : RouteProxySingleton::get().connectedPool())

@@ -8,6 +8,7 @@ identify:            # 节点标识
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
 service_timeout: 600 # 服务发现超时时间，默认：300, 单位秒
+service_learning_duration: 60 # 服务发现学习时间，默认：60，单位秒
 certificate:         #证书
   public_key: E:/APie/conf/key.pub    #公钥位置
   private_key: E:/APie/conf/key.pem   #私钥位置

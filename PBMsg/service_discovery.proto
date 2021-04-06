@@ -3,6 +3,12 @@ syntax = "proto3";
 package service_discovery;
 import "common.proto";
 
+enum RegistryStatus
+{
+	RS_None = 0;
+	RS_Learning = 1;
+	RS_Forwarding = 2;
+}
 
 enum UpdateMode
 {
@@ -37,11 +43,14 @@ message MSG_RESP_REGISTER_INSTANCE
 
 message MSG_NOTICE_INSTANCE
 {
-	UpdateMode mode = 1;
-	repeated EndPointInstance add_instance = 2;
-	repeated EndPointInstance delete_instance = 3;
-	repeated EndPointInstance update_instance = 4;
-	// map<uint32, ClientNode> network_topology = 5;
+	string id = 1;
+	uint64 version = 2;
+	RegistryStatus status = 3;
+	UpdateMode mode = 4;
+	repeated EndPointInstance add_instance = 5;
+	repeated EndPointInstance delete_instance = 6;
+	repeated EndPointInstance update_instance = 7;
+	// map<uint32, ClientNode> network_topology = 8;
 }
 
 

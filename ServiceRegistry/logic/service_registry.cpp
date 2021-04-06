@@ -29,6 +29,7 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 
 std::tuple<uint32_t, std::string> ServiceRegistry::start()
 {
+	m_id = "id_" + APie::CtxSingleton::get().launchTime();
 	m_serviceTimeout = APie::CtxSingleton::get().yamlAs<uint32_t>({"service_timeout"}, 300);
 
 	auto timerCb = [this]() {
@@ -89,6 +90,23 @@ std::map<uint64_t, RegisteredEndPoint>& ServiceRegistry::registered()
 void ServiceRegistry::update()
 {
 	this->checkTimeout();
+
+	if (this->m_status == service_discovery::RS_Learning)
+	{
+		auto iDuration = APie::CtxSingleton::get().yamlAs<uint32_t>({ "service_learning_duration" }, 60);
+
+		auto iCurTime = APie::CtxSingleton::get().getCurSeconds();
+		if (m_iStatusCheckTime == 0)
+		{
+			m_iStatusCheckTime = iCurTime;
+		}
+
+		if (iCurTime > m_iStatusCheckTime + iDuration)
+		{
+			this->m_status = service_discovery::RS_Forwarding;
+			this->broadcast();
+		}
+	}
 }
 
 bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
@@ -193,7 +211,12 @@ void ServiceRegistry::checkTimeout()
 
 void ServiceRegistry::broadcast()
 {
+	m_version++;
+
 	::service_discovery::MSG_NOTICE_INSTANCE notice;
+	notice.set_id(m_id);
+	notice.set_version(m_version);
+	notice.set_status(m_status);
 	notice.set_mode(service_discovery::UM_Full);
 	for (const auto& items : m_registered)
 	{

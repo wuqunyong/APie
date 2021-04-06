@@ -310,7 +310,11 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service
 	{
 	case service_discovery::UM_Full:
 	{
-		EndPointMgrSingleton::get().clear();
+		if (notice.status() == service_discovery::RS_Forwarding)
+		{
+			EndPointMgrSingleton::get().clear();
+		}
+
 		for (const auto& items : notice.add_instance())
 		{
 			EndPointMgrSingleton::get().registerEndpoint(items);

@@ -63,6 +63,10 @@ namespace APie {
 		std::map<EndPoint, uint64_t> m_pointMap;
 		uint32_t m_serviceTimeout = 300;
 
+		std::string m_id;
+		uint64_t m_version = 0;
+		::service_discovery::RegistryStatus m_status = service_discovery::RS_Learning;
+		uint64_t m_iStatusCheckTime = 0;
 		Event::TimerPtr m_updateTimer;
 	};
 

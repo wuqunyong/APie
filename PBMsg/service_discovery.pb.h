@@ -86,6 +86,32 @@ template<> ::service_discovery::MSG_RESP_REGISTER_INSTANCE* Arena::CreateMaybeMe
 PROTOBUF_NAMESPACE_CLOSE
 namespace service_discovery {
 
+enum RegistryStatus : int {
+  RS_None = 0,
+  RS_Learning = 1,
+  RS_Forwarding = 2,
+  RegistryStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  RegistryStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool RegistryStatus_IsValid(int value);
+constexpr RegistryStatus RegistryStatus_MIN = RS_None;
+constexpr RegistryStatus RegistryStatus_MAX = RS_Forwarding;
+constexpr int RegistryStatus_ARRAYSIZE = RegistryStatus_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RegistryStatus_descriptor();
+template<typename T>
+inline const std::string& RegistryStatus_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, RegistryStatus>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function RegistryStatus_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    RegistryStatus_descriptor(), enum_t_value);
+}
+inline bool RegistryStatus_Parse(
+    const std::string& name, RegistryStatus* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<RegistryStatus>(
+    RegistryStatus_descriptor(), name, value);
+}
 enum UpdateMode : int {
   UM_None = 0,
   UM_Full = 1,
@@ -708,12 +734,15 @@ class MSG_NOTICE_INSTANCE :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAddInstanceFieldNumber = 2,
-    kDeleteInstanceFieldNumber = 3,
-    kUpdateInstanceFieldNumber = 4,
-    kModeFieldNumber = 1,
+    kAddInstanceFieldNumber = 5,
+    kDeleteInstanceFieldNumber = 6,
+    kUpdateInstanceFieldNumber = 7,
+    kIdFieldNumber = 1,
+    kVersionFieldNumber = 2,
+    kStatusFieldNumber = 3,
+    kModeFieldNumber = 4,
   };
-  // repeated .service_discovery.EndPointInstance add_instance = 2;
+  // repeated .service_discovery.EndPointInstance add_instance = 5;
   int add_instance_size() const;
   private:
   int _internal_add_instance_size() const;
@@ -731,7 +760,7 @@ class MSG_NOTICE_INSTANCE :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
       add_instance() const;
 
-  // repeated .service_discovery.EndPointInstance delete_instance = 3;
+  // repeated .service_discovery.EndPointInstance delete_instance = 6;
   int delete_instance_size() const;
   private:
   int _internal_delete_instance_size() const;
@@ -749,7 +778,7 @@ class MSG_NOTICE_INSTANCE :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
       delete_instance() const;
 
-  // repeated .service_discovery.EndPointInstance update_instance = 4;
+  // repeated .service_discovery.EndPointInstance update_instance = 7;
   int update_instance_size() const;
   private:
   int _internal_update_instance_size() const;
@@ -767,7 +796,41 @@ class MSG_NOTICE_INSTANCE :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance >&
       update_instance() const;
 
-  // .service_discovery.UpdateMode mode = 1;
+  // string id = 1;
+  void clear_id();
+  const std::string& id() const;
+  void set_id(const std::string& value);
+  void set_id(std::string&& value);
+  void set_id(const char* value);
+  void set_id(const char* value, size_t size);
+  std::string* mutable_id();
+  std::string* release_id();
+  void set_allocated_id(std::string* id);
+  private:
+  const std::string& _internal_id() const;
+  void _internal_set_id(const std::string& value);
+  std::string* _internal_mutable_id();
+  public:
+
+  // uint64 version = 2;
+  void clear_version();
+  ::PROTOBUF_NAMESPACE_ID::uint64 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  public:
+
+  // .service_discovery.RegistryStatus status = 3;
+  void clear_status();
+  ::service_discovery::RegistryStatus status() const;
+  void set_status(::service_discovery::RegistryStatus value);
+  private:
+  ::service_discovery::RegistryStatus _internal_status() const;
+  void _internal_set_status(::service_discovery::RegistryStatus value);
+  public:
+
+  // .service_discovery.UpdateMode mode = 4;
   void clear_mode();
   ::service_discovery::UpdateMode mode() const;
   void set_mode(::service_discovery::UpdateMode value);
@@ -784,6 +847,9 @@ class MSG_NOTICE_INSTANCE :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > add_instance_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > delete_instance_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::service_discovery::EndPointInstance > update_instance_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 version_;
+  int status_;
   int mode_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
@@ -1414,7 +1480,107 @@ inline void MSG_RESP_REGISTER_INSTANCE::set_status_code(::PROTOBUF_NAMESPACE_ID:
 
 // MSG_NOTICE_INSTANCE
 
-// .service_discovery.UpdateMode mode = 1;
+// string id = 1;
+inline void MSG_NOTICE_INSTANCE::clear_id() {
+  id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_NOTICE_INSTANCE::id() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.id)
+  return _internal_id();
+}
+inline void MSG_NOTICE_INSTANCE::set_id(const std::string& value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_NOTICE_INSTANCE.id)
+}
+inline std::string* MSG_NOTICE_INSTANCE::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_NOTICE_INSTANCE.id)
+  return _internal_mutable_id();
+}
+inline const std::string& MSG_NOTICE_INSTANCE::_internal_id() const {
+  return id_.GetNoArena();
+}
+inline void MSG_NOTICE_INSTANCE::_internal_set_id(const std::string& value) {
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_NOTICE_INSTANCE::set_id(std::string&& value) {
+  
+  id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_NOTICE_INSTANCE.id)
+}
+inline void MSG_NOTICE_INSTANCE::set_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_NOTICE_INSTANCE.id)
+}
+inline void MSG_NOTICE_INSTANCE::set_id(const char* value, size_t size) {
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_NOTICE_INSTANCE.id)
+}
+inline std::string* MSG_NOTICE_INSTANCE::_internal_mutable_id() {
+  
+  return id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_NOTICE_INSTANCE::release_id() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_NOTICE_INSTANCE.id)
+  
+  return id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_NOTICE_INSTANCE::set_allocated_id(std::string* id) {
+  if (id != nullptr) {
+    
+  } else {
+    
+  }
+  id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), id);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_NOTICE_INSTANCE.id)
+}
+
+// uint64 version = 2;
+inline void MSG_NOTICE_INSTANCE::clear_version() {
+  version_ = PROTOBUF_ULONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_NOTICE_INSTANCE::_internal_version() const {
+  return version_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 MSG_NOTICE_INSTANCE::version() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.version)
+  return _internal_version();
+}
+inline void MSG_NOTICE_INSTANCE::_internal_set_version(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  version_ = value;
+}
+inline void MSG_NOTICE_INSTANCE::set_version(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_version(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_NOTICE_INSTANCE.version)
+}
+
+// .service_discovery.RegistryStatus status = 3;
+inline void MSG_NOTICE_INSTANCE::clear_status() {
+  status_ = 0;
+}
+inline ::service_discovery::RegistryStatus MSG_NOTICE_INSTANCE::_internal_status() const {
+  return static_cast< ::service_discovery::RegistryStatus >(status_);
+}
+inline ::service_discovery::RegistryStatus MSG_NOTICE_INSTANCE::status() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_NOTICE_INSTANCE.status)
+  return _internal_status();
+}
+inline void MSG_NOTICE_INSTANCE::_internal_set_status(::service_discovery::RegistryStatus value) {
+  
+  status_ = value;
+}
+inline void MSG_NOTICE_INSTANCE::set_status(::service_discovery::RegistryStatus value) {
+  _internal_set_status(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_NOTICE_INSTANCE.status)
+}
+
+// .service_discovery.UpdateMode mode = 4;
 inline void MSG_NOTICE_INSTANCE::clear_mode() {
   mode_ = 0;
 }
@@ -1434,7 +1600,7 @@ inline void MSG_NOTICE_INSTANCE::set_mode(::service_discovery::UpdateMode value)
   // @@protoc_insertion_point(field_set:service_discovery.MSG_NOTICE_INSTANCE.mode)
 }
 
-// repeated .service_discovery.EndPointInstance add_instance = 2;
+// repeated .service_discovery.EndPointInstance add_instance = 5;
 inline int MSG_NOTICE_INSTANCE::_internal_add_instance_size() const {
   return add_instance_.size();
 }
@@ -1473,7 +1639,7 @@ MSG_NOTICE_INSTANCE::add_instance() const {
   return add_instance_;
 }
 
-// repeated .service_discovery.EndPointInstance delete_instance = 3;
+// repeated .service_discovery.EndPointInstance delete_instance = 6;
 inline int MSG_NOTICE_INSTANCE::_internal_delete_instance_size() const {
   return delete_instance_.size();
 }
@@ -1512,7 +1678,7 @@ MSG_NOTICE_INSTANCE::delete_instance() const {
   return delete_instance_;
 }
 
-// repeated .service_discovery.EndPointInstance update_instance = 4;
+// repeated .service_discovery.EndPointInstance update_instance = 7;
 inline int MSG_NOTICE_INSTANCE::_internal_update_instance_size() const {
   return update_instance_.size();
 }
@@ -1599,6 +1765,11 @@ inline void MSG_RESP_HEARTBEAT::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 
 
 PROTOBUF_NAMESPACE_OPEN
 
+template <> struct is_proto_enum< ::service_discovery::RegistryStatus> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::RegistryStatus>() {
+  return ::service_discovery::RegistryStatus_descriptor();
+}
 template <> struct is_proto_enum< ::service_discovery::UpdateMode> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::service_discovery::UpdateMode>() {
