@@ -1,18 +1,7 @@
 identify:
   type: 2
   id: 1
-  auth: "hello"
-  ip: "127.0.0.1"
-  port: 12007
-  codec_type: 1
 io_threads: 2
-listeners:
-- address:
-    socket_address:
-      address: "127.0.0.1"
-      port_value: 12007
-      type: 1
-      mask_flag : 0
 service_registry:
   address: "127.0.0.1"
   port_value: 5007
