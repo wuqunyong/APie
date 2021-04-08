@@ -29,18 +29,3 @@ CREATE TABLE `role_base` (
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Procedure structure for sp_select_userid_info
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_select_userid_info`;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_userid_info`(IN `begin_id` integer,IN `batch_count` integer)
-BEGIN
-		select user_id,user_id
-    from role_base
-    where user_id>begin_id
-		limit batch_count;
-END
-;;
-DELIMITER ;

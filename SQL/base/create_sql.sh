@@ -27,7 +27,9 @@ echo DATABASE $DATABASE
 
 
 mysql -h$HOST -P$PORT -u$USER -p$PASSWORD $DATABASE < ./apie_account.sql 2>&1 | /usr/bin/tee -a ${logFile}
-/bin/echo "`date +'%Y-%m-%d %H:%M:%S'`|apie_account.sql " >> ${logFile}
+cat ./apie_account.sql | xargs echo "`date +'%Y-%m-%d %H:%M:%S'`|apie_account.sql" | /usr/bin/tee -a ${logFile}
+
+# /bin/echo "`date +'%Y-%m-%d %H:%M:%S'`|apie_account.sql " >> ${logFile}
 
 
 
