@@ -265,6 +265,24 @@ void EndPointMgr::delRoute(uint64_t iSerialNum)
 	m_reversePoints.erase(findIte);
 }
 
+void EndPointMgr::updateRouteHeartbeat(uint64_t iSerialNum)
+{
+	auto findIte = m_reversePoints.find(iSerialNum);
+	if (findIte == m_reversePoints.end())
+	{
+		return;
+	}
+
+	auto updateIte = m_establishedPoints.find(findIte->second);
+	if (updateIte == m_establishedPoints.end())
+	{
+		return;
+	}
+
+	auto iCurTime = time(NULL);
+	updateIte->second.iLastHeartbeat = iCurTime;
+}
+
 std::optional<EndPoint> EndPointMgr::findRoute(uint64_t iSerialNum)
 {
 	auto findIte = m_reversePoints.find(iSerialNum);
@@ -392,6 +410,7 @@ void SelfRegistration::handleRouteHeartbeat(uint64_t iSerialNum, const ::route_r
 	if (optPoint)
 	{
 		response.set_status_code(opcodes::SC_Ok);
+		EndPointMgrSingleton::get().updateRouteHeartbeat(iSerialNum);
 	}
 	else
 	{

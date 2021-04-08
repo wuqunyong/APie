@@ -86,6 +86,8 @@ namespace APie
 
 		void addRoute(const EndPoint& point, uint64_t iSerialNum);
 		void delRoute(uint64_t iSerialNum);
+		void updateRouteHeartbeat(uint64_t iSerialNum);
+
 		std::vector<EndPoint> getEstablishedEndpointsByType(uint32_t type);
 		std::optional<EndPoint> findRoute(uint64_t iSerialNum);
 
