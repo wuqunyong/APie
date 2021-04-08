@@ -130,7 +130,8 @@ mysqladmin -u root -p version
 ```
 
 # Windows安装
-安装依赖库，直接visual studio启动，编译
+安装依赖库mysql-installer-community-5.7.20.msi,Win64OpenSSL-1_1_1g.msi
+直接visual studio启动，编译
 
 # 架构图
 ![架构图](https://github.com/wuqunyong/APie/blob/master/docs/topology.png)
@@ -208,6 +209,8 @@ int main(int argc, char **argv)
 	return 0;
 }
 ```
+
+[配置文件模板](https://github.com/wuqunyong/APie/blob/master/conf/template.yaml)
 
 
 # MysqlORM Demo
