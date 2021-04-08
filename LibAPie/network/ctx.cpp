@@ -542,7 +542,7 @@ void Ctx::handleSigProcMask()
 		if (rc != 0)
 		{
 			PANIC_ABORT("pthread_sigmask");
-}
+		}
 	}
 #endif
 }
