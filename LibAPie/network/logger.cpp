@@ -161,7 +161,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 #else
-		bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({ "daemon" }, true);
+		bool bDaemon = APie::CtxSingleton::get().isDaemon();
 		if (!bDaemon)
 		{
 			printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);

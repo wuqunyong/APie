@@ -166,6 +166,8 @@ namespace APie
 
 		bool checkIsValidServerType(std::set<uint32_t> validSet);
 
+		bool isDaemon();
+
 	public:
 		static std::string logName();
 		static std::string logPostfix();
@@ -193,6 +195,8 @@ namespace APie
 		std::atomic<uint32_t> tid_ = 0;
 		YAML::Node node_;
 		std::mutex node_sync_;
+
+		bool m_bDaemon = true;
 
 		std::shared_ptr<SelfRegistration> endpoint_ = nullptr;
 

@@ -198,8 +198,8 @@ void Ctx::init(const std::string& configFile)
 	try {
 		this->node_ = YAML::LoadFile(configFile);
 
-		bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({"daemon"}, true);
-		if (bDaemon)
+		m_bDaemon = APie::CtxSingleton::get().yamlAs<bool>({"daemon"}, true);
+		if (m_bDaemon)
 		{
 			this->daemonize();
 		}
@@ -529,17 +529,20 @@ void Ctx::handleSigProcMask()
 {
 #ifdef WIN32
 #else
-	sigemptyset(&g_SigSet);
-	sigaddset(&g_SigSet, SIGTERM);
-	//sigaddset(&g_SigSet, SIGINT);
-	sigaddset(&g_SigSet, SIGHUP);
-	sigaddset(&g_SigSet, SIGQUIT);
-
-	//sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
-	int rc = pthread_sigmask(SIG_BLOCK, &g_SigSet, NULL);
-	if ( rc != 0)
+	if (m_bDaemon) 
 	{
-		PANIC_ABORT("pthread_sigmask");
+		sigemptyset(&g_SigSet);
+		sigaddset(&g_SigSet, SIGTERM);
+		//sigaddset(&g_SigSet, SIGINT);
+		sigaddset(&g_SigSet, SIGHUP);
+		sigaddset(&g_SigSet, SIGQUIT);
+
+		//sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
+		int rc = pthread_sigmask(SIG_BLOCK, &g_SigSet, NULL);
+		if (rc != 0)
+		{
+			PANIC_ABORT("pthread_sigmask");
+}
 	}
 #endif
 }
@@ -581,8 +584,7 @@ void Ctx::waitForShutdown()
 		}
 	}
 #else
-	bool bDaemon = APie::CtxSingleton::get().yamlAs<bool>({ "daemon" }, true);
-	if (bDaemon)
+	if (m_bDaemon)
 	{
 		int actualSignal = 0;
 		int errCount = 0;
@@ -714,6 +716,11 @@ bool Ctx::checkIsValidServerType(std::set<uint32_t> validSet)
 	}
 
 	return true;
+}
+
+bool Ctx::isDaemon()
+{
+	return m_bDaemon;
 }
 
 std::string Ctx::logName()
