@@ -545,6 +545,7 @@ void Ctx::handleSigProcMask()
 		//sigaddset(&g_SigSet, SIGINT);
 		sigaddset(&g_SigSet, SIGHUP);
 		sigaddset(&g_SigSet, SIGQUIT);
+		sigaddset(&g_SigSet, SIGUSR1);
 
 		//sigprocmask(SIG_BLOCK, &g_SigSet, NULL);
 		int rc = pthread_sigmask(SIG_BLOCK, &g_SigSet, NULL);
@@ -622,9 +623,22 @@ void Ctx::waitForShutdown()
 			case SIGQUIT:
 			case SIGTERM:
 			case SIGHUP:
+			{
 				quitFlag = true;
 				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
 				break;
+			}
+			case SIGUSR1:
+			{
+				auto ptrCmd = new LogicCmd;
+				ptrCmd->sCmd = "reload";
+
+				Command command;
+				command.type = Command::logic_cmd;
+				command.args.logic_cmd.ptrData = ptrCmd;
+				APie::CtxSingleton::get().getLogicThread()->push(command);
+				break;
+			}
 			default:
 				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
 				break;
