@@ -50,7 +50,7 @@ void SelfRegistration::registerEndpoint()
 		return;
 	}
 
-	if (!APie::CtxSingleton::get().yamlNode()["service_registry"])
+	if (!APie::CtxSingleton::get().yamlFieldsExists({ "service_registry" }))
 	{
 		std::stringstream ss;
 		ss << "service_registry empty";

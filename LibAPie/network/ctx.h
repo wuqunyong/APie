@@ -39,8 +39,10 @@ namespace APie
 		void waitForShutdown();
 
 		uint32_t generatorTId();
-		YAML::Node& yamlNode();
+		//YAML::Node& yamlNode();
+
 		void resetYamlNode(YAML::Node node);
+		bool yamlFieldsExists(std::vector<std::string> index);
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
@@ -54,20 +56,6 @@ namespace APie
 		T yamlAs(std::vector<std::string> index)
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
-
-			//YAML::Node node = YAML::Clone(node_);
-			////YAML::Node node = node_;
-			//for (const auto &items : index)
-			//{
-			//	if (node[items])
-			//	{
-			//		node = node[items];
-			//	}
-			//	else
-			//	{
-			//		throw std::invalid_argument("Configuration|field:" + items + "|not found");
-			//	}
-			//}
 
 			std::vector<YAML::Node> nodeList;
 			nodeList.push_back(node_);
@@ -94,20 +82,6 @@ namespace APie
 		T yamlAs(std::vector<std::string> index, const S& fallback)
 		{
 			std::lock_guard<std::mutex> guard(node_sync_);
-
-			//YAML::Node node = YAML::Clone(node_);
-			////YAML::Node node = node_;
-			//for (const auto &items : index)
-			//{
-			//	if (node[items])
-			//	{
-			//		node = node[items];
-			//	}
-			//	else
-			//	{
-			//		return fallback;
-			//	}
-			//}
 
 			std::vector<YAML::Node> nodeList;
 			nodeList.push_back(node_);

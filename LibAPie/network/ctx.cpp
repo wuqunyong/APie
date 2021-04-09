@@ -134,8 +134,8 @@ Ctx::~Ctx()
 EndPoint Ctx::identify()
 {
 	EndPoint point;
-	point.type = this->yamlAs<uint32_t>({ "identify","type" }, 0);
-	point.id = this->yamlAs<uint32_t>({ "identify","id" }, 0);
+	point.type = this->getServerType();
+	point.id = this->getServerId();
 	point.auth = this->yamlAs<std::string>({ "identify","auth" }, "");
 	return point;
 }
@@ -701,15 +701,41 @@ uint32_t Ctx::generatorTId()
 	return tid_;
 }
 
-YAML::Node& Ctx::yamlNode()
-{
-	return this->node_;
-}
+//YAML::Node& Ctx::yamlNode()
+//{
+//	std::lock_guard<std::mutex> guard(node_sync_);
+//	return this->node_;
+//}
 
 void Ctx::resetYamlNode(YAML::Node node)
 {
 	std::lock_guard<std::mutex> guard(node_sync_);
 	this->node_ = node;
+}
+
+bool Ctx::yamlFieldsExists(std::vector<std::string> index)
+{
+	std::lock_guard<std::mutex> guard(node_sync_);
+
+	std::vector<YAML::Node> nodeList;
+	nodeList.push_back(node_);
+
+	uint32_t iIndex = 0;
+
+	for (const auto &items : index)
+	{
+		if (nodeList[iIndex][items])
+		{
+			nodeList.push_back(nodeList[iIndex][items]);
+			iIndex++;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 std::string Ctx::launchTime()
