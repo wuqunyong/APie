@@ -161,6 +161,12 @@ void DispatcherImpl::runIntervalCallbacks()
 	{
 		MetricData *ptrData = new MetricData;
 		ptrData->sMetric = "queue";
+
+		auto iType = APie::CtxSingleton::get().getServerType();
+		auto iId = APie::CtxSingleton::get().getServerId();
+
+		ptrData->tag["server_type"] = std::to_string(iType);
+		ptrData->tag["server_id"] = std::to_string(iId);
 		ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
 		ptrData->field["mailbox"] = (double)mailbox_.size();
 
