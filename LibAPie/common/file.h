@@ -76,5 +76,7 @@ std::string GetFileName(const std::string &path);
 
 int64_t FileSize(const std::string& path);
 
+int64_t FileDataModificationTime(const std::string& path);
+
 }  // namespace common
 }  // namespace APie

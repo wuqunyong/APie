@@ -41,6 +41,7 @@ public:
 
 public:
 	static void onHelp(::pubsub::LOGIC_CMD& cmd);
+	static void onReload(::pubsub::LOGIC_CMD& cmd);
 
 private:
 	std::map<std::string, cmd_entry_t> m_cmd;

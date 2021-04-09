@@ -120,5 +120,22 @@ int64_t FileSize(const std::string& path) {
 #endif
 }
 
+int64_t FileDataModificationTime(const std::string& path)
+{
+#ifdef WIN32
+	struct _stat info;
+	if (::_stat(path.c_str(), &info) != 0) {
+		return -1;
+	}
+	return info.st_mtime;
+#else
+	struct stat info;
+	if (::stat(path.c_str(), &info) != 0) {
+		return -1;
+	}
+	return info.st_mtime;
+#endif
+}
+
 }  // namespace common
 }  // namespace APie

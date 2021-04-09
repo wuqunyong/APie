@@ -35,7 +35,7 @@ void SelfRegistration::init()
 
 void SelfRegistration::registerEndpoint()
 {
-	auto identityType = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
+	auto identityType = APie::CtxSingleton::get().getServerType();
 
 	std::set<uint32_t> needRegister;
 	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
@@ -64,7 +64,6 @@ void SelfRegistration::registerEndpoint()
 	std::string registryAuth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
 	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","type" }, 0);
 	
-	//uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({"service_registry", "mask_flag" }, 0);
 	uint32_t maskFlag = 0;
 
 	auto ptrSelf = this->shared_from_this();
@@ -104,13 +103,12 @@ void SelfRegistration::unregisterEndpoint()
 
 void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth)
 {
-	uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
-	uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
+	uint32_t type = APie::CtxSingleton::get().getServerType();
+	uint32_t id = APie::CtxSingleton::get().getServerId();
 	std::string auth = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","auth" }, "");
 	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","ip" }, "");
 	uint32_t port = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","port" }, 0);
 	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
-	uint32_t db_id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","db_id" }, 0);
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));

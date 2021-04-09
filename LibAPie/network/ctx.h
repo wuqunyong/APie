@@ -40,6 +40,7 @@ namespace APie
 
 		uint32_t generatorTId();
 		YAML::Node& yamlNode();
+		void resetYamlNode(YAML::Node node);
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
@@ -167,6 +168,10 @@ namespace APie
 		bool checkIsValidServerType(std::set<uint32_t> validSet);
 
 		bool isDaemon();
+		std::string getConfigFile();
+		int64_t getConfigFileMTime();
+		void setConfigFileMTime(int64_t mtime);
+
 
 	public:
 		static std::string logName();
@@ -197,6 +202,8 @@ namespace APie
 		std::mutex node_sync_;
 
 		bool m_bDaemon = true;
+		std::string m_configFile;
+		int64_t m_configFileMTime = -1;
 
 		std::shared_ptr<SelfRegistration> endpoint_ = nullptr;
 

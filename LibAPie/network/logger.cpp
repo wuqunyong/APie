@@ -87,6 +87,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	if (bMerge && !ignoreMerge)
 	{
 		bMergeFlag = true;
+		//std::string logName = APie::CtxSingleton::get().yamlAs<std::string>({ "log", "name" }, "apie");
 		logFileName = APie::Ctx::logName() + "-" + APie::Ctx::logPostfix();
 		ptrFile = getCacheFile(logFileName, PIE_CYCLE_DAY);
 	}

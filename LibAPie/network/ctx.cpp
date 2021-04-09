@@ -50,6 +50,7 @@ sigset_t g_SigSet;
 #include "../api/os_sys_calls.h"
 
 #include "../redis_driver/redis_client.h"
+#include "../common/file.h"
 
 
 
@@ -181,6 +182,14 @@ uint32_t Ctx::generateHash(EndPoint point)
 
 void Ctx::init(const std::string& configFile)
 {
+	this->m_configFile = configFile;
+	int64_t mtime = APie::Common::FileDataModificationTime(this->m_configFile);
+	if (mtime == -1)
+	{
+		PANIC_ABORT("configFile:%s not exist", configFile.c_str());
+	}
+	this->setConfigFileMTime(mtime);
+
 	time_t now = time(NULL);
 
 	char timebuf[128] = { '\0' };
@@ -683,6 +692,12 @@ YAML::Node& Ctx::yamlNode()
 	return this->node_;
 }
 
+void Ctx::resetYamlNode(YAML::Node node)
+{
+	std::lock_guard<std::mutex> guard(node_sync_);
+	this->node_ = node;
+}
+
 std::string Ctx::launchTime()
 {
 	return m_launchTime;
@@ -721,6 +736,21 @@ bool Ctx::checkIsValidServerType(std::set<uint32_t> validSet)
 bool Ctx::isDaemon()
 {
 	return m_bDaemon;
+}
+
+std::string Ctx::getConfigFile()
+{
+	return m_configFile;
+}
+
+int64_t Ctx::getConfigFileMTime()
+{
+	return m_configFileMTime;
+}
+
+void Ctx::setConfigFileMTime(int64_t mtime)
+{
+	m_configFileMTime = mtime;
 }
 
 std::string Ctx::logName()
