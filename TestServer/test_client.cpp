@@ -318,6 +318,7 @@ string encode_rc4(const std::string& sharedKey, const string& data) {
 int main(int argc, char **argv)
 {
 	auto iR = MakeKey(9000001, 123);
+	auto sSS = SSImpl("hello", 1, iR, "world");
 
 	auto iValue = APie::toUnderlyingType(MyEnum::ME_Hehlo);
 

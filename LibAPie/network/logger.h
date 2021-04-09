@@ -161,3 +161,14 @@ void logFileClose();
 	} \
 } while (0);
 #endif
+
+
+template <typename ...Args>
+std::string SSImpl(Args&& ...args)
+{
+	std::ostringstream ss;
+
+	(ss << ... << std::forward<Args>(args));
+
+	return ss.str();
+}
