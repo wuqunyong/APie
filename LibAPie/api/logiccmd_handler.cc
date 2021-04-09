@@ -94,12 +94,16 @@ namespace APie {
 			if (mtime == -1)
 			{
 				PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "reload|configFile:%s not exist", configFile.c_str());
+				std::cout << "reload|configFile:" << configFile << "not exist";
+
 				return;
 			}
 
 			if (APie::CtxSingleton::get().getConfigFileMTime() == mtime)
 			{
 				PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|configFile:%s not changed", configFile.c_str());
+				std::cout << "reload|configFile:" << configFile << "not changed";
+
 				return;
 			}
 
@@ -108,11 +112,15 @@ namespace APie {
 			APie::CtxSingleton::get().setConfigFileMTime(mtime);
 
 			PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|configFile:%s changed", configFile.c_str());
+			std::cout << "reload|configFile:" << configFile << "changed";
+
 		}
 		catch (std::exception& e) {
 			std::stringstream ss;
-			ss << "reload|fileName:" << configFile << "|Unexpected exception: " << e.what();
+			ss << "reload|configFile:" << configFile << "|Unexpected exception: " << e.what();
 			PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
+
+			std::cout << "reload|configFile:" << configFile << "|Unexpected exception: " << e.what();
 		}
 	}
 
