@@ -15,7 +15,7 @@
 
 #include "../decompressor/lz4_decompressor_impl.h"
 
-#include "Command.h"
+#include "command.h"
 #include "../crypto/crypto_utility.h"
 
 
