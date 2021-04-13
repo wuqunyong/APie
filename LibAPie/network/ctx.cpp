@@ -224,6 +224,8 @@ void Ctx::init(const std::string& configFile)
 		adjustOpenFilesLimit();
 		enableCoreFiles();
 
+		handleSigProcMask();
+
 		uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
 		uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
 		APie::CtxSingleton::get().setServerId(id);
@@ -354,8 +356,6 @@ void Ctx::init(const std::string& configFile)
 		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 		throw;
 	}
-
-	this->handleSigProcMask();
 }
 
 void Ctx::start()
