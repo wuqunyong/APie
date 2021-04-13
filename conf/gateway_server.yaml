@@ -7,8 +7,8 @@ identify:
   codec_type: 1
 io_threads: 2
 certificate:         #证书
-  public_key: E:/APie/conf/key.pub    #公钥位置
-  private_key: E:/APie/conf/key.pem   #私钥位置
+  public_key: /usr/local/apie/etc/key.pub    #公钥位置
+  private_key: /usr/local/apie/etc/key.pem   #私钥位置
 listeners:
 - address:
     socket_address:

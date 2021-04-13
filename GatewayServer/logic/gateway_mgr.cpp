@@ -17,8 +17,8 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
 	}
 
-	std::string pubKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "public_key" }, "E:\\APie\\conf\\key.pub");
-	std::string privateKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "private_key" }, "E:\\APie\\conf\\key.pem");
+	std::string pubKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "public_key" }, "/usr/local/apie/etc/key.pub");
+	std::string privateKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "private_key" }, "/usr/local/apie/etc/key.pem");
 
 	std::string errInfo;
 	bResult = APie::Crypto::RSAUtilitySingleton::get().init(pubKey, privateKey, errInfo);
@@ -804,7 +804,7 @@ void GatewayMgr::handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg
 void GatewayMgr::handleRequestHandshakeInit(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_INIT& request)
 {
 	std::string content;
-	std::string pubKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "public_key" }, "E:\\APie\\conf\\key.pub");
+	std::string pubKey = APie::CtxSingleton::get().yamlAs<std::string>({ "certificate", "public_key" }, "/usr/local/apie/etc/key.pub");
 	bool bResult = APie::Common::GetContent(pubKey, &content);
 
 	std::string sServerRandom("server");

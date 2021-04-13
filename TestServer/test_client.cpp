@@ -331,12 +331,12 @@ int main(int argc, char **argv)
 	//TestEncrypt(plainMsg, &encryptedMsg);
 	//TestDecrypt(encryptedMsg, &decryptedMsg);
 
-	std::string errInfo;
-	bool bResult = APie::Crypto::RSAUtilitySingleton::get().init("E:\\APie\\conf\\key.pub", "E:\\APie\\conf\\key.pem", errInfo);
-	if (!bResult)
-	{
-		return 1;
-	}
+	//std::string errInfo;
+	//bool bResult = APie::Crypto::RSAUtilitySingleton::get().init("E:\\APie\\conf\\key.pub", "E:\\APie\\conf\\key.pem", errInfo);
+	//if (!bResult)
+	//{
+	//	return 1;
+	//}
 
 	{
 
