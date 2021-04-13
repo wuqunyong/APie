@@ -136,7 +136,7 @@ mysqladmin -u root -p version
 # 架构图
 ![架构图](https://github.com/wuqunyong/APie/blob/master/docs/topology.png)
 
-# 框架图
+# Reactor线程模型
  [nio reactor](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
 
 # Demo
