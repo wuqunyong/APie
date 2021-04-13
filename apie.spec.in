@@ -57,6 +57,9 @@ pwd
 %{__install} -c -m 644 conf/service_registry.yaml %{buildroot}/usr/local/%{name}/conf/service_registry.yaml
 %{__install} -c -m 644 conf/test_client.yaml %{buildroot}/usr/local/%{name}/conf/test_client.yaml
 
+%{__install} -c -m 644 etc/key.pem %{buildroot}/usr/local/%{name}/etc/key.pem
+%{__install} -c -m 644 etc/key.pub %{buildroot}/usr/local/%{name}/etc/key.pub
+
 /usr/bin/cp -i data/* %{buildroot}/usr/local/%{name}/data/
 
 %{__install} -c -m 755 etc/apie.sh %{buildroot}/etc/rc.d/init.d/apie
