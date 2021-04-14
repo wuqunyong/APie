@@ -450,6 +450,8 @@ void Ctx::destroy()
 	{
 		db_thread_.reset();
 	}
+
+	logFileClose();
 }
 
 void Ctx::daemonize()

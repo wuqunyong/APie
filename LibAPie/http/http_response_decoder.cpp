@@ -23,6 +23,11 @@ namespace APie
 
     HttpResponseDecoder::~HttpResponseDecoder()
     {
+		if (m_response_ptr != nullptr)
+		{
+			delete m_response_ptr;
+			m_response_ptr = nullptr;
+		}
     }
   
 	void HttpResponseDecoder::setConnectSession(class ClientConnection *ptrSession)
