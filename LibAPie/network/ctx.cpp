@@ -106,6 +106,8 @@ public:
 		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
+			delete itemObjPtr;
+
 			return;
 		}
 		ptrThread->push(command);
