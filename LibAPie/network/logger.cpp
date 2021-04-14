@@ -394,6 +394,8 @@ void checkRotate()
 
 void logFileClose()
 {
+	std::lock_guard<std::mutex> guard(log_sync);
+
 	std::map<std::string, LogFile*>::iterator ite = cacheMap.begin();
 	while (ite != cacheMap.end())
 	{

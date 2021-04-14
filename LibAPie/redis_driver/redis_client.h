@@ -54,6 +54,7 @@ namespace APie {
 		~RedisClient();
 
 		void start();
+		void stop();
 		
 		cpp_redis::client& client();
 
@@ -99,6 +100,7 @@ namespace APie {
 	{
 	public:
 		bool registerClient(std::shared_ptr<RedisClient> ptrClient);
+		void destroy();
 
 		std::shared_ptr<RedisClient> getClient(RedisClient::Key key);
 		std::shared_ptr<RedisClient> getConnectedClient(RedisClient::Key key);

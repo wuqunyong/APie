@@ -181,6 +181,14 @@ namespace APie {
 		m_status = RS_Connect;
 	}
 
+	void RedisClient::stop()
+	{
+		if (this->m_reconnectTimer->enabled())
+		{
+			this->disableReconnectTimer();
+		}
+	}
+
 	void RedisClient::addReconnectTimer(uint64_t interval)
 	{
 		this->m_reconnectTimer->enableTimer(std::chrono::milliseconds(interval));
@@ -247,6 +255,19 @@ namespace APie {
 		ptrClient->addReconnectTimer(10000);
 
 		return true;
+	}
+
+	void RedisClientFactory::destroy()
+	{
+		auto ite = m_redisClient.begin();
+		while (ite != m_redisClient.end())
+		{
+			ite->second->stop();
+
+			auto o = ite;
+			++ite;
+			m_redisClient.erase(o);
+		}
 	}
 
 	std::shared_ptr<RedisClient> RedisClientFactory::getClient(RedisClient::Key key)

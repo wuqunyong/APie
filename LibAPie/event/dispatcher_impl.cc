@@ -36,6 +36,7 @@
 #include "influxdb.hpp"
 #include "../compressor/lz4_compressor_impl.h"
 #include "../crypto/crypto_utility.h"
+#include "../redis_driver/redis_client.h"
 
 
 namespace APie {
@@ -115,6 +116,17 @@ void DispatcherImpl::start()
 void DispatcherImpl::exit() 
 { 
 	base_scheduler_.loopExit();
+
+	switch (type_)
+	{
+	case APie::Event::EThreadType::TT_Logic:
+	{
+		RedisClientFactorySingleton::get().destroy();
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 SignalEventPtr DispatcherImpl::listenForSignal(int signal_num, SignalCb cb) {
