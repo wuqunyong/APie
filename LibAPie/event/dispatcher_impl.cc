@@ -495,7 +495,8 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	ptrConnection->setMaskFlag(itemPtr->iMaskFlag);
 
 	bufferevent_setcb(bev, readcb, writecb, eventcb, ptrConnection.get());
-	bufferevent_enable(bev, EV_READ | EV_WRITE);
+	//bufferevent_enable(bev, EV_READ | EV_WRITE);
+	bufferevent_enable(bev, EV_READ);
 
 	struct timeval tv_read;
 	tv_read.tv_sec = 600;
