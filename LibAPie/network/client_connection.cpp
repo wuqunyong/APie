@@ -510,8 +510,7 @@ std::shared_ptr<APie::ClientConnection> APie::ClientConnection::createClient(uin
 
 
 		bufferevent_setcb(bev, client_readcb, client_writecb, client_eventcb, ptrConnectSession);
-		//bufferevent_enable(bev, EV_READ | EV_WRITE);
-		bufferevent_enable(bev, EV_READ);
+		bufferevent_enable(bev, EV_READ | EV_WRITE);
 
 		struct timeval tv_read;
 		tv_read.tv_sec = 600;
