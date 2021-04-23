@@ -10,12 +10,14 @@
 #include <memory>
 #include <functional>
 #include <optional>
+#include <utility>
 
 #include <cpp_redis/cpp_redis>
 
 #include "../singleton/threadsafe_singleton.h"
 #include "../../PBMsg/rpc_msg.pb.h"
 #include "../event/timer.h"
+
 
 
 namespace APie {
@@ -25,6 +27,21 @@ namespace APie {
 		RCT_None = 0,
 		RCT_Role = 1,
 	};
+
+	template<typename... Args, std::size_t... I>
+	std::string _GenRedisKeyImpl(std::tuple<Args...> &&params, std::index_sequence<I...>)
+	{
+		std::stringstream ss;
+		((ss << (I == 0 ? "" : ":") << std::get<I>(params)), ...);
+
+		return ss.str();
+	}
+
+	template<typename... Args>
+	std::string GenRedisKey(Args... args)
+	{
+		return _GenRedisKeyImpl(std::forward<std::tuple<Args...>>(std::make_tuple(args...)), std::index_sequence_for<Args...>{});
+	}
 
 	class RedisClient : public std::enable_shared_from_this<RedisClient>
 	{
