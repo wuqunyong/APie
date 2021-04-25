@@ -433,7 +433,7 @@ namespace APie {
 ```
  	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
-	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
+	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin);
 ```
 - SceneServer(非直连，默认转发目的)
 ```
