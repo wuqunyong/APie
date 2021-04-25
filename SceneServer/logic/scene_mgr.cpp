@@ -38,7 +38,7 @@ std::tuple<uint32_t, std::string> SceneMgr::ready()
 {
 	// CLIENT OPCODE
 	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
+	forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
 
 
 	std::stringstream ss;

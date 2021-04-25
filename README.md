@@ -438,7 +438,7 @@ namespace APie {
 - SceneServer(非直连，默认转发目的)
 ```
 	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho, ::login_msg::MSG_REQUEST_ECHO::default_instance());
+	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
 ```
 - 其他
 通过RPC转发
