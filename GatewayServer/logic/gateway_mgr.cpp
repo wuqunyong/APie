@@ -40,8 +40,8 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 
 	// RPC
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_DeMultiplexer_Forward_Args>(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_login::L2G_LoginPendingRequest>(rpc_msg::RPC_L2G_LoginPending, GatewayMgr::RPC_handleLoginPending);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_DeMultiplexer_Forward, GatewayMgr::RPC_handleDeMultiplexerForward);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_L2G_LoginPending, GatewayMgr::RPC_handleLoginPending);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }

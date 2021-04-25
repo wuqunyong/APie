@@ -21,7 +21,7 @@ std::tuple<uint32_t, std::string> SceneMgr::init()
 
 	// RPC
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::rpc_msg::PRC_Multiplexer_Forward_Args>(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_Multiplexer_Forward, SceneMgr::RPC_handleMultiplexerForward);
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");

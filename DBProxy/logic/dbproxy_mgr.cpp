@@ -24,12 +24,12 @@ std::tuple<uint32_t, std::string> DBProxyMgr::init()
 
 	// RPC
 	APie::RPC::rpcInit();
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlDescribeRequest>(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlQueryRequest>(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlInsertRequest>(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlUpdateRequest>(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlDeleteRequest>(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
-	APie::RPC::RpcServerSingleton::get().registerOpcodes<::mysql_proxy_msg::MysqlQueryRequestByFilter>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgr::RPC_handleMysqlQueryByFilter);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlDescTable, DBProxyMgr::RPC_handleMysqlDescTable);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlQuery, DBProxyMgr::RPC_handleMysqlQuery);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlInsert, DBProxyMgr::RPC_handleMysqlInsert);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlUpdate, DBProxyMgr::RPC_handleMysqlUpdate);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlDelete, DBProxyMgr::RPC_handleMysqlDelete);
+	APie::RPC::RpcServerSingleton::get().bind(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgr::RPC_handleMysqlQueryByFilter);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
