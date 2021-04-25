@@ -62,7 +62,7 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 
 	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
-	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin, ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin);
 
 
 	std::stringstream ss;

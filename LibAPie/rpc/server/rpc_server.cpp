@@ -6,8 +6,8 @@ namespace RPC {
 
 	bool RpcServer::init()
 	{
-		APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcServer::handleRequest, ::rpc_msg::RPC_REQUEST::default_instance());
-		APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcServer::handleRequest, ::rpc_msg::RPC_REQUEST::default_instance());
+		APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcServer::handleRequest);
+		APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OPCODE_ID::OP_RPC_REQUEST, RpcServer::handleRequest);
 		return true;
 	}
 

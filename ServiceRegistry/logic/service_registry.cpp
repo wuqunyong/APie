@@ -19,8 +19,8 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 	// RPC
 	APie::RPC::rpcInit();
 
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance, ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE::default_instance());
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat, ::service_discovery::MSG_REQUEST_HEARTBEAT::default_instance());
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance);
+	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat);
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 

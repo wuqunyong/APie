@@ -84,10 +84,11 @@ std::tuple<uint32_t, std::string> GatewayMgr::ready()
 	// CLIENT OPCODE
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
-	serverPB.bind(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin, ::login_msg::MSG_REQUEST_CLIENT_LOGIN::default_instance());
-	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, GatewayMgr::handleRequestHandshakeInit, ::login_msg::MSG_REQUEST_HANDSHAKE_INIT::default_instance());
-	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, GatewayMgr::handleRequestHandshakeEstablished, ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin);
+	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, GatewayMgr::handleRequestHandshakeInit);
+	serverPB.bind(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, GatewayMgr::handleRequestHandshakeEstablished);
 	
+	//static_assert(std::is_function<decltype(GatewayMgr::handleRequestHandshakeEstablished)>::value);
 
 	std::stringstream ss;
 	ss << "Server Ready!";

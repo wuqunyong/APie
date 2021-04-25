@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include <tuple>
+#include <iostream>
+#include <type_traits>
 
 #include "apie.h"
 #include "json/json.h"
@@ -22,6 +24,7 @@
 #include <openssl/rc4.h>
 
 #include "../LibAPie/common/file.h"
+#include "../PBMsg/BusinessMsg/login_msg.pb.h"
 
 using namespace tinyxml2;
 using namespace std;
@@ -315,8 +318,99 @@ string encode_rc4(const std::string& sharedKey, const string& data) {
 	return encode_data;
 }
 
+class TestType
+{
+public:
+	int PrintA(int a, int b)
+	{
+		return 0;
+	}
+
+	static void handleRespAddRoute(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& response)
+	{
+
+	}
+
+	int operator()(int a, int b, int c)
+	{
+		return 0;
+	}
+};
+
+template <typename T>
+struct func_traits : func_traits<decltype(&T::operator())> {};
+
+template <typename C, typename R, typename... Args>
+struct func_traits<R(C::*)(Args...)> : func_traits<R(*)(Args...)> {};
+
+template <typename C, typename R, typename... Args>
+struct func_traits<R(C::*)(Args...) const> : func_traits<R(*)(Args...)> {};
+
+template <typename R, typename... Args> struct func_traits<R(*)(Args...)> {
+	using result_type = R;
+	using arg_count = std::integral_constant<std::size_t, sizeof...(Args)>;
+	using args_type = std::tuple<typename std::decay<Args>::type...>;
+};
+
+template<std::size_t... I>
+std::size_t a2t_impl()
+{
+	std::index_sequence<I...> a;
+	return a.size();
+	//return (0 + ...+ value);
+}
+
+
+template<typename... Args, std::size_t... I>
+std::string gen_key_impl(std::tuple<Args...> &&params, std::index_sequence<I...>)
+{
+	std::stringstream ss;
+	((ss << (I == 0 ? "" : ":") << std::get<I>(params)), ...);
+
+	return ss.str();
+}
+
+template<typename... Args>
+std::string gen_key(Args... args)
+{
+	return gen_key_impl(std::forward<std::tuple<Args...>>(std::make_tuple(args...)), std::index_sequence_for<Args...>{});
+}
+
+
+template <typename F> 
+void bind_functor(F func)
+{
+	static_assert(2 == func_traits<F>::arg_count());
+	
+	using ArgsType = typename std::tuple_element<1, func_traits<F>::args_type>::type;
+
+	static_assert(std::is_base_of<google::protobuf::Message, ArgsType>::value);
+	//static_assert(std::is_same<float, ArgsType>::value);
+
+	std::string sType = ArgsType::descriptor()->full_name();
+}
+
+//const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& a
+int test_func_1(int serialNum, const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& a)
+{
+	return 0;
+}
+
 int main(int argc, char **argv)
 {
+	bind_functor(&test_func_1);
+
+	bool bResult111 = std::is_function<decltype(TestType::handleRespAddRoute)>::value;
+	static_assert(std::is_function<decltype(TestType::handleRespAddRoute)>::value);
+
+	auto iii = a2t_impl<1, 2, 3, 4, 5, 6>();
+	std::string hello("hello");
+	auto key_str = gen_key("player", 1, "register", hello);
+
+	func_traits<TestType> tt;
+	int tt_a = func_traits<TestType>::arg_count::value;
+	func_traits<TestType>::args_type ttt;
+
 	auto iR = MakeKey(9000001, 123);
 	auto sSS = SSImpl("hello", 1, iR, "world");
 
