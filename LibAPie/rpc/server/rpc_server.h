@@ -67,14 +67,14 @@ namespace RPC {
 		template <typename F>
 		bool bind(::rpc_msg::RPC_OPCODES opcodes, F func)
 		{
-			static_assert(Common::func_traits<F>::arg_count() == 2);
+			static_assert(typename Common::func_traits<F>::arg_count() == 2);
 
-			using Args1Type = typename std::tuple_element<0, Common::func_traits<F>::args_type>::type;
-			using Args2Type = typename std::tuple_element<1, Common::func_traits<F>::args_type>::type;
+			using Args1Type = typename std::tuple_element<0, typename Common::func_traits<F>::args_type>::type;
+			using Args2Type = typename std::tuple_element<1, typename Common::func_traits<F>::args_type>::type;
 
 			static_assert(std::is_same<::rpc_msg::CLIENT_IDENTIFIER, Args1Type>::value);
 			static_assert(std::is_base_of<google::protobuf::Message, Args2Type>::value);
-			static_assert(std::is_same<std::tuple<uint32_t, std::string>, Common::func_traits<F>::result_type>::value);
+			static_assert(std::is_same<std::tuple<uint32_t, std::string>, typename Common::func_traits<F>::result_type>::value);
 
 			using OriginType = typename std::decay<Args2Type>::type;
 			std::string sType = OriginType::descriptor()->full_name();
