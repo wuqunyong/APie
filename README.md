@@ -178,7 +178,7 @@ std::tuple<uint32_t, std::string> readyHook()
 {
 	// CLIENT OPCODE
 	APie::Api::PBHandler& serverPB = APie::Api::OpcodeHandlerSingleton::get().server;
-	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccountLogin, ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L::default_instance());
+	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccountLogin);
 
 	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
 }
