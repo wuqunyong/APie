@@ -337,21 +337,6 @@ public:
 	}
 };
 
-template <typename T>
-struct func_traits : func_traits<decltype(&T::operator())> {};
-
-template <typename C, typename R, typename... Args>
-struct func_traits<R(C::*)(Args...)> : func_traits<R(*)(Args...)> {};
-
-template <typename C, typename R, typename... Args>
-struct func_traits<R(C::*)(Args...) const> : func_traits<R(*)(Args...)> {};
-
-template <typename R, typename... Args> struct func_traits<R(*)(Args...)> {
-	using result_type = R;
-	using arg_count = std::integral_constant<std::size_t, sizeof...(Args)>;
-	using args_type = std::tuple<typename std::decay<Args>::type...>;
-};
-
 template<std::size_t... I>
 std::size_t a2t_impl()
 {
@@ -377,19 +362,6 @@ std::string gen_key(Args... args)
 }
 
 
-template <typename F> 
-void bind_functor(F func)
-{
-	static_assert(2 == func_traits<F>::arg_count());
-	
-	using ArgsType = typename std::tuple_element<1, func_traits<F>::args_type>::type;
-
-	static_assert(std::is_base_of<google::protobuf::Message, ArgsType>::value);
-	//static_assert(std::is_same<float, ArgsType>::value);
-
-	std::string sType = ArgsType::descriptor()->full_name();
-}
-
 //const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& a
 int test_func_1(int serialNum, const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& a)
 {
@@ -398,7 +370,6 @@ int test_func_1(int serialNum, const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& 
 
 int main(int argc, char **argv)
 {
-	bind_functor(&test_func_1);
 
 	bool bResult111 = std::is_function<decltype(TestType::handleRespAddRoute)>::value;
 	static_assert(std::is_function<decltype(TestType::handleRespAddRoute)>::value);
@@ -406,10 +377,6 @@ int main(int argc, char **argv)
 	auto iii = a2t_impl<1, 2, 3, 4, 5, 6>();
 	std::string hello("hello");
 	auto key_str = gen_key("player", 1, "register", hello);
-
-	func_traits<TestType> tt;
-	int tt_a = func_traits<TestType>::arg_count::value;
-	func_traits<TestType>::args_type ttt;
 
 	auto iR = MakeKey(9000001, 123);
 	auto sSS = SSImpl("hello", 1, iR, "world");
