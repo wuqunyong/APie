@@ -5,6 +5,10 @@
 ```shell
     docker pull wuqunyong/apie-env
 ```
+## 运行容器
+```shell
+    docker run -i -t wuqunyong/apie-env /bin/bash
+```
 ## 编译
 ```shell
 cd /root/
