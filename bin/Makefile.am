@@ -4,8 +4,7 @@ AM_CXXFLAGS = -Wall -std=c++17
 
 INCLUDES = -I /usr/local/include \
 			-I /usr/include/mysql \
-			-I /root/yaml-cpp-master/include \
-			-I /root/protobuf-3.11.4/src \
+			-I /usr/local/protobuf/include \
 			-I $(top_srcdir)/ThirdParty/astar \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/includes \
 			-I $(top_srcdir)/ThirdParty/cpp_redis/tacopie/includes \
