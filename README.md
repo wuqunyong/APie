@@ -1,9 +1,20 @@
 [# Welcome to APie!](https://github.com/wuqunyong/APie)
 
 # Docker安装
+## 拉取环境镜像
 ```shell
     docker pull wuqunyong/apie-env
 ```
+## 编译
+```shell
+cd /root/
+git clone https://github.com/wuqunyong/APie.git
+cd /root/APie/
+./bootstrap.sh
+./configure
+make rpm
+```
+
 # CentOS 7 x64安装
 ## 依赖
 
