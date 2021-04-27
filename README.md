@@ -13,6 +13,21 @@
 ```shell
 yum install -y mysql-devel mysql-server lrzsz curl-devel openssl openssl-devel readline-devel pcre pcre-devel zlib zlib-devel libevent libevent-devel gcc gcc-c++ rpm-build automake libtool lz4-devel
 ```
+## 安装git
+```
+yum install -y git
+git --version
+```
+## clone项目
+```
+cd /root/
+git clone https://github.com/wuqunyong/APie.git
+cd /root/APie/Download/
+cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
+cp protobuf-3.11.4.zip /root/
+cp yaml-cpp-master.zip /root/
+cd /root/
+```
 ### 安装cmake
 ```shell
 tar -zxvf cmake-3.18.1-Linux-x86_64.tar.gz
@@ -47,11 +62,7 @@ make
 make test
 make install
 ```
-## 安装git
-```
-yum install -y git
-git --version
-```
+
 ## 安装cpp_redis
 ```
 # Clone the project
