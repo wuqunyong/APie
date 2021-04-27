@@ -1,5 +1,9 @@
 [# Welcome to APie!](https://github.com/wuqunyong/APie)
 
+# Docker安装
+```shell
+    docker pull wuqunyong/apie-env
+```
 # CentOS 7 x64安装
 ## 依赖
 
