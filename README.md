@@ -14,6 +14,7 @@
 cd /root/
 git clone https://github.com/wuqunyong/APie.git
 cd /root/APie/
+chmod +x ./bootstrap.sh
 ./bootstrap.sh
 ./configure
 make rpm
