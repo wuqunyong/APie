@@ -651,11 +651,18 @@ void Ctx::waitForShutdown()
 	}
 	else
 	{
+		uint64_t iIndex = 0;
 		while (true)
 		{
-			std::cout << std::endl;
+			if (iIndex > 100000000)
+			{
+				iIndex = 0;
+			}
 
-			std::cout << ">>>";
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			iIndex++;
+			std::cout << std::endl;
+			std::cout << iIndex << ">>>";
 			char mystring[2048] = { '\0' };
 			char answer[2048] = "exit";
 			char* prtGet = fgets(mystring, 2048, stdin);
