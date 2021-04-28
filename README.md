@@ -11,6 +11,7 @@
 ```
 ## 编译
 ```shell
+scl enable devtoolset-8 bash
 cd /root/
 git clone https://github.com/wuqunyong/APie.git
 cd /root/APie/
