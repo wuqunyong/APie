@@ -659,7 +659,8 @@ void Ctx::waitForShutdown()
 				iIndex = 0;
 			}
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+			//docker -d 0 -> /dev/null
+			std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 			iIndex++;
 			std::cout << std::endl;
 			std::cout << iIndex << ">>>";
