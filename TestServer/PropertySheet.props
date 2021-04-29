@@ -3,12 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)LibAPie;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)\ThirdParty\lz4\include;$(SolutionDir)\ThirdParty\jsoncpp\include;C:\Program Files\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\cpp_redis\includes;$(SolutionDir)ThirdParty\cpp_redis\tacopie\includes;$(SolutionDir)ThirdParty\tinyxml2;$(SolutionDir)ThirdParty\astar;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\OpenSSL-Win64\lib;C:\Program Files\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)LibAPie;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)\ThirdParty\lz4\include;$(SolutionDir)\ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\OpenSSL-Win64\include;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\cpp_redis\includes;$(SolutionDir)ThirdParty\cpp_redis\tacopie\includes;$(SolutionDir)ThirdParty\tinyxml2;$(SolutionDir)ThirdParty\astar;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ThirdParty\OpenSSL-Win64\lib;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
