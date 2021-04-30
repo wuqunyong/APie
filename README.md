@@ -162,8 +162,7 @@ mysqladmin -u root -p version
 ```
 
 # Windows安装
-安装依赖库mysql-installer-community-5.7.20.msi,Win64OpenSSL-1_1_1g.msi,protobuf-3.11.4.zip
-依赖库安装目录到：C:\Program Files\OpenSSL-Win64，C:\Program Files\MySQL，若安装到其它目录，需修改包含目录，库目录到实际目录
+安装依赖库protobuf-3.11.4.zip
 直接visual studio启动，编译
 
 # 架构图
