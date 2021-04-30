@@ -2,6 +2,8 @@ message(STATUS "LibApie")
 message(STATUS "LibApie CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "LibApie PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
+message(STATUS "LibApie CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+
 # Set lists to empty beforehand as to not accidentally take values from parent
 set(sources)
 set(cxx-sources)
