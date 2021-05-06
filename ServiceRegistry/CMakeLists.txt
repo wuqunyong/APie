@@ -31,7 +31,8 @@ set(cxx-link
     /usr/local/lib64
     /usr/local/lib
     /usr/local/protobuf/lib
-    /usr/local/apie/lib)
+    /usr/local/apie/lib
+    ${PROJECT_BINARY_DIR}/lib)
 
 
 include_directories(${cxx-includes})
