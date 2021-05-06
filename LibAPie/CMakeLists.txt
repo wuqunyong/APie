@@ -132,3 +132,14 @@ endforeach()
 add_library(apie SHARED ${sources} ${public_headers})
 
 target_link_libraries(apie -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -lcpp_redis -ltacopie)
+
+message(STATUS "LibApie PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
+
+#add_custom_command(TARGET apie 
+#                POST_BUILD
+#                COMMAND ${CMAKE_COMMAND} -E echo compile finish
+#                COMMAND ${CMAKE_COMMAND} -E make_directory /usr/local/apie/lib/
+#                COMMAND ${CMAKE_COMMAND} -E copy apie /usr/local/apie/lib/.
+#                VERBATIM
+#               )
+          
