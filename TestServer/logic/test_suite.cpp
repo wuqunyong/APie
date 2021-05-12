@@ -119,6 +119,21 @@ namespace APie {
 			root["delay"] = delay;
 		}
 
+		Json::Value summary;
+		for (auto& elems : m_taskList)
+		{
+			Json::Value typeSummary;
+			typeSummary["type"] = elems->getType();
+			typeSummary["count"] = elems->getCount();
+			typeSummary["successCount"] = elems->getSuccessCount();
+			typeSummary["failureCount"] = elems->getFailureCount();
+
+			std::string sType = std::to_string(elems->getType());
+			summary[sType] = typeSummary;
+		}
+
+		root["task_summary"] = summary;
+
 
 		return root;
 	}

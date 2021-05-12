@@ -60,6 +60,16 @@ namespace APie {
 		return m_completeLoop >= m_loopCount;
 	}
 
+	uint32_t TestCase::getType()
+	{
+		return m_type;
+	}
+
+	uint32_t TestCase::getCount()
+	{
+		return m_loopCount;
+	}
+
 	void TestCase::addSuccessCount()
 	{
 		m_successCount++;

@@ -51,6 +51,9 @@ namespace APie {
 		void addCompleteLoop();
 		bool isComplete();
 
+		uint32_t getType();
+		uint32_t getCount();
+
 		void addSuccessCount();
 		uint32_t getSuccessCount();
 
