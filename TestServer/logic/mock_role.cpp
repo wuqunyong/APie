@@ -155,6 +155,11 @@ void MockRole::addTimer(uint64_t interval)
 	this->m_cmdTimer->enableTimer(std::chrono::milliseconds(interval));
 }
 
+void MockRole::disableCmdTimer()
+{
+	this->m_cmdTimer->disableTimer();
+}
+
 void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 {
 	auto sCmd = msg.cmd();
@@ -234,6 +239,11 @@ MockRole::HandleResponseCB MockRole::findResponseHandler(uint32_t opcodes)
 	return findIte->second;
 }
 
+void MockRole::clearResponseHandler()
+{
+	m_responseHandler.clear();
+}
+
 void MockRole::setPauseProcess(bool flag)
 {
 	m_bPauseProcess = false;
@@ -248,6 +258,152 @@ void MockRole::removeWaitResponse(uint32_t iOpcode)
 {
 	m_waitResponse.erase(iOpcode);
 }
+
+std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& MockRole::getReplyDelay()
+{
+	return m_replyDelay;
+}
+
+bool MockRole::hasTimeout(uint64_t iCurMS)
+{
+	for (const auto& elems : m_pendingResponse)
+	{
+		if (iCurMS > elems.expired_at_ms)
+		{
+			return true;
+		}
+	}
+
+	for (const auto& elems : m_pendingNotify)
+	{
+		if (iCurMS > elems.expired_at_ms)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+uint32_t MockRole::addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb, uint32_t timeout)
+{
+	m_id++;
+
+	auto iCurMs = Ctx::getCurMilliseconds();
+
+	PendingResponse pendingObj;
+	pendingObj.id = m_id;
+	pendingObj.request_opcode = request;
+	pendingObj.request_time = iCurMs;
+	pendingObj.response_opcode = response;
+	pendingObj.cb = cb;
+	pendingObj.timeout = timeout;
+	pendingObj.expired_at_ms = iCurMs + timeout;
+
+	m_pendingResponse.push_back(pendingObj);
+
+	return m_id;
+}
+
+std::optional<PendingResponse> MockRole::findPendingResponse(uint32_t response)
+{
+	for (auto& elems : m_pendingResponse)
+	{
+		if (elems.response_opcode == response)
+		{
+			return std::make_optional(elems);
+		}
+	}
+
+	return std::nullopt;
+}
+
+void MockRole::removePendingResponseById(uint32_t id)
+{
+	auto cmp = [id](const PendingResponse& elems) {
+		if (elems.id == id)
+		{
+			return true;
+		}
+
+		return false;
+	};
+
+	m_pendingResponse.remove_if(cmp);
+}
+
+void MockRole::clearPendingResponse()
+{
+	m_pendingResponse.clear();
+}
+
+
+uint32_t MockRole::addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout)
+{
+	m_id++;
+
+	auto iCurMs = Ctx::getCurMilliseconds();
+
+	PendingNotify pendingObj;
+	pendingObj.id = m_id;
+	pendingObj.response_opcode = response;
+	pendingObj.cb = cb;
+	pendingObj.timeout = timeout;
+	pendingObj.expired_at_ms = iCurMs + timeout;
+
+	m_pendingNotify.push_back(pendingObj);
+
+	return m_id;
+}
+
+std::optional<PendingNotify> MockRole::findPendingNotify(uint32_t response)
+{
+	for (auto& elems : m_pendingNotify)
+	{
+		if (elems.response_opcode == response)
+		{
+			return std::make_optional(elems);
+		}
+	}
+
+	return std::nullopt;
+}
+
+void MockRole::removePendingNotifyById(uint32_t id)
+{
+	auto cmp = [id](const PendingNotify& elems) {
+		if (elems.id == id)
+		{
+			return true;
+		}
+
+		return false;
+	};
+
+	m_pendingNotify.remove_if(cmp);
+}
+
+void MockRole::clearPendingNotify()
+{
+	m_pendingNotify.clear();
+}
+
+void MockRole::handlePendingNotify(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	auto findIte = findPendingNotify(opcodes);
+	if (!findIte.has_value())
+	{
+		return;
+	}
+
+	if (findIte.value().cb)
+	{
+		findIte.value().cb(this, serialNum, opcodes, msg);
+	}
+	
+	removePendingNotifyById(findIte.value().id);
+}
+
 
 void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
@@ -294,10 +450,45 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 	if (findIte != nullptr)
 	{
 		findIte(this, serialNum, opcodes, msg);
+
+		//std::cout << ss.str() << std::endl;
 		return;
 	}
 
-	std::cout << ss.str() << std::endl;
+	//std::cout << ss.str() << std::endl;
+}
+
+void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+{
+	auto findIte = findPendingResponse(opcodes);
+	if (!findIte.has_value())
+	{
+		return;
+	}
+
+	auto iCurMs = Ctx::getCurMilliseconds();
+	auto iDelay = iCurMs - findIte.value().request_time;
+
+	std::tuple<uint32_t, uint32_t> key = { findIte.value().request_opcode, findIte.value().response_opcode};
+	auto ite = m_replyDelay.find(key);
+	if (ite == m_replyDelay.end())
+	{
+		std::vector<uint64_t> delayVec;
+		delayVec.push_back(iDelay);
+
+		m_replyDelay[key] = delayVec;
+	}
+	else
+	{
+		ite->second.push_back(iDelay);
+	}
+
+	if (findIte.value().cb)
+	{
+		findIte.value().cb(this, serialNum, opcodes, msg);
+	}
+
+	removePendingResponseById(findIte.value().id);
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
@@ -334,6 +525,8 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 	request.set_account_id(m_iRoleId);
 
 	this->sendMsg(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
+
+	this->addPendingResponse(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, OP_MSG_REQUEST_ACCOUNT_LOGIN_L);
 }
 
 //void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
@@ -353,11 +546,19 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 	request.set_value2(msg.params()[1]);
 
 	this->sendMsg(::APie::OP_MSG_REQUEST_ECHO, request);
+	this->addPendingResponse(OP_MSG_RESPONSE_ECHO, OP_MSG_REQUEST_ECHO);
 }
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
 	TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+
+	uint64_t iSerialNum = 0;
+	if (m_clientProxy)
+	{
+		iSerialNum = m_clientProxy->getSerialNum();
+	}
+	this->handlePendingNotify(iSerialNum, 0, "active close");
 }
 
 void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
@@ -407,6 +608,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 				::login_msg::MSG_REQUEST_HANDSHAKE_INIT request;
 				request.set_client_random(ptrShared->m_clientRandom);
 				ptrShared->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, request);
+				ptrShared->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_INIT, OP_MSG_REQUEST_HANDSHAKE_INIT);
 
 				ptrShared->m_account_id = response.account_id();
 				ptrShared->m_session_key = response.session_key();
@@ -458,7 +660,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t o
 	::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED request;
 	request.set_encrypted_key(encryptedMsg);
 	this->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, request);
-
+	this->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED);
 
 	APie::SetClientSessionAttr *ptr = new APie::SetClientSessionAttr;
 	ptr->iSerialNum = this->m_clientProxy->getSerialNum();
@@ -491,6 +693,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uin
 	request.set_user_id(this->m_account_id);
 	request.set_session_key(this->m_session_key);
 	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+	this->addPendingResponse(OP_MSG_RESPONSE_CLIENT_LOGIN, OP_MSG_REQUEST_CLIENT_LOGIN);
 
 	this->setPauseProcess(false);
 	this->addWaitResponse(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);

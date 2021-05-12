@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <stdexcept>
 
 #include "../common/empty_string.h"
 #include "../event/dispatcher_impl.h"

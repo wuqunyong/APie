@@ -179,7 +179,9 @@ void DispatcherImpl::runIntervalCallbacks()
 
 		ptrData->tag["server_type"] = std::to_string(iType);
 		ptrData->tag["server_id"] = std::to_string(iId);
-		ptrData->tag["thread_type"] = toStirng(type_) + "_" + std::to_string(tid_);
+		ptrData->tag["thread_type"] = toStirng(type_);
+		ptrData->tag["thread_id"] = std::to_string(tid_);
+		ptrData->tag["queue_id"] = std::to_string(iType) + "|" + std::to_string(iId) + "|" + toStirng(type_) + "|" + std::to_string(tid_);
 		ptrData->field["mailbox"] = (double)mailbox_.size();
 
 		Command command;

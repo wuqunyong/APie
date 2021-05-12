@@ -23,7 +23,13 @@
     <ClCompile Include="..\PBMsg\BusinessMsg\role_server_msg.pb.cc" />
     <ClCompile Include="..\PBMsg\BusinessMsg\rpc_login.pb.cc" />
     <ClCompile Include="logic\mock_role.cpp" />
+    <ClCompile Include="logic\task\echo_test_case.cpp" />
+    <ClCompile Include="logic\task\login_test_case.cpp" />
+    <ClCompile Include="logic\task\logout_test_case.cpp" />
+    <ClCompile Include="logic\test_case.cpp" />
+    <ClCompile Include="logic\test_runner.cpp" />
     <ClCompile Include="logic\test_server.cpp" />
+    <ClCompile Include="logic\test_suite.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
@@ -32,7 +38,13 @@
     <ClInclude Include="..\PBMsg\BusinessMsg\role_server_msg.pb.h" />
     <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h" />
     <ClInclude Include="logic\mock_role.h" />
+    <ClInclude Include="logic\task\echo_test_case.h" />
+    <ClInclude Include="logic\task\login_test_case.h" />
+    <ClInclude Include="logic\task\logout_test_case.h" />
+    <ClInclude Include="logic\test_case.h" />
+    <ClInclude Include="logic\test_runner.h" />
     <ClInclude Include="logic\test_server.h" />
+    <ClInclude Include="logic\test_suite.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

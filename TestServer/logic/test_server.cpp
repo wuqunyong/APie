@@ -5,6 +5,9 @@
 #include "../../LibAPie/redis_driver/redis_client.h"
 #include "../../SharedDir/opcodes.h"
 
+
+#include "test_runner.h"
+
 namespace APie {
 
 
@@ -298,6 +301,13 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		}
 		ptrMockRole->pushMsg(newMsg);
 	}
+	else if (command.cmd() == "auto_test")
+	{
+		std::cout << "start auto_test" << std::endl;
+
+		TestRunnerMgrSingleton::get().init();
+		TestRunnerMgrSingleton::get().run();
+	}
 
 }
 
@@ -327,6 +337,8 @@ void TestServerMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, c
 	}
 
 	ptrMockRole->handleResponse(serialNum, opcodes, msg);
+	ptrMockRole->handlePendingResponse(serialNum, opcodes, msg);
+	ptrMockRole->handlePendingNotify(serialNum, opcodes, msg);
 }
 
 }

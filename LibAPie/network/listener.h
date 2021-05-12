@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <stdexcept>
 
 #include "../common/pure.h"
 #include "../event/libevent.h"

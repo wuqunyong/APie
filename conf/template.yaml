@@ -38,7 +38,7 @@ service_registry:    # 服务注册地址
   type: 1                # 协议：1(PB√),2(HTTP×)
 log:                 # 日志
   merge: true            # 合并文件, 默认true
-  level: 0               # 等级, 默认2, (0:DEBUG, 1:VERBOSE, 2:NOTICE, 3:WARNING, 4:ERROR, 5:PANIC)
+  level: 2               # 等级, 默认2, (0:DEBUG, 1:VERBOSE, 2:NOTICE, 3:WARNING, 4:ERROR, 5:PANIC)
   show_pos: false        # 显示文件位置, 默认true
   split_size: 128        # 文件最大字节,单位M,超过生成新文件, 默认128M
   backup: "/usr/local/apie/logs/backup" # 文件备份文件
@@ -65,3 +65,19 @@ redis_clients:       # redis客户端列表
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
   uint: 1                # 客户端间隔单位(秒数，默认:60)
+auto_test:               # 自动化测试
+  enable: true           # 是否启用, 默认false
+  start: 1
+  stop: 2000
+  ramp_up_interval: 1000
+  ramp_up_nums: 100
+  loop_count: 1 
+  task_suite:
+  - task_case:
+      case_type: 1
+      loop_count: 1
+      loop_interval_ms: 10
+  - task_case:
+      case_type: 2
+      loop_count: 1
+      loop_interval_ms: 10

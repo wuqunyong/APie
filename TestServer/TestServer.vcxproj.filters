@@ -18,6 +18,24 @@
     <ClCompile Include="..\PBMsg\BusinessMsg\rpc_login.pb.cc">
       <Filter>PBMsg\BusinessMsg</Filter>
     </ClCompile>
+    <ClCompile Include="logic\test_suite.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_case.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_runner.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\echo_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\login_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\logout_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
@@ -36,6 +54,24 @@
     <ClInclude Include="..\PBMsg\BusinessMsg\rpc_login.pb.h">
       <Filter>PBMsg\BusinessMsg</Filter>
     </ClInclude>
+    <ClInclude Include="logic\test_suite.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_case.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_runner.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\echo_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\login_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\logout_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -46,6 +82,9 @@
     </Filter>
     <Filter Include="PBMsg\BusinessMsg">
       <UniqueIdentifier>{be452a32-80d2-459b-bd0a-4cbbbd2e5914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic\task">
+      <UniqueIdentifier>{bd8addb6-4423-4649-beef-488ca165c8f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

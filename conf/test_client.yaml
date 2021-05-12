@@ -4,10 +4,11 @@ identify:
 io_threads: 2
 clients:
     socket_address:
-      address: "127.0.0.1"
+      address: "45.63.24.92"
+      #address: "127.0.0.1"
       port_value: 16007
       type: 1
-      mask_flag : 2
+      mask_flag : 0
 log:
   merge: true
   level: 0
@@ -28,3 +29,22 @@ redis_clients:
     host: "127.0.0.1"
     port: 6379
     passwd: "" 
+auto_test:               # 自动化测试
+  enable: true           # 是否启用, 默认false
+  start: 1
+  stop: 50
+  ramp_up_interval_ms: 10000
+  ramp_up_nums: 10
+  task_suite:
+  - task_case:
+      case_type: 1
+      loop_count: 1
+      loop_interval_ms: 10
+  - task_case:
+      case_type: 2
+      loop_count: 1000
+      loop_interval_ms: 100
+  - task_case:
+      case_type: 3
+      loop_count: 1
+      loop_interval_ms: 10               

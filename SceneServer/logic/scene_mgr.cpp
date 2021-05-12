@@ -112,10 +112,10 @@ void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::log
 {
 	PIE_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request.DebugString().c_str());
 
-	uint64_t iCurMS = Ctx::getCurMilliseconds();
+	//uint64_t iCurMS = Ctx::getCurMilliseconds();
 
 	::login_msg::MSG_RESPONSE_ECHO response;
-	response.set_value1(iCurMS);
+	response.set_value1(request.value1());
 	response.set_value2(request.value2() + "|response");
 	Network::OutputStream::sendMsgToUserByGateway(roleIdentifier, APie::OP_MSG_RESPONSE_ECHO, response);
 }

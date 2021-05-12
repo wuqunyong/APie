@@ -368,8 +368,26 @@ int test_func_1(int serialNum, const ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L& 
 	return 0;
 }
 
+class TestMakeObj
+{
+public:
+	static std::shared_ptr<TestMakeObj> makeObj()
+	{
+		return std::make_shared<TestMakeObj>();
+	}
+	
+
+public:
+	TestMakeObj() {
+		i = 100;
+	};
+	int i = 0;
+
+};
+
 int main(int argc, char **argv)
 {
+	auto ptrObj = TestMakeObj::makeObj();
 
 	bool bResult111 = std::is_function<decltype(TestType::handleRespAddRoute)>::value;
 	static_assert(std::is_function<decltype(TestType::handleRespAddRoute)>::value);

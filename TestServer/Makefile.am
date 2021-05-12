@@ -20,7 +20,13 @@ test_client_sources = \
 	$(top_srcdir)/TestServer/test_client.cpp \
 	$(top_srcdir)/TestServer/service_init.cpp \
 	$(top_srcdir)/TestServer/logic/mock_role.cpp \
-	$(top_srcdir)/TestServer/logic/test_server.cpp 
+	$(top_srcdir)/TestServer/logic/test_case.cpp \
+	$(top_srcdir)/TestServer/logic/test_runner.cpp \
+	$(top_srcdir)/TestServer/logic/test_server.cpp \
+	$(top_srcdir)/TestServer/logic/test_suite.cpp \
+	$(top_srcdir)/TestServer/logic/task/echo_test_case.cpp \
+	$(top_srcdir)/TestServer/logic/task/login_test_case.cpp \
+	$(top_srcdir)/TestServer/logic/task/logou_test_case.cpp
 
 pb_sources = \
 	$(top_srcdir)/PBMsg/BusinessMsg/login_msg.pb.cc \
