@@ -209,7 +209,12 @@ void DispatcherImpl::runIntervalCallbacks()
 		ptrData->field["pb_count"] = (double)iPbCount;
 		m_pbStats.clear();
 
+		ptrData->field["mailbox_max"] = (double)m_maxMailboxStats;
+		ptrData->field["mailbox_accumulate"] = (double)m_accumulateMailBoxStats;
 		ptrData->field["mailbox"] = (double)mailbox_.size();
+		m_maxMailboxStats = 0;
+		m_accumulateMailBoxStats = 0;
+
 		ptrData->field["timer_call"] = (double)TimerImpl::s_callCount;
 
 		TimerImpl::s_callCount = 0;
@@ -264,6 +269,11 @@ void DispatcherImpl::handleCommand()
 {
 	time_t iCurTime = time(NULL);
 	size_t iLoopCount = mailbox_.size();
+	if (iLoopCount > m_maxMailboxStats)
+	{
+		m_maxMailboxStats = iLoopCount;
+	}
+	m_accumulateMailBoxStats += iLoopCount;
 
 	while (iLoopCount > 0)
 	{

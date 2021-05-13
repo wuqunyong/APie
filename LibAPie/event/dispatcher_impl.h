@@ -122,6 +122,9 @@ private:
   std::map<uint32_t, uint32_t> m_cmdStats;
   std::map<uint32_t, uint32_t> m_pbStats;
 
+  uint32_t m_maxMailboxStats = 0;
+  uint32_t m_accumulateMailBoxStats = 0;
+
 
   std::atomic<bool> terminating_ = false;
 
