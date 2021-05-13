@@ -943,31 +943,54 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 {
 	auto metric = influxdb_cpp::builder();
 	auto& measure = metric.meas(ptrCmd->sMetric);
+
+	std::size_t iTagCount = ptrCmd->tag.size();
+	std::size_t iCurTag = 0;
 	for (const auto& items : ptrCmd->tag)
 	{
-		measure.tag(items.first, items.second);
-	}
-	std::size_t iCount = ptrCmd->field.size();
-	std::size_t iIndex = 0;
-	for (const auto& items : ptrCmd->field)
-	{
-		iIndex++;
-		if (iIndex < iCount)
+		iCurTag++;
+		if (iCurTag < iTagCount)
 		{
-			measure.field(items.first, items.second);
+			measure.tag(items.first, items.second);
 		}
 		else
 		{
-			std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-			auto duration = now.time_since_epoch();
-			auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+			influxdb_cpp::detail::field_caller *ptrField = nullptr;
 
-			//uint64_t iCurTime = time(NULL) * 1000000000;
-			uint64_t iCurTime = nanoseconds.count();
+			std::size_t iCount = ptrCmd->field.size();
+			std::size_t iIndex = 0;
+			for (const auto& elems : ptrCmd->field)
+			{
+				iIndex++;
+				if (iIndex == 1)
+				{
+					ptrField = &(measure.tag(items.first, items.second).field(elems.first, elems.second));
+				}
+				else if (iIndex < iCount)
+				{
+					if (ptrField != nullptr)
+					{
+						ptrField->field(elems.first, elems.second);
+					}
+				}
+				else
+				{
+					std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+					auto duration = now.time_since_epoch();
+					auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
 
-			std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({"metrics","ip"}, "127.0.0.1");
-			uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({"metrics","udp_port"}, 8089);
-			measure.field(items.first, items.second).timestamp(iCurTime).send_udp(ip, port);
+					//uint64_t iCurTime = time(NULL) * 1000000000;
+					uint64_t iCurTime = nanoseconds.count();
+
+					std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "metrics","ip" }, "127.0.0.1");
+					uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "metrics","udp_port" }, 8089);
+
+					if (ptrField != nullptr)
+					{
+						ptrField->field(elems.first, elems.second).timestamp(iCurTime).send_udp(ip, port);
+					}
+				}
+			}
 		}
 	}
 }
