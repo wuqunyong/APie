@@ -200,7 +200,7 @@ void DispatcherImpl::runIntervalCallbacks()
 		uint32_t iPbCount = 0;
 		for (auto& elems : m_pbStats)
 		{
-			iCmdCount += elems.second;
+			iPbCount += elems.second;
 
 			std::string sPb = "pb_type_" + std::to_string(elems.first);
 			ptrData->field[sPb] = (double)elems.second;
