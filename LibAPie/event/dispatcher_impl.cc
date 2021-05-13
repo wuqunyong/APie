@@ -190,10 +190,10 @@ void DispatcherImpl::runIntervalCallbacks()
 			iCmdCount += elems.second;
 
 			std::string sCmd = "cmd_type_" + std::to_string(elems.first);
-			ptrData->field[sCmd] = elems.second;
+			ptrData->field[sCmd] = (double)elems.second;
 		}
-		ptrData->field["cmd_type"] = iCmdType;
-		ptrData->field["cmd_count"] = iCmdCount;
+		ptrData->field["cmd_type"] = (double)iCmdType;
+		ptrData->field["cmd_count"] = (double)iCmdCount;
 		m_cmdStats.clear();
 
 		uint32_t iPbType = m_pbStats.size();
@@ -203,14 +203,14 @@ void DispatcherImpl::runIntervalCallbacks()
 			iCmdCount += elems.second;
 
 			std::string sPb = "pb_type_" + std::to_string(elems.first);
-			ptrData->field[sPb] = elems.second;
+			ptrData->field[sPb] = (double)elems.second;
 		}
-		ptrData->field["pb_type"] = iPbType;
-		ptrData->field["pb_count"] = iPbCount;
+		ptrData->field["pb_type"] = (double)iPbType;
+		ptrData->field["pb_count"] = (double)iPbCount;
 		m_pbStats.clear();
 
 		ptrData->field["mailbox"] = (double)mailbox_.size();
-		ptrData->field["timer_call"] = TimerImpl::s_callCount;
+		ptrData->field["timer_call"] = (double)TimerImpl::s_callCount;
 
 		TimerImpl::s_callCount = 0;
 
