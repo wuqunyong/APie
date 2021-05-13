@@ -119,6 +119,10 @@ private:
   time_t i_next_check_rotate;
   time_t i_next_metric_time;
 
+  std::map<uint32_t, uint32_t> m_cmdStats;
+  std::map<uint32_t, uint32_t> m_pbStats;
+
+
   std::atomic<bool> terminating_ = false;
 
   static std::atomic<uint64_t> serial_num_;

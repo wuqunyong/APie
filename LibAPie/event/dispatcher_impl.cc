@@ -182,6 +182,33 @@ void DispatcherImpl::runIntervalCallbacks()
 		ptrData->tag["thread_type"] = toStirng(type_);
 		ptrData->tag["thread_id"] = std::to_string(tid_);
 		ptrData->tag["queue_id"] = std::to_string(iType) + "_" + std::to_string(iId) + "_" + toStirng(type_) + "_" + std::to_string(tid_);
+
+		uint32_t iCmdType = m_cmdStats.size();
+		uint32_t iCmdCount = 0;
+		for (auto& elems : m_cmdStats)
+		{
+			iCmdCount += elems.second;
+
+			std::string sCmd = "cmd_type_" + std::to_string(elems.first);
+			ptrData->field[sCmd] = elems.second;
+		}
+		ptrData->field["cmd_type"] = iCmdType;
+		ptrData->field["cmd_count"] = iCmdCount;
+		m_cmdStats.clear();
+
+		uint32_t iPbType = m_pbStats.size();
+		uint32_t iPbCount = 0;
+		for (auto& elems : m_pbStats)
+		{
+			iCmdCount += elems.second;
+
+			std::string sPb = "pb_type_" + std::to_string(elems.first);
+			ptrData->field[sPb] = elems.second;
+		}
+		ptrData->field["pb_type"] = iPbType;
+		ptrData->field["pb_count"] = iPbCount;
+		m_pbStats.clear();
+
 		ptrData->field["mailbox"] = (double)mailbox_.size();
 
 		Command command;
@@ -206,7 +233,7 @@ void DispatcherImpl::runIntervalCallbacks()
 		break;
 	}
 
-	interval_timer_->enableTimer(std::chrono::milliseconds(200));
+	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
 }
 
 void DispatcherImpl::runPostCallbacks() {
@@ -245,6 +272,8 @@ void DispatcherImpl::handleCommand()
 		{
 			break;
 		}
+
+		m_cmdStats[cmd.type] = m_cmdStats[cmd.type] + 1;
 
 		switch (cmd.type)
 		{
@@ -520,6 +549,8 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	{
 	case APie::ConnetionType::CT_SERVER:
 	{
+		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+
 		auto optionalData = Api::OpcodeHandlerSingleton::get().server.getFunction(itemPtr->iOpcode);
 		if (!optionalData)
 		{
@@ -531,6 +562,8 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	}
 	case APie::ConnetionType::CT_CLIENT:
 	{
+		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+
 		auto optionalData = Api::OpcodeHandlerSingleton::get().client.getFunction(itemPtr->iOpcode);
 		if (!optionalData)
 		{
@@ -551,6 +584,8 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 	case APie::ConnetionType::CT_SERVER:
 	{
+		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+
 		auto defaultHandler = Api::OpcodeHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
@@ -565,6 +600,8 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	}
 	case APie::ConnetionType::CT_CLIENT:
 	{
+		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+
 		auto defaultHandler = Api::OpcodeHandlerSingleton::get().client.getDefaultFunc();
 		if (!defaultHandler)
 		{
