@@ -210,6 +210,9 @@ void DispatcherImpl::runIntervalCallbacks()
 		m_pbStats.clear();
 
 		ptrData->field["mailbox"] = (double)mailbox_.size();
+		ptrData->field["timer_call"] = TimerImpl::s_callCount;
+
+		TimerImpl::s_callCount = 0;
 
 		Command command;
 		command.type = Command::metric_data;

@@ -9,10 +9,12 @@
 namespace APie {
 namespace Event {
 
+	std::atomic<uint32_t> TimerImpl::s_callCount = 0;
+
 TimerImpl::TimerImpl(Libevent::BasePtr& libevent, TimerCb cb) : cb_(cb) {
   evtimer_assign(
       &raw_event_, libevent.get(),
-      [](evutil_socket_t, short, void* arg) -> void { static_cast<TimerImpl*>(arg)->cb_(); }, this);
+	  [](evutil_socket_t, short, void* arg) -> void { static_cast<TimerImpl*>(arg)->cb_();  s_callCount++; }, this);
 }
 
 void TimerImpl::disableTimer() { event_del(&raw_event_); }

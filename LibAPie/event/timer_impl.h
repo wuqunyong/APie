@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <map>
+#include <atomic>
 
 #include "../event/timer.h"
 
@@ -26,6 +27,9 @@ public:
 
 private:
   TimerCb cb_;
+
+public:
+	static std::atomic<uint32_t> s_callCount;
 };
 
 
