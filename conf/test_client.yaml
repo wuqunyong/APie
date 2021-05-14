@@ -4,8 +4,7 @@ identify:
 io_threads: 16
 clients:
     socket_address:
-      address: "45.63.24.92"
-      #address: "127.0.0.1"
+      address: "127.0.0.1"
       port_value: 16007
       type: 1
       mask_flag : 0
