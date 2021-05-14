@@ -485,7 +485,7 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 	}
 	else
 	{
-		if (ite->second.size() > 1000)
+		if (ite->second.size() > 100)
 		{
 			uint64_t iMin = 0;
 			uint64_t iMax = 0;
