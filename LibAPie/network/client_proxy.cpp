@@ -29,7 +29,11 @@ ClientProxy::ClientProxy()
 	this->m_reconnectTimes = 0;
 	this->m_tId = 0;
 
-	auto timerCb = [this](){ 
+	auto reconnectCb = [this](){
+		std::stringstream ss;
+		ss << "reconnect|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> " << "peerIp:" << this->m_ip << ":" << this->m_port;
+		ASYNC_PIE_LOG("ClientProxy", PIE_CYCLE_DAY, PIE_NOTICE, "reconnect|m_reconnectTimes:%d|%s", m_reconnectTimes, ss.str().c_str());
+
 		this->reconnect(); 
 		if (this->isConnectted())
 		{
@@ -37,7 +41,7 @@ ClientProxy::ClientProxy()
 		}
 		this->addReconnectTimer(3000);
 	};
-	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(reconnectCb);
 
 	auto heartbeatCb = [this]() {
 		if (this->m_heartbeatCb)

@@ -1,7 +1,7 @@
 identify:
   type: 8
   id: 1
-io_threads: 8
+io_threads: 16
 clients:
     socket_address:
       address: "45.63.24.92"
@@ -32,9 +32,9 @@ redis_clients:
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1
-  stop: 10
+  stop: 200
   ramp_up_interval_ms: 10000
-  ramp_up_nums: 100
+  ramp_up_nums: 20
   task_suite:
   - task_case:
       case_type: 1
@@ -42,7 +42,7 @@ auto_test:               # 自动化测试
       loop_interval_ms: 10
   - task_case:
       case_type: 2
-      loop_count: 10
+      loop_count: 10000
       loop_interval_ms: 100
   - task_case:
       case_type: 3
