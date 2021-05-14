@@ -264,6 +264,11 @@ std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& MockRole::getRe
 	return m_replyDelay;
 }
 
+std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& MockRole::getMergeReplyDelay()
+{
+	return m_mergeReplyDelay;
+}
+
 bool MockRole::hasTimeout(uint64_t iCurMS)
 {
 	for (const auto& elems : m_pendingResponse)
@@ -480,6 +485,62 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 	}
 	else
 	{
+		if (ite->second.size() > 1000)
+		{
+			uint64_t iMin = 0;
+			uint64_t iMax = 0;
+			uint64_t iAverage = 0;
+			uint64_t iTotal = 0;
+			uint64_t iCount = 0;
+			for (auto& items : ite->second)
+			{
+				if (iMin == 0)
+				{
+					iMin = items;
+				}
+
+				if (iMax == 0)
+				{
+					iMax = items;
+				}
+
+				if (iMin > items)
+				{
+					iMin = items;
+				}
+
+				if (iMax < items)
+				{
+					iMax = items;
+				}
+
+				iCount++;
+
+				iTotal += items;
+			}
+
+			auto findIte = m_mergeReplyDelay.find(key);
+			if (findIte == m_mergeReplyDelay.end())
+			{
+				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iMin, iMax, iCount, iTotal };
+				m_mergeReplyDelay[key] = mergeElem;
+			}
+			else
+			{
+				auto prevElem = m_mergeReplyDelay[key];
+
+				uint64_t iCurMin = std::get<0>(prevElem) + iMin;
+				uint64_t iCurMax = std::get<1>(prevElem) + iMax;
+				uint64_t iCurCount = std::get<2>(prevElem) + iCount;
+				uint64_t iCurTotal = std::get<3>(prevElem) + iTotal;
+
+				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iCurMin, iCurMax, iCurCount, iCurTotal };
+				m_mergeReplyDelay[key] = mergeElem;
+			}
+
+			ite->second.clear();
+		}
+
 		ite->second.push_back(iDelay);
 	}
 

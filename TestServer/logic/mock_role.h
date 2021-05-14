@@ -112,6 +112,7 @@ namespace APie {
 		bool hasTimeout(uint64_t iCurMS);
 
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& getReplyDelay();
+		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& getMergeReplyDelay();
 
 	private:
 		void handleMsg(::pubsub::LOGIC_CMD& msg);
@@ -166,6 +167,7 @@ namespace APie {
 		
 
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>  m_replyDelay;  // key: request-response, value:delay(ms)
+		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>> m_mergeReplyDelay; // value:min,max,count,total
 
 		static std::map<uint32_t, std::string> s_pbReflect;
 	};

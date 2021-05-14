@@ -103,6 +103,25 @@ namespace APie {
 					iTotal += items;
 				}
 
+
+				auto& mergeDelay = m_ptrRole->getMergeReplyDelay();
+				auto findIte = mergeDelay.find(elems.first);
+				if (findIte != mergeDelay.end())
+				{
+					if (std::get<0>(findIte->second) < iMin)
+					{
+						iMin = std::get<0>(findIte->second);
+					}
+
+					if (std::get<1>(findIte->second) > iMax)
+					{
+						iMax = std::get<1>(findIte->second);
+					}
+
+					iCount += std::get<2>(findIte->second);
+					iTotal += std::get<3>(findIte->second);
+				}
+
 				Json::Value delayElem;
 				delayElem["min"] = iMin;
 				delayElem["max"] = iMax;
@@ -116,6 +135,8 @@ namespace APie {
 
 				delay[sKey] = delayElem;
 			}
+
+
 			root["delay"] = delay;
 		}
 
