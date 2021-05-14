@@ -124,6 +124,9 @@ private:
 
   uint32_t m_maxMailboxStats = 0;
   uint32_t m_accumulateMailBoxStats = 0;
+  uint32_t m_zeroMailBoxStats = 0;
+
+  uint32_t m_loopCountStats = 0;
 
 
   std::atomic<bool> terminating_ = false;
