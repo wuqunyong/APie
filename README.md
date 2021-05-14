@@ -474,3 +474,14 @@ namespace APie {
 ```
 - 其他
 通过RPC转发
+
+# 服务监控
+![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/qps.png)
+![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/cpu.png)
+
+# 压测
+```
+TestServer.exe ../../conf/test_client.yaml
+```
+![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/auto_test.png)
+![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/auto_test_config.png)
