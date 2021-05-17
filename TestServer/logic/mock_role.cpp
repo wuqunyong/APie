@@ -529,8 +529,18 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 			{
 				auto prevElem = m_mergeReplyDelay[key];
 
-				uint64_t iCurMin = std::get<0>(prevElem) + iMin;
-				uint64_t iCurMax = std::get<1>(prevElem) + iMax;
+				uint64_t iCurMin = std::get<0>(prevElem);
+				if (iMin < iCurMin)
+				{
+					iCurMin = iMin;
+				}
+
+				uint64_t iCurMax = std::get<1>(prevElem);
+				if (iMax > iCurMax)
+				{
+					iCurMax = iMax;
+				}
+
 				uint64_t iCurCount = std::get<2>(prevElem) + iCount;
 				uint64_t iCurTotal = std::get<3>(prevElem) + iTotal;
 
