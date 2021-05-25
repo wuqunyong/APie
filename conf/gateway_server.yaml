@@ -5,10 +5,10 @@ identify:
   ip: "127.0.0.1"
   port: 14007
   codec_type: 1
-io_threads: 2
+io_threads: 16
 certificate:         #证书
-  public_key: /usr/local/apie/etc/key.pub    #公钥位置
-  private_key: /usr/local/apie/etc/key.pem   #私钥位置
+  public_key: E:\\APie\\etc\\key.pub    #公钥位置
+  private_key: E:\\APie\\etc\\key.pem   #私钥位置
 listeners:
 - address:
     socket_address:
@@ -23,12 +23,12 @@ service_registry:
   type: 1
 log:
   merge: true
-  level: 0
+  level: 3
   show_pos: true
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
   name: "gateway_server"
-  show_console: true
+  show_console: false
 metrics:
   enable: true
   ip: "127.0.0.1"
@@ -42,5 +42,5 @@ redis_clients:
     passwd: ""
 
 limited:
-  requests_per_unit: 3 
+  requests_per_unit: 0 
   uint: 10             
