@@ -121,6 +121,15 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 	server.set_type(common::EPT_DB_ACCOUNT_Proxy);
 	server.set_id(1);
 
+
+	// ≤‚ ‘
+	auto multiCb = [](const rpc_msg::STATUS& status, std::tuple<ModelAccount, ModelAccount, ModelAccount>& tupleData, std::array<uint32_t, 3>& tupleRows) {
+		int a = 1;
+		int c = a + 1;
+	};
+	bResult = Multi_LoadFromDb(multiCb, server, accountData, accountData, accountData);
+
+
 	auto cb = [iSerialNum, request, server](rpc_msg::STATUS status, ModelAccount account, uint32_t iRows) {
 		if (status.code() != ::rpc_msg::CODE_Ok)
 		{

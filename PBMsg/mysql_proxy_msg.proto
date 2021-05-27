@@ -104,6 +104,16 @@ message MysqlQueryResponse
 	bytes sql_statement = 4;
 }
 
+message MysqlMultiQueryRequest
+{
+	repeated MysqlQueryRequest requests = 1;
+}
+
+message MysqlMulitQueryResponse
+{
+	repeated MysqlQueryResponse data = 1;
+}
+
 message MysqlInsertRequest
 {
 	string db_name = 1;

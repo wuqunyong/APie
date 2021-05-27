@@ -111,6 +111,8 @@ enum RPC_OPCODES : int {
   RPC_MysqlUpdate = 404,
   RPC_MysqlDelete = 405,
   RPC_MysqlQueryByFilter = 406,
+  RPC_MysqlMultiQuery = 407,
+
   RPC_L2G_LoginPending = 1001,
   RPC_OPCODES_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_OPCODES_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
@@ -150,6 +152,10 @@ enum RPC_CODE : int {
   CODE_NotSend = 110,
   CODE_LoadFromDbError = 111,
   CODE_DirtyFlagZero = 112,
+  CODE_QueryError = 113,
+  CODE_TableNameNotExistError = 114,
+  CODE_GenerateQuerySQLError = 115,
+  CODE_NotMatchedResultError = 116,
   RPC_CODE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RPC_CODE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };

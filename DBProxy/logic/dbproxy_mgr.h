@@ -32,7 +32,7 @@ namespace APie {
 		static std::tuple<uint32_t, std::string> RPC_handleMysqlUpdate(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlUpdateRequest& request);
 		static std::tuple<uint32_t, std::string> RPC_handleMysqlDelete(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlDeleteRequest& request);
 		static std::tuple<uint32_t, std::string> RPC_handleMysqlQueryByFilter(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& request);
-		
+		static std::tuple<uint32_t, std::string> RPC_handleMysqlMultiQuery(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlMultiQueryRequest& request);
 
 	private:
 	};
