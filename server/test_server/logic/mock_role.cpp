@@ -4,7 +4,7 @@
 #include "test_server.h"
 
 #include "../../common/opcodes.h"
-#include "../../LibAPie/common/file.h"
+#include "../../libapie/common/file.h"
 
 namespace APie {
 

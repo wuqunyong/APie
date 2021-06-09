@@ -2,7 +2,7 @@
 
 #include "table_cache_mgr.h"
 
-#include "../../LibAPie/rpc/server/rpc_server.h"
+#include "../../libapie/rpc/server/rpc_server.h"
 
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_user.h"

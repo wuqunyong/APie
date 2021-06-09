@@ -5,8 +5,8 @@
 
 #include "gateway_role.h"
 
-#include "../../LibAPie/common/message_traits.h"
-#include "../../LibAPie/common/file.h"
+#include "../../libapie/common/message_traits.h"
+#include "../../libapie/common/file.h"
 
 
 namespace APie {

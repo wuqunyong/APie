@@ -1,7 +1,7 @@
 #include "test_suite.h"
 
 #include "../../common/opcodes.h"
-#include "../../LibAPie/common/file.h"
+#include "../../libapie/common/file.h"
 #include "test_server.h"
 
 namespace APie {

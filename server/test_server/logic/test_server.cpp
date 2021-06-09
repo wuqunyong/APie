@@ -2,7 +2,7 @@
 
 #include "json/json.h"
 
-#include "../../LibAPie/redis_driver/redis_client.h"
+#include "../../libapie/redis_driver/redis_client.h"
 #include "../../common/opcodes.h"
 
 
