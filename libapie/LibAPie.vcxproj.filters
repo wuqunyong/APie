@@ -334,97 +334,97 @@
     <ClInclude Include="decompressor\lz4_decompressor_impl.h">
       <Filter>decompressor</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h">
+    <ClInclude Include="..\third_party\tinyxml2\tinyxml2.h">
       <Filter>third_party\tinyxml2</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h">
+    <ClInclude Include="..\third_party\http-parser\http_parser.h">
       <Filter>third_party\http-parser</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\allocator.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\allocator.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\assertions.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\assertions.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\config.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\config.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\forwards.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\forwards.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\json.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json_features.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\json_features.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\reader.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\reader.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\value.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\value.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\version.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\version.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\writer.h">
+    <ClInclude Include="..\third_party\jsoncpp\include\json\writer.h">
       <Filter>third_party\jsoncpp\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\jsoncpp\src\lib_json\json_tool.h">
+    <ClInclude Include="..\third_party\jsoncpp\src\lib_json\json_tool.h">
       <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </ClInclude>
     <ClInclude Include="api\logiccmd_handler.h">
       <Filter>api</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\BucketPriorityQueue.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Cases.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Cases.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\DijkstraFloodfill.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Entry.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Entry.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\FastStack.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\FPUtil.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\GenericHeap.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\JPSPlus.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Map.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Map.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PathfindingNode.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\PathfindingNode.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\PrecomputeMap.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\ScenarioLoader.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.h">
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\UnsortedPriorityQueue.h">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClInclude>
     <ClInclude Include="redis_driver\redis_client.h">
       <Filter>redis_driver</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\astar\fsa.h">
+    <ClInclude Include="..\third_party\astar\fsa.h">
       <Filter>third_party\astar</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\astar\stlastar.h">
+    <ClInclude Include="..\third_party\astar\stlastar.h">
       <Filter>third_party\astar</Filter>
     </ClInclude>
     <ClInclude Include="common\graphics_utility.h">
@@ -615,58 +615,58 @@
     <ClCompile Include="decompressor\lz4_decompressor_impl.cc">
       <Filter>decompressor</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp">
+    <ClCompile Include="..\third_party\tinyxml2\tinyxml2.cpp">
       <Filter>third_party\tinyxml2</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c">
+    <ClCompile Include="..\third_party\http-parser\http_parser.c">
       <Filter>third_party\http-parser</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_reader.cpp">
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_reader.cpp">
       <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_value.cpp">
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_value.cpp">
       <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_writer.cpp">
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_writer.cpp">
       <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </ClCompile>
     <ClCompile Include="api\logiccmd_handler.cc">
       <Filter>api</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\BucketPriorityQueue.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\DijkstraFloodfill.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Entry.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\Entry.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\FastStack.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\FPUtil.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\GenericHeap.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\JPSPlus.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Map.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\Map.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\PrecomputeMap.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\ScenarioLoader.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp">
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp">
       <Filter>third_party\JPSPlusGoalBounding</Filter>
     </ClCompile>
     <ClCompile Include="redis_driver\redis_client.cpp">
@@ -698,7 +698,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ThirdParty\jsoncpp\src\lib_json\json_valueiterator.inl">
+    <None Include="..\third_party\jsoncpp\src\lib_json\json_valueiterator.inl">
       <Filter>third_party\jsoncpp\src\lib_json</Filter>
     </None>
   </ItemGroup>

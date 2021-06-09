@@ -74,8 +74,8 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)ThirdParty\OpenSSL-Win64\include;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\influxdb-cpp;$(SolutionDir)ThirdParty\lz4\include;$(SolutionDir)ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\tinyxml2;$(SolutionDir)ThirdParty\cpp_redis\includes;$(SolutionDir)ThirdParty\cpp_redis\tacopie\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)ThirdParty\libs;$(SolutionDir)ThirdParty\OpenSSL-Win64\lib;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\influxdb-cpp;$(SolutionDir)third_party\lz4\include;$(SolutionDir)third_party\jsoncpp\include;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)third_party\libs;$(SolutionDir)third_party\OpenSSL-Win64\lib;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\libs;$(SolutionDir)ThirdParty\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\libs;$(SolutionDir)third_party\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -145,35 +145,35 @@
     <ClInclude Include="..\pb_msg\core\route_register.pb.h" />
     <ClInclude Include="..\pb_msg\core\rpc_msg.pb.h" />
     <ClInclude Include="..\pb_msg\core\service_discovery.pb.h" />
-    <ClInclude Include="..\ThirdParty\astar\fsa.h" />
-    <ClInclude Include="..\ThirdParty\astar\stlastar.h" />
-    <ClInclude Include="..\ThirdParty\http-parser\http_parser.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Cases.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Entry.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\Map.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PathfindingNode.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.h" />
-    <ClInclude Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\allocator.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\assertions.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\config.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\forwards.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\json_features.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\reader.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\value.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\version.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\include\json\writer.h" />
-    <ClInclude Include="..\ThirdParty\jsoncpp\src\lib_json\json_tool.h" />
-    <ClInclude Include="..\ThirdParty\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="..\third_party\astar\fsa.h" />
+    <ClInclude Include="..\third_party\astar\stlastar.h" />
+    <ClInclude Include="..\third_party\http-parser\http_parser.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\BucketPriorityQueue.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Cases.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\DijkstraFloodfill.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Entry.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\FastStack.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\FPUtil.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\GenericHeap.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\JPSPlus.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\Map.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\PathfindingNode.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\PrecomputeMap.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\ScenarioLoader.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.h" />
+    <ClInclude Include="..\third_party\JPSPlusGoalBounding\UnsortedPriorityQueue.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\allocator.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\assertions.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\config.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\forwards.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\json.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\json_features.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\reader.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\value.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\version.h" />
+    <ClInclude Include="..\third_party\jsoncpp\include\json\writer.h" />
+    <ClInclude Include="..\third_party\jsoncpp\src\lib_json\json_tool.h" />
+    <ClInclude Include="..\third_party\tinyxml2\tinyxml2.h" />
     <ClInclude Include="apie.h" />
     <ClInclude Include="api\api.h" />
     <ClInclude Include="api\api_impl.h" />
@@ -268,23 +268,23 @@
     <ClCompile Include="..\pb_msg\core\route_register.pb.cc" />
     <ClCompile Include="..\pb_msg\core\rpc_msg.pb.cc" />
     <ClCompile Include="..\pb_msg\core\service_discovery.pb.cc" />
-    <ClCompile Include="..\ThirdParty\http-parser\http_parser.c" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\BucketPriorityQueue.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\DijkstraFloodfill.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Entry.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FastStack.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\FPUtil.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\GenericHeap.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\JPSPlus.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\Map.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\PrecomputeMap.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\ScenarioLoader.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.cpp" />
-    <ClCompile Include="..\ThirdParty\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp" />
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_value.cpp" />
-    <ClCompile Include="..\ThirdParty\jsoncpp\src\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\ThirdParty\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\third_party\http-parser\http_parser.c" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\BucketPriorityQueue.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\DijkstraFloodfill.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\Entry.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\FastStack.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\FPUtil.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\GenericHeap.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\JPSPlus.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\Map.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\PrecomputeMap.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\ScenarioLoader.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\SimpleUnsortedPriorityQueue.cpp" />
+    <ClCompile Include="..\third_party\JPSPlusGoalBounding\UnsortedPriorityQueue.cpp" />
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\third_party\jsoncpp\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\third_party\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="api\api_impl.cc" />
     <ClCompile Include="api\forward_handler.cc" />
     <ClCompile Include="api\hook.cc" />
@@ -344,7 +344,7 @@
     <ClCompile Include="serialization\protocol_head.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ThirdParty\jsoncpp\src\lib_json\json_valueiterator.inl" />
+    <None Include="..\third_party\jsoncpp\src\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

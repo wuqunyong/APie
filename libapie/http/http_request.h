@@ -6,7 +6,7 @@
 
 extern "C"
 {
-#include "../../ThirdParty/http-parser/http_parser.h" 
+#include "../../third_party/http-parser/http_parser.h" 
 }
 
 #include "http_common.h"
