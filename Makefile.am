@@ -1,4 +1,4 @@
-SUBDIRS = libapie/Makefile server/db_proxy_server/Makefile server/gateway_server/Makefile server/login_server/Makefile server/route_proxy_server/Makefile server/scene_server/Makefile server/service_registry_server/Makefile server/test_server/Makefile
+SUBDIRS = libapie server/db_proxy_server server/gateway_server server/login_server server/route_proxy_server server/scene_server server/service_registry_server server/test_server
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@

@@ -5,7 +5,7 @@ AC_PREREQ(2.59)
 AC_INIT([apie], [1.0.0], [xxx], [apie])
 AM_INIT_AUTOMAKE([foreign])
 AC_PREFIX_DEFAULT([/usr/local/apie/])
-AC_CONFIG_SRCDIR([LibAPie/network/ctx.cpp])
+AC_CONFIG_SRCDIR([libapie/network/ctx.cpp])
 AC_CONFIG_HEADER([config.h])
 
 # CXXFLAGS=${CXXFLAGS--g -O0}
