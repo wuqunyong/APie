@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\login_mgr.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedDir\opcodes.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dao\model_account.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\login_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{48ecb0b7-fcb7-4067-9052-4ca376e37ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{996697be-5657-49df-8186-9f67dd5d7b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\dao">
+      <UniqueIdentifier>{8a2f3ea7-ced2-4fe2-82f1-8079bbce50f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg">
+      <UniqueIdentifier>{efbf3989-ff6b-42eb-9b78-e4ce958c84e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg\business">
+      <UniqueIdentifier>{737af177-610d-45a9-8494-5e400ec87d4f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

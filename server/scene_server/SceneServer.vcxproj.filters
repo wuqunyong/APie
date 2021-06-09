@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{698a48ab-249e-4908-a2a2-017451d63b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg">
+      <UniqueIdentifier>{44939a77-72a0-4ccb-83bc-dc8000d114d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg\business">
+      <UniqueIdentifier>{92eaeed6-632f-4235-91f7-da511568d1fb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\scene_mgr.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\scene_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

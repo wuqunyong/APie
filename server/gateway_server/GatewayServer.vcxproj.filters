@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\gateway_mgr.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\gateway_role.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dao\model_user.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\gateway_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\gateway_role.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{9fc74d54-78ab-468b-86fd-ba95ecfd17e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{9de18d71-708b-4f67-a8a6-2d973d88ca9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\dao">
+      <UniqueIdentifier>{0b702e53-b791-485b-93f1-eaa573f0b1c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg">
+      <UniqueIdentifier>{8e83c96f-53dc-4113-8164-19888ba4b57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg\business">
+      <UniqueIdentifier>{30312d97-04c5-43ff-b056-27682ceec89f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

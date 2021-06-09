@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package opcodes;
+
+//-------------OPCODE-------------
+
+enum OPCODE_ID {
+	OP_None = 0;
+	OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE = 101;  //Discovery
+	OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE = 102;
+	OP_DISCOVERY_MSG_NOTICE_INSTANCE = 103;
+	OP_DISCOVERY_MSG_REQUEST_HEARTBEAT = 104;
+	OP_DISCOVERY_MSG_RESP_HEARTBEAT = 105;
+
+	OP_ROUTE_MSG_REQUEST_ADD_ROUTE = 201;
+	OP_ROUTE_MSG_RESP_ADD_ROUTE = 202;
+	OP_ROUTE_MSG_REQUEST_HEARTBEAT = 203;
+	OP_ROUTE_MSG_RESP_HEARTBEAT = 204;
+
+	OP_RPC_REQUEST = 301;
+	OP_RPC_RESPONSE = 302;
+}
+
+
+enum StatusCode {
+	SC_Ok = 0;
+
+	SC_Discovery_AuthError = 100;
+	SC_Discovery_DuplicateNode = 101;
+	SC_Discovery_Unregistered = 102;
+	SC_Discovery_ServerListEmpty = 103;
+	SC_Discovery_InvalidPoint = 104;
+
+	SC_Route_InvalidPoint = 200;
+	SC_Route_AuthError = 201;
+	SC_Route_Unregistered = 202;
+
+	SC_Rpc_Timeout = 300;
+	SC_Rpc_RouteEmpty = 301;
+	SC_Rpc_RouteEstablishedEmpty = 302;
+	SC_Rpc_RouteSerialNumInvalid = 303;
+	SC_Rpc_RouteSendError = 304;
+	SC_Rpc_NotReceivedReply = 305;
+	SC_Rpc_NotSend = 306;
+	SC_Rpc_InvalidArgs_MethodsEmpty = 307;
+	SC_Rpc_Partial_Error = 308; // 部分错误
+	 
+
+	SC_ClientProxy_SerialNumEqualZero = 400;
+	SC_ClientProxy_SerialNumNotEqualZero = 401;
+	SC_ClientProxy_Established = 402;
+	SC_ClientProxy_NotEstablished = 403;
+	SC_ClientProxy_BadAlloc = 404;
+	SC_ClientProxy_NoIOThread = 405;
+
+	SC_BindTable_Error = 500;
+
+	SC_Auth_LoadPubFileError = 600;  //加载公钥文件出错
+	SC_Auth_DecryptError = 601;
+
+}

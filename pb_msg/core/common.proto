@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package common;
+
+
+enum EndPointType 
+{
+	EPT_None = 0;
+	EPT_Service_Registry = 1;
+	EPT_Route_Proxy = 2;
+
+	EPT_Login_Server = 3;
+	EPT_Gateway_Server = 4;
+	EPT_Scene_Server = 5;
+	EPT_DB_ACCOUNT_Proxy = 6;
+	EPT_DB_ROLE_Proxy = 7;
+
+	EPT_Test_Client = 8;
+	
+	EPT_Max = 9;
+}

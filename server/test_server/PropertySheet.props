@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(SolutionDir)LibAPie;$(SolutionDir)ThirdParty\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)ThirdParty\libevent-release-2.1.11\include;$(SolutionDir)ThirdParty\protobuf\src;$(SolutionDir)ThirdParty\yaml-cpp\include;$(SolutionDir)\ThirdParty\lz4\include;$(SolutionDir)\ThirdParty\jsoncpp\include;$(SolutionDir)ThirdParty\OpenSSL-Win64\include;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\include;$(SolutionDir)ThirdParty\cpp_redis\includes;$(SolutionDir)ThirdParty\cpp_redis\tacopie\includes;$(SolutionDir)ThirdParty\tinyxml2;$(SolutionDir)ThirdParty\astar;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ThirdParty\OpenSSL-Win64\lib;$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\MySQL\MySQL Server 5.7\lib;$(SolutionDir)ThirdParty\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>LibAPie.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;liblz4_static.lib;cpp_redis.lib;tacopie.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

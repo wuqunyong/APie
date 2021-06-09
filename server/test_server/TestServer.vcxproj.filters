@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="service_init.cpp" />
+    <ClCompile Include="logic\test_server.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\mock_role.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="test_client.cpp" />
+    <ClCompile Include="logic\test_suite.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_case.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_runner.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\echo_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\login_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\logout_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\role_server_msg.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="service_init.h" />
+    <ClInclude Include="logic\test_server.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\mock_role.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_suite.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_case.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_runner.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\echo_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\login_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\logout_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\role_server_msg.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{a890c62d-52f6-45ee-8365-3836cdc00209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic\task">
+      <UniqueIdentifier>{bd8addb6-4423-4649-beef-488ca165c8f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg">
+      <UniqueIdentifier>{303489ac-763b-4da7-b23d-5263350fc61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pb_msg\business">
+      <UniqueIdentifier>{320bb5ec-ca4b-4e64-8cfa-1c3d3955af42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

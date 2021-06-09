@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package rpc_login;
+
+
+message L2G_LoginPendingRequest
+{
+	uint64 account_id = 1;
+	string session_key = 2;
+	int32 version = 3;
+	uint32 db_id = 4;
+}
+
+message L2G_LoginPendingResponse
+{
+	int32 status_code = 1;
+	uint64 account_id = 2;
+}

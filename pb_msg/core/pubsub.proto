@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package pubsub;
+
+
+import "service_discovery.proto";
+
+//---------------------------------------
+
+enum PUB_TOPIC
+{
+	PT_None = 0;
+	PT_LogicCmd = 100;
+	PT_ClientPeerClose = 200;
+	PT_ServerPeerClose = 201;
+	PT_DiscoveryNotice = 301;
+}
+
+message LOGIC_CMD
+{
+	string cmd = 1;
+	repeated string params = 2;
+}
+
+message CLIENT_PEER_CLOSE
+{
+	uint64 serial_num = 1;
+	uint32 result = 2;
+	string info = 3;
+	uint32 active = 4;
+}
+
+message SERVER_PEER_CLOSE
+{
+	uint64 serial_num = 1;
+	uint32 result = 2;
+	string info = 3;
+	uint32 active = 4;
+}
+
+message DISCOVERY_NOTICE
+{
+	service_discovery.MSG_NOTICE_INSTANCE notice = 1;
+}
