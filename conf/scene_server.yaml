@@ -20,7 +20,7 @@ service_registry:
   type: 1
 log:
   merge: true
-  level: 0
+  level: 3
   show_pos: true
   split_size: 128
   backup: "/usr/local/apie/logs/backup"

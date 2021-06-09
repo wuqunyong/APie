@@ -11,7 +11,7 @@
 #include "output_stream.h"
 #include "../event/dispatcher_impl.h"
 
-#include "../../PBMsg/opcodes.pb.h"
+#include "../../pb_msg/core/opcodes.pb.h"
 
 using namespace APie;
 

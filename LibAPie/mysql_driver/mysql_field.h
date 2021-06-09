@@ -14,7 +14,7 @@
 
 #include <mysql.h>
 
-#include "../../PBMsg/mysql_proxy_msg.pb.h"
+#include "../../pb_msg/core/mysql_proxy_msg.pb.h"
 
 
 class MysqlField

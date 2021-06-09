@@ -10,7 +10,7 @@
 #include "../network/logger.h"
 #include "../common/utility.h"
 
-#include "../../PBMsg/rpc_msg.pb.h"
+#include "../../pb_msg/core/rpc_msg.pb.h"
 
 namespace APie {
 namespace Api {

@@ -4,6 +4,8 @@ identify:
 io_threads: 16
 clients:
     socket_address:
+      #address: "10.0.16.59"
+      #address: "45.63.24.92"
       address: "127.0.0.1"
       port_value: 16007
       type: 1
@@ -13,7 +15,7 @@ log:
   level: 0
   show_pos: false
   split_size: 128
-  show_console: false
+  show_console: true
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 metrics:
@@ -31,9 +33,9 @@ redis_clients:
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1
-  stop: 200
+  stop: 500
   ramp_up_interval_ms: 10000
-  ramp_up_nums: 20
+  ramp_up_nums: 50
   task_suite:
   - task_case:
       case_type: 1

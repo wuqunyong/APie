@@ -3,9 +3,9 @@
 #include "ctx.h"
 #include "client_proxy.h"
 
-#include "../../PBMsg/opcodes.pb.h"
-#include "../../PBMsg/pubsub.pb.h"
-#include "../../PBMsg/common.pb.h"
+#include "../../pb_msg/core/opcodes.pb.h"
+#include "../../pb_msg/core/pubsub.pb.h"
+#include "../../pb_msg/core/common.pb.h"
 
 #include "../api/pb_handler.h"
 #include "../api/pubsub.h"

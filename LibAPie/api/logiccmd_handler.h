@@ -14,7 +14,7 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
-#include "../../PBMsg/pubsub.pb.h"
+#include "../../pb_msg/core/pubsub.pb.h"
 
 
 namespace APie {

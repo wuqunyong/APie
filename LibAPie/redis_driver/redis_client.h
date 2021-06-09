@@ -15,7 +15,7 @@
 #include <cpp_redis/cpp_redis>
 
 #include "../singleton/threadsafe_singleton.h"
-#include "../../PBMsg/rpc_msg.pb.h"
+#include "../../pb_msg/core/rpc_msg.pb.h"
 #include "../event/timer.h"
 
 

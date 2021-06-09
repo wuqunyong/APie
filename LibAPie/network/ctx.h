@@ -12,7 +12,7 @@
 #include "../network/i_poll_events.hpp"
 #include "../network/end_point.h"
 
-#include "../../PBMsg/rpc_msg.pb.h"
+#include "../../pb_msg/core/rpc_msg.pb.h"
 
 #include "yaml-cpp/yaml.h"
 
