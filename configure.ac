@@ -37,14 +37,14 @@ AC_FUNC_STRFTIME
 AC_CHECK_FUNCS([clock_gettime gettimeofday memset socket strchr strstr strtol])
 
 AC_CONFIG_FILES([Makefile
-		bin/Makefile
-		DBProxy/Makefile
-		GatewayServer/Makefile
-		LoginServer/Makefile
-		RouteProxy/Makefile
-		SceneServer/Makefile
-		ServiceRegistry/Makefile
-		TestServer/Makefile
+		libapie/Makefile
+		server/db_proxy_server/Makefile
+		server/gateway_server/Makefile
+		server/login_server/Makefile
+		server/route_proxy_server/Makefile
+		server/scene_server/Makefile
+		server/service_registry_server/Makefile
+		server/test_server/Makefile
 		])
 
 AC_OUTPUT

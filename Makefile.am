@@ -1,4 +1,4 @@
-SUBDIRS = bin DBProxy GatewayServer LoginServer RouteProxy SceneServer ServiceRegistry TestServer
+SUBDIRS = libapie/Makefile server/db_proxy_server/Makefile server/gateway_server/Makefile server/login_server/Makefile server/route_proxy_server/Makefile server/scene_server/Makefile server/service_registry_server/Makefile server/test_server/Makefile
 
 name=@PACKAGE_NAME@
 version=@PACKAGE_VERSION@
@@ -25,22 +25,23 @@ $(name).spec : $(name).spec.in FORCE
 EXTRA_DIST =  \
 	conf \
 	data \
-	DBProxy \
 	etc \
-	GatewayServer \
-	LibAPie \
-	LoginServer \
-	PBMsg \
-	RouteProxy \
-	SceneServer \
-	ServiceRegistry \
-	TestServer \
-	ThirdParty/astar \
-	ThirdParty/http-parser \
-	ThirdParty/JPSPlusGoalBounding \
-	ThirdParty/influxdb-cpp \
-	ThirdParty/jsoncpp \
-	ThirdParty/tinyxml2 \
+	libapie \
+	pb_msg \
+	server/common \
+	server/db_proxy_server \
+	server/gateway_server \
+	server/login_server \
+	server/route_proxy_server \
+	server/scene_server \
+	server/service_registry_server \
+	server/test_server \
+	third_party/astar \
+	third_party/http-parser \
+	third_party/JPSPlusGoalBounding \
+	third_party/influxdb-cpp \
+	third_party/jsoncpp \
+	third_party/tinyxml2 \
 	$(name).spec.in \
 	bootstrap.sh
 

@@ -3,4 +3,5 @@ EXTRA_DIST = \
 	$(wildcard *.cc) \
 	$(wildcard *.h) \
 	$(wildcard *.inl) \
-	BusinessMsg
+	business \
+	core
