@@ -43,7 +43,7 @@ git --version
 ```
 cd /root/
 git clone https://github.com/wuqunyong/APie.git
-cd /root/APie/Download/
+cd /root/APie/download/
 cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
 cp protobuf-3.11.4.zip /root/
 cp yaml-cpp-master.zip /root/
