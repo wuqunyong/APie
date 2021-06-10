@@ -1,8 +1,8 @@
-message(STATUS "service_registry")
-message(STATUS "service_registry CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "service_registry PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
+message(STATUS "db_proxy_server")
+message(STATUS "db_proxy_server CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "db_proxy_server PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
-message(STATUS "service_registry CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+message(STATUS "db_proxy_server CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 # Set lists to empty beforehand as to not accidentally take values from parent
 set(public_headers)
@@ -39,10 +39,13 @@ include_directories(${cxx-includes})
 link_directories(${cxx-link})
 
 
+
 set(cxx-sources
-    service_registry_server/main.cpp
-    service_registry_server/service_init.cpp
-    service_registry_server/logic/service_registry.cpp)
+    db_proxy_server/main.cpp
+    db_proxy_server/service_init.cpp
+    db_proxy_server/logic/dbproxy_mgr.cpp
+    db_proxy_server/logic/table_cache_mgr.cpp
+    db_proxy_server/logic/table_records_cache_mgr.cpp)
 
 
 # -----------------------------------------------------------------------------
@@ -56,6 +59,6 @@ foreach(source ${pb_sources})
   list(APPEND sources ${source})
 endforeach()
 
-add_executable(service_registry ${sources} ${public_headers})
+add_executable(db_proxy_server ${sources} ${public_headers})
 
-target_link_libraries(service_registry -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp)
+target_link_libraries(db_proxy_server -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp)

@@ -31,8 +31,8 @@ message(STATUS "APie_Project PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
 
 # Build LibAPie.so
-set(LIBAPIE_DIR "LibAPie")
+set(LIBAPIE_DIR "libapie")
 add_subdirectory(${LIBAPIE_DIR})
-add_subdirectory("ServiceRegistry")
+add_subdirectory(server)
 
 
