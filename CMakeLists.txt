@@ -7,6 +7,10 @@ message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 # Project name
 project(APie_Project)
 
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# set(CMAKE_CXX_STANDARD 17)
+
+
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 set(CMAKE_VERBOSE_MAKEFILEON ON)
