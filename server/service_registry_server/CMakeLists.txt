@@ -3,6 +3,9 @@ message(STATUS "service_registry CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURC
 message(STATUS "service_registry PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
 message(STATUS "service_registry CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+message(STATUS "service_registry CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
+
+
 
 # Set lists to empty beforehand as to not accidentally take values from parent
 set(public_headers)
