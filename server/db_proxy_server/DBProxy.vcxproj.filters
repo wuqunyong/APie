@@ -14,6 +14,12 @@
     <ClInclude Include="..\common\dao\model_user.h">
       <Filter>common\dao</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\dao\model_account.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dao\model_account_name.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

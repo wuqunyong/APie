@@ -5,6 +5,7 @@
 #include "../../libapie/rpc/server/rpc_server.h"
 
 #include "../../common/dao/model_account.h"
+#include "../../common/dao/model_account_name.h"
 #include "../../common/dao/model_user.h"
 
 namespace APie {
@@ -47,7 +48,7 @@ std::tuple<uint32_t, std::string> DBProxyMgr::start()
 	{
 		dbType = DeclarativeBase::DBType::DBT_Account;
 		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccount::getFactoryName(), ModelAccount::createMethod);
-
+		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccountName::getFactoryName(), ModelAccountName::createMethod);
 		break;
 	}
 	case common::EPT_DB_ROLE_Proxy:

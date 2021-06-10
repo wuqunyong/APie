@@ -2,6 +2,7 @@
 
 #include "../../libapie/common/string_utils.h"
 #include "../../common/dao/model_account.h"
+#include "../../common/dao/model_account_name.h"
 #include "../../common/opcodes.h"
 
 
@@ -43,7 +44,9 @@ std::tuple<uint32_t, std::string> LoginMgr::start()
 
 	};
 
-	bool bResult = RegisterRequiredTable(dbType, 1, { {ModelAccount::getFactoryName(), ModelAccount::createMethod} }, ptrReadyCb);
+	bool bResult = RegisterRequiredTable(dbType, 1, { {ModelAccount::getFactoryName(), ModelAccount::createMethod},
+		{ModelAccountName::getFactoryName(), ModelAccountName::createMethod} }, ptrReadyCb);
+
 	if (bResult)
 	{
 		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
@@ -121,13 +124,16 @@ void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_RE
 	server.set_type(common::EPT_DB_ACCOUNT_Proxy);
 	server.set_id(1);
 
+	ModelAccountName accountName;
+	accountName.fields.account_id = request.account_id();
+	bResult = accountName.bindTable(DeclarativeBase::DBType::DBT_Account, ModelAccountName::getFactoryName());
 
 	// ≤‚ ‘
-	auto multiCb = [](const rpc_msg::STATUS& status, std::tuple<ModelAccount, ModelAccount, ModelAccount>& tupleData, std::array<uint32_t, 3>& tupleRows) {
+	auto multiCb = [](const rpc_msg::STATUS& status, std::tuple<ModelAccount, ModelAccountName>& tupleData, std::array<uint32_t, 2>& tupleRows) {
 		int a = 1;
 		int c = a + 1;
 	};
-	bResult = Multi_LoadFromDb(multiCb, server, accountData, accountData, accountData);
+	bResult = Multi_LoadFromDb(multiCb, server, accountData, accountName);
 
 
 	auto cb = [iSerialNum, request, server](rpc_msg::STATUS status, ModelAccount account, uint32_t iRows) {

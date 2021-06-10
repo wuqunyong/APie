@@ -17,6 +17,9 @@
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
       <Filter>pb_msg\business</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\dao\model_account_name.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

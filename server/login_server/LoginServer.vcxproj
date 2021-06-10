@@ -127,6 +127,7 @@
     <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
     <ClInclude Include="..\common\dao\model_account.h" />
+    <ClInclude Include="..\common\dao\model_account_name.h" />
     <ClInclude Include="..\SharedDir\opcodes.h" />
     <ClInclude Include="logic\login_mgr.h" />
     <ClInclude Include="service_init.h" />

@@ -124,6 +124,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\dao\model_account.h" />
+    <ClInclude Include="..\common\dao\model_account_name.h" />
     <ClInclude Include="..\common\dao\model_user.h" />
     <ClInclude Include="logic\dbproxy_mgr.h" />
     <ClInclude Include="logic\table_cache_mgr.h" />

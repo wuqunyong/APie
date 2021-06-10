@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibAPie", "LibAPie\LibAPie.vcxproj", "{52102A95-E447-4295-B4BB-5F6F4E78BA43}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibAPie", "libapie\LibAPie.vcxproj", "{52102A95-E447-4295-B4BB-5F6F4E78BA43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{A9D0F79B-DEA8-4488-A125-0C99B1B09B53}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}"
 	ProjectSection(SolutionItems) = preProject
 		server\common\dao\model_account.h = server\common\dao\model_account.h
+		server\common\dao\model_account_name.h = server\common\dao\model_account_name.h
 		server\common\dao\model_user.h = server\common\dao\model_user.h
 	EndProjectSection
 EndProject
