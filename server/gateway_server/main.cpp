@@ -10,14 +10,8 @@
 
 #include "service_init.h"
 
-
 int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
-	}
-
 	std::string configFile = argv[1];
 
 	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, APie::initHook);

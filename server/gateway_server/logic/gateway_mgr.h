@@ -13,6 +13,8 @@
 #include "../../../pb_msg/business/login_msg.pb.h"
 #include "../../../pb_msg/business/rpc_login.pb.h"
 
+#include "../../../pb_msg/core/nats_msg.pb.h"
+
 namespace APie {
 
 	class GatewayRole;
@@ -53,7 +55,8 @@ namespace APie {
 		static void onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd);
-
+		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
+		
 
 		// RPC
 		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request);

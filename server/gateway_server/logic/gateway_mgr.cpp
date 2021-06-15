@@ -40,6 +40,7 @@ std::tuple<uint32_t, std::string> GatewayMgr::init()
 	LogicCmdHandlerSingleton::get().registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgr::onMysqlLoadFromDbORM);
 	LogicCmdHandlerSingleton::get().registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgr::onMysqlQueryFromDbORM);
 	
+	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", GatewayMgr::onNatsPublish);
 
 	// RPC
 	APie::RPC::rpcInit();
@@ -654,6 +655,26 @@ void GatewayMgr::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 		}
 	};
 	LoadFromDbByFilter<ModelUser>(server, user, cb);
+}
+
+void GatewayMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 4)
+	{
+		return;
+	}
+
+	uint32_t type = std::stoul(cmd.params()[0]);
+	uint32_t id = std::stoul(cmd.params()[1]);
+
+	std::string channel = std::to_string(type) + ":" + std::to_string(id);
+
+	std::string name = cmd.params()[2];
+	std::string info = cmd.params()[3];
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+
 }
 
 void GatewayMgr::onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd)

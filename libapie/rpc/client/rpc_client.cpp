@@ -3,6 +3,10 @@
 #include <chrono>
 
 #include "../../network/logger.h"
+#include "../../../pb_msg/core/nats_msg.pb.h"
+#include "../../event/nats_proxy.h"
+
+#define USE_NATS_PROXY true
 
 namespace APie {
 namespace RPC {
@@ -347,7 +351,20 @@ namespace RPC {
 			}
 		}
 
-		bool bResult = APie::Network::OutputStream::sendMsg(controller.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
+		bool bResult = false;
+
+#ifdef USE_NATS_PROXY
+		std::string channel = std::to_string(request.server().stub().type()) + ":" + std::to_string(request.server().stub().id());
+
+		::nats_msg::NATS_MSG_PRXOY nats_msg;
+		(*nats_msg.mutable_rpc_request()) = request;
+		int32_t iRC = APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+		if (iRC == 0)
+		{
+			bResult = true;
+		}
+#else
+		bResult = APie::Network::OutputStream::sendMsg(controller.serial_num(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);
 		if (!bResult)
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "send error|server:%s|opcodes:%d", server.ShortDebugString().c_str(), opcodes);
@@ -358,6 +375,7 @@ namespace RPC {
 				reply(status, "");
 			}
 		}
+#endif
 
 		return bResult;
 	}

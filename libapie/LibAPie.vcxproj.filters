@@ -451,6 +451,12 @@
     <ClInclude Include="..\pb_msg\core\service_discovery.pb.h">
       <Filter>pb_msg\core</Filter>
     </ClInclude>
+    <ClInclude Include="event\nats_proxy.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pb_msg\core\nats_msg.pb.h">
+      <Filter>pb_msg\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -694,6 +700,12 @@
       <Filter>pb_msg\core</Filter>
     </ClCompile>
     <ClCompile Include="..\pb_msg\core\service_discovery.pb.cc">
+      <Filter>pb_msg\core</Filter>
+    </ClCompile>
+    <ClCompile Include="event\nats_proxy.cc">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc">
       <Filter>pb_msg\core</Filter>
     </ClCompile>
   </ItemGroup>

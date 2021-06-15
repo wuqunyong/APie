@@ -62,6 +62,12 @@ redis_clients:       # redis客户端列表
     host: "127.0.0.1"        # redis server ip
     port: 6379               # redis server port
     passwd: ""               # redis server passwd
+nats:               # nats
+  enable: true                # 是否连接, 默认false
+  nats_server: "nats://10.0.16.59:4222"  # server 
+  sub_topic: "sub_topic"                 # sub
+  pub_topic: "pub_topic"                 # pub
+  
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
   uint: 1                # 客户端间隔单位(秒数，默认:60)

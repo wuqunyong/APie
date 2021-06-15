@@ -14,6 +14,7 @@
 #include "event/real_time_system.h"
 #include "event/dispatched_thread.h"
 #include "event/libevent_scheduler.h"
+#include "event/nats_proxy.h"
 
 #include "api/api_impl.h"
 #include "api/pb_handler.h"

@@ -11,7 +11,7 @@
 
 #include "apie.h"
 #include "json/json.h"
-#include "tinyxml2.h"
+//#include "tinyxml2.h"
 
 #include "service_init.h"
 
@@ -27,7 +27,7 @@
 #include "../libapie/common/file.h"
 #include "../pb_msg/business/login_msg.pb.h"
 
-using namespace tinyxml2;
+//using namespace tinyxml2;
 using namespace std;
 
 constexpr size_t kMaxVarintLength64 = 10;
@@ -137,29 +137,29 @@ int TestJsonCpp()
 	return EXIT_SUCCESS;
 }
 
-int TestXML()
-{
-
-	static const char* xml =
-		"<?xml version=\"1.0\"?>"
-		"<!DOCTYPE PLAY SYSTEM \"play.dtd\">"
-		"<PLAY>"
-		"<TITLE>A Midsummer Night's Dream</TITLE>"
-		"</PLAY>";
-
-	tinyxml2::XMLDocument doc;
-	doc.Parse(xml);
-
-	XMLElement* titleElement = doc.FirstChildElement("PLAY")->FirstChildElement("TITLE");
-	const char* title = titleElement->GetText();
-	printf("Name of play (1): %s\n", title);
-
-	XMLText* textNode = titleElement->FirstChild()->ToText();
-	title = textNode->Value();
-	printf("Name of play (2): %s\n", title);
-
-	return doc.ErrorID();
-}
+//int TestXML()
+//{
+//
+//	static const char* xml =
+//		"<?xml version=\"1.0\"?>"
+//		"<!DOCTYPE PLAY SYSTEM \"play.dtd\">"
+//		"<PLAY>"
+//		"<TITLE>A Midsummer Night's Dream</TITLE>"
+//		"</PLAY>";
+//
+//	tinyxml2::XMLDocument doc;
+//	doc.Parse(xml);
+//
+//	XMLElement* titleElement = doc.FirstChildElement("PLAY")->FirstChildElement("TITLE");
+//	const char* title = titleElement->GetText();
+//	printf("Name of play (1): %s\n", title);
+//
+//	XMLText* textNode = titleElement->FirstChild()->ToText();
+//	title = textNode->Value();
+//	printf("Name of play (2): %s\n", title);
+//
+//	return doc.ErrorID();
+//}
 
 bool TestEncrypt(std::string plainText, std::string *ptrCipherText)
 {
@@ -435,7 +435,8 @@ int main(int argc, char **argv)
 	std::string decryptedMsg;
 
 	TestJsonCpp();
-	TestXML();
+	//TestXML();
+
 	//TestEncrypt(plainMsg, &encryptedMsg);
 	//TestDecrypt(encryptedMsg, &decryptedMsg);
 

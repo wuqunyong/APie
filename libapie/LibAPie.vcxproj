@@ -74,7 +74,7 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\influxdb-cpp;$(SolutionDir)third_party\lz4\include;$(SolutionDir)third_party\jsoncpp\include;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\influxdb-cpp;$(SolutionDir)third_party\lz4\include;$(SolutionDir)third_party\jsoncpp\include;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(SolutionDir)third_party\nats.c\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)third_party\libs;$(SolutionDir)third_party\OpenSSL-Win64\lib;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="..\pb_msg\core\common.pb.h" />
     <ClInclude Include="..\pb_msg\core\mysql_proxy_msg.pb.h" />
+    <ClInclude Include="..\pb_msg\core\nats_msg.pb.h" />
     <ClInclude Include="..\pb_msg\core\opcodes.pb.h" />
     <ClInclude Include="..\pb_msg\core\pubsub.pb.h" />
     <ClInclude Include="..\pb_msg\core\route_register.pb.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="event\file_event_impl.h" />
     <ClInclude Include="event\libevent.h" />
     <ClInclude Include="event\libevent_scheduler.h" />
+    <ClInclude Include="event\nats_proxy.h" />
     <ClInclude Include="event\real_time_system.h" />
     <ClInclude Include="event\signal.h" />
     <ClInclude Include="event\signal_impl.h" />
@@ -263,6 +265,7 @@
   <ItemGroup>
     <ClCompile Include="..\pb_msg\core\common.pb.cc" />
     <ClCompile Include="..\pb_msg\core\mysql_proxy_msg.pb.cc" />
+    <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc" />
     <ClCompile Include="..\pb_msg\core\opcodes.pb.cc" />
     <ClCompile Include="..\pb_msg\core\pubsub.pb.cc" />
     <ClCompile Include="..\pb_msg\core\route_register.pb.cc" />
@@ -306,6 +309,7 @@
     <ClCompile Include="event\file_event_impl.cc" />
     <ClCompile Include="event\libevent.cc" />
     <ClCompile Include="event\libevent_scheduler.cc" />
+    <ClCompile Include="event\nats_proxy.cc" />
     <ClCompile Include="event\real_time_system.cc" />
     <ClCompile Include="event\signal_impl.cc" />
     <ClCompile Include="event\timer_impl.cc" />

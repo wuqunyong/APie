@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)libapie;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)\third_party\lz4\include;$(SolutionDir)\third_party\jsoncpp\include;$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\astar;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)libapie;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)\third_party\lz4\include;$(SolutionDir)\third_party\jsoncpp\include;$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(SolutionDir)third_party\nats.c\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)third_party\OpenSSL-Win64\lib;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\lib;$(SolutionDir)third_party\libs;$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -14,7 +14,7 @@
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>LibAPie.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;liblz4_static.lib;cpp_redis.lib;tacopie.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>LibAPie.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;liblz4_static.lib;cpp_redis.lib;tacopie.lib;nats_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

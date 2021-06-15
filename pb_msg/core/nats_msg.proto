@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package nats_msg;
+
+import "rpc_msg.proto";
+
+
+//---------------------------------------
+
+
+
+message NATS_MSG_PRXOY
+{
+	uint32 rpc_type = 1;
+
+	oneof msg {
+		rpc_msg.RPC_REQUEST rpc_request = 100;
+		rpc_msg.RPC_RESPONSE rpc_response = 101;
+	}
+}

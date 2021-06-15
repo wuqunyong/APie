@@ -76,6 +76,11 @@ namespace Event {
 		uint32_t getTId();
 
 		Dispatcher& dispatcher() { return *dispatcher_; }
+		DispatcherImpl* dispatcherImpl() 
+		{
+			return dynamic_cast<Event::DispatcherImpl*>(dispatcher_.get());
+		};
+
 		void push(std::shared_ptr<Network::Listener> listener);
 		void push(Command& cmd);
 

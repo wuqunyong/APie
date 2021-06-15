@@ -15,6 +15,9 @@
 
 #include "../api/hook.h"
 
+#include "../event/nats_proxy.h"
+
+
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
 #else
@@ -51,7 +54,7 @@ sigset_t g_SigSet;
 
 #include "../redis_driver/redis_client.h"
 #include "../common/file.h"
-
+#include "nats.h"
 
 
 namespace APie {
@@ -281,6 +284,15 @@ void Ctx::init(const std::string& configFile)
 		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "ioThreads: %d", ioThreads);
 
 		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
+		
+		bool bResult = APie::Event::NatsSingleton::get().init();
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "nats init error";
+			PANIC_ABORT(ss.str().c_str());
+		}
+
 		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
 		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
 

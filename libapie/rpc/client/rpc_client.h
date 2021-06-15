@@ -13,6 +13,8 @@
 #include "../../network/windows_platform.h"
 #include "../../singleton/threadsafe_singleton.h"
 
+#include "../../event/nats_proxy.h"
+
 #include "../init.h"
 
 #include <event2/util.h>
@@ -80,6 +82,7 @@ namespace RPC {
 		static uint64_t CHECK_INTERVAL;
 
 		friend class APie::Network::OutputStream;
+		friend class APie::Event::NatsManager;
 	};
 
 	typedef APie::ThreadSafeSingleton<RpcClient> RpcClientSingleton;

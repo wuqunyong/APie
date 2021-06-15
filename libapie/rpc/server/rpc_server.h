@@ -13,8 +13,10 @@
 #include "../../network/output_stream.h"
 #include "../../network/windows_platform.h"
 #include "../../singleton/threadsafe_singleton.h"
+#include "../../event/nats_proxy.h"
 
 #include "../init.h"
+
 
 #include <event2/util.h>
 
@@ -117,6 +119,8 @@ namespace RPC {
 	private:
 		std::map<::rpc_msg::RPC_OPCODES, adaptor_type> m_register;
 		std::map<uint64_t, std::string> m_types;
+
+		friend class APie::Event::NatsManager;
 	};
 
 	typedef APie::ThreadSafeSingleton<RpcServer> RpcServerSingleton;

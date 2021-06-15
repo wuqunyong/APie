@@ -9,8 +9,9 @@ service_registry:
   type: 1
 log:
   merge: true
-  level: 3
+  level: 0
   show_pos: true
+  show_console: true
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
   name: "route_proxy"
@@ -18,3 +19,8 @@ metrics:
   enable: true
   ip: "127.0.0.1"
   udp_port: 8089
+nats:               # nats
+  enable: true                # 是否连接, 默认false
+  nats_server: "nats://10.0.16.59:4222"  # server 
+  sub_topic: "nats_proxy"                 # sub
+  pub_topic: "nats_proxy"                 # pub
