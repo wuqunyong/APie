@@ -36,6 +36,11 @@ namespace Event {
 		};
 
 		class NATSConnectorBase {
+		public:
+			static void DisconnectedCb(natsConnection* nc, void* closure);
+			static void ReconnectedCb(natsConnection* nc, void* closure);
+			static void ClosedCb(natsConnection* nc, void* closure);
+
 		protected:
 			NATSConnectorBase(std::string nats_server, std::unique_ptr<NATSTLSConfig> tls_config)
 				: nats_server_(nats_server), tls_config_(std::move(tls_config)) {}
@@ -191,6 +196,20 @@ namespace Event {
 			{
 				if (nats_connection_ == nullptr)
 				{
+					std::stringstream ss;
+					ss << "nats_connection_ nullptr";
+					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "isConnect|%s", ss.str().c_str());
+
+					return false;
+				}
+
+				auto connStatus = natsConnection_Status(nats_connection_);
+				if (connStatus != NATS_CONN_STATUS_CONNECTED)
+				{
+					std::stringstream ss;
+					ss << "status:" << connStatus;
+					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "isConnect|%s", ss.str().c_str());
+
 					return false;
 				}
 

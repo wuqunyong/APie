@@ -61,6 +61,16 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
 
   natsOptions_SetURL(nats_opts, nats_server_.c_str());
 
+
+  //natsOptions_SetTimeout(nats_opts, config.connectionTimeout.count());
+  //natsOptions_SetMaxReconnect(nats_opts, config.maxReconnectionAttempts);
+  //natsOptions_SetReconnectWait(nats_opts, config.reconnectWait);
+
+  natsOptions_SetClosedCB(nats_opts, NATSConnectorBase::ClosedCb, this);
+  natsOptions_SetDisconnectedCB(nats_opts, NATSConnectorBase::DisconnectedCb, this);
+  natsOptions_SetReconnectedCB(nats_opts, NATSConnectorBase::ReconnectedCb, this);
+
+
   auto nats_status = natsConnection_Connect(&nats_connection_, nats_opts);
   natsOptions_Destroy(nats_opts);
   nats_opts = nullptr;
@@ -75,6 +85,46 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
 
   return 0;
 }
+
+void NATSConnectorBase::DisconnectedCb(natsConnection* nc, void* closure)
+{
+	int32_t status = -1;
+	if (nc != nullptr)
+	{
+		status = natsConnection_Status(nc);
+	}
+
+	std::stringstream ss;
+	ss << "DisconnectedCb|status:" << status;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+}
+
+void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
+{
+	int32_t status = -1;
+	if (nc != nullptr)
+	{
+		status = natsConnection_Status(nc);
+	}
+
+	std::stringstream ss;
+	ss << "ReconnectedCb|status:" << status;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+}
+
+void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
+{
+	int32_t status = -1;
+	if (nc != nullptr)
+	{
+		status = natsConnection_Status(nc);
+	}
+
+	std::stringstream ss;
+	ss << "ClosedCb|status:" << status;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+}
+
 
 NatsManager::NatsManager() : nats_proxy(nullptr)
 {
@@ -135,7 +185,7 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 {
 	//::nats_msg::NATS_MSG_PRXOY* m = msg.release();
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|%s", msg->DebugString().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|%s", msg->DebugString().c_str());
 
 	if (msg->has_rpc_request())
 	{
