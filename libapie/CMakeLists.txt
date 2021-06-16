@@ -40,6 +40,7 @@ link_directories(${cxx-link})
 set(cxx-sources
     pb_msg/core/common.pb.cc
     pb_msg/core/mysql_proxy_msg.pb.cc
+    pb_msg/core/nats_msg.pb.cc
     pb_msg/core/opcodes.pb.cc
     pb_msg/core/pubsub.pb.cc
     pb_msg/core/route_register.pb.cc

@@ -20,6 +20,7 @@ INCLUDES = -I /usr/local/include \
 apie_sources = \
 	$(top_srcdir)/pb_msg/core/common.pb.cc  \
 	$(top_srcdir)/pb_msg/core/mysql_proxy_msg.pb.cc  \
+	$(top_srcdir)/pb_msg/core/nats_msg.pb.cc  \
 	$(top_srcdir)/pb_msg/core/opcodes.pb.cc  \
 	$(top_srcdir)/pb_msg/core/pubsub.pb.cc  \
 	$(top_srcdir)/pb_msg/core/route_register.pb.cc  \
