@@ -187,6 +187,16 @@ namespace Event {
 			 */
 			void RemoveMessageHandler() { msg_handler_ = nullptr; }
 
+			bool isConnect()
+			{
+				if (nats_connection_ == nullptr)
+				{
+					return false;
+				}
+
+				return true;
+			}
+
 		protected:
 			static void NATSMessageCallbackHandler(natsConnection* nc, natsSubscription* sub, natsMsg* msg,
 				void* closure)
@@ -214,6 +224,8 @@ namespace Event {
 			~NatsManager();
 
 			bool init();
+
+			bool inConnect();
 
 			int32_t publish(const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
 			{

@@ -25,11 +25,19 @@ namespace RPC {
 		response.mutable_status()->set_code(errCode);
 		response.set_result_data(replyData);
 
+#ifdef USE_NATS_PROXY
+		std::string channel = std::to_string(client.stub().type()) + ":" + std::to_string(client.stub().id());
+
+		::nats_msg::NATS_MSG_PRXOY nats_msg;
+		(*nats_msg.mutable_rpc_response()) = response;
+		APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+#else
 		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)
 		{
 			//TODO
 		}
+#endif
 		return true;
 	}
 
@@ -49,11 +57,19 @@ namespace RPC {
 		response.set_has_more(hasMore);
 		response.set_offset(offset);
 
+#ifdef USE_NATS_PROXY
+		std::string channel = std::to_string(client.stub().type()) + ":" + std::to_string(client.stub().id());
+
+		::nats_msg::NATS_MSG_PRXOY nats_msg;
+		(*nats_msg.mutable_rpc_response()) = response;
+		APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+#else
 		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)
 		{
 			//TODO
 		}
+#endif
 		return true;
 	}
 

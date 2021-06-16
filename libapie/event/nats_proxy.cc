@@ -121,6 +121,15 @@ bool NatsManager::init()
 	return true;
 }
 
+bool NatsManager::inConnect()
+{
+	if (nats_proxy == nullptr)
+	{
+		return false;
+	}
+
+	return nats_proxy->isConnect();
+}
 
 void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 {

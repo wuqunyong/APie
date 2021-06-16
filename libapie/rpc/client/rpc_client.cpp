@@ -6,8 +6,6 @@
 #include "../../../pb_msg/core/nats_msg.pb.h"
 #include "../../event/nats_proxy.h"
 
-#define USE_NATS_PROXY true
-
 namespace APie {
 namespace RPC {
 
@@ -35,6 +33,23 @@ namespace RPC {
 			controller = controllerOpt.value();
 		}
 
+#ifdef USE_NATS_PROXY
+		rpc_msg::STATUS status;
+
+		bool bResult = APie::Event::NatsSingleton::get().inConnect();
+		if (!bResult)
+		{
+			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "nats not connect|server:%s|opcodes:%d|args:%s",
+				server.ShortDebugString().c_str(), opcodes, args.ShortDebugString().c_str());
+
+			status.set_code(opcodes::SC_Rpc_RouteEmpty);
+			if (reply)
+			{
+				reply(status, "");
+			}
+			return false;
+		}
+#else
 		rpc_msg::STATUS status;
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
@@ -87,6 +102,7 @@ namespace RPC {
 		}
 
 		controller.set_serial_num(serialOpt.value());
+#endif
 		return this->call(controller, server, opcodes, args, reply);
 	}
 
@@ -127,6 +143,27 @@ namespace RPC {
 			return false;
 		}
 
+
+#ifdef USE_NATS_PROXY
+		bool bResult = APie::Event::NatsSingleton::get().inConnect();
+		if (!bResult)
+		{
+			status.set_code(opcodes::SC_Rpc_RouteEmpty);
+			if (reply)
+			{
+				while (replyData.size() < methods.size())
+				{
+					rpc_msg::STATUS responseStatus;
+					responseStatus.set_code(opcodes::SC_Rpc_NotSend);
+
+					std::tuple<rpc_msg::STATUS, std::string> response(responseStatus, "");
+					replyData.push_back(response);
+				}
+				reply(status, replyData);
+			}
+			return false;
+		}
+#else
 		auto routeList = EndPointMgrSingleton::get().getEndpointsByType(::common::EPT_Route_Proxy);
 		if (routeList.empty())
 		{
@@ -202,6 +239,7 @@ namespace RPC {
 				return false;
 			}
 		}
+#endif
 
 		auto sharedPtrPending = std::make_shared<MultiCallPending>();
 		sharedPtrPending->iCount = methods.size();
@@ -214,6 +252,11 @@ namespace RPC {
 			target.id = std::get<0>(method).id();
 			uint32_t iHash = CtxSingleton::get().generateHash(target);
 
+			uint64_t iSerialNum = 0;
+
+#ifdef USE_NATS_PROXY
+		// Nothing
+#else
 			uint32_t index = iHash % establishedList.size();
 			EndPoint route = establishedList[index];
 
@@ -226,10 +269,13 @@ namespace RPC {
 				serialOpt = std::make_optional(0);
 			}
 
+			iSerialNum = serialOpt.value();
+#endif
+
 			m_iSeqId++;
 
 			uint64_t iCurSeqId = m_iSeqId;
-			controller.set_serial_num(serialOpt.value());
+			controller.set_serial_num(iSerialNum);
 			controller.set_seq_id(iCurSeqId);
 
 			sharedPtrPending->seqIdVec.push_back(iCurSeqId);

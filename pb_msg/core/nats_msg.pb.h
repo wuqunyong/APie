@@ -179,19 +179,9 @@ class NATS_MSG_PRXOY :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kRpcTypeFieldNumber = 1,
     kRpcRequestFieldNumber = 100,
     kRpcResponseFieldNumber = 101,
   };
-  // uint32 rpc_type = 1;
-  void clear_rpc_type();
-  ::PROTOBUF_NAMESPACE_ID::uint32 rpc_type() const;
-  void set_rpc_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_rpc_type() const;
-  void _internal_set_rpc_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  public:
-
   // .rpc_msg.RPC_REQUEST rpc_request = 100;
   bool has_rpc_request() const;
   private:
@@ -234,7 +224,6 @@ class NATS_MSG_PRXOY :
   inline void clear_has_msg();
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 rpc_type_;
   union MsgUnion {
     MsgUnion() {}
     ::rpc_msg::RPC_REQUEST* rpc_request_;
@@ -255,26 +244,6 @@ class NATS_MSG_PRXOY :
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
 // NATS_MSG_PRXOY
-
-// uint32 rpc_type = 1;
-inline void NATS_MSG_PRXOY::clear_rpc_type() {
-  rpc_type_ = 0u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 NATS_MSG_PRXOY::_internal_rpc_type() const {
-  return rpc_type_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 NATS_MSG_PRXOY::rpc_type() const {
-  // @@protoc_insertion_point(field_get:nats_msg.NATS_MSG_PRXOY.rpc_type)
-  return _internal_rpc_type();
-}
-inline void NATS_MSG_PRXOY::_internal_set_rpc_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
-  rpc_type_ = value;
-}
-inline void NATS_MSG_PRXOY::set_rpc_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_set_rpc_type(value);
-  // @@protoc_insertion_point(field_set:nats_msg.NATS_MSG_PRXOY.rpc_type)
-}
 
 // .rpc_msg.RPC_REQUEST rpc_request = 100;
 inline bool NATS_MSG_PRXOY::_internal_has_rpc_request() const {

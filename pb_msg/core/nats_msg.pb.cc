@@ -50,7 +50,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_nats_5fmsg_2eproto::offsets[] 
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, rpc_type_),
   offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_request_),
   offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_response_),
   PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, msg_),
@@ -65,10 +64,10 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_nats_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\016nats_msg.proto\022\010nats_msg\032\rrpc_msg.prot"
-  "o\"\205\001\n\016NATS_MSG_PRXOY\022\020\n\010rpc_type\030\001 \001(\r\022+"
-  "\n\013rpc_request\030d \001(\0132\024.rpc_msg.RPC_REQUES"
-  "TH\000\022-\n\014rpc_response\030e \001(\0132\025.rpc_msg.RPC_"
-  "RESPONSEH\000B\005\n\003msgb\006proto3"
+  "o\"s\n\016NATS_MSG_PRXOY\022+\n\013rpc_request\030d \001(\013"
+  "2\024.rpc_msg.RPC_REQUESTH\000\022-\n\014rpc_response"
+  "\030e \001(\0132\025.rpc_msg.RPC_RESPONSEH\000B\005\n\003msgb\006"
+  "proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_nats_5fmsg_2eproto_deps[1] = {
   &::descriptor_table_rpc_5fmsg_2eproto,
@@ -79,7 +78,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_nat
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_nats_5fmsg_2eproto_once;
 static bool descriptor_table_nats_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_nats_5fmsg_2eproto = {
-  &descriptor_table_nats_5fmsg_2eproto_initialized, descriptor_table_protodef_nats_5fmsg_2eproto, "nats_msg.proto", 185,
+  &descriptor_table_nats_5fmsg_2eproto_initialized, descriptor_table_protodef_nats_5fmsg_2eproto, "nats_msg.proto", 166,
   &descriptor_table_nats_5fmsg_2eproto_once, descriptor_table_nats_5fmsg_2eproto_sccs, descriptor_table_nats_5fmsg_2eproto_deps, 1, 1,
   schemas, file_default_instances, TableStruct_nats_5fmsg_2eproto::offsets,
   file_level_metadata_nats_5fmsg_2eproto, 1, file_level_enum_descriptors_nats_5fmsg_2eproto, file_level_service_descriptors_nats_5fmsg_2eproto,
@@ -160,7 +159,6 @@ NATS_MSG_PRXOY::NATS_MSG_PRXOY(const NATS_MSG_PRXOY& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  rpc_type_ = from.rpc_type_;
   clear_has_msg();
   switch (from.msg_case()) {
     case kRpcRequest: {
@@ -180,7 +178,6 @@ NATS_MSG_PRXOY::NATS_MSG_PRXOY(const NATS_MSG_PRXOY& from)
 
 void NATS_MSG_PRXOY::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto.base);
-  rpc_type_ = 0u;
   clear_has_msg();
 }
 
@@ -229,7 +226,6 @@ void NATS_MSG_PRXOY::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  rpc_type_ = 0u;
   clear_msg();
   _internal_metadata_.Clear();
 }
@@ -241,13 +237,6 @@ const char* NATS_MSG_PRXOY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // uint32 rpc_type = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          rpc_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
       // .rpc_msg.RPC_REQUEST rpc_request = 100;
       case 100:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
@@ -288,12 +277,6 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 rpc_type = 1;
-  if (this->rpc_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_rpc_type(), target);
-  }
-
   // .rpc_msg.RPC_REQUEST rpc_request = 100;
   if (_internal_has_rpc_request()) {
     target = stream->EnsureSpace(target);
@@ -325,13 +308,6 @@ size_t NATS_MSG_PRXOY::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
-
-  // uint32 rpc_type = 1;
-  if (this->rpc_type() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_rpc_type());
-  }
 
   switch (msg_case()) {
     // .rpc_msg.RPC_REQUEST rpc_request = 100;
@@ -383,9 +359,6 @@ void NATS_MSG_PRXOY::MergeFrom(const NATS_MSG_PRXOY& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.rpc_type() != 0) {
-    _internal_set_rpc_type(from._internal_rpc_type());
-  }
   switch (from.msg_case()) {
     case kRpcRequest: {
       _internal_mutable_rpc_request()->::rpc_msg::RPC_REQUEST::MergeFrom(from._internal_rpc_request());
@@ -422,7 +395,6 @@ bool NATS_MSG_PRXOY::IsInitialized() const {
 void NATS_MSG_PRXOY::InternalSwap(NATS_MSG_PRXOY* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(rpc_type_, other->rpc_type_);
   swap(msg_, other->msg_);
   swap(_oneof_case_[0], other->_oneof_case_[0]);
 }

@@ -43,7 +43,7 @@ auto_test:               # 自动化测试
       loop_interval_ms: 10
   - task_case:
       case_type: 2
-      loop_count: 10000
+      loop_count: 100
       loop_interval_ms: 100
   - task_case:
       case_type: 3
