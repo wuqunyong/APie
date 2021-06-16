@@ -133,7 +133,7 @@ add_library(apie SHARED ${sources} ${public_headers})
 
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
 
-target_link_libraries(apie -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -lcpp_redis -ltacopie)
+target_link_libraries(apie -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -lcpp_redis -ltacopie -lnats)
 
 message(STATUS "LibApie PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 

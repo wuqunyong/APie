@@ -70,4 +70,4 @@ endforeach()
 
 add_executable(test_server ${sources} ${public_headers})
 
-target_link_libraries(test_server -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp)
+target_link_libraries(test_server -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp -lnats)
