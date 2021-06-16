@@ -64,6 +64,7 @@ apie_sources = \
 	$(top_srcdir)/libapie/event/file_event_impl.cc  \
 	$(top_srcdir)/libapie/event/libevent.cc  \
 	$(top_srcdir)/libapie/event/libevent_scheduler.cc  \
+	$(top_srcdir)/libapie/event/nats_proxy.cc  \
 	$(top_srcdir)/libapie/event/real_time_system.cc  \
 	$(top_srcdir)/libapie/event/signal_impl.cc  \
 	$(top_srcdir)/libapie/event/timer_impl.cc  \

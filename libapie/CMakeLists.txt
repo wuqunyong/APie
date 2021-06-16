@@ -84,6 +84,7 @@ set(cxx-sources
     libapie/event/file_event_impl.cc
     libapie/event/libevent.cc
     libapie/event/libevent_scheduler.cc
+    libapie/event/nats_proxy.cc
     libapie/event/real_time_system.cc
     libapie/event/signal_impl.cc
     libapie/event/timer_impl.cc
