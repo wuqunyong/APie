@@ -17,7 +17,7 @@
  */
 
 #include "nats_proxy.h"
-#include "adapters/libevent.h"
+#include "nats/adapters/libevent.h"
 
 #include "../rpc/server/rpc_server.h"
 #include "../rpc/client/rpc_client.h"

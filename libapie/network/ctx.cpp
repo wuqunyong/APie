@@ -54,7 +54,7 @@ sigset_t g_SigSet;
 
 #include "../redis_driver/redis_client.h"
 #include "../common/file.h"
-#include "nats.h"
+#include "nats/nats.h"
 
 
 namespace APie {
