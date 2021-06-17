@@ -66,9 +66,9 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
   //natsOptions_SetMaxReconnect(nats_opts, config.maxReconnectionAttempts);
   //natsOptions_SetReconnectWait(nats_opts, config.reconnectWait);
 
-  natsOptions_SetClosedCB(nats_opts, NATSConnectorBase::ClosedCb, this);
-  natsOptions_SetDisconnectedCB(nats_opts, NATSConnectorBase::DisconnectedCb, this);
-  natsOptions_SetReconnectedCB(nats_opts, NATSConnectorBase::ReconnectedCb, this);
+  natsOptions_SetClosedCB(nats_opts, ClosedCb, this);
+  natsOptions_SetDisconnectedCB(nats_opts, DisconnectedCb, this);
+  natsOptions_SetReconnectedCB(nats_opts, ReconnectedCb, this);
 
 
   auto nats_status = natsConnection_Connect(&nats_connection_, nats_opts);
@@ -82,6 +82,8 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
 	  ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connet|%s", ss.str().c_str());
 	  return 3;
   }
+
+  ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "connect success|%s", nats_server_.c_str());
 
   return 0;
 }
@@ -114,6 +116,9 @@ void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
 
 void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
 {
+	auto* connector = static_cast<NATSConnectorBase*>(closure);
+	connector->conn_closed = true;
+
 	int32_t status = -1;
 	if (nc != nullptr)
 	{
@@ -122,7 +127,7 @@ void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
 
 	std::stringstream ss;
 	ss << "ClosedCb|status:" << status;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "status|%s", ss.str().c_str());
 }
 
 
@@ -169,6 +174,12 @@ bool NatsManager::init()
 	nats_proxy->RegisterMessageHandler(std::bind(&NatsManager::NATSMessageHandler, this, std::placeholders::_1));
 
 	return true;
+}
+
+void NatsManager::destroy()
+{
+	nats_proxy->destroy();
+	nats_proxy = nullptr;
 }
 
 bool NatsManager::inConnect()

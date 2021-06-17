@@ -51,6 +51,8 @@ namespace Event {
 
 			std::string nats_server_;
 			std::unique_ptr<NATSTLSConfig> tls_config_;
+
+			bool conn_closed = false;
 		};
 
 
@@ -85,6 +87,46 @@ namespace Event {
 				nats_Close();
 			}
 
+			void destroy()
+			{
+				if (nats_subscription_)
+				{
+					// Remove interest from the subscription. Note that pending message may still
+					// be received by the client.
+					natsStatus status;
+					status = natsSubscription_Unsubscribe(nats_subscription_);
+					if (status != NATS_OK) 
+					{
+						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to unsubscribe");
+					}
+
+					status = natsSubscription_Drain(nats_subscription_);
+					if (status != NATS_OK) 
+					{
+						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to drain subscription");
+					}
+
+					status = natsSubscription_WaitForDrainCompletion(nats_subscription_, 1000);
+					if (status != NATS_OK) 
+					{
+						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to wait for subscription drain");
+					}
+					// Called only here, because it needs to wait for the natsSubscription_WaitForDrainCompletion
+					natsSubscription_Destroy(nats_subscription_);
+					nats_subscription_ = nullptr;
+				}
+
+				natsConnection_Close(nats_connection_);
+				while (!conn_closed) 
+				{
+					// Wait until the connection is actually closed. This will be reported on a different
+					// thread.
+					std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				}
+				natsConnection_Destroy(nats_connection_);
+				nats_connection_ = nullptr;
+			}
+
 			/**
 			 * Connect to the nats server.
 			 * @return Status of the connection.
@@ -100,8 +142,10 @@ namespace Event {
 				std::string sSub = sub_topic_ + ":" + channel;
 
 				// Attach the message reader.
-				natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
-				return 0;
+				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
+				ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "subscribe|%s|%d", nats_server_.c_str(), status);
+				
+				return status;
 			}
 
 			/**
@@ -243,6 +287,7 @@ namespace Event {
 			~NatsManager();
 
 			bool init();
+			void destroy();
 
 			bool inConnect();
 

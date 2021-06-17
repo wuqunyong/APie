@@ -931,6 +931,7 @@ void DispatcherImpl::handleLogicExit(uint32_t iThreadId)
 		return;
 	}
 
+	APie::Event::NatsSingleton::get().destroy();
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Exit);
 
 	terminating_ = true;
