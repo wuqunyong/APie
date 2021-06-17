@@ -64,4 +64,4 @@ endforeach()
 
 add_executable(gateway_server ${sources} ${public_headers})
 
-target_link_libraries(gateway_server -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp -lnats_static)
+target_link_libraries(gateway_server -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp -lnats)
