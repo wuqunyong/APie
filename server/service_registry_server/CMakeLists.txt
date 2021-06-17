@@ -62,4 +62,4 @@ endforeach()
 
 add_executable(service_registry ${sources} ${public_headers})
 
-target_link_libraries(service_registry -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp -lnats)
+target_link_libraries(service_registry -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lapie -lprotobuf -lyaml-cpp -lnats_static)
