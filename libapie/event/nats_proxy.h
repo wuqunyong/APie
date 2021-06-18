@@ -40,6 +40,7 @@ namespace Event {
 			static void DisconnectedCb(natsConnection* nc, void* closure);
 			static void ReconnectedCb(natsConnection* nc, void* closure);
 			static void ClosedCb(natsConnection* nc, void* closure);
+			static void ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure);
 
 		protected:
 			NATSConnectorBase(std::string nats_server, std::unique_ptr<NATSTLSConfig> tls_config)

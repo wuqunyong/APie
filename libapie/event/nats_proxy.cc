@@ -69,7 +69,8 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
   natsOptions_SetClosedCB(nats_opts, ClosedCb, this);
   natsOptions_SetDisconnectedCB(nats_opts, DisconnectedCb, this);
   natsOptions_SetReconnectedCB(nats_opts, ReconnectedCb, this);
-
+  natsOptions_SetMaxPendingMsgs(nats_opts, 65536);
+  natsOptions_SetErrorHandler(nats_opts, ErrHandler, this);
 
   auto nats_status = natsConnection_Connect(&nats_connection_, nats_opts);
   natsOptions_Destroy(nats_opts);
@@ -98,7 +99,7 @@ void NATSConnectorBase::DisconnectedCb(natsConnection* nc, void* closure)
 
 	std::stringstream ss;
 	ss << "DisconnectedCb|status:" << status;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
 }
 
 void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
@@ -109,9 +110,15 @@ void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
 		status = natsConnection_Status(nc);
 	}
 
+	if (status == NATS_CONN_STATUS_CONNECTED)
+	{
+		auto* connector = static_cast<NATSConnectorBase*>(closure);
+		connector->conn_closed = false;
+	}
+
 	std::stringstream ss;
 	ss << "ReconnectedCb|status:" << status;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
 }
 
 void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
@@ -130,6 +137,26 @@ void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "status|%s", ss.str().c_str());
 }
 
+void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure)
+{
+	int32_t status = -1;
+	if (nc != nullptr)
+	{
+		status = natsConnection_Status(nc);
+	}
+
+	std::stringstream ss;
+	if (err == NATS_SLOW_CONSUMER) 
+	{
+		ss << "ErrHandler|status:" << status;
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error: slow consumer|%s", ss.str().c_str());
+	}
+	else 
+	{
+		ss << "ErrHandler|status:" << status;
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error|%s", ss.str().c_str());
+	}
+}
 
 NatsManager::NatsManager() : nats_proxy(nullptr)
 {
