@@ -667,7 +667,7 @@ void GatewayMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 	uint32_t type = std::stoul(cmd.params()[0]);
 	uint32_t id = std::stoul(cmd.params()[1]);
 
-	std::string channel = std::to_string(type) + ":" + std::to_string(id);
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(type, id);
 
 	std::string name = cmd.params()[2];
 	std::string info = cmd.params()[3];

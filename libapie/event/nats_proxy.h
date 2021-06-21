@@ -140,7 +140,7 @@ namespace Event {
 					return iRC;
 				}
 
-				std::string sSub = sub_topic_ + ":" + channel;
+				std::string sSub = sub_topic_ + "/" + channel;
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -209,7 +209,7 @@ namespace Event {
 					return 1;
 				}
 			
-				std::string sPub = pub_topic_ + ":" + channel;
+				std::string sPub = pub_topic_ + "/" + channel;
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -307,6 +307,9 @@ namespace Event {
 			}
 
 			void NATSMessageHandler(PrxoyNATSConnector::MsgType msg);
+
+		public:
+			static std::string GetTopicChannel(uint32_t type, uint32_t id);
 
 		private:
 			NatsManager(const NatsManager&) = delete;

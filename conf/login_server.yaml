@@ -22,6 +22,7 @@ log:
   merge: true
   level: 0
   show_pos: true
+  show_console: true
   split_size: 128
   backup: "/usr/local/apie/logs/backup"
   name: "login_server"

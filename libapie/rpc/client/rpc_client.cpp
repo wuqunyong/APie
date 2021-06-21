@@ -400,7 +400,7 @@ namespace RPC {
 		bool bResult = false;
 
 #ifdef USE_NATS_PROXY
-		std::string channel = std::to_string(request.server().stub().type()) + ":" + std::to_string(request.server().stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(request.server().stub().type(), request.server().stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_request()) = request;

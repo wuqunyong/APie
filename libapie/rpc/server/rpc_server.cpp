@@ -26,7 +26,7 @@ namespace RPC {
 		response.set_result_data(replyData);
 
 #ifdef USE_NATS_PROXY
-		std::string channel = std::to_string(client.stub().type()) + ":" + std::to_string(client.stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().type(), client.stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
@@ -58,7 +58,7 @@ namespace RPC {
 		response.set_offset(offset);
 
 #ifdef USE_NATS_PROXY
-		std::string channel = std::to_string(client.stub().type()) + ":" + std::to_string(client.stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().type(), client.stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;

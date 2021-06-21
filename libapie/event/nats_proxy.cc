@@ -188,9 +188,9 @@ bool NatsManager::init()
 		return false;
 	}
 
-	std::string sPostfix = std::to_string(type) + ":" + std::to_string(id);
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(type, id);
 	struct event_base* ptrBase = &(APie::CtxSingleton::get().getLogicThread()->dispatcherImpl()->base());
-	int32_t iRC = nats_proxy->Connect(ptrBase, sPostfix);
+	int32_t iRC = nats_proxy->Connect(ptrBase, channel);
 	if (iRC != 0)
 	{
 		return false;
@@ -229,7 +229,7 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 	{
 		::rpc_msg::RPC_REQUEST request = msg->rpc_request();
 
-		std::string channel = std::to_string(request.client().stub().type()) + ":" + std::to_string(request.client().stub().id());
+		std::string channel = NatsManager::GetTopicChannel(request.client().stub().type(), request.client().stub().id());
 
 		::rpc_msg::CHANNEL server;
 		server.set_type(APie::CtxSingleton::get().identify().type);
@@ -237,6 +237,7 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 
 		if (request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
 		{
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_request||cur server:%s|%s", server.DebugString().c_str(), msg->DebugString().c_str());
 			return;
 		}
 
@@ -317,6 +318,7 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 
 		if (response.client().stub().type() != server.type() || response.client().stub().id() != server.id())
 		{
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_response|invalid target|cur server:%s|%s", server.DebugString().c_str(), msg->DebugString().c_str());
 			return;
 		}
 
@@ -352,6 +354,12 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 		}
 		APie::RPC::RpcClientSingleton::get().handleTimeout();
 	}
+}
+
+std::string NatsManager::GetTopicChannel(uint32_t type, uint32_t id)
+{
+	std::string channel = std::to_string(type) + "/" + std::to_string(id);
+	return channel;
 }
 
 }  // namespace APie
