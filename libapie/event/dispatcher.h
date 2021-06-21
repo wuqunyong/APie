@@ -28,6 +28,7 @@ namespace Event {
 		TT_DB,
 		TT_Log,
 		TT_Metrics,
+		TT_Nats,
 	};
 
 	inline std::string toStirng(EThreadType type)

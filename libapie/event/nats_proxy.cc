@@ -97,8 +97,10 @@ void NATSConnectorBase::DisconnectedCb(natsConnection* nc, void* closure)
 		status = natsConnection_Status(nc);
 	}
 
+	std::thread::id iThreadId = std::this_thread::get_id();
+
 	std::stringstream ss;
-	ss << "DisconnectedCb|status:" << status;
+	ss << "DisconnectedCb|status:" << status << "|threadId:" << iThreadId;
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
 }
 
@@ -116,8 +118,10 @@ void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
 		connector->conn_closed = false;
 	}
 
+	std::thread::id iThreadId = std::this_thread::get_id();
+
 	std::stringstream ss;
-	ss << "ReconnectedCb|status:" << status;
+	ss << "ReconnectedCb|status:" << status << "|threadId:" << iThreadId;
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
 }
 
@@ -132,8 +136,10 @@ void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
 		status = natsConnection_Status(nc);
 	}
 
+	std::thread::id iThreadId = std::this_thread::get_id();
+
 	std::stringstream ss;
-	ss << "ClosedCb|status:" << status;
+	ss << "ClosedCb|status:" << status << "|threadId:" << iThreadId;
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "status|%s", ss.str().c_str());
 }
 
@@ -189,7 +195,7 @@ bool NatsManager::init()
 	}
 
 	std::string channel = APie::Event::NatsManager::GetTopicChannel(type, id);
-	struct event_base* ptrBase = &(APie::CtxSingleton::get().getLogicThread()->dispatcherImpl()->base());
+	struct event_base* ptrBase = &(APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
 	int32_t iRC = nats_proxy->Connect(ptrBase, channel);
 	if (iRC != 0)
 	{
@@ -221,9 +227,25 @@ bool NatsManager::inConnect()
 
 void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 {
-	//::nats_msg::NATS_MSG_PRXOY* m = msg.release();
+	std::thread::id iThreadId = std::this_thread::get_id();
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|%s", iThreadId, msg->DebugString().c_str());
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|%s", msg->DebugString().c_str());
+	if (APie::CtxSingleton::get().getLogicThread() == nullptr)
+	{
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|LogicThread null|threadid:%d", iThreadId);
+		return;
+	}
+
+	::nats_msg::NATS_MSG_PRXOY* m = msg.release();
+	APie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		[m, this]() mutable { Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
+	);
+}
+
+void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
+{
+	std::thread::id iThreadId = std::this_thread::get_id();
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|threadid:%d|%s", iThreadId, msg->DebugString().c_str());
 
 	if (msg->has_rpc_request())
 	{

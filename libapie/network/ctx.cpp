@@ -125,7 +125,8 @@ Ctx::Ctx() :
 	logic_thread_(nullptr),
 	log_thread_(nullptr),
 	metrics_thread_(nullptr),
-	db_thread_(nullptr),
+	//db_thread_(nullptr),
+	nats_thread_(nullptr),
 	endpoint_(nullptr)
 {
 
@@ -284,17 +285,9 @@ void Ctx::init(const std::string& configFile)
 		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "ioThreads: %d", ioThreads);
 
 		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
-		
-		bool bResult = APie::Event::NatsSingleton::get().init();
-		if (!bResult)
-		{
-			std::stringstream ss;
-			ss << "nats init error";
-			PANIC_ABORT(ss.str().c_str());
-		}
-
 		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
 		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
+		nats_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Nats, this->generatorTId());
 
 		bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "mysql","enable" }, false);
 		if (enable)
@@ -316,6 +309,13 @@ void Ctx::init(const std::string& configFile)
 			logic_thread_->initMysql(options);
 		}
 
+		bool bResult = APie::Event::NatsSingleton::get().init();
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "nats init error";
+			PANIC_ABORT(ss.str().c_str());
+		}
 
 		for (const auto& item : this->node_["redis_clients"])
 		{
@@ -404,11 +404,17 @@ void Ctx::start()
 		thread_id_[metrics_thread_->getTId()] = metrics_thread_;
 	}
 
-	if (db_thread_ != nullptr && db_thread_->state() == Event::DTState::DTS_Ready)
+	if (nats_thread_->state() == Event::DTState::DTS_Ready)
 	{
-		db_thread_->start();
-		thread_id_[db_thread_->getTId()] = db_thread_;
+		nats_thread_->start();
+		thread_id_[nats_thread_->getTId()] = nats_thread_;
 	}
+
+	//if (db_thread_ != nullptr && db_thread_->state() == Event::DTState::DTS_Ready)
+	//{
+	//	db_thread_->start();
+	//	thread_id_[db_thread_->getTId()] = db_thread_;
+	//}
 	
 
 	Command command;
@@ -459,11 +465,12 @@ void Ctx::destroy()
 	logic_thread_.reset();
 	log_thread_.reset();
 	metrics_thread_.reset();
+	nats_thread_.reset();
 
-	if (db_thread_ != nullptr)
-	{
-		db_thread_.reset();
-	}
+	//if (db_thread_ != nullptr)
+	//{
+	//	db_thread_.reset();
+	//}
 
 	logFileClose();
 }
@@ -858,10 +865,15 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getMetricsThread()
 	return metrics_thread_;
 }
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getDBThread()
+std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getNatsThread()
 {
-	return db_thread_;
+	return nats_thread_;
 }
+
+//std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getDBThread()
+//{
+//	return db_thread_;
+//}
 
 std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
 {

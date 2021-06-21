@@ -831,7 +831,10 @@ void DispatcherImpl::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
 
 void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 {
+	std::thread::id iThreadId = std::this_thread::get_id();
+
 	std::string cmd = ptrCmd->sCmd;
+	ASYNC_PIE_LOG("DispatcherImpl/handleLogicCmd", PIE_CYCLE_HOUR, PIE_DEBUG, "threadId:%d|cmd:%s", iThreadId, cmd.c_str());
 
 	::pubsub::LOGIC_CMD msg;
 

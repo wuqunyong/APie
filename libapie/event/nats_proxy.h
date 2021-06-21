@@ -22,6 +22,7 @@
 
 #include <memory>
 #include <string>
+#include <thread>
 
 #include "../network/logger.h"
 #include "../../pb_msg/core/nats_msg.pb.h"
@@ -310,6 +311,7 @@ namespace Event {
 
 		public:
 			static std::string GetTopicChannel(uint32_t type, uint32_t id);
+			static void Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
 
 		private:
 			NatsManager(const NatsManager&) = delete;
