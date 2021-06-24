@@ -4,6 +4,8 @@ identify:            # 节点标识
   auth: "hello"          # 节点认证秘钥
   ip: "127.0.0.1"        # 节点作为Server,监听的IP
   port: 5007             # 节点作为Server,监听的端口
+  out_ip: "127.0.0.1"    # 节点对外IP
+  out_port: 5007         # 节点对外端口
   codec_type: 1          # 节点协议：1(PB√),2(HTTP×)
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
@@ -65,9 +67,13 @@ redis_clients:       # redis客户端列表
 nats:               # nats
   enable: true                # 是否连接, 默认false
   nats_server: "nats://10.0.16.59:4222"  # server 
-  sub_topic: "sub_topic"                 # sub
-  pub_topic: "pub_topic"                 # pub
-  
+  channel_domains: "sub_topic"           # sub
+
+etcd:
+    enable: true
+    urls: "http://10.0.16.59:2379"
+    #prefix: "/"
+
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
   uint: 1                # 客户端间隔单位(秒数，默认:60)
