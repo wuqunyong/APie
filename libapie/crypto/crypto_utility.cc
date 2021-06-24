@@ -7,10 +7,12 @@
 
 #include <openssl/sha.h>
 #include <openssl/md5.h>
+#include <openssl/rsa.h>
 
-#ifdef WIN32
-#include <openssl/applink.c>
-#endif
+
+ #ifdef WIN32
+ #include <openssl/applink.c>
+ #endif
 
 
 namespace APie {

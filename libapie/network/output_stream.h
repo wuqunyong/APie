@@ -12,7 +12,8 @@
 
 #include <event2/util.h>
 #include <google/protobuf/message.h>
-#include "../../pb_msg/core/rpc_msg.pb.h"
+
+#include "../pb_msg.h"
 
 
 

@@ -12,8 +12,7 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
-#include "../../pb_msg/core/service_discovery.pb.h"
-#include "../../pb_msg/core/route_register.pb.h"
+#include "../pb_msg.h"
 
 
 

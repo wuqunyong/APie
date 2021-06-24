@@ -22,6 +22,8 @@
 #include "../rpc/server/rpc_server.h"
 #include "../rpc/client/rpc_client.h"
 
+#include "../influxdb-cpp/influxdb.hpp"
+
 namespace APie {
 namespace Event {
 
@@ -171,6 +173,11 @@ NatsManager::NatsManager() : nats_proxy(nullptr)
 
 NatsManager::~NatsManager() 
 {
+	if (interval_timer_)
+	{
+		interval_timer_->disableTimer();
+		interval_timer_.reset(nullptr);
+	}
 }
 
 bool NatsManager::init()
@@ -185,10 +192,9 @@ bool NatsManager::init()
 	uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
 
 	auto sServer = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "nats_server" }, "");
-	auto sSub = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "sub_topic" }, "");
-	auto sPub = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "pub_topic" }, "");
+	auto sDomains = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "channel_domains" }, "");
 
-	nats_proxy = std::make_shared<PrxoyNATSConnector>(sServer, sPub, sSub);
+	nats_proxy = std::make_shared<PrxoyNATSConnector>(sServer, sDomains, sDomains);
 	if (nats_proxy == nullptr)
 	{
 		return false;
@@ -206,11 +212,20 @@ bool NatsManager::init()
 	// Attach the message handler for agent nats:
 	nats_proxy->RegisterMessageHandler(std::bind(&NatsManager::NATSMessageHandler, this, std::placeholders::_1));
 
+	interval_timer_ = APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->createTimer([this]() -> void { runIntervalCallbacks(); });
+	interval_timer_->enableTimer(std::chrono::milliseconds(2000));
+
 	return true;
 }
 
 void NatsManager::destroy()
 {
+	if (interval_timer_)
+	{
+		interval_timer_->disableTimer();
+		interval_timer_.reset(nullptr);
+	}
+
 	nats_proxy->destroy();
 	nats_proxy = nullptr;
 }
@@ -228,7 +243,7 @@ bool NatsManager::inConnect()
 void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|%s", iThreadId, msg->DebugString().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
 
 	if (APie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
@@ -236,16 +251,93 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 		return;
 	}
 
+
+	{
+		std::lock_guard<std::mutex> guard(_sync);
+
+		if (msg->has_rpc_request())
+		{
+			::rpc_msg::RPC_REQUEST request = msg->rpc_request();
+			std::string sMetricsChannel = NatsManager::GetMetricsChannel(request.client().stub(), request.server().stub());
+			channel_request_msgs[sMetricsChannel] = channel_request_msgs[sMetricsChannel] + 1;
+		}
+
+		if (msg->has_rpc_response())
+		{
+			::rpc_msg::RPC_RESPONSE response = msg->rpc_response();
+
+			std::string sMetricsChannel = NatsManager::GetMetricsChannel(response.client().stub(), response.server().stub());
+			channel_response_msgs[sMetricsChannel] = channel_response_msgs[sMetricsChannel] + 1;
+		}
+	}
+
+
 	::nats_msg::NATS_MSG_PRXOY* m = msg.release();
 	APie::CtxSingleton::get().getLogicThread()->dispatcher().post(
 		[m, this]() mutable { Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
 	);
 }
 
+void NatsManager::runIntervalCallbacks()
+{
+	std::thread::id iThreadId = std::this_thread::get_id();
+
+	bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "metrics","enable" }, false);
+	if (enable)
+	{
+		MetricData* ptrData = new MetricData;
+		ptrData->sMetric = "queue";
+
+		auto iType = APie::CtxSingleton::get().getServerType();
+		auto iId = APie::CtxSingleton::get().getServerId();
+
+		ptrData->tag["server_type"] = std::to_string(iType);
+		ptrData->tag["server_id"] = std::to_string(iId);
+		ptrData->tag["queue_id"] = std::to_string(iType) + "_" + std::to_string(iId) + "_nats";
+
+		std::lock_guard<std::mutex> guard(_sync);
+
+		uint32_t iRequestMsgs = 0;
+		uint32_t iResponseMsgs = 0;
+		for (auto& elems : channel_request_msgs)
+		{
+			iRequestMsgs += elems.second;
+
+			std::string sChannel = "request_" + elems.first;
+			ptrData->field[sChannel] = (double)elems.second;
+		}
+
+		for (auto& elems : channel_response_msgs)
+		{
+			iResponseMsgs += elems.second;
+
+			std::string sChannel = "response_" + elems.first;
+			ptrData->field[sChannel] = (double)elems.second;
+		}
+		ptrData->field["iRequestMsgs"] = (double)iRequestMsgs;
+		ptrData->field["iResponseMsgs"] = (double)iResponseMsgs;
+
+		channel_request_msgs.clear();
+		channel_response_msgs.clear();
+
+		Command command;
+		command.type = Command::metric_data;
+		command.args.metric_data.ptrData = ptrData;
+
+		auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+		if (ptrMetric != nullptr)
+		{
+			ptrMetric->push(command);
+		}
+	}
+
+	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
+}
+
 void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|threadid:%d|%s", iThreadId, msg->DebugString().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
 
 	if (msg->has_rpc_request())
 	{
@@ -259,7 +351,7 @@ void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> m
 
 		if (request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
 		{
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_request||cur server:%s|%s", server.DebugString().c_str(), msg->DebugString().c_str());
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_request||cur server:%s|%s", server.ShortDebugString().c_str(), msg->ShortDebugString().c_str());
 			return;
 		}
 
@@ -381,6 +473,12 @@ void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> m
 std::string NatsManager::GetTopicChannel(uint32_t type, uint32_t id)
 {
 	std::string channel = std::to_string(type) + "/" + std::to_string(id);
+	return channel;
+}
+
+std::string NatsManager::GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest)
+{
+	std::string channel = std::to_string(src.type()) + "/" + std::to_string(src.id()) + "->" + std::to_string(dest.type()) + "/" + std::to_string(dest.id());
 	return channel;
 }
 

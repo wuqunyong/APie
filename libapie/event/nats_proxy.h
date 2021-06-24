@@ -25,7 +25,7 @@
 #include <thread>
 
 #include "../network/logger.h"
-#include "../../pb_msg/core/nats_msg.pb.h"
+#include "../pb_msg.h"
 
 namespace APie {
 namespace Event {
@@ -145,7 +145,7 @@ namespace Event {
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
-				ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "subscribe|%s|%d", nats_server_.c_str(), status);
+				PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "nats|subscribe|%s|%s|%d", nats_server_.c_str(), sSub.c_str(), status);
 				
 				return status;
 			}
@@ -311,13 +311,25 @@ namespace Event {
 
 		public:
 			static std::string GetTopicChannel(uint32_t type, uint32_t id);
-			static void Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
+			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
+
+			void Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
+
+		private:
+			void runIntervalCallbacks();
 
 		private:
 			NatsManager(const NatsManager&) = delete;
 			NatsManager& operator=(const NatsManager&) = delete;
 
 			std::shared_ptr<PrxoyNATSConnector> nats_proxy;
+
+			std::mutex _sync;
+			std::map<std::string, uint32_t> channel_request_msgs;
+			std::map<std::string, uint32_t> channel_response_msgs;
+
+			TimerPtr interval_timer_ = nullptr;
+
 		};
 
 		using NatsSingleton = ThreadSafeSingleton<NatsManager>;

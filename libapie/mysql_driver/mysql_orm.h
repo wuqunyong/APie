@@ -20,7 +20,7 @@
 #include "mysql_connector.h"
 #include "result_set.h"
 
-#include "../../pb_msg/core/mysql_proxy_msg.pb.h"
+#include "../pb_msg.h"
 
 
 #ifdef _MSC_VER

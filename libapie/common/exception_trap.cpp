@@ -171,7 +171,7 @@ std::string GetExceptionString(DWORD dwCode)
 	HMODULE hNTDLL = GetModuleHandleA("NTDLL.DLL");
 	if (hNTDLL == NULL)
 	{
-		return "未取得NTDLL.DLL模块";
+		return "NTDLL"; //未取得NTDLL.DLL模块
 	}
 
 	char szBuffer[512] = { '\0' };

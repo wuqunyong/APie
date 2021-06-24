@@ -3,12 +3,12 @@
 #include "ctx.h"
 #include "client_proxy.h"
 
-#include "../../pb_msg/core/opcodes.pb.h"
-#include "../../pb_msg/core/pubsub.pb.h"
-#include "../../pb_msg/core/common.pb.h"
+#include "../pb_msg.h"
 
 #include "../api/pb_handler.h"
 #include "../api/pubsub.h"
+
+#include "../rpc/init.h"
 
 #include "output_stream.h"
 #include <sstream>
@@ -39,12 +39,16 @@ void SelfRegistration::registerEndpoint()
 	auto identityType = APie::CtxSingleton::get().getServerType();
 
 	std::set<uint32_t> needRegister;
+
+#ifdef USE_NATS_PROXY
+#else
 	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
 	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
 	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
 	needRegister.insert(::common::EndPointType::EPT_DB_ACCOUNT_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_DB_ROLE_Proxy);
+#endif
 
 	if (needRegister.count(identityType) == 0)
 	{

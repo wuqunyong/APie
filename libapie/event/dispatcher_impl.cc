@@ -189,8 +189,8 @@ void DispatcherImpl::runIntervalCallbacks()
 		{
 			iCmdCount += elems.second;
 
-			std::string sCmd = "cmd_type_" + std::to_string(elems.first);
-			ptrData->field[sCmd] = (double)elems.second;
+			//std::string sCmd = "cmd_type_" + std::to_string(elems.first);
+			//ptrData->field[sCmd] = (double)elems.second;
 		}
 		ptrData->field["cmd_type"] = (double)iCmdType;
 		ptrData->field["cmd_count"] = (double)iCmdCount;

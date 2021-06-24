@@ -3,8 +3,9 @@
 #include <chrono>
 
 #include "../../network/logger.h"
-#include "../../../pb_msg/core/nats_msg.pb.h"
 #include "../../event/nats_proxy.h"
+
+#include "../../pb_msg.h"
 
 namespace APie {
 namespace RPC {

@@ -32,7 +32,7 @@ namespace APie {
 		auto findIte = m_cmd.find(name);
 		if (findIte != m_cmd.end())
 		{
-			ASYNC_PIE_LOG("duplicate|registerOnCmd:%s", PIE_CYCLE_DAY, PIE_ERROR, name.c_str());
+			ASYNC_PIE_LOG("logic_cmd", PIE_CYCLE_DAY, PIE_ERROR, "duplicate|registerOnCmd:%s", name.c_str());
 			return false;
 		}
 
@@ -80,7 +80,7 @@ namespace APie {
 			ss << items.second.desc << std::endl;
 		}
 
-		ASYNC_PIE_LOG("%s", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG("logic_cmd", PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 		std::cout << ss.str();
 	}
 

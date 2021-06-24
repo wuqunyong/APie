@@ -1,4 +1,4 @@
-#include "../event/libevent.h"
+#include "libevent.h"
 
 #include <signal.h>
 

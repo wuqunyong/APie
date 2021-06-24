@@ -12,7 +12,7 @@
 #include "../network/i_poll_events.hpp"
 #include "../network/end_point.h"
 
-#include "../../pb_msg/core/rpc_msg.pb.h"
+#include "../pb_msg.h"
 
 #include "yaml-cpp/yaml.h"
 
@@ -35,6 +35,8 @@ namespace APie
 		void init(const std::string& configFile);
 		void start();
 		void destroy();
+
+		bool logEnable();
 
 		void waitForShutdown();
 
@@ -187,6 +189,8 @@ namespace APie
 
 		uint32_t m_server_id = 0;
 		uint32_t m_server_type = 0;
+
+		bool m_bLogEnable = false;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;

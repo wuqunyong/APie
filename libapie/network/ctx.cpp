@@ -188,6 +188,8 @@ uint32_t Ctx::generateHash(EndPoint point)
 
 void Ctx::init(const std::string& configFile)
 {
+	this->m_bLogEnable = true;
+
 	this->m_configFile = configFile;
 	int64_t mtime = APie::Common::FileDataModificationTime(this->m_configFile);
 	if (mtime == -1)
@@ -307,6 +309,7 @@ void Ctx::init(const std::string& configFile)
 
 			//db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
 			logic_thread_->initMysql(options);
+			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:%s|%s|%d", host.c_str(), db.c_str(), port);
 		}
 
 		bool bResult = APie::Event::NatsSingleton::get().init();
@@ -425,6 +428,8 @@ void Ctx::start()
 
 void Ctx::destroy()
 {
+	this->m_bLogEnable = false;
+
 	APie::Event::DispatcherImpl::clearAllConnection();
 	ClientProxy::clearAllClientProxy();
 
@@ -473,6 +478,11 @@ void Ctx::destroy()
 	//}
 
 	logFileClose();
+}
+
+bool Ctx::logEnable()
+{
+	return this->m_bLogEnable;
 }
 
 void Ctx::daemonize()
