@@ -457,6 +457,7 @@
     <ClInclude Include="..\pb_msg\core\nats_msg.pb.h">
       <Filter>pb_msg\core</Filter>
     </ClInclude>
+    <ClInclude Include="pb_msg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

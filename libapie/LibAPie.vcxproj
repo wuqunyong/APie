@@ -252,6 +252,7 @@
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
+    <ClInclude Include="pb_msg.h" />
     <ClInclude Include="redis_driver\redis_client.h" />
     <ClInclude Include="rpc\client\rpc_client.h" />
     <ClInclude Include="rpc\init.h" />
