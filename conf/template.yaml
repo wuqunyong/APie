@@ -1,4 +1,5 @@
 identify:            # 节点标识
+  realm: 1               # 区服ID
   type: 1                # 节点类型
   id: 1                  # 节点ID
   auth: "hello"          # 节点认证秘钥
@@ -66,13 +67,19 @@ redis_clients:       # redis客户端列表
     passwd: ""               # redis server passwd
 nats:               # nats
   enable: true                # 是否连接, 默认false
-  nats_server: "nats://10.0.16.59:4222"  # server 
-  channel_domains: "sub_topic"           # sub
-
+  connections:
+  - subscription:
+      type: 1
+      nats_server: "nats://10.0.16.59:4222"  # server 
+      channel_domains: "sub_topic"           # sub
 etcd:
     enable: true
     urls: "http://10.0.16.59:2379"
-    #prefix: "/"
+    watch_list:
+    - watch_elems:
+        type: 1
+        urls: "http://10.0.16.59:2379"
+        prefix: "/"
 
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)

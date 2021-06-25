@@ -673,7 +673,7 @@ void GatewayMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 	std::string info = cmd.params()[3];
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
-	APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+	APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 
 }
 

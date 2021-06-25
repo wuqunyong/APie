@@ -21,6 +21,8 @@ metrics:
   udp_port: 8089
 nats:               # nats
   enable: true                # 是否连接, 默认false
-  nats_server: "nats://127.0.0.1:4222"  # server 
-  sub_topic: "nats_proxy"                 # sub
-  pub_topic: "nats_proxy"                 # pub
+  connections:
+  - subscription:
+      type: 1
+      nats_server: "nats://127.0.0.1:4222"  # server 
+      channel_domains: "sub_topic"           # sub

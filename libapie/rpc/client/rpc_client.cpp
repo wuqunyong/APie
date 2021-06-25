@@ -37,7 +37,7 @@ namespace RPC {
 #ifdef USE_NATS_PROXY
 		rpc_msg::STATUS status;
 
-		bool bResult = APie::Event::NatsSingleton::get().inConnect();
+		bool bResult = APie::Event::NatsSingleton::get().isConnect(APie::Event::NatsManager::E_NT_Realm);
 		if (!bResult)
 		{
 			ASYNC_PIE_LOG("rpc/rpc", PIE_CYCLE_DAY, PIE_ERROR, "nats not connect|server:%s|opcodes:%d|args:%s",
@@ -146,7 +146,7 @@ namespace RPC {
 
 
 #ifdef USE_NATS_PROXY
-		bool bResult = APie::Event::NatsSingleton::get().inConnect();
+		bool bResult = APie::Event::NatsSingleton::get().isConnect(APie::Event::NatsManager::E_NT_Realm);
 		if (!bResult)
 		{
 			status.set_code(opcodes::SC_Rpc_RouteEmpty);
@@ -405,7 +405,7 @@ namespace RPC {
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_request()) = request;
-		int32_t iRC = APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+		int32_t iRC = APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 		if (iRC == 0)
 		{
 			bResult = true;

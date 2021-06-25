@@ -288,41 +288,36 @@ namespace Event {
 			NatsManager();
 			~NatsManager();
 
+			enum E_NatsType
+			{
+				E_NT_None = 0,
+				E_NT_Realm = 1,
+			};
+
 			bool init();
 			void destroy();
 
-			bool inConnect();
-
-			int32_t publish(const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
-			{
-				if (nats_proxy == nullptr)
-				{
-					std::stringstream ss;
-					ss << "nats_proxy nullptr";
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
-
-					return 100;
-				}
-
-				return nats_proxy->Publish(channel, msg);
-			}
-
-			void NATSMessageHandler(PrxoyNATSConnector::MsgType msg);
+		public:
+			bool isConnect(E_NatsType type);
+			int32_t publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
 
 		public:
 			static std::string GetTopicChannel(uint32_t type, uint32_t id);
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
 
-			void Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
+			void Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
 
 		private:
+			void NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg);
 			void runIntervalCallbacks();
+
+			std::shared_ptr<PrxoyNATSConnector> createConnection(uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains);
 
 		private:
 			NatsManager(const NatsManager&) = delete;
 			NatsManager& operator=(const NatsManager&) = delete;
 
-			std::shared_ptr<PrxoyNATSConnector> nats_proxy;
+			std::shared_ptr<PrxoyNATSConnector> nats_realm;
 
 			std::mutex _sync;
 			std::map<std::string, uint32_t> channel_request_msgs;

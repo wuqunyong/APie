@@ -166,7 +166,7 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	}
 }
 
-NatsManager::NatsManager() : nats_proxy(nullptr)
+NatsManager::NatsManager() : nats_realm(nullptr)
 {
 
 }
@@ -188,34 +188,62 @@ bool NatsManager::init()
 		return true;
 	}
 
+	uint32_t realm = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","realm" }, 0);
 	uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
 	uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
 
-	auto sServer = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "nats_server" }, "");
-	auto sDomains = APie::CtxSingleton::get().yamlAs<std::string>({ "nats", "channel_domains" }, "");
 
-	nats_proxy = std::make_shared<PrxoyNATSConnector>(sServer, sDomains, sDomains);
-	if (nats_proxy == nullptr)
+	auto nodeObj = APie::CtxSingleton::get().yamlAs<YAML::Node>({ "nats", "connections" }, YAML::Node());
+	for (const auto& elems : nodeObj)
 	{
-		return false;
+		auto iType = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(elems, { "subscription", "type" }, 0);
+		auto sServer = APie::CtxSingleton::get().nodeYamlAs<std::string>(elems, { "subscription", "nats_server" }, "undefined");
+		auto sDomains = APie::CtxSingleton::get().nodeYamlAs<std::string>(elems, { "subscription", "channel_domains" }, "undefined");
+
+		switch (iType)
+		{
+		case E_NT_Realm:
+		{
+			nats_realm = createConnection(type, id, iType, sServer, sDomains);
+			if (nats_realm == nullptr)
+			{
+				return false;
+			}
+			break;
+		}
+		default:
+		{
+			return false;
+		}
+		}
 	}
-
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(type, id);
-	struct event_base* ptrBase = &(APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
-	int32_t iRC = nats_proxy->Connect(ptrBase, channel);
-	if (iRC != 0)
-	{
-		return false;
-	}
-
-
-	// Attach the message handler for agent nats:
-	nats_proxy->RegisterMessageHandler(std::bind(&NatsManager::NATSMessageHandler, this, std::placeholders::_1));
 
 	interval_timer_ = APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->createTimer([this]() -> void { runIntervalCallbacks(); });
 	interval_timer_->enableTimer(std::chrono::milliseconds(2000));
 
 	return true;
+}
+
+std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains)
+{
+	auto sharedPtr = std::make_shared<PrxoyNATSConnector>(urls, domains, domains);
+	if (sharedPtr == nullptr)
+	{
+		return nullptr;
+	}
+
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(serverType, serverId);
+	struct event_base* ptrBase = &(APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
+	int32_t iRC = sharedPtr->Connect(ptrBase, channel);
+	if (iRC != 0)
+	{
+		return nullptr;
+	}
+
+
+	// Attach the message handler for agent nats:
+	sharedPtr->RegisterMessageHandler(std::bind(&NatsManager::NATSMessageHandler, this, domainsType, std::placeholders::_1));
+	return sharedPtr;
 }
 
 void NatsManager::destroy()
@@ -226,24 +254,63 @@ void NatsManager::destroy()
 		interval_timer_.reset(nullptr);
 	}
 
-	nats_proxy->destroy();
-	nats_proxy = nullptr;
+	if (nats_realm)
+	{
+		nats_realm->destroy();
+		nats_realm = nullptr;
+	}
 }
 
-bool NatsManager::inConnect()
+bool NatsManager::isConnect(E_NatsType type)
 {
-	if (nats_proxy == nullptr)
+	switch (type)
+	{
+	case APie::Event::NatsManager::E_NT_Realm:
+	{
+		if (nats_realm == nullptr)
+		{
+			return false;
+		}
+
+		return nats_realm->isConnect();
+	}
+	default:
 	{
 		return false;
 	}
+	}
 
-	return nats_proxy->isConnect();
+	return false;
 }
 
-void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
+int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
+{
+	switch (type)
+	{
+	case APie::Event::NatsManager::E_NT_Realm:
+	{
+		if (nats_realm == nullptr)
+		{
+			std::stringstream ss;
+			ss << "nats_realm nullptr";
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
+			return 100;
+		}
+
+		return nats_realm->Publish(channel, msg);
+	}
+	default:
+		break;
+	}
+
+	return 101;
+}
+
+void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|type:%d|%s", iThreadId, type, msg->ShortDebugString().c_str());
 
 	if (APie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
@@ -271,11 +338,22 @@ void NatsManager::NATSMessageHandler(PrxoyNATSConnector::MsgType msg)
 		}
 	}
 
+	switch (type)
+	{
+	case APie::Event::NatsManager::E_NT_Realm:
+	{
+		::nats_msg::NATS_MSG_PRXOY* m = msg.release();
+		APie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+			[m, this]() mutable { Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
+		);
+		break;
+	}
+	default:
+	{
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|invalid type|threadid:%d|type:%d", iThreadId, type);
+	}
+	}
 
-	::nats_msg::NATS_MSG_PRXOY* m = msg.release();
-	APie::CtxSingleton::get().getLogicThread()->dispatcher().post(
-		[m, this]() mutable { Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
-	);
 }
 
 void NatsManager::runIntervalCallbacks()
@@ -334,7 +412,7 @@ void NatsManager::runIntervalCallbacks()
 	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
 }
 
-void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
+void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
@@ -369,7 +447,7 @@ void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> m
 
 			::nats_msg::NATS_MSG_PRXOY nats_msg;
 			(*nats_msg.mutable_rpc_response()) = response;
-			APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+			APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 
 			return;
 		}
@@ -381,7 +459,7 @@ void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> m
 
 			::nats_msg::NATS_MSG_PRXOY nats_msg;
 			(*nats_msg.mutable_rpc_response()) = response;
-			APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+			APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 			return;
 		}
 
@@ -417,7 +495,7 @@ void NatsManager::Handle_Subscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> m
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
-		APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+		APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 
 		return;
 	}

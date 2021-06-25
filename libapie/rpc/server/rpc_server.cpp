@@ -30,7 +30,7 @@ namespace RPC {
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
-		APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+		APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 #else
 		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)
@@ -62,7 +62,7 @@ namespace RPC {
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
-		APie::Event::NatsSingleton::get().publish(channel, nats_msg);
+		APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 #else
 		bool bResult = APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 		if (!bResult)
