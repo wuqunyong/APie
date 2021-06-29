@@ -168,7 +168,7 @@ std::atomic<bool>& DispatcherImpl::terminating()
 
 void DispatcherImpl::runIntervalCallbacks()
 {
-	bool enable = APie::CtxSingleton::get().yamlAs<bool>({"metrics","enable"}, false);
+	bool enable = APie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)
 	{
 		MetricData *ptrData = new MetricData;
@@ -1009,8 +1009,8 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 					//uint64_t iCurTime = time(NULL) * 1000000000;
 					uint64_t iCurTime = nanoseconds.count();
 
-					std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "metrics","ip" }, "127.0.0.1");
-					uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "metrics","udp_port" }, 8089);
+					std::string ip = APie::CtxSingleton::get().getConfigs()->metrics.ip;
+					uint16_t port = APie::CtxSingleton::get().getConfigs()->metrics.udp_port;
 
 					if (ptrField != nullptr)
 					{

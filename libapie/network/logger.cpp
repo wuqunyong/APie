@@ -83,11 +83,10 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	std::string logFileName;
 
 	LogFile* ptrFile = NULL;
-	bool bMerge = APie::CtxSingleton::get().yamlAs<bool>({"log","merge"}, true); 
+	bool bMerge = APie::CtxSingleton::get().getConfigs()->log.merge;
 	if (bMerge && !ignoreMerge)
 	{
 		bMergeFlag = true;
-		//std::string logName = APie::CtxSingleton::get().yamlAs<std::string>({ "log", "name" }, "apie");
 		logFileName = APie::Ctx::logName() + "-" + APie::Ctx::logPostfix();
 		ptrFile = getCacheFile(logFileName, PIE_CYCLE_DAY);
 	}
@@ -123,7 +122,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	}
 	fflush(ptrFile->pFile);
 
-	bool bShowConsole = APie::CtxSingleton::get().yamlAs<bool>({ "log","show_console" }, false);
+	bool bShowConsole = APie::CtxSingleton::get().getConfigs()->log.show_console;
 	if (bShowConsole || level >= PIE_ERROR)
 	{
 #ifdef WIN32
@@ -177,7 +176,7 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN];
 
-	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
+	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -195,7 +194,7 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN] = {'\0'};
 
-	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
+	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -229,7 +228,7 @@ void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN] = { '\0' };
 
-	int iConfigLogLevel = APie::CtxSingleton::get().yamlAs<int>({ "log","level" }, 2);
+	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level & 0xff) < iConfigLogLevel)
 	{
 		return;
@@ -380,7 +379,7 @@ void checkRotate()
 			++ite;
 			cacheMap.erase(o);
 
-			std::string toDir = APie::CtxSingleton::get().yamlAs<std::string>({"log","backup"}, "");
+			std::string toDir = APie::CtxSingleton::get().getConfigs()->log.backup;
 #ifdef WIN32
 			toDir = "D:/backup";
 #endif
@@ -436,7 +435,7 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	struct stat statInfo;
 	if (0 == fstat(fileFd, &statInfo))
 	{
-		int32_t iSize = APie::CtxSingleton::get().yamlAs<int>({ "log","split_size" }, 128);
+		int32_t iSize = APie::CtxSingleton::get().getConfigs()->log.split_size;
 		if (statInfo.st_size > iSize *1240 * 1240)
 		{
 			return true;

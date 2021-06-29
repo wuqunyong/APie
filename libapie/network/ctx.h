@@ -12,6 +12,8 @@
 #include "../network/i_poll_events.hpp"
 #include "../network/end_point.h"
 
+#include "../configs/configs.h"
+
 #include "../pb_msg.h"
 
 #include "yaml-cpp/yaml.h"
@@ -150,6 +152,7 @@ namespace APie
 		int64_t getConfigFileMTime();
 		void setConfigFileMTime(int64_t mtime);
 
+		std::shared_ptr<APieConfig> getConfigs();
 
 	public:
 		static std::string logName();
@@ -163,6 +166,8 @@ namespace APie
 		bool adjustOpenFilesLimit();
 		void enableCoreFiles();
 		void handleSigProcMask();
+
+		std::shared_ptr<APieConfig> loadConfigs();
 
 		typedef std::vector<std::shared_ptr<Event::DispatchedThreadImpl>> ThreadVec;
 		std::map<Event::EThreadType, ThreadVec> thread_;
@@ -191,6 +196,8 @@ namespace APie
 		uint32_t m_server_type = 0;
 
 		bool m_bLogEnable = false;
+
+		std::shared_ptr<APieConfig> m_ptrConfig;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;

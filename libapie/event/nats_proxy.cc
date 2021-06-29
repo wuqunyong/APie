@@ -182,23 +182,22 @@ NatsManager::~NatsManager()
 
 bool NatsManager::init()
 {
-	auto bEnable = APie::CtxSingleton::get().yamlAs<bool>({ "nats","enable" }, false);
+	auto bEnable = APie::CtxSingleton::get().getConfigs()->nats.enable;
 	if (bEnable == false)
 	{
 		return true;
 	}
 
-	uint32_t realm = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","realm" }, 0);
-	uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
-	uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
+	uint32_t realm = APie::CtxSingleton::get().getConfigs()->identify.realm;
+	uint32_t id = APie::CtxSingleton::get().getConfigs()->identify.id;
+	uint32_t type = APie::CtxSingleton::get().getConfigs()->identify.type;
 
 
-	auto nodeObj = APie::CtxSingleton::get().yamlAs<YAML::Node>({ "nats", "connections" }, YAML::Node());
-	for (const auto& elems : nodeObj)
+	for (const auto& elems : APie::CtxSingleton::get().getConfigs()->nats.connections)
 	{
-		auto iType = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(elems, { "subscription", "type" }, 0);
-		auto sServer = APie::CtxSingleton::get().nodeYamlAs<std::string>(elems, { "subscription", "nats_server" }, "undefined");
-		auto sDomains = APie::CtxSingleton::get().nodeYamlAs<std::string>(elems, { "subscription", "channel_domains" }, "undefined");
+		auto iType = elems.type;
+		auto sServer = elems.nats_server;
+		auto sDomains = elems.channel_domains;
 
 		switch (iType)
 		{
@@ -360,7 +359,7 @@ void NatsManager::runIntervalCallbacks()
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
 
-	bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "metrics","enable" }, false);
+	bool enable = APie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)
 	{
 		MetricData* ptrData = new MetricData;

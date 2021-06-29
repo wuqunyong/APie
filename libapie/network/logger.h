@@ -73,7 +73,7 @@ void logFileClose();
 
 #ifdef WIN32
 #define PIE_LOG(file, cycle, level, format, ...) do { \
-    bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true); \
+    bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -87,7 +87,7 @@ void logFileClose();
 } while (0);
 #else
 #define PIE_LOG(file, cycle, level, format, args...) do { \
-	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true); \
+	bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -104,7 +104,7 @@ void logFileClose();
 
 #ifdef WIN32
 #define ASYNC_PIE_LOG(file, cycle, level, format, ...) do { \
-	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);                                                 \
+	bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -118,7 +118,7 @@ void logFileClose();
 } while (0);
 #else
 #define ASYNC_PIE_LOG(file, cycle, level, format, args...) do { \
-	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);  \
+	bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -134,7 +134,7 @@ void logFileClose();
 
 #ifdef WIN32
 #define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, ...) do { \
-	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);                                                 \
+	bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \
@@ -148,7 +148,7 @@ void logFileClose();
 } while (0);
 #else
 #define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, args...) do { \
-	bool bShowPos = APie::CtxSingleton::get().yamlAs<bool>({"log","show_pos"}, true);  \
+	bool bShowPos = APie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr("%s:%d|"); \

@@ -129,7 +129,7 @@ Ctx::Ctx() :
 	nats_thread_(nullptr),
 	endpoint_(nullptr)
 {
-
+	this->m_ptrConfig = std::make_shared<APieConfig>();
 }
 
 Ctx::~Ctx()
@@ -142,7 +142,7 @@ EndPoint Ctx::identify()
 	EndPoint point;
 	point.type = this->getServerType();
 	point.id = this->getServerId();
-	point.auth = this->yamlAs<std::string>({ "identify","auth" }, "");
+	point.auth = this->getConfigs()->identify.auth;
 	return point;
 }
 
@@ -185,6 +185,160 @@ uint32_t Ctx::generateHash(EndPoint point)
 	return hashValue;
 }
 
+std::shared_ptr<APieConfig> Ctx::loadConfigs()
+{
+	auto tmpPtrConfig = std::make_shared<APieConfig>();
+
+	if (node_["identify"])
+	{
+		tmpPtrConfig->identify.realm = node_["identify"]["realm"].as<uint16_t>(0);
+		tmpPtrConfig->identify.type = node_["identify"]["type"].as<uint32_t>();
+		tmpPtrConfig->identify.id = node_["identify"]["id"].as<uint32_t>();
+		tmpPtrConfig->identify.auth = node_["identify"]["auth"].as<std::string>("");
+		tmpPtrConfig->identify.ip = node_["identify"]["ip"].as<std::string>("");
+		tmpPtrConfig->identify.port = node_["identify"]["port"].as<uint16_t>(0);
+		tmpPtrConfig->identify.out_ip = node_["identify"]["out_ip"].as<std::string>("");
+		tmpPtrConfig->identify.out_port = node_["identify"]["out_port"].as<uint16_t>(0);
+		tmpPtrConfig->identify.codec_type = node_["identify"]["codec_type"].as<uint16_t>(1);
+	}
+	else
+	{
+		return nullptr;
+	}	
+
+	tmpPtrConfig->io_threads = node_["io_threads"].as<uint16_t>(2);
+	tmpPtrConfig->daemon = node_["daemon"].as<bool>(true);
+	tmpPtrConfig->service_timeout = node_["service_timeout"].as<uint32_t>(600);
+	tmpPtrConfig->service_learning_duration = node_["service_learning_duration"].as<uint32_t>(60);
+
+	if (node_["certificate"])
+	{
+		tmpPtrConfig->certificate.public_key = node_["certificate"]["public_key"].as<std::string>("");
+		tmpPtrConfig->certificate.private_key = node_["certificate"]["private_key"].as<std::string>("");
+	}
+
+	for (const auto& item : this->node_["listeners"])
+	{
+		std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
+		uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
+		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
+		uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>();
+
+		APieConfig_ListenersElems elems;
+		elems.socket_address.address = ip;
+		elems.socket_address.port_value = port;
+		elems.socket_address.type = type;
+		elems.socket_address.mask_flag = maskFlag;
+
+		tmpPtrConfig->listeners.push_back(elems);
+	}
+
+	if (this->node_["clients"])
+	{
+		std::string ip = node_["clients"]["socket_address"]["address"].as<std::string>();
+		uint16_t port = node_["clients"]["socket_address"]["port_value"].as<uint16_t>();
+		uint16_t type = node_["clients"]["socket_address"]["type"].as<uint16_t>();
+		uint32_t maskFlag = node_["clients"]["socket_address"]["mask_flag"].as<uint32_t>();
+
+		APieConfig_ClientsElems elems;
+		elems.socket_address.address = ip;
+		elems.socket_address.port_value = port;
+		elems.socket_address.type = type;
+		elems.socket_address.mask_flag = maskFlag;
+
+		tmpPtrConfig->clients = elems;
+	}
+
+	if (node_["service_registry"])
+	{
+		tmpPtrConfig->service_registry.address = node_["service_registry"]["address"].as<std::string>("127.0.0.1");
+		tmpPtrConfig->service_registry.port_value = node_["service_registry"]["port_value"].as<uint16_t>(5007);
+		tmpPtrConfig->service_registry.auth = node_["service_registry"]["auth"].as<std::string>("");
+		tmpPtrConfig->service_registry.type = node_["service_registry"]["type"].as<uint16_t>(1);
+	}
+
+	if (node_["log"])
+	{
+		tmpPtrConfig->log.merge = node_["log"]["merge"].as<bool>(true);
+		tmpPtrConfig->log.level = node_["log"]["level"].as<uint16_t>(2);
+		tmpPtrConfig->log.show_pos = node_["log"]["show_pos"].as<bool>(false);
+		tmpPtrConfig->log.split_size = node_["log"]["split_size"].as<uint16_t>(128);
+		tmpPtrConfig->log.backup = node_["log"]["backup"].as<std::string>("/usr/local/apie/logs/backup");
+		tmpPtrConfig->log.name = node_["log"]["name"].as<std::string>("apie");
+		tmpPtrConfig->log.show_console = node_["log"]["show_console"].as<bool>(false);
+	}
+
+	if (node_["metrics"])
+	{
+		tmpPtrConfig->metrics.enable = node_["metrics"]["enable"].as<bool>(true);
+		tmpPtrConfig->metrics.ip = node_["metrics"]["ip"].as<std::string>("127.0.0.1");
+		tmpPtrConfig->metrics.udp_port = node_["metrics"]["udp_port"].as<uint16_t>(8089);
+	}
+
+	if (node_["mysql"])
+	{
+		tmpPtrConfig->mysql.enable = node_["mysql"]["enable"].as<bool>(true);
+		tmpPtrConfig->mysql.host = node_["mysql"]["host"].as<std::string>("127.0.0.1");
+		tmpPtrConfig->mysql.port = node_["mysql"]["port"].as<uint16_t>(3306);
+		tmpPtrConfig->mysql.user = node_["mysql"]["user"].as<std::string>("root");
+		tmpPtrConfig->mysql.passwd = node_["mysql"]["passwd"].as<std::string>("root");
+		tmpPtrConfig->mysql.db = node_["mysql"]["db"].as<std::string>("apie");
+	}
+
+	for (const auto& item : this->node_["redis_clients"])
+	{
+		uint32_t type = item["client"]["type"].as<uint32_t>();
+		uint32_t id = item["client"]["id"].as<uint32_t>();
+		std::string host = item["client"]["host"].as<std::string>();
+		uint16_t port = item["client"]["port"].as<uint16_t>();
+		std::string passwd = item["client"]["passwd"].as<std::string>();
+
+
+		APieConfig_RedisClient elems;
+		elems.type = type;
+		elems.id = id;
+		elems.host = host;
+		elems.port = port;
+		elems.passwd = passwd;
+
+		tmpPtrConfig->redis_clients.push_back(elems);
+	}
+
+	if (node_["nats"])
+	{
+		tmpPtrConfig->nats.enable = node_["nats"]["enable"].as<bool>(true);
+
+		for (const auto& item : this->node_["nats"]["connections"])
+		{
+			uint32_t type = item["subscription"]["type"].as<uint32_t>();
+			std::string nats_server = item["subscription"]["nats_server"].as<std::string>();
+			std::string channel_domains = item["subscription"]["channel_domains"].as<std::string>();
+
+
+			APieConfig_NatsSubscription elems;
+			elems.type = type;
+			elems.nats_server = nats_server;
+			elems.channel_domains = channel_domains;
+
+			tmpPtrConfig->nats.connections.push_back(elems);
+		}
+	}
+
+	if (node_["etcd"])
+	{
+		tmpPtrConfig->etcd.enable = node_["etcd"]["enable"].as<bool>(true);
+		tmpPtrConfig->etcd.urls = node_["etcd"]["urls"].as<std::string>("");
+		tmpPtrConfig->etcd.prefix = node_["etcd"]["prefix"].as<std::string>("");
+	}
+
+	if (node_["limited"])
+	{
+		tmpPtrConfig->limited.requests_per_unit = node_["limited"]["requests_per_unit"].as<uint32_t>(0);
+		tmpPtrConfig->limited.uint = node_["limited"]["uint"].as<uint32_t>(60);
+	}
+
+	return tmpPtrConfig;
+}
 
 void Ctx::init(const std::string& configFile)
 {
@@ -214,14 +368,20 @@ void Ctx::init(const std::string& configFile)
 
 	try {
 		this->node_ = YAML::LoadFile(configFile);
+		auto ptrConfig = this->loadConfigs();
+		if (ptrConfig == nullptr)
+		{
+			PANIC_ABORT("configFile:%s load error", configFile.c_str());
+		}
+		this->m_ptrConfig = ptrConfig;
 
-		m_bDaemon = APie::CtxSingleton::get().yamlAs<bool>({"daemon"}, true);
-		if (m_bDaemon)
+
+		if (this->getConfigs()->daemon)
 		{
 			this->daemonize();
 		}
 
-		s_log_name = APie::CtxSingleton::get().yamlAs<std::string>({ "log", "name" }, "apie");
+		s_log_name = this->getConfigs()->log.name;
 
 		uint32_t pid = APie::Api::OsSysCallsSingleton::get().getCurProcessId();
 		snprintf(timebuf, sizeof(timebuf), "%s-%d", m_launchTime.c_str(), pid);
@@ -234,8 +394,8 @@ void Ctx::init(const std::string& configFile)
 
 		handleSigProcMask();
 
-		uint32_t id = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","id" }, 0);
-		uint32_t type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","type" }, 0);
+		uint32_t id = this->getConfigs()->identify.id; 
+		uint32_t type = this->getConfigs()->identify.type;
 		APie::CtxSingleton::get().setServerId(id);
 		APie::CtxSingleton::get().setServerType(type);
 
@@ -291,14 +451,13 @@ void Ctx::init(const std::string& configFile)
 		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
 		nats_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Nats, this->generatorTId());
 
-		bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "mysql","enable" }, false);
-		if (enable)
+		if (this->getConfigs()->mysql.enable)
 		{
-			std::string host = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","host" }, "");
-			std::string user = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","user" }, "");
-			std::string passwd = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","passwd" }, "");
-			std::string db = APie::CtxSingleton::get().yamlAs<std::string>({ "mysql","db" }, "");
-			uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "mysql","port" }, 0);
+			std::string host = this->getConfigs()->mysql.host;
+			std::string user = this->getConfigs()->mysql.user;
+			std::string passwd = this->getConfigs()->mysql.passwd;
+			std::string db = this->getConfigs()->mysql.db;
+			uint16_t port = this->getConfigs()->mysql.port;
 
 			MySQLConnectOptions options;
 			options.host = host;
@@ -320,13 +479,13 @@ void Ctx::init(const std::string& configFile)
 			PANIC_ABORT(ss.str().c_str());
 		}
 
-		for (const auto& item : this->node_["redis_clients"])
+		for (const auto& item : this->getConfigs()->redis_clients)
 		{
-			auto iType = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","type" }, 0);
-			auto iId = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","id" }, 0);
-			auto sHost = APie::CtxSingleton::get().nodeYamlAs<std::string>(item, { "client","host" }, "");
-			auto iPort = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(item, { "client","port" }, 0);
-			auto sPasswd = APie::CtxSingleton::get().nodeYamlAs<std::string>(item, { "client","passwd" }, "");
+			auto iType = item.type;
+			auto iId = item.id;
+			auto sHost = item.host;
+			auto iPort = item.port;
+			auto sPasswd = item.passwd;
 
 			auto key = std::make_tuple(iType, iId);
 
@@ -752,6 +911,15 @@ void Ctx::resetYamlNode(YAML::Node node)
 {
 	std::lock_guard<std::mutex> guard(node_sync_);
 	this->node_ = node;
+
+	auto ptrConfig = this->loadConfigs();
+	if (ptrConfig == nullptr)
+	{
+		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|loadConfigs error");
+		return;
+	}
+
+	this->m_ptrConfig = ptrConfig;
 }
 
 bool Ctx::yamlFieldsExists(std::vector<std::string> index)
@@ -832,6 +1000,11 @@ int64_t Ctx::getConfigFileMTime()
 void Ctx::setConfigFileMTime(int64_t mtime)
 {
 	m_configFileMTime = mtime;
+}
+
+std::shared_ptr<APieConfig> Ctx::getConfigs()
+{
+	return m_ptrConfig;
 }
 
 std::string Ctx::logName()

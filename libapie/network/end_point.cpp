@@ -55,7 +55,7 @@ void SelfRegistration::registerEndpoint()
 		return;
 	}
 
-	if (!APie::CtxSingleton::get().yamlFieldsExists({ "service_registry" }))
+	if (APie::CtxSingleton::get().getConfigs()->service_registry.address.empty())
 	{
 		std::stringstream ss;
 		ss << "service_registry empty";
@@ -64,10 +64,10 @@ void SelfRegistration::registerEndpoint()
 		PANIC_ABORT(ss.str().c_str());
 	}
 
-	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","address" }, "");
-	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","port_value" }, 0);
-	std::string registryAuth = APie::CtxSingleton::get().yamlAs<std::string>({ "service_registry","auth" }, "");
-	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "service_registry","type" }, 0);
+	std::string ip = APie::CtxSingleton::get().getConfigs()->service_registry.address;
+	uint16_t port = APie::CtxSingleton::get().getConfigs()->service_registry.port_value;
+	std::string registryAuth = APie::CtxSingleton::get().getConfigs()->service_registry.auth;
+	uint16_t type = APie::CtxSingleton::get().getConfigs()->service_registry.type;
 	
 	uint32_t maskFlag = 0;
 
@@ -110,10 +110,10 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 {
 	uint32_t type = APie::CtxSingleton::get().getServerType();
 	uint32_t id = APie::CtxSingleton::get().getServerId();
-	std::string auth = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","auth" }, "");
-	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "identify","ip" }, "");
-	uint32_t port = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","port" }, 0);
-	uint32_t codec_type = APie::CtxSingleton::get().yamlAs<uint32_t>({ "identify","codec_type" }, 0);
+	std::string auth = APie::CtxSingleton::get().getConfigs()->identify.auth;
+	std::string ip = APie::CtxSingleton::get().getConfigs()->identify.ip;
+	uint32_t port = APie::CtxSingleton::get().getConfigs()->identify.port;
+	uint32_t codec_type = APie::CtxSingleton::get().getConfigs()->identify.codec_type;
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
