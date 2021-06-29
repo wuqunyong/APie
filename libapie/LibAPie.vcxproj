@@ -201,6 +201,7 @@
     <ClInclude Include="common\utility.h" />
     <ClInclude Include="compressor\compressor.h" />
     <ClInclude Include="compressor\lz4_compressor_impl.h" />
+    <ClInclude Include="configs\configs.h" />
     <ClInclude Include="crypto\crypto_utility.h" />
     <ClInclude Include="decompressor\decompressor.h" />
     <ClInclude Include="decompressor\lz4_decompressor_impl.h" />

@@ -39,7 +39,7 @@ mysql:
   passwd: "root"
   db: "apie"
 nats:               # nats
-  enable: true                # 是否连接, 默认false
+  enable: false                # 是否连接, 默认false
   connections:
   - subscription:
       type: 1

@@ -16,11 +16,10 @@ listeners:
       type: 1
       mask_flag : 0
 clients:
-- address:
-    socket_address:
-      address: "127.0.0.1"
-      port_value: 5007
-      type: 1
+  socket_address:
+    address: "127.0.0.1"
+    port_value: 5007
+    type: 1
 service_registry:
   address: "127.0.0.1"
   port_value: 5007
@@ -39,7 +38,7 @@ metrics:
   ip: "127.0.0.1"
   udp_port: 8089
 nats:               # nats
-  enable: true                # 是否连接, 默认false
+  enable: false                # 是否连接, 默认false
   connections:
   - subscription:
       type: 1

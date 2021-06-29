@@ -88,6 +88,9 @@
     <Filter Include="pb_msg\core">
       <UniqueIdentifier>{487d2838-853b-4b39-9d06-cb462aa89a2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="configs">
+      <UniqueIdentifier>{4e9054e3-c562-4048-b198-9742a6da642a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -458,6 +461,9 @@
       <Filter>pb_msg\core</Filter>
     </ClInclude>
     <ClInclude Include="pb_msg.h" />
+    <ClInclude Include="configs\configs.h">
+      <Filter>configs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

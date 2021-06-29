@@ -221,8 +221,8 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 	{
 		std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
 		uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
-		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
-		uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>();
+		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>(1);
+		uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>(0);
 
 		APieConfig_ListenersElems elems;
 		elems.socket_address.address = ip;
@@ -237,8 +237,8 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 	{
 		std::string ip = node_["clients"]["socket_address"]["address"].as<std::string>();
 		uint16_t port = node_["clients"]["socket_address"]["port_value"].as<uint16_t>();
-		uint16_t type = node_["clients"]["socket_address"]["type"].as<uint16_t>();
-		uint32_t maskFlag = node_["clients"]["socket_address"]["mask_flag"].as<uint32_t>();
+		uint16_t type = node_["clients"]["socket_address"]["type"].as<uint16_t>(1);
+		uint32_t maskFlag = node_["clients"]["socket_address"]["mask_flag"].as<uint32_t>(0);
 
 		APieConfig_ClientsElems elems;
 		elems.socket_address.address = ip;
@@ -270,14 +270,14 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 	if (node_["metrics"])
 	{
-		tmpPtrConfig->metrics.enable = node_["metrics"]["enable"].as<bool>(true);
+		tmpPtrConfig->metrics.enable = node_["metrics"]["enable"].as<bool>(false);
 		tmpPtrConfig->metrics.ip = node_["metrics"]["ip"].as<std::string>("127.0.0.1");
 		tmpPtrConfig->metrics.udp_port = node_["metrics"]["udp_port"].as<uint16_t>(8089);
 	}
 
 	if (node_["mysql"])
 	{
-		tmpPtrConfig->mysql.enable = node_["mysql"]["enable"].as<bool>(true);
+		tmpPtrConfig->mysql.enable = node_["mysql"]["enable"].as<bool>(false);
 		tmpPtrConfig->mysql.host = node_["mysql"]["host"].as<std::string>("127.0.0.1");
 		tmpPtrConfig->mysql.port = node_["mysql"]["port"].as<uint16_t>(3306);
 		tmpPtrConfig->mysql.user = node_["mysql"]["user"].as<std::string>("root");
@@ -306,7 +306,7 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 	if (node_["nats"])
 	{
-		tmpPtrConfig->nats.enable = node_["nats"]["enable"].as<bool>(true);
+		tmpPtrConfig->nats.enable = node_["nats"]["enable"].as<bool>(false);
 
 		for (const auto& item : this->node_["nats"]["connections"])
 		{
@@ -326,7 +326,7 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 	if (node_["etcd"])
 	{
-		tmpPtrConfig->etcd.enable = node_["etcd"]["enable"].as<bool>(true);
+		tmpPtrConfig->etcd.enable = node_["etcd"]["enable"].as<bool>(false);
 		tmpPtrConfig->etcd.urls = node_["etcd"]["urls"].as<std::string>("");
 		tmpPtrConfig->etcd.prefix = node_["etcd"]["prefix"].as<std::string>("");
 	}
