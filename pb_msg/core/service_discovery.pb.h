@@ -246,15 +246,16 @@ class EndPointInstance :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAuthFieldNumber = 3,
-    kIpFieldNumber = 4,
-    kTypeFieldNumber = 1,
-    kIdFieldNumber = 2,
-    kPortFieldNumber = 5,
-    kCodecTypeFieldNumber = 6,
-    kMaskFlagFieldNumber = 7,
+    kAuthFieldNumber = 4,
+    kIpFieldNumber = 5,
+    kRealmFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kIdFieldNumber = 3,
+    kPortFieldNumber = 6,
+    kCodecTypeFieldNumber = 7,
+    kMaskFlagFieldNumber = 8,
   };
-  // string auth = 3;
+  // string auth = 4;
   void clear_auth();
   const std::string& auth() const;
   void set_auth(const std::string& value);
@@ -270,7 +271,7 @@ class EndPointInstance :
   std::string* _internal_mutable_auth();
   public:
 
-  // string ip = 4;
+  // string ip = 5;
   void clear_ip();
   const std::string& ip() const;
   void set_ip(const std::string& value);
@@ -286,7 +287,16 @@ class EndPointInstance :
   std::string* _internal_mutable_ip();
   public:
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  void clear_realm();
+  ::PROTOBUF_NAMESPACE_ID::uint32 realm() const;
+  void set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_realm() const;
+  void _internal_set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // .common.EndPointType type = 2;
   void clear_type();
   ::common::EndPointType type() const;
   void set_type(::common::EndPointType value);
@@ -295,7 +305,7 @@ class EndPointInstance :
   void _internal_set_type(::common::EndPointType value);
   public:
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   void clear_id();
   ::PROTOBUF_NAMESPACE_ID::uint32 id() const;
   void set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -304,7 +314,7 @@ class EndPointInstance :
   void _internal_set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // uint32 port = 5;
+  // uint32 port = 6;
   void clear_port();
   ::PROTOBUF_NAMESPACE_ID::uint32 port() const;
   void set_port(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -313,7 +323,7 @@ class EndPointInstance :
   void _internal_set_port(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // uint32 codec_type = 6;
+  // uint32 codec_type = 7;
   void clear_codec_type();
   ::PROTOBUF_NAMESPACE_ID::uint32 codec_type() const;
   void set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -322,7 +332,7 @@ class EndPointInstance :
   void _internal_set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // uint32 mask_flag = 7;
+  // uint32 mask_flag = 8;
   void clear_mask_flag();
   ::PROTOBUF_NAMESPACE_ID::uint32 mask_flag() const;
   void set_mask_flag(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -338,6 +348,7 @@ class EndPointInstance :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 realm_;
   int type_;
   ::PROTOBUF_NAMESPACE_ID::uint32 id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 port_;
@@ -1108,7 +1119,27 @@ class MSG_RESP_HEARTBEAT :
 #endif  // __GNUC__
 // EndPointInstance
 
-// .common.EndPointType type = 1;
+// uint32 realm = 1;
+inline void EndPointInstance::clear_realm() {
+  realm_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::_internal_realm() const {
+  return realm_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 EndPointInstance::realm() const {
+  // @@protoc_insertion_point(field_get:service_discovery.EndPointInstance.realm)
+  return _internal_realm();
+}
+inline void EndPointInstance::_internal_set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  realm_ = value;
+}
+inline void EndPointInstance::set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_realm(value);
+  // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.realm)
+}
+
+// .common.EndPointType type = 2;
 inline void EndPointInstance::clear_type() {
   type_ = 0;
 }
@@ -1128,7 +1159,7 @@ inline void EndPointInstance::set_type(::common::EndPointType value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.type)
 }
 
-// uint32 id = 2;
+// uint32 id = 3;
 inline void EndPointInstance::clear_id() {
   id_ = 0u;
 }
@@ -1148,7 +1179,7 @@ inline void EndPointInstance::set_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.id)
 }
 
-// string auth = 3;
+// string auth = 4;
 inline void EndPointInstance::clear_auth() {
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -1208,7 +1239,7 @@ inline void EndPointInstance::set_allocated_auth(std::string* auth) {
   // @@protoc_insertion_point(field_set_allocated:service_discovery.EndPointInstance.auth)
 }
 
-// string ip = 4;
+// string ip = 5;
 inline void EndPointInstance::clear_ip() {
   ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -1268,7 +1299,7 @@ inline void EndPointInstance::set_allocated_ip(std::string* ip) {
   // @@protoc_insertion_point(field_set_allocated:service_discovery.EndPointInstance.ip)
 }
 
-// uint32 port = 5;
+// uint32 port = 6;
 inline void EndPointInstance::clear_port() {
   port_ = 0u;
 }
@@ -1288,7 +1319,7 @@ inline void EndPointInstance::set_port(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.port)
 }
 
-// uint32 codec_type = 6;
+// uint32 codec_type = 7;
 inline void EndPointInstance::clear_codec_type() {
   codec_type_ = 0u;
 }
@@ -1308,7 +1339,7 @@ inline void EndPointInstance::set_codec_type(::PROTOBUF_NAMESPACE_ID::uint32 val
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.codec_type)
 }
 
-// uint32 mask_flag = 7;
+// uint32 mask_flag = 8;
 inline void EndPointInstance::clear_mask_flag() {
   mask_flag_ = 0u;
 }

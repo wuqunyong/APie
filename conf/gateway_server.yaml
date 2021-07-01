@@ -1,4 +1,5 @@
 identify:
+  realm: 1
   type: 4
   id: 1
   auth: "hello"

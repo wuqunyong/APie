@@ -93,6 +93,7 @@ bool RouteProxy::addRouteClient(const ::service_discovery::EndPointInstance& ins
 	ptrClient->init();
 
 	EndPoint point;
+	point.realm = instance.realm();
 	point.type = instance.type();
 	point.id = instance.id();
 
@@ -208,6 +209,7 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 		for (const auto& items : refMsg.notice().add_instance())
 		{
 			EndPoint point;
+			point.realm = items.realm();
 			point.type = items.type();
 			point.id = items.id();
 
@@ -226,7 +228,8 @@ void RouteProxy::onDiscoveryNotice(uint64_t topic, ::google::protobuf::Message& 
 			else
 			{
 				bool bChange = false;
-				if (items.ip() != ptrClient->getInstance().ip()
+				if (items.realm() != ptrClient->getInstance().realm()
+					|| items.ip() != ptrClient->getInstance().ip()
 					|| items.port() != ptrClient->getInstance().port()
 					|| items.codec_type() != ptrClient->getInstance().codec_type())
 				{

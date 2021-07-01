@@ -27,68 +27,63 @@
 namespace APie {
 namespace Event {
 
-int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) {
-  natsOptions* nats_opts = nullptr;
-  natsOptions_Create(&nats_opts);
+int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) 
+{
+	natsOptions* nats_opts = nullptr;
+	natsOptions_Create(&nats_opts);
 
+	if (ptrBase == nullptr)
+	{
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|event_base null");
+		return 1;
+	}
 
-  if (ptrBase == nullptr) 
-  {
-    ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|event_base null");
-	return 1;
-  }
+	natsLibevent_Init();
 
-  natsLibevent_Init();
+	if (tls_config_ != nullptr)
+	{
+		natsOptions_SetSecure(nats_opts, true);
+		natsOptions_LoadCATrustedCertificates(nats_opts, tls_config_->ca_cert.c_str());
+		natsOptions_LoadCertificatesChain(nats_opts, tls_config_->tls_cert.c_str(), tls_config_->tls_key.c_str());
+	}
 
+	auto s = natsOptions_SetEventLoop(nats_opts, ptrBase, natsLibevent_Attach, natsLibevent_Read, natsLibevent_Write, natsLibevent_Detach);
+	if (s != NATS_OK)
+	{
+		std::stringstream ss;
+		ss << "Failed to set NATS event loop, nats_status=" << s;
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|%s", ss.str().c_str());
 
-  if (tls_config_ != nullptr) 
-  {
-    natsOptions_SetSecure(nats_opts, true);
-    natsOptions_LoadCATrustedCertificates(nats_opts, tls_config_->ca_cert.c_str());
-    natsOptions_LoadCertificatesChain(nats_opts, tls_config_->tls_cert.c_str(),
-                                      tls_config_->tls_key.c_str());
-  }
+		return 2;
+	}
 
-  auto s = natsOptions_SetEventLoop(nats_opts, ptrBase, natsLibevent_Attach,
-	  natsLibevent_Read, natsLibevent_Write, natsLibevent_Detach);
+	natsOptions_SetURL(nats_opts, nats_server_.c_str());
 
-  if (s != NATS_OK) 
-  {
-	  std::stringstream ss;
-	  ss << "Failed to set NATS event loop, nats_status=" << s;
-	  ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|%s", ss.str().c_str());
+	//natsOptions_SetTimeout(nats_opts, config.connectionTimeout.count());
+	//natsOptions_SetMaxReconnect(nats_opts, config.maxReconnectionAttempts);
+	//natsOptions_SetReconnectWait(nats_opts, config.reconnectWait);
 
-    return 2;
-  }
+	natsOptions_SetClosedCB(nats_opts, ClosedCb, this);
+	natsOptions_SetDisconnectedCB(nats_opts, DisconnectedCb, this);
+	natsOptions_SetReconnectedCB(nats_opts, ReconnectedCb, this);
+	natsOptions_SetMaxPendingMsgs(nats_opts, 65536);
+	natsOptions_SetErrorHandler(nats_opts, ErrHandler, this);
 
-  natsOptions_SetURL(nats_opts, nats_server_.c_str());
+	auto nats_status = natsConnection_Connect(&nats_connection_, nats_opts);
+	natsOptions_Destroy(nats_opts);
+	nats_opts = nullptr;
 
+	if (nats_status != NATS_OK)
+	{
+		std::stringstream ss;
+		ss << "Failed to connect to NATS, nats_status=" << s;
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connet|%s", ss.str().c_str());
+		return 3;
+	}
 
-  //natsOptions_SetTimeout(nats_opts, config.connectionTimeout.count());
-  //natsOptions_SetMaxReconnect(nats_opts, config.maxReconnectionAttempts);
-  //natsOptions_SetReconnectWait(nats_opts, config.reconnectWait);
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "connect success|%s", nats_server_.c_str());
 
-  natsOptions_SetClosedCB(nats_opts, ClosedCb, this);
-  natsOptions_SetDisconnectedCB(nats_opts, DisconnectedCb, this);
-  natsOptions_SetReconnectedCB(nats_opts, ReconnectedCb, this);
-  natsOptions_SetMaxPendingMsgs(nats_opts, 65536);
-  natsOptions_SetErrorHandler(nats_opts, ErrHandler, this);
-
-  auto nats_status = natsConnection_Connect(&nats_connection_, nats_opts);
-  natsOptions_Destroy(nats_opts);
-  nats_opts = nullptr;
-
-  if (nats_status != NATS_OK) 
-  {
-	  std::stringstream ss;
-	  ss << "Failed to connect to NATS, nats_status=" << s;
-	  ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connet|%s", ss.str().c_str());
-	  return 3;
-  }
-
-  ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "connect success|%s", nats_server_.c_str());
-
-  return 0;
+	return 0;
 }
 
 void NATSConnectorBase::DisconnectedCb(natsConnection* nc, void* closure)
@@ -154,12 +149,12 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	}
 
 	std::stringstream ss;
-	if (err == NATS_SLOW_CONSUMER) 
+	if (err == NATS_SLOW_CONSUMER)
 	{
 		ss << "ErrHandler|status:" << status;
 		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error: slow consumer|%s", ss.str().c_str());
 	}
-	else 
+	else
 	{
 		ss << "ErrHandler|status:" << status;
 		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error|%s", ss.str().c_str());
@@ -171,7 +166,7 @@ NatsManager::NatsManager() : nats_realm(nullptr)
 
 }
 
-NatsManager::~NatsManager() 
+NatsManager::~NatsManager()
 {
 	if (interval_timer_)
 	{
@@ -183,15 +178,14 @@ NatsManager::~NatsManager()
 bool NatsManager::init()
 {
 	auto bEnable = APie::CtxSingleton::get().getConfigs()->nats.enable;
-	if (bEnable == false)
+	if (!bEnable)
 	{
 		return true;
 	}
 
-	uint32_t realm = APie::CtxSingleton::get().getConfigs()->identify.realm;
-	uint32_t id = APie::CtxSingleton::get().getConfigs()->identify.id;
-	uint32_t type = APie::CtxSingleton::get().getConfigs()->identify.type;
-
+	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
+	uint32_t id = APie::CtxSingleton::get().getServerId();
+	uint32_t type = APie::CtxSingleton::get().getServerType();
 
 	for (const auto& elems : APie::CtxSingleton::get().getConfigs()->nats.connections)
 	{
@@ -203,7 +197,7 @@ bool NatsManager::init()
 		{
 		case E_NT_Realm:
 		{
-			nats_realm = createConnection(type, id, iType, sServer, sDomains);
+			nats_realm = createConnection(realm, type, id, iType, sServer, sDomains);
 			if (nats_realm == nullptr)
 			{
 				return false;
@@ -223,7 +217,7 @@ bool NatsManager::init()
 	return true;
 }
 
-std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains)
+std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(uint32_t realm, uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains)
 {
 	auto sharedPtr = std::make_shared<PrxoyNATSConnector>(urls, domains, domains);
 	if (sharedPtr == nullptr)
@@ -231,7 +225,7 @@ std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(u
 		return nullptr;
 	}
 
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(serverType, serverId);
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(realm, serverType, serverId);
 	struct event_base* ptrBase = &(APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
 	int32_t iRC = sharedPtr->Connect(ptrBase, channel);
 	if (iRC != 0)
@@ -420,13 +414,14 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	{
 		::rpc_msg::RPC_REQUEST request = msg->rpc_request();
 
-		std::string channel = NatsManager::GetTopicChannel(request.client().stub().type(), request.client().stub().id());
+		std::string channel = NatsManager::GetTopicChannel(request.client().stub().realm(), request.client().stub().type(), request.client().stub().id());
 
 		::rpc_msg::CHANNEL server;
+		server.set_realm(APie::CtxSingleton::get().identify().realm);
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_id(APie::CtxSingleton::get().identify().id);
 
-		if (request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
+		if (request.server().stub().realm() != server.realm() || request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
 		{
 			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_request||cur server:%s|%s", server.ShortDebugString().c_str(), msg->ShortDebugString().c_str());
 			return;
@@ -504,10 +499,11 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		::rpc_msg::RPC_RESPONSE response = msg->rpc_response();
 
 		::rpc_msg::CHANNEL server;
+		server.set_realm(APie::CtxSingleton::get().identify().realm);
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_id(APie::CtxSingleton::get().identify().id);
 
-		if (response.client().stub().type() != server.type() || response.client().stub().id() != server.id())
+		if (response.client().stub().realm() != server.realm() || response.client().stub().type() != server.type() || response.client().stub().id() != server.id())
 		{
 			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_response|invalid target|cur server:%s|%s", server.DebugString().c_str(), msg->DebugString().c_str());
 			return;
@@ -547,15 +543,23 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	}
 }
 
-std::string NatsManager::GetTopicChannel(uint32_t type, uint32_t id)
+std::string NatsManager::GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id)
 {
-	std::string channel = std::to_string(type) + "/" + std::to_string(id);
+	std::string channel = std::to_string(realm) + "/" + std::to_string(type) + "/" + std::to_string(id);
 	return channel;
 }
 
+std::string NatsManager::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
+{
+	std::string topic = domains + "/" + channel;
+	return topic;
+}
+
+
 std::string NatsManager::GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest)
 {
-	std::string channel = std::to_string(src.type()) + "/" + std::to_string(src.id()) + "->" + std::to_string(dest.type()) + "/" + std::to_string(dest.id());
+	std::string channel = std::to_string(src.realm()) + "/" + std::to_string(src.type()) + "/" + std::to_string(src.id()) 
+		+ "->" + std::to_string(dest.realm()) + "/" + std::to_string(dest.type()) + "/" + std::to_string(dest.id());
 	return channel;
 }
 

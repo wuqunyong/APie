@@ -137,6 +137,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, realm_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, type_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, id_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, auth_),
@@ -183,11 +184,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
-  { 12, -1, sizeof(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE)},
-  { 19, -1, sizeof(::service_discovery::MSG_RESP_REGISTER_INSTANCE)},
-  { 25, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
-  { 37, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
-  { 42, -1, sizeof(::service_discovery::MSG_RESP_HEARTBEAT)},
+  { 13, -1, sizeof(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE)},
+  { 20, -1, sizeof(::service_discovery::MSG_RESP_REGISTER_INSTANCE)},
+  { 26, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 38, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
+  { 43, -1, sizeof(::service_discovery::MSG_RESP_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -201,28 +202,28 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\027service_discovery.proto\022\021service_disco"
-  "very\032\014common.proto\"\221\001\n\020EndPointInstance\022"
-  "\"\n\004type\030\001 \001(\0162\024.common.EndPointType\022\n\n\002i"
-  "d\030\002 \001(\r\022\014\n\004auth\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004por"
-  "t\030\005 \001(\r\022\022\n\ncodec_type\030\006 \001(\r\022\021\n\tmask_flag"
-  "\030\007 \001(\r\"d\n\035MSG_REQUEST_REGISTER_INSTANCE\022"
-  "5\n\010instance\030\001 \001(\0132#.service_discovery.En"
-  "dPointInstance\022\014\n\004auth\030\002 \001(\t\"1\n\032MSG_RESP"
-  "_REGISTER_INSTANCE\022\023\n\013status_code\030\001 \001(\r\""
-  "\311\002\n\023MSG_NOTICE_INSTANCE\022\n\n\002id\030\001 \001(\t\022\017\n\007v"
-  "ersion\030\002 \001(\004\0221\n\006status\030\003 \001(\0162!.service_d"
-  "iscovery.RegistryStatus\022+\n\004mode\030\004 \001(\0162\035."
-  "service_discovery.UpdateMode\0229\n\014add_inst"
-  "ance\030\005 \003(\0132#.service_discovery.EndPointI"
-  "nstance\022<\n\017delete_instance\030\006 \003(\0132#.servi"
-  "ce_discovery.EndPointInstance\022<\n\017update_"
-  "instance\030\007 \003(\0132#.service_discovery.EndPo"
-  "intInstance\"\027\n\025MSG_REQUEST_HEARTBEAT\")\n\022"
-  "MSG_RESP_HEARTBEAT\022\023\n\013status_code\030\001 \001(\r*"
-  "A\n\016RegistryStatus\022\013\n\007RS_None\020\000\022\017\n\013RS_Lea"
-  "rning\020\001\022\021\n\rRS_Forwarding\020\002*:\n\nUpdateMode"
-  "\022\013\n\007UM_None\020\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_Increme"
-  "ntal\020\002b\006proto3"
+  "very\032\014common.proto\"\240\001\n\020EndPointInstance\022"
+  "\r\n\005realm\030\001 \001(\r\022\"\n\004type\030\002 \001(\0162\024.common.En"
+  "dPointType\022\n\n\002id\030\003 \001(\r\022\014\n\004auth\030\004 \001(\t\022\n\n\002"
+  "ip\030\005 \001(\t\022\014\n\004port\030\006 \001(\r\022\022\n\ncodec_type\030\007 \001"
+  "(\r\022\021\n\tmask_flag\030\010 \001(\r\"d\n\035MSG_REQUEST_REG"
+  "ISTER_INSTANCE\0225\n\010instance\030\001 \001(\0132#.servi"
+  "ce_discovery.EndPointInstance\022\014\n\004auth\030\002 "
+  "\001(\t\"1\n\032MSG_RESP_REGISTER_INSTANCE\022\023\n\013sta"
+  "tus_code\030\001 \001(\r\"\311\002\n\023MSG_NOTICE_INSTANCE\022\n"
+  "\n\002id\030\001 \001(\t\022\017\n\007version\030\002 \001(\004\0221\n\006status\030\003 "
+  "\001(\0162!.service_discovery.RegistryStatus\022+"
+  "\n\004mode\030\004 \001(\0162\035.service_discovery.UpdateM"
+  "ode\0229\n\014add_instance\030\005 \003(\0132#.service_disc"
+  "overy.EndPointInstance\022<\n\017delete_instanc"
+  "e\030\006 \003(\0132#.service_discovery.EndPointInst"
+  "ance\022<\n\017update_instance\030\007 \003(\0132#.service_"
+  "discovery.EndPointInstance\"\027\n\025MSG_REQUES"
+  "T_HEARTBEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013sta"
+  "tus_code\030\001 \001(\r*A\n\016RegistryStatus\022\013\n\007RS_N"
+  "one\020\000\022\017\n\013RS_Learning\020\001\022\021\n\rRS_Forwarding\020"
+  "\002*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Full\020"
+  "\001\022\022\n\016UM_Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
   &::descriptor_table_common_2eproto,
@@ -238,7 +239,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 894,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 909,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 1,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 6, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -303,9 +304,9 @@ EndPointInstance::EndPointInstance(const EndPointInstance& from)
   if (!from._internal_ip().empty()) {
     ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
   }
-  ::memcpy(&type_, &from.type_,
+  ::memcpy(&realm_, &from.realm_,
     static_cast<size_t>(reinterpret_cast<char*>(&mask_flag_) -
-    reinterpret_cast<char*>(&type_)) + sizeof(mask_flag_));
+    reinterpret_cast<char*>(&realm_)) + sizeof(mask_flag_));
   // @@protoc_insertion_point(copy_constructor:service_discovery.EndPointInstance)
 }
 
@@ -313,9 +314,9 @@ void EndPointInstance::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_EndPointInstance_service_5fdiscovery_2eproto.base);
   auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&type_, 0, static_cast<size_t>(
+  ::memset(&realm_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&mask_flag_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(mask_flag_));
+      reinterpret_cast<char*>(&realm_)) + sizeof(mask_flag_));
 }
 
 EndPointInstance::~EndPointInstance() {
@@ -345,9 +346,9 @@ void EndPointInstance::Clear() {
 
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&type_, 0, static_cast<size_t>(
+  ::memset(&realm_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&mask_flag_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(mask_flag_));
+      reinterpret_cast<char*>(&realm_)) + sizeof(mask_flag_));
   _internal_metadata_.Clear();
 }
 
@@ -358,56 +359,63 @@ const char* EndPointInstance::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .common.EndPointType type = 1;
+      // uint32 realm = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          realm_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .common.EndPointType type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
           _internal_set_type(static_cast<::common::EndPointType>(val));
         } else goto handle_unusual;
         continue;
-      // uint32 id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+      // uint32 id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // string auth = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // string auth = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_auth();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.EndPointInstance.auth"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // string ip = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+      // string ip = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           auto str = _internal_mutable_ip();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.EndPointInstance.ip"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // uint32 port = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+      // uint32 port = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
           port_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // uint32 codec_type = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+      // uint32 codec_type = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
           codec_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // uint32 mask_flag = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+      // uint32 mask_flag = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
           mask_flag_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -438,55 +446,61 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  if (this->realm() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_realm(), target);
+  }
+
+  // .common.EndPointType type = 2;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
+      2, this->_internal_type(), target);
   }
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   if (this->id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_id(), target);
   }
 
-  // string auth = 3;
+  // string auth = 4;
   if (this->auth().size() > 0) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_auth().data(), static_cast<int>(this->_internal_auth().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "service_discovery.EndPointInstance.auth");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_auth(), target);
+        4, this->_internal_auth(), target);
   }
 
-  // string ip = 4;
+  // string ip = 5;
   if (this->ip().size() > 0) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_ip().data(), static_cast<int>(this->_internal_ip().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "service_discovery.EndPointInstance.ip");
     target = stream->WriteStringMaybeAliased(
-        4, this->_internal_ip(), target);
+        5, this->_internal_ip(), target);
   }
 
-  // uint32 port = 5;
+  // uint32 port = 6;
   if (this->port() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_port(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_port(), target);
   }
 
-  // uint32 codec_type = 6;
+  // uint32 codec_type = 7;
   if (this->codec_type() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_codec_type(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(7, this->_internal_codec_type(), target);
   }
 
-  // uint32 mask_flag = 7;
+  // uint32 mask_flag = 8;
   if (this->mask_flag() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(7, this->_internal_mask_flag(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(8, this->_internal_mask_flag(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -505,48 +519,55 @@ size_t EndPointInstance::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string auth = 3;
+  // string auth = 4;
   if (this->auth().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_auth());
   }
 
-  // string ip = 4;
+  // string ip = 5;
   if (this->ip().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_ip());
   }
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  if (this->realm() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_realm());
+  }
+
+  // .common.EndPointType type = 2;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
   }
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   if (this->id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_id());
   }
 
-  // uint32 port = 5;
+  // uint32 port = 6;
   if (this->port() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_port());
   }
 
-  // uint32 codec_type = 6;
+  // uint32 codec_type = 7;
   if (this->codec_type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_codec_type());
   }
 
-  // uint32 mask_flag = 7;
+  // uint32 mask_flag = 8;
   if (this->mask_flag() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
@@ -592,6 +613,9 @@ void EndPointInstance::MergeFrom(const EndPointInstance& from) {
 
     ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
   }
+  if (from.realm() != 0) {
+    _internal_set_realm(from._internal_realm());
+  }
   if (from.type() != 0) {
     _internal_set_type(from._internal_type());
   }
@@ -634,6 +658,7 @@ void EndPointInstance::InternalSwap(EndPointInstance* other) {
     GetArenaNoVirtual());
   ip_.Swap(&other->ip_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  swap(realm_, other->realm_);
   swap(type_, other->type_);
   swap(id_, other->id_);
   swap(port_, other->port_);

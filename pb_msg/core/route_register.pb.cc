@@ -119,6 +119,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_route_5fregister_2eproto::offs
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::route_register::RouteInstance, realm_),
   PROTOBUF_FIELD_OFFSET(::route_register::RouteInstance, type_),
   PROTOBUF_FIELD_OFFSET(::route_register::RouteInstance, id_),
   PROTOBUF_FIELD_OFFSET(::route_register::RouteInstance, auth_),
@@ -150,10 +151,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_route_5fregister_2eproto::offs
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::route_register::RouteInstance)},
-  { 8, -1, sizeof(::route_register::MSG_REQUEST_ADD_ROUTE)},
-  { 14, -1, sizeof(::route_register::MSG_RESP_ADD_ROUTE)},
-  { 22, -1, sizeof(::route_register::MSG_REQUEST_HEARTBEAT)},
-  { 27, -1, sizeof(::route_register::MSG_RESP_HEARTBEAT)},
+  { 9, -1, sizeof(::route_register::MSG_REQUEST_ADD_ROUTE)},
+  { 15, -1, sizeof(::route_register::MSG_RESP_ADD_ROUTE)},
+  { 23, -1, sizeof(::route_register::MSG_REQUEST_HEARTBEAT)},
+  { 28, -1, sizeof(::route_register::MSG_RESP_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -166,16 +167,16 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_route_5fregister_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\024route_register.proto\022\016route_register\032\014"
-  "common.proto\"M\n\rRouteInstance\022\"\n\004type\030\001 "
-  "\001(\0162\024.common.EndPointType\022\n\n\002id\030\002 \001(\r\022\014\n"
-  "\004auth\030\003 \001(\t\"H\n\025MSG_REQUEST_ADD_ROUTE\022/\n\010"
-  "instance\030\001 \001(\0132\035.route_register.RouteIns"
-  "tance\"\206\001\n\022MSG_RESP_ADD_ROUTE\022-\n\006target\030\001"
-  " \001(\0132\035.route_register.RouteInstance\022,\n\005r"
-  "oute\030\002 \001(\0132\035.route_register.RouteInstanc"
-  "e\022\023\n\013status_code\030\003 \001(\r\"\027\n\025MSG_REQUEST_HE"
-  "ARTBEAT\")\n\022MSG_RESP_HEARTBEAT\022\023\n\013status_"
-  "code\030\001 \001(\rb\006proto3"
+  "common.proto\"\\\n\rRouteInstance\022\r\n\005realm\030\001"
+  " \001(\r\022\"\n\004type\030\002 \001(\0162\024.common.EndPointType"
+  "\022\n\n\002id\030\003 \001(\r\022\014\n\004auth\030\004 \001(\t\"H\n\025MSG_REQUES"
+  "T_ADD_ROUTE\022/\n\010instance\030\001 \001(\0132\035.route_re"
+  "gister.RouteInstance\"\206\001\n\022MSG_RESP_ADD_RO"
+  "UTE\022-\n\006target\030\001 \001(\0132\035.route_register.Rou"
+  "teInstance\022,\n\005route\030\002 \001(\0132\035.route_regist"
+  "er.RouteInstance\022\023\n\013status_code\030\003 \001(\r\"\027\n"
+  "\025MSG_REQUEST_HEARTBEAT\")\n\022MSG_RESP_HEART"
+  "BEAT\022\023\n\013status_code\030\001 \001(\rb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_route_5fregister_2eproto_deps[1] = {
   &::descriptor_table_common_2eproto,
@@ -190,7 +191,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rou
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_route_5fregister_2eproto_once;
 static bool descriptor_table_route_5fregister_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_route_5fregister_2eproto = {
-  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 418,
+  &descriptor_table_route_5fregister_2eproto_initialized, descriptor_table_protodef_route_5fregister_2eproto, "route_register.proto", 433,
   &descriptor_table_route_5fregister_2eproto_once, descriptor_table_route_5fregister_2eproto_sccs, descriptor_table_route_5fregister_2eproto_deps, 5, 1,
   schemas, file_default_instances, TableStruct_route_5fregister_2eproto::offsets,
   file_level_metadata_route_5fregister_2eproto, 5, file_level_enum_descriptors_route_5fregister_2eproto, file_level_service_descriptors_route_5fregister_2eproto,
@@ -221,18 +222,18 @@ RouteInstance::RouteInstance(const RouteInstance& from)
   if (!from._internal_auth().empty()) {
     auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
   }
-  ::memcpy(&type_, &from.type_,
+  ::memcpy(&realm_, &from.realm_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
-    reinterpret_cast<char*>(&type_)) + sizeof(id_));
+    reinterpret_cast<char*>(&realm_)) + sizeof(id_));
   // @@protoc_insertion_point(copy_constructor:route_register.RouteInstance)
 }
 
 void RouteInstance::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RouteInstance_route_5fregister_2eproto.base);
   auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&type_, 0, static_cast<size_t>(
+  ::memset(&realm_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&id_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+      reinterpret_cast<char*>(&realm_)) + sizeof(id_));
 }
 
 RouteInstance::~RouteInstance() {
@@ -260,9 +261,9 @@ void RouteInstance::Clear() {
   (void) cached_has_bits;
 
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&type_, 0, static_cast<size_t>(
+  ::memset(&realm_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&id_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+      reinterpret_cast<char*>(&realm_)) + sizeof(id_));
   _internal_metadata_.Clear();
 }
 
@@ -273,24 +274,31 @@ const char* RouteInstance::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .common.EndPointType type = 1;
+      // uint32 realm = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          realm_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .common.EndPointType type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
           _internal_set_type(static_cast<::common::EndPointType>(val));
         } else goto handle_unusual;
         continue;
-      // uint32 id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+      // uint32 id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // string auth = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // string auth = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_auth();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "route_register.RouteInstance.auth"));
@@ -323,27 +331,33 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  if (this->realm() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_realm(), target);
+  }
+
+  // .common.EndPointType type = 2;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
+      2, this->_internal_type(), target);
   }
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   if (this->id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_id(), target);
   }
 
-  // string auth = 3;
+  // string auth = 4;
   if (this->auth().size() > 0) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_auth().data(), static_cast<int>(this->_internal_auth().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "route_register.RouteInstance.auth");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_auth(), target);
+        4, this->_internal_auth(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -362,20 +376,27 @@ size_t RouteInstance::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string auth = 3;
+  // string auth = 4;
   if (this->auth().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_auth());
   }
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  if (this->realm() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_realm());
+  }
+
+  // .common.EndPointType type = 2;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
   }
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   if (this->id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
@@ -417,6 +438,9 @@ void RouteInstance::MergeFrom(const RouteInstance& from) {
 
     auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
   }
+  if (from.realm() != 0) {
+    _internal_set_realm(from._internal_realm());
+  }
   if (from.type() != 0) {
     _internal_set_type(from._internal_type());
   }
@@ -448,6 +472,7 @@ void RouteInstance::InternalSwap(RouteInstance* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  swap(realm_, other->realm_);
   swap(type_, other->type_);
   swap(id_, other->id_);
 }

@@ -9,6 +9,8 @@ enum RPC_OPCODES {
 	RPC_Multiplexer_Forward = 1;
 	RPC_DeMultiplexer_Forward = 2;
 
+	RPC_EchoTest = 10;
+
 	RPC_MysqlDescTable = 401;
 	RPC_MysqlQuery = 402;
 	RPC_MysqlInsert = 403;
@@ -16,6 +18,7 @@ enum RPC_OPCODES {
 	RPC_MysqlDelete = 405;
 	RPC_MysqlQueryByFilter = 406;
 	RPC_MysqlMultiQuery = 407;
+	RPC_QPS = 999;
 
 	RPC_L2G_LoginPending = 1001;
 }
@@ -46,8 +49,9 @@ enum RPC_CODE {
 
 message CHANNEL
 {
-	uint32 type = 1;
-	uint32 id = 2;
+	uint32 type = 1;  // 服务类型
+	uint32 id = 2;    // 服务ID
+	uint32 realm = 3; // 区服ID
 }
 
 message CONTROLLER 
@@ -72,7 +76,8 @@ message CLIENT_IDENTIFIER
 	bool required_reply = 3;
 	CHANNEL router = 4;
 	uint64 channel_serial_num = 5; // 收到请求时的SOCKET序列号
-	RoleIdentifier role_identifier = 6;
+	//RoleIdentifier role_identifier = 6;
+	bool is_urgency = 7; //是否紧急
 }
 
 message SERVER_IDENTIFIER
@@ -85,7 +90,7 @@ message RPC_REQUEST
 	CLIENT_IDENTIFIER client = 1;  // 调用方
 	SERVER_IDENTIFIER server = 2;  // 被调用方
 	RPC_OPCODES opcodes = 3;
-	bool server_stream = 4;
+	bool server_stream = 4; //是否连续响应
 	bytes args_data = 5;
 }
 
@@ -114,9 +119,39 @@ message PRC_Multiplexer_Forward_Args
 	bytes body_msg = 3;
 }
 
+message EMPTY
+{
+}
+
 message PRC_DeMultiplexer_Forward_Args
 {
 	RoleIdentifier role_id = 1;
 	uint32 opcodes = 2;
 	bytes body_msg = 3;
+}
+
+
+//测试qps
+message MSG_TEST_QPS_REQUEST{
+	int64 seq_id = 1;
+	int64 star_tm = 2;
+	int64 origin_tm = 3;
+}
+message MSG_TEST_QPS_RESP{
+	int32 ret_code = 1;
+	MSG_TEST_QPS_REQUEST req = 2;
+}
+
+
+
+message MSG_RPC_REQUEST_ECHO
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}
+
+message MSG_RPC_RESPONSE_ECHO
+{
+	uint64 value1 = 1;
+	string value2 = 2;
 }

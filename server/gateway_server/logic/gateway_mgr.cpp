@@ -659,18 +659,19 @@ void GatewayMgr::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 void GatewayMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 {
-	if (cmd.params_size() < 4)
+	if (cmd.params_size() < 5)
 	{
 		return;
 	}
 
-	uint32_t type = std::stoul(cmd.params()[0]);
-	uint32_t id = std::stoul(cmd.params()[1]);
+	uint32_t realm = std::stoul(cmd.params()[0]);
+	uint32_t type = std::stoul(cmd.params()[1]);
+	uint32_t id = std::stoul(cmd.params()[2]);
 
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(type, id);
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(realm, type, id);
 
-	std::string name = cmd.params()[2];
-	std::string info = cmd.params()[3];
+	std::string name = cmd.params()[3];
+	std::string info = cmd.params()[4];
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);

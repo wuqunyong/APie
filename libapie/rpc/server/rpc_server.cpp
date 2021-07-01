@@ -26,7 +26,7 @@ namespace RPC {
 		response.set_result_data(replyData);
 
 #ifdef USE_NATS_PROXY
-		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().type(), client.stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().realm(), client.stub().type(), client.stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
@@ -58,7 +58,7 @@ namespace RPC {
 		response.set_offset(offset);
 
 #ifdef USE_NATS_PROXY
-		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().type(), client.stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(client.stub().realm(), client.stub().type(), client.stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;
@@ -76,6 +76,7 @@ namespace RPC {
 	void RpcServer::handleRequest(uint64_t iSerialNum, ::rpc_msg::RPC_REQUEST& request)
 	{
 		::rpc_msg::CHANNEL server;
+		server.set_realm(APie::CtxSingleton::get().identify().realm);
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_id(APie::CtxSingleton::get().identify().id);
 
@@ -96,6 +97,7 @@ namespace RPC {
 			else
 			{
 				EndPoint sendTarget;
+				sendTarget.realm = request.server().stub().realm();
 				sendTarget.type = request.server().stub().type();
 				sendTarget.id = request.server().stub().id();
 				auto serialOpt = EndPointMgrSingleton::get().getSerialNum(sendTarget);
@@ -105,7 +107,7 @@ namespace RPC {
 					APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_RPC_RESPONSE, response);
 					return;
 				}
-
+				request.mutable_client()->mutable_router()->set_realm(server.realm());
 				request.mutable_client()->mutable_router()->set_type(server.type());
 				request.mutable_client()->mutable_router()->set_id(server.id());
 				bool bResult = APie::Network::OutputStream::sendMsg(serialOpt.value(), ::opcodes::OPCODE_ID::OP_RPC_REQUEST, request);

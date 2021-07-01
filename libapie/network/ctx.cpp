@@ -140,6 +140,7 @@ Ctx::~Ctx()
 EndPoint Ctx::identify()
 {
 	EndPoint point;
+	point.realm = this->getServerRealm();
 	point.type = this->getServerType();
 	point.id = this->getServerId();
 	point.auth = this->getConfigs()->identify.auth;
@@ -394,8 +395,11 @@ void Ctx::init(const std::string& configFile)
 
 		handleSigProcMask();
 
+		uint32_t realm = this->getConfigs()->identify.realm;
 		uint32_t id = this->getConfigs()->identify.id; 
 		uint32_t type = this->getConfigs()->identify.type;
+
+		APie::CtxSingleton::get().setServerRealm(realm);
 		APie::CtxSingleton::get().setServerId(id);
 		APie::CtxSingleton::get().setServerType(type);
 
@@ -403,12 +407,12 @@ void Ctx::init(const std::string& configFile)
 
 		std::shared_ptr<Event::DispatchedThreadImpl> ptrListen = nullptr;
 
-		for (const auto& item : this->node_["listeners"])
+		for (const auto& item : this->getConfigs()->listeners)
 		{
-			std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
-			uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
-			uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>();
-			uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>();
+			std::string ip = item.socket_address.address;
+			uint16_t port = item.socket_address.port_value;
+			uint16_t type = item.socket_address.type;
+			uint32_t maskFlag = item.socket_address.mask_flag;
 
 			Network::ListenerConfig config;
 			config.ip = ip;
@@ -950,6 +954,16 @@ bool Ctx::yamlFieldsExists(std::vector<std::string> index)
 std::string Ctx::launchTime()
 {
 	return m_launchTime;
+}
+
+uint32_t Ctx::getServerRealm()
+{
+	return m_server_realm;
+}
+
+void Ctx::setServerRealm(uint32_t realm)
+{
+	m_server_realm = realm;
 }
 
 uint32_t Ctx::getServerId()

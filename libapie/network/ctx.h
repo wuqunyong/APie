@@ -43,7 +43,6 @@ namespace APie
 		void waitForShutdown();
 
 		uint32_t generatorTId();
-		//YAML::Node& yamlNode();
 
 		void resetYamlNode(YAML::Node node);
 		bool yamlFieldsExists(std::vector<std::string> index);
@@ -139,6 +138,9 @@ namespace APie
 
 		std::string launchTime();
 
+		uint32_t getServerRealm();
+		void setServerRealm(uint32_t realm);
+
 		uint32_t getServerId();
 		void setServerId(uint32_t id);
 
@@ -192,6 +194,7 @@ namespace APie
 
 		std::shared_ptr<SelfRegistration> endpoint_ = nullptr;
 
+		uint32_t m_server_realm = 0;
 		uint32_t m_server_id = 0;
 		uint32_t m_server_type = 0;
 

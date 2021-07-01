@@ -189,11 +189,12 @@ class RouteInstance :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAuthFieldNumber = 3,
-    kTypeFieldNumber = 1,
-    kIdFieldNumber = 2,
+    kAuthFieldNumber = 4,
+    kRealmFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kIdFieldNumber = 3,
   };
-  // string auth = 3;
+  // string auth = 4;
   void clear_auth();
   const std::string& auth() const;
   void set_auth(const std::string& value);
@@ -209,7 +210,16 @@ class RouteInstance :
   std::string* _internal_mutable_auth();
   public:
 
-  // .common.EndPointType type = 1;
+  // uint32 realm = 1;
+  void clear_realm();
+  ::PROTOBUF_NAMESPACE_ID::uint32 realm() const;
+  void set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_realm() const;
+  void _internal_set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // .common.EndPointType type = 2;
   void clear_type();
   ::common::EndPointType type() const;
   void set_type(::common::EndPointType value);
@@ -218,7 +228,7 @@ class RouteInstance :
   void _internal_set_type(::common::EndPointType value);
   public:
 
-  // uint32 id = 2;
+  // uint32 id = 3;
   void clear_id();
   ::PROTOBUF_NAMESPACE_ID::uint32 id() const;
   void set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
@@ -233,6 +243,7 @@ class RouteInstance :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 realm_;
   int type_;
   ::PROTOBUF_NAMESPACE_ID::uint32 id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -788,7 +799,27 @@ class MSG_RESP_HEARTBEAT :
 #endif  // __GNUC__
 // RouteInstance
 
-// .common.EndPointType type = 1;
+// uint32 realm = 1;
+inline void RouteInstance::clear_realm() {
+  realm_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RouteInstance::_internal_realm() const {
+  return realm_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RouteInstance::realm() const {
+  // @@protoc_insertion_point(field_get:route_register.RouteInstance.realm)
+  return _internal_realm();
+}
+inline void RouteInstance::_internal_set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  realm_ = value;
+}
+inline void RouteInstance::set_realm(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_realm(value);
+  // @@protoc_insertion_point(field_set:route_register.RouteInstance.realm)
+}
+
+// .common.EndPointType type = 2;
 inline void RouteInstance::clear_type() {
   type_ = 0;
 }
@@ -808,7 +839,7 @@ inline void RouteInstance::set_type(::common::EndPointType value) {
   // @@protoc_insertion_point(field_set:route_register.RouteInstance.type)
 }
 
-// uint32 id = 2;
+// uint32 id = 3;
 inline void RouteInstance::clear_id() {
   id_ = 0u;
 }
@@ -828,7 +859,7 @@ inline void RouteInstance::set_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   // @@protoc_insertion_point(field_set:route_register.RouteInstance.id)
 }
 
-// string auth = 3;
+// string auth = 4;
 inline void RouteInstance::clear_auth() {
   auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }

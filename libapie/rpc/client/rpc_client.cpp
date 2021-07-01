@@ -374,11 +374,18 @@ namespace RPC {
 		::rpc_msg::CHANNEL client;
 		client.set_type(APie::CtxSingleton::get().identify().type);
 		client.set_id(APie::CtxSingleton::get().identify().id);
+		client.set_realm(APie::CtxSingleton::get().identify().realm);
+
 
 		::rpc_msg::RPC_REQUEST request;
 		*request.mutable_client()->mutable_stub() = client;
 		request.mutable_client()->set_seq_id(iCurSeqId);
 		request.mutable_client()->set_required_reply(false);
+
+		if (server.realm() == 0)
+		{
+			server.set_realm(APie::CtxSingleton::get().identify().realm);
+		}
 
 		*request.mutable_server()->mutable_stub() = server;
 		request.set_opcodes(opcodes);
@@ -401,7 +408,7 @@ namespace RPC {
 		bool bResult = false;
 
 #ifdef USE_NATS_PROXY
-		std::string channel = APie::Event::NatsManager::GetTopicChannel(request.server().stub().type(), request.server().stub().id());
+		std::string channel = APie::Event::NatsManager::GetTopicChannel(request.server().stub().realm(), request.server().stub().type(), request.server().stub().id());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_request()) = request;
@@ -502,6 +509,7 @@ namespace RPC {
 	void RpcClient::handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response)
 	{
 		::rpc_msg::CHANNEL server;
+		server.set_realm(APie::CtxSingleton::get().identify().realm);
 		server.set_type(APie::CtxSingleton::get().identify().type);
 		server.set_id(APie::CtxSingleton::get().identify().id);
 
@@ -521,6 +529,7 @@ namespace RPC {
 			else
 			{
 				EndPoint sendTarget;
+				sendTarget.realm = response.client().stub().realm();
 				sendTarget.type = response.client().stub().type();
 				sendTarget.id = response.client().stub().id();
 				auto serialOpt = EndPointMgrSingleton::get().getSerialNum(sendTarget);

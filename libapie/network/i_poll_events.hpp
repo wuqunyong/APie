@@ -27,12 +27,18 @@ namespace APie
  
 	struct EndPoint
 	{
+		uint32_t realm = 0;
 		uint32_t type = 0;
 		uint32_t id = 0;
 		std::string auth;
 
 		bool operator<(const EndPoint& other) const
 		{
+			if (realm != other.realm)
+			{
+				return realm < other.realm;
+			}
+
 			if (type != other.type)
 			{
 				return type < other.type;

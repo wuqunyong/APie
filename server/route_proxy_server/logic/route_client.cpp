@@ -146,12 +146,14 @@ void RouteClient::setState(State value)
 
 void RouteClient::sendAddRoute(APie::ClientProxy* ptrClient)
 {
+	uint32_t realm = APie::CtxSingleton::get().identify().realm;
 	uint32_t type = APie::CtxSingleton::get().identify().type;
 	uint32_t id = APie::CtxSingleton::get().identify().id;
 	std::string auth = APie::CtxSingleton::get().identify().auth;
 
 	::route_register::MSG_REQUEST_ADD_ROUTE request;
 	auto ptrAdd = request.mutable_instance();
+	ptrAdd->set_realm(realm);
 	ptrAdd->set_type(static_cast<::common::EndPointType>(type));
 	ptrAdd->set_id(id);
 	ptrAdd->set_auth(auth);

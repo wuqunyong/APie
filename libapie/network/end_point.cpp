@@ -108,6 +108,7 @@ void SelfRegistration::unregisterEndpoint()
 
 void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth)
 {
+	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
 	uint32_t type = APie::CtxSingleton::get().getServerType();
 	uint32_t id = APie::CtxSingleton::get().getServerId();
 	std::string auth = APie::CtxSingleton::get().getConfigs()->identify.auth;
@@ -116,6 +117,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	uint32_t codec_type = APie::CtxSingleton::get().getConfigs()->identify.codec_type;
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
+	request.mutable_instance()->set_realm(realm);
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
 	request.mutable_instance()->set_id(id);
 	request.mutable_instance()->set_auth(auth);
@@ -153,6 +155,7 @@ int EndPointMgr::registerEndpoint(::service_discovery::EndPointInstance instance
 	EndPoint point;
 	point.type = instance.type();
 	point.id = instance.id();
+	point.realm = instance.realm();
 
 	m_endpoints[point] = instance;
 
@@ -374,12 +377,18 @@ void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_registe
 	EndPoint point;
 	point.type = request.instance().type();
 	point.id = request.instance().id();
+	point.realm = request.instance().realm();
 
 	auto identify = ::APie::CtxSingleton::get().identify();
 
+	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
+	uint32_t id = APie::CtxSingleton::get().getServerId();
+	uint32_t type = APie::CtxSingleton::get().getServerType();
+
 	::route_register::MSG_RESP_ADD_ROUTE response;
-	response.mutable_target()->set_type(static_cast<::common::EndPointType>(identify.type));
-	response.mutable_target()->set_id(identify.id);
+	response.mutable_target()->set_realm(realm);
+	response.mutable_target()->set_id(id);
+	response.mutable_target()->set_type(static_cast<::common::EndPointType>(type));
 	response.mutable_target()->set_auth(identify.auth);
 	*response.mutable_route() = request.instance();
 

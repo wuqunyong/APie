@@ -15,7 +15,8 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CHANNEL_rpc_5fmsg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoleIdentifier_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_SERVER_IDENTIFIER_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_STATUS_rpc_5fmsg_2eproto;
@@ -56,10 +57,30 @@ class PRC_Multiplexer_Forward_ArgsDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PRC_Multiplexer_Forward_Args> _instance;
 } _PRC_Multiplexer_Forward_Args_default_instance_;
+class EMPTYDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<EMPTY> _instance;
+} _EMPTY_default_instance_;
 class PRC_DeMultiplexer_Forward_ArgsDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PRC_DeMultiplexer_Forward_Args> _instance;
 } _PRC_DeMultiplexer_Forward_Args_default_instance_;
+class MSG_TEST_QPS_REQUESTDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_TEST_QPS_REQUEST> _instance;
+} _MSG_TEST_QPS_REQUEST_default_instance_;
+class MSG_TEST_QPS_RESPDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_TEST_QPS_RESP> _instance;
+} _MSG_TEST_QPS_RESP_default_instance_;
+class MSG_RPC_REQUEST_ECHODefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RPC_REQUEST_ECHO> _instance;
+} _MSG_RPC_REQUEST_ECHO_default_instance_;
+class MSG_RPC_RESPONSE_ECHODefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RPC_RESPONSE_ECHO> _instance;
+} _MSG_RPC_RESPONSE_ECHO_default_instance_;
 }  // namespace rpc_msg
 static void InitDefaultsscc_info_CHANNEL_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -86,10 +107,9 @@ static void InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto() {
   ::rpc_msg::CLIENT_IDENTIFIER::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto}, {
-      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,
-      &scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto}, {
+      &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_CONTROLLER_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -104,6 +124,77 @@ static void InitDefaultsscc_info_CONTROLLER_rpc_5fmsg_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CONTROLLER_rpc_5fmsg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CONTROLLER_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_EMPTY_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_EMPTY_default_instance_;
+    new (ptr) ::rpc_msg::EMPTY();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::EMPTY::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_EMPTY_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_EMPTY_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_MSG_RPC_REQUEST_ECHO_default_instance_;
+    new (ptr) ::rpc_msg::MSG_RPC_REQUEST_ECHO();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::MSG_RPC_REQUEST_ECHO::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_MSG_RPC_RESPONSE_ECHO_default_instance_;
+    new (ptr) ::rpc_msg::MSG_RPC_RESPONSE_ECHO();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::MSG_RPC_RESPONSE_ECHO::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_MSG_TEST_QPS_REQUEST_default_instance_;
+    new (ptr) ::rpc_msg::MSG_TEST_QPS_REQUEST();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::MSG_TEST_QPS_REQUEST::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_MSG_TEST_QPS_RESP_default_instance_;
+    new (ptr) ::rpc_msg::MSG_TEST_QPS_RESP();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::MSG_TEST_QPS_RESP::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto}, {
+      &scc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_PRC_DeMultiplexer_Forward_Args_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -211,7 +302,7 @@ static void InitDefaultsscc_info_STATUS_rpc_5fmsg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_STATUS_rpc_5fmsg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_STATUS_rpc_5fmsg_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_rpc_5fmsg_2eproto[10];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_rpc_5fmsg_2eproto[15];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_rpc_5fmsg_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_rpc_5fmsg_2eproto = nullptr;
 
@@ -223,6 +314,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CHANNEL, type_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CHANNEL, id_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CHANNEL, realm_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CONTROLLER, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -250,7 +342,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, required_reply_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, router_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, channel_serial_num_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, role_identifier_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::CLIENT_IDENTIFIER, is_urgency_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::SERVER_IDENTIFIER, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -296,6 +388,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_Multiplexer_Forward_Args, opcodes_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_Multiplexer_Forward_Args, body_msg_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::EMPTY, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward_Args, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -303,18 +400,52 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward_Args, role_id_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward_Args, opcodes_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward_Args, body_msg_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_REQUEST, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_REQUEST, seq_id_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_REQUEST, star_tm_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_REQUEST, origin_tm_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_RESP, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_RESP, ret_code_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_TEST_QPS_RESP, req_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, value1_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, value2_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, value1_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, value2_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
-  { 7, -1, sizeof(::rpc_msg::CONTROLLER)},
-  { 16, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 24, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 35, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 41, -1, sizeof(::rpc_msg::RPC_REQUEST)},
-  { 51, -1, sizeof(::rpc_msg::STATUS)},
-  { 60, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 71, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
-  { 79, -1, sizeof(::rpc_msg::PRC_DeMultiplexer_Forward_Args)},
+  { 8, -1, sizeof(::rpc_msg::CONTROLLER)},
+  { 17, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 25, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
+  { 36, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 42, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 52, -1, sizeof(::rpc_msg::STATUS)},
+  { 61, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
+  { 72, -1, sizeof(::rpc_msg::PRC_Multiplexer_Forward_Args)},
+  { 80, -1, sizeof(::rpc_msg::EMPTY)},
+  { 85, -1, sizeof(::rpc_msg::PRC_DeMultiplexer_Forward_Args)},
+  { 93, -1, sizeof(::rpc_msg::MSG_TEST_QPS_REQUEST)},
+  { 101, -1, sizeof(::rpc_msg::MSG_TEST_QPS_RESP)},
+  { 108, -1, sizeof(::rpc_msg::MSG_RPC_REQUEST_ECHO)},
+  { 115, -1, sizeof(::rpc_msg::MSG_RPC_RESPONSE_ECHO)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -327,66 +458,83 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_STATUS_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_RESPONSE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_PRC_Multiplexer_Forward_Args_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_EMPTY_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_PRC_DeMultiplexer_Forward_Args_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_TEST_QPS_REQUEST_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_TEST_QPS_RESP_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_RPC_REQUEST_ECHO_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_RPC_RESPONSE_ECHO_default_instance_),
 };
 
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rrpc_msg.proto\022\007rpc_msg\"#\n\007CHANNEL\022\014\n\004t"
-  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\"[\n\nCONTROLLER\022\022\n\ns"
-  "erial_num\030\001 \001(\004\022\022\n\ntimeout_ms\030\002 \001(\004\022\025\n\rs"
-  "erver_stream\030\003 \001(\010\022\016\n\006seq_id\030\004 \001(\004\"L\n\016Ro"
-  "leIdentifier\022\017\n\007user_id\030\001 \001(\004\022\r\n\005gw_id\030\002"
-  " \001(\r\022\032\n\022channel_serial_num\030\003 \001(\004\"\313\001\n\021CLI"
-  "ENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.C"
-  "HANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_reply"
-  "\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020.rpc_msg.CHANNEL"
-  "\022\032\n\022channel_serial_num\030\005 \001(\004\0220\n\017role_ide"
-  "ntifier\030\006 \001(\0132\027.rpc_msg.RoleIdentifier\"3"
-  "\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_"
-  "msg.CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006client\030\001 "
-  "\001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006serve"
-  "r\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022%\n\007o"
-  "pcodes\030\003 \001(\0162\024.rpc_msg.RPC_OPCODES\022\025\n\rse"
-  "rver_stream\030\004 \001(\010\022\021\n\targs_data\030\005 \001(\014\"E\n\006"
-  "STATUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\022\020\n\010has"
-  "_more\030\003 \001(\010\022\016\n\006offset\030\004 \001(\r\"\276\001\n\014RPC_RESP"
-  "ONSE\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CLIENT_ID"
-  "ENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SERVE"
-  "R_IDENTIFIER\022\037\n\006status\030\003 \001(\0132\017.rpc_msg.S"
-  "TATUS\022\020\n\010has_more\030\004 \001(\010\022\016\n\006offset\030\005 \001(\r\022"
-  "\023\n\013result_data\030\006 \001(\014\"k\n\034PRC_Multiplexer_"
-  "Forward_Args\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg."
-  "RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_"
-  "msg\030\003 \001(\014\"m\n\036PRC_DeMultiplexer_Forward_A"
-  "rgs\022(\n\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdent"
-  "ifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014"
-  "*\231\002\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Mu"
-  "ltiplexer_Forward\020\001\022\035\n\031RPC_DeMultiplexer"
-  "_Forward\020\002\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016R"
-  "PC_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024"
-  "\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020"
-  "\225\003\022\033\n\026RPC_MysqlQueryByFilter\020\226\003\022\030\n\023RPC_M"
-  "ysqlMultiQuery\020\227\003\022\031\n\024RPC_L2G_LoginPendin"
-  "g\020\351\007*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_O"
-  "k_Async\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_Unre"
-  "gister\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE_Er"
-  "rorServerPost\020g\022\035\n\031CODE_RouteNotLinkToSe"
-  "rver\020h\022\037\n\033CODE_RouteSendToServerError\020i\022"
-  "\031\n\025CODE_OpcodeUnregister\020j\022\027\n\023CODE_Creat"
-  "eMsgError\020k\022\030\n\024CODE_LogicThreadNull\020l\022\031\n"
-  "\025CODE_NotReceivedReply\020m\022\020\n\014CODE_NotSend"
-  "\020n\022\030\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE_Dir"
-  "tyFlagZero\020p\022\023\n\017CODE_QueryError\020q\022\037\n\033COD"
-  "E_TableNameNotExistError\020r\022\036\n\032CODE_Gener"
-  "ateQuerySQLError\020s\022\036\n\032CODE_NotMatchedRes"
-  "ultError\020tb\006proto3"
+  "\n\rrpc_msg.proto\022\007rpc_msg\"2\n\007CHANNEL\022\014\n\004t"
+  "ype\030\001 \001(\r\022\n\n\002id\030\002 \001(\r\022\r\n\005realm\030\003 \001(\r\"[\n\n"
+  "CONTROLLER\022\022\n\nserial_num\030\001 \001(\004\022\022\n\ntimeou"
+  "t_ms\030\002 \001(\004\022\025\n\rserver_stream\030\003 \001(\010\022\016\n\006seq"
+  "_id\030\004 \001(\004\"L\n\016RoleIdentifier\022\017\n\007user_id\030\001"
+  " \001(\004\022\r\n\005gw_id\030\002 \001(\r\022\032\n\022channel_serial_nu"
+  "m\030\003 \001(\004\"\255\001\n\021CLIENT_IDENTIFIER\022\036\n\004stub\030\001 "
+  "\001(\0132\020.rpc_msg.CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n"
+  "\016required_reply\030\003 \001(\010\022 \n\006router\030\004 \001(\0132\020."
+  "rpc_msg.CHANNEL\022\032\n\022channel_serial_num\030\005 "
+  "\001(\004\022\022\n\nis_urgency\030\007 \001(\010\"3\n\021SERVER_IDENTI"
+  "FIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\"\266\001\n"
+  "\013RPC_REQUEST\022*\n\006client\030\001 \001(\0132\032.rpc_msg.C"
+  "LIENT_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_m"
+  "sg.SERVER_IDENTIFIER\022%\n\007opcodes\030\003 \001(\0162\024."
+  "rpc_msg.RPC_OPCODES\022\025\n\rserver_stream\030\004 \001"
+  "(\010\022\021\n\targs_data\030\005 \001(\014\"E\n\006STATUS\022\014\n\004code\030"
+  "\001 \001(\r\022\013\n\003msg\030\002 \001(\t\022\020\n\010has_more\030\003 \001(\010\022\016\n\006"
+  "offset\030\004 \001(\r\"\276\001\n\014RPC_RESPONSE\022*\n\006client\030"
+  "\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006ser"
+  "ver\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\037\n"
+  "\006status\030\003 \001(\0132\017.rpc_msg.STATUS\022\020\n\010has_mo"
+  "re\030\004 \001(\010\022\016\n\006offset\030\005 \001(\r\022\023\n\013result_data\030"
+  "\006 \001(\014\"k\n\034PRC_Multiplexer_Forward_Args\022(\n"
+  "\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdentifier\022"
+  "\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014\"\007\n\005EM"
+  "PTY\"m\n\036PRC_DeMultiplexer_Forward_Args\022(\n"
+  "\007role_id\030\001 \001(\0132\027.rpc_msg.RoleIdentifier\022"
+  "\017\n\007opcodes\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014\"J\n\024MS"
+  "G_TEST_QPS_REQUEST\022\016\n\006seq_id\030\001 \001(\003\022\017\n\007st"
+  "ar_tm\030\002 \001(\003\022\021\n\torigin_tm\030\003 \001(\003\"Q\n\021MSG_TE"
+  "ST_QPS_RESP\022\020\n\010ret_code\030\001 \001(\005\022*\n\003req\030\002 \001"
+  "(\0132\035.rpc_msg.MSG_TEST_QPS_REQUEST\"6\n\024MSG"
+  "_RPC_REQUEST_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006val"
+  "ue2\030\002 \001(\t\"7\n\025MSG_RPC_RESPONSE_ECHO\022\016\n\006va"
+  "lue1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t*\271\002\n\013RPC_OPCOD"
+  "ES\022\014\n\010RPC_None\020\000\022\033\n\027RPC_Multiplexer_Forw"
+  "ard\020\001\022\035\n\031RPC_DeMultiplexer_Forward\020\002\022\020\n\014"
+  "RPC_EchoTest\020\n\022\027\n\022RPC_MysqlDescTable\020\221\003\022"
+  "\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020"
+  "\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDel"
+  "ete\020\225\003\022\033\n\026RPC_MysqlQueryByFilter\020\226\003\022\030\n\023R"
+  "PC_MysqlMultiQuery\020\227\003\022\014\n\007RPC_QPS\020\347\007\022\031\n\024R"
+  "PC_L2G_LoginPending\020\351\007*\343\003\n\010RPC_CODE\022\013\n\007C"
+  "ODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Time"
+  "out\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_Parse"
+  "Error\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031COD"
+  "E_RouteNotLinkToServer\020h\022\037\n\033CODE_RouteSe"
+  "ndToServerError\020i\022\031\n\025CODE_OpcodeUnregist"
+  "er\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_Lo"
+  "gicThreadNull\020l\022\031\n\025CODE_NotReceivedReply"
+  "\020m\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbE"
+  "rror\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Q"
+  "ueryError\020q\022\037\n\033CODE_TableNameNotExistErr"
+  "or\020r\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032"
+  "CODE_NotMatchedResultError\020tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc_5fmsg_2eproto_sccs[10] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc_5fmsg_2eproto_sccs[15] = {
   &scc_info_CHANNEL_rpc_5fmsg_2eproto.base,
   &scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto.base,
   &scc_info_CONTROLLER_rpc_5fmsg_2eproto.base,
+  &scc_info_EMPTY_rpc_5fmsg_2eproto.base,
+  &scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base,
+  &scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base,
+  &scc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto.base,
+  &scc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto.base,
   &scc_info_PRC_DeMultiplexer_Forward_Args_rpc_5fmsg_2eproto.base,
   &scc_info_PRC_Multiplexer_Forward_Args_rpc_5fmsg_2eproto.base,
   &scc_info_RPC_REQUEST_rpc_5fmsg_2eproto.base,
@@ -398,10 +546,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1938,
-  &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 10, 0,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 2236,
+  &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 15, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
-  file_level_metadata_rpc_5fmsg_2eproto, 10, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
+  file_level_metadata_rpc_5fmsg_2eproto, 15, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -416,6 +564,7 @@ bool RPC_OPCODES_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 10:
     case 401:
     case 402:
     case 403:
@@ -423,6 +572,7 @@ bool RPC_OPCODES_IsValid(int value) {
     case 405:
     case 406:
     case 407:
+    case 999:
     case 1001:
       return true;
     default:
@@ -480,15 +630,15 @@ CHANNEL::CHANNEL(const CHANNEL& from)
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&type_, &from.type_,
-    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
-    reinterpret_cast<char*>(&type_)) + sizeof(id_));
+    static_cast<size_t>(reinterpret_cast<char*>(&realm_) -
+    reinterpret_cast<char*>(&type_)) + sizeof(realm_));
   // @@protoc_insertion_point(copy_constructor:rpc_msg.CHANNEL)
 }
 
 void CHANNEL::SharedCtor() {
   ::memset(&type_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&id_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+      reinterpret_cast<char*>(&realm_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(realm_));
 }
 
 CHANNEL::~CHANNEL() {
@@ -515,8 +665,8 @@ void CHANNEL::Clear() {
   (void) cached_has_bits;
 
   ::memset(&type_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&id_) -
-      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+      reinterpret_cast<char*>(&realm_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(realm_));
   _internal_metadata_.Clear();
 }
 
@@ -538,6 +688,13 @@ const char* CHANNEL::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 realm = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          realm_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -579,6 +736,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_id(), target);
   }
 
+  // uint32 realm = 3;
+  if (this->realm() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_realm(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -607,6 +770,13 @@ size_t CHANNEL::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_id());
+  }
+
+  // uint32 realm = 3;
+  if (this->realm() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_realm());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -646,6 +816,9 @@ void CHANNEL::MergeFrom(const CHANNEL& from) {
   if (from.id() != 0) {
     _internal_set_id(from._internal_id());
   }
+  if (from.realm() != 0) {
+    _internal_set_realm(from._internal_realm());
+  }
 }
 
 void CHANNEL::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -671,6 +844,7 @@ void CHANNEL::InternalSwap(CHANNEL* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(type_, other->type_);
   swap(id_, other->id_);
+  swap(realm_, other->realm_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata CHANNEL::GetMetadata() const {
@@ -1187,14 +1361,11 @@ void CLIENT_IDENTIFIER::InitAsDefaultInstance() {
       ::rpc_msg::CHANNEL::internal_default_instance());
   ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->router_ = const_cast< ::rpc_msg::CHANNEL*>(
       ::rpc_msg::CHANNEL::internal_default_instance());
-  ::rpc_msg::_CLIENT_IDENTIFIER_default_instance_._instance.get_mutable()->role_identifier_ = const_cast< ::rpc_msg::RoleIdentifier*>(
-      ::rpc_msg::RoleIdentifier::internal_default_instance());
 }
 class CLIENT_IDENTIFIER::_Internal {
  public:
   static const ::rpc_msg::CHANNEL& stub(const CLIENT_IDENTIFIER* msg);
   static const ::rpc_msg::CHANNEL& router(const CLIENT_IDENTIFIER* msg);
-  static const ::rpc_msg::RoleIdentifier& role_identifier(const CLIENT_IDENTIFIER* msg);
 };
 
 const ::rpc_msg::CHANNEL&
@@ -1204,10 +1375,6 @@ CLIENT_IDENTIFIER::_Internal::stub(const CLIENT_IDENTIFIER* msg) {
 const ::rpc_msg::CHANNEL&
 CLIENT_IDENTIFIER::_Internal::router(const CLIENT_IDENTIFIER* msg) {
   return *msg->router_;
-}
-const ::rpc_msg::RoleIdentifier&
-CLIENT_IDENTIFIER::_Internal::role_identifier(const CLIENT_IDENTIFIER* msg) {
-  return *msg->role_identifier_;
 }
 CLIENT_IDENTIFIER::CLIENT_IDENTIFIER()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -1228,22 +1395,17 @@ CLIENT_IDENTIFIER::CLIENT_IDENTIFIER(const CLIENT_IDENTIFIER& from)
   } else {
     router_ = nullptr;
   }
-  if (from._internal_has_role_identifier()) {
-    role_identifier_ = new ::rpc_msg::RoleIdentifier(*from.role_identifier_);
-  } else {
-    role_identifier_ = nullptr;
-  }
   ::memcpy(&seq_id_, &from.seq_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&required_reply_) -
-    reinterpret_cast<char*>(&seq_id_)) + sizeof(required_reply_));
+    static_cast<size_t>(reinterpret_cast<char*>(&is_urgency_) -
+    reinterpret_cast<char*>(&seq_id_)) + sizeof(is_urgency_));
   // @@protoc_insertion_point(copy_constructor:rpc_msg.CLIENT_IDENTIFIER)
 }
 
 void CLIENT_IDENTIFIER::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto.base);
   ::memset(&stub_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&required_reply_) -
-      reinterpret_cast<char*>(&stub_)) + sizeof(required_reply_));
+      reinterpret_cast<char*>(&is_urgency_) -
+      reinterpret_cast<char*>(&stub_)) + sizeof(is_urgency_));
 }
 
 CLIENT_IDENTIFIER::~CLIENT_IDENTIFIER() {
@@ -1254,7 +1416,6 @@ CLIENT_IDENTIFIER::~CLIENT_IDENTIFIER() {
 void CLIENT_IDENTIFIER::SharedDtor() {
   if (this != internal_default_instance()) delete stub_;
   if (this != internal_default_instance()) delete router_;
-  if (this != internal_default_instance()) delete role_identifier_;
 }
 
 void CLIENT_IDENTIFIER::SetCachedSize(int size) const {
@@ -1280,13 +1441,9 @@ void CLIENT_IDENTIFIER::Clear() {
     delete router_;
   }
   router_ = nullptr;
-  if (GetArenaNoVirtual() == nullptr && role_identifier_ != nullptr) {
-    delete role_identifier_;
-  }
-  role_identifier_ = nullptr;
   ::memset(&seq_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&required_reply_) -
-      reinterpret_cast<char*>(&seq_id_)) + sizeof(required_reply_));
+      reinterpret_cast<char*>(&is_urgency_) -
+      reinterpret_cast<char*>(&seq_id_)) + sizeof(is_urgency_));
   _internal_metadata_.Clear();
 }
 
@@ -1332,10 +1489,10 @@ const char* CLIENT_IDENTIFIER::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .rpc_msg.RoleIdentifier role_identifier = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
-          ptr = ctx->ParseMessage(_internal_mutable_role_identifier(), ptr);
+      // bool is_urgency = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          is_urgency_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1399,12 +1556,10 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_channel_serial_num(), target);
   }
 
-  // .rpc_msg.RoleIdentifier role_identifier = 6;
-  if (this->has_role_identifier()) {
+  // bool is_urgency = 7;
+  if (this->is_urgency() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        6, _Internal::role_identifier(this), target, stream);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(7, this->_internal_is_urgency(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1437,13 +1592,6 @@ size_t CLIENT_IDENTIFIER::ByteSizeLong() const {
         *router_);
   }
 
-  // .rpc_msg.RoleIdentifier role_identifier = 6;
-  if (this->has_role_identifier()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *role_identifier_);
-  }
-
   // uint64 seq_id = 2;
   if (this->seq_id() != 0) {
     total_size += 1 +
@@ -1460,6 +1608,11 @@ size_t CLIENT_IDENTIFIER::ByteSizeLong() const {
 
   // bool required_reply = 3;
   if (this->required_reply() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool is_urgency = 7;
+  if (this->is_urgency() != 0) {
     total_size += 1 + 1;
   }
 
@@ -1500,9 +1653,6 @@ void CLIENT_IDENTIFIER::MergeFrom(const CLIENT_IDENTIFIER& from) {
   if (from.has_router()) {
     _internal_mutable_router()->::rpc_msg::CHANNEL::MergeFrom(from._internal_router());
   }
-  if (from.has_role_identifier()) {
-    _internal_mutable_role_identifier()->::rpc_msg::RoleIdentifier::MergeFrom(from._internal_role_identifier());
-  }
   if (from.seq_id() != 0) {
     _internal_set_seq_id(from._internal_seq_id());
   }
@@ -1511,6 +1661,9 @@ void CLIENT_IDENTIFIER::MergeFrom(const CLIENT_IDENTIFIER& from) {
   }
   if (from.required_reply() != 0) {
     _internal_set_required_reply(from._internal_required_reply());
+  }
+  if (from.is_urgency() != 0) {
+    _internal_set_is_urgency(from._internal_is_urgency());
   }
 }
 
@@ -1537,10 +1690,10 @@ void CLIENT_IDENTIFIER::InternalSwap(CLIENT_IDENTIFIER* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(stub_, other->stub_);
   swap(router_, other->router_);
-  swap(role_identifier_, other->role_identifier_);
   swap(seq_id_, other->seq_id_);
   swap(channel_serial_num_, other->channel_serial_num_);
   swap(required_reply_, other->required_reply_);
+  swap(is_urgency_, other->is_urgency_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata CLIENT_IDENTIFIER::GetMetadata() const {
@@ -3012,6 +3165,160 @@ void PRC_Multiplexer_Forward_Args::InternalSwap(PRC_Multiplexer_Forward_Args* ot
 
 // ===================================================================
 
+void EMPTY::InitAsDefaultInstance() {
+}
+class EMPTY::_Internal {
+ public:
+};
+
+EMPTY::EMPTY()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.EMPTY)
+}
+EMPTY::EMPTY(const EMPTY& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.EMPTY)
+}
+
+void EMPTY::SharedCtor() {
+}
+
+EMPTY::~EMPTY() {
+  // @@protoc_insertion_point(destructor:rpc_msg.EMPTY)
+  SharedDtor();
+}
+
+void EMPTY::SharedDtor() {
+}
+
+void EMPTY::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const EMPTY& EMPTY::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_EMPTY_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void EMPTY::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.EMPTY)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+const char* EMPTY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* EMPTY::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.EMPTY)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.EMPTY)
+  return target;
+}
+
+size_t EMPTY::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.EMPTY)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void EMPTY::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.EMPTY)
+  GOOGLE_DCHECK_NE(&from, this);
+  const EMPTY* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<EMPTY>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.EMPTY)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.EMPTY)
+    MergeFrom(*source);
+  }
+}
+
+void EMPTY::MergeFrom(const EMPTY& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.EMPTY)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void EMPTY::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.EMPTY)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void EMPTY::CopyFrom(const EMPTY& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.EMPTY)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool EMPTY::IsInitialized() const {
+  return true;
+}
+
+void EMPTY::InternalSwap(EMPTY* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata EMPTY::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 void PRC_DeMultiplexer_Forward_Args::InitAsDefaultInstance() {
   ::rpc_msg::_PRC_DeMultiplexer_Forward_Args_default_instance_._instance.get_mutable()->role_id_ = const_cast< ::rpc_msg::RoleIdentifier*>(
       ::rpc_msg::RoleIdentifier::internal_default_instance());
@@ -3276,6 +3583,930 @@ void PRC_DeMultiplexer_Forward_Args::InternalSwap(PRC_DeMultiplexer_Forward_Args
 }
 
 
+// ===================================================================
+
+void MSG_TEST_QPS_REQUEST::InitAsDefaultInstance() {
+}
+class MSG_TEST_QPS_REQUEST::_Internal {
+ public:
+};
+
+MSG_TEST_QPS_REQUEST::MSG_TEST_QPS_REQUEST()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.MSG_TEST_QPS_REQUEST)
+}
+MSG_TEST_QPS_REQUEST::MSG_TEST_QPS_REQUEST(const MSG_TEST_QPS_REQUEST& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&seq_id_, &from.seq_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&origin_tm_) -
+    reinterpret_cast<char*>(&seq_id_)) + sizeof(origin_tm_));
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_TEST_QPS_REQUEST)
+}
+
+void MSG_TEST_QPS_REQUEST::SharedCtor() {
+  ::memset(&seq_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&origin_tm_) -
+      reinterpret_cast<char*>(&seq_id_)) + sizeof(origin_tm_));
+}
+
+MSG_TEST_QPS_REQUEST::~MSG_TEST_QPS_REQUEST() {
+  // @@protoc_insertion_point(destructor:rpc_msg.MSG_TEST_QPS_REQUEST)
+  SharedDtor();
+}
+
+void MSG_TEST_QPS_REQUEST::SharedDtor() {
+}
+
+void MSG_TEST_QPS_REQUEST::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_TEST_QPS_REQUEST& MSG_TEST_QPS_REQUEST::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_TEST_QPS_REQUEST_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_TEST_QPS_REQUEST::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&seq_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&origin_tm_) -
+      reinterpret_cast<char*>(&seq_id_)) + sizeof(origin_tm_));
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_TEST_QPS_REQUEST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // int64 seq_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          seq_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int64 star_tm = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          star_tm_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int64 origin_tm = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          origin_tm_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_TEST_QPS_REQUEST::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int64 seq_id = 1;
+  if (this->seq_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_seq_id(), target);
+  }
+
+  // int64 star_tm = 2;
+  if (this->star_tm() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_star_tm(), target);
+  }
+
+  // int64 origin_tm = 3;
+  if (this->origin_tm() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_origin_tm(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_TEST_QPS_REQUEST)
+  return target;
+}
+
+size_t MSG_TEST_QPS_REQUEST::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int64 seq_id = 1;
+  if (this->seq_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_seq_id());
+  }
+
+  // int64 star_tm = 2;
+  if (this->star_tm() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_star_tm());
+  }
+
+  // int64 origin_tm = 3;
+  if (this->origin_tm() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_origin_tm());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_TEST_QPS_REQUEST::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_TEST_QPS_REQUEST* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_TEST_QPS_REQUEST>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_TEST_QPS_REQUEST)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_TEST_QPS_REQUEST)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_TEST_QPS_REQUEST::MergeFrom(const MSG_TEST_QPS_REQUEST& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.seq_id() != 0) {
+    _internal_set_seq_id(from._internal_seq_id());
+  }
+  if (from.star_tm() != 0) {
+    _internal_set_star_tm(from._internal_star_tm());
+  }
+  if (from.origin_tm() != 0) {
+    _internal_set_origin_tm(from._internal_origin_tm());
+  }
+}
+
+void MSG_TEST_QPS_REQUEST::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_TEST_QPS_REQUEST::CopyFrom(const MSG_TEST_QPS_REQUEST& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_TEST_QPS_REQUEST)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_TEST_QPS_REQUEST::IsInitialized() const {
+  return true;
+}
+
+void MSG_TEST_QPS_REQUEST::InternalSwap(MSG_TEST_QPS_REQUEST* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(seq_id_, other->seq_id_);
+  swap(star_tm_, other->star_tm_);
+  swap(origin_tm_, other->origin_tm_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_TEST_QPS_REQUEST::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MSG_TEST_QPS_RESP::InitAsDefaultInstance() {
+  ::rpc_msg::_MSG_TEST_QPS_RESP_default_instance_._instance.get_mutable()->req_ = const_cast< ::rpc_msg::MSG_TEST_QPS_REQUEST*>(
+      ::rpc_msg::MSG_TEST_QPS_REQUEST::internal_default_instance());
+}
+class MSG_TEST_QPS_RESP::_Internal {
+ public:
+  static const ::rpc_msg::MSG_TEST_QPS_REQUEST& req(const MSG_TEST_QPS_RESP* msg);
+};
+
+const ::rpc_msg::MSG_TEST_QPS_REQUEST&
+MSG_TEST_QPS_RESP::_Internal::req(const MSG_TEST_QPS_RESP* msg) {
+  return *msg->req_;
+}
+MSG_TEST_QPS_RESP::MSG_TEST_QPS_RESP()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.MSG_TEST_QPS_RESP)
+}
+MSG_TEST_QPS_RESP::MSG_TEST_QPS_RESP(const MSG_TEST_QPS_RESP& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._internal_has_req()) {
+    req_ = new ::rpc_msg::MSG_TEST_QPS_REQUEST(*from.req_);
+  } else {
+    req_ = nullptr;
+  }
+  ret_code_ = from.ret_code_;
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_TEST_QPS_RESP)
+}
+
+void MSG_TEST_QPS_RESP::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto.base);
+  ::memset(&req_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&ret_code_) -
+      reinterpret_cast<char*>(&req_)) + sizeof(ret_code_));
+}
+
+MSG_TEST_QPS_RESP::~MSG_TEST_QPS_RESP() {
+  // @@protoc_insertion_point(destructor:rpc_msg.MSG_TEST_QPS_RESP)
+  SharedDtor();
+}
+
+void MSG_TEST_QPS_RESP::SharedDtor() {
+  if (this != internal_default_instance()) delete req_;
+}
+
+void MSG_TEST_QPS_RESP::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_TEST_QPS_RESP& MSG_TEST_QPS_RESP::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_TEST_QPS_RESP_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_TEST_QPS_RESP::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_TEST_QPS_RESP)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaNoVirtual() == nullptr && req_ != nullptr) {
+    delete req_;
+  }
+  req_ = nullptr;
+  ret_code_ = 0;
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_TEST_QPS_RESP::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // int32 ret_code = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ret_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .rpc_msg.MSG_TEST_QPS_REQUEST req = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_req(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_TEST_QPS_RESP::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_TEST_QPS_RESP)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 ret_code = 1;
+  if (this->ret_code() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_ret_code(), target);
+  }
+
+  // .rpc_msg.MSG_TEST_QPS_REQUEST req = 2;
+  if (this->has_req()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::req(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_TEST_QPS_RESP)
+  return target;
+}
+
+size_t MSG_TEST_QPS_RESP::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_TEST_QPS_RESP)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .rpc_msg.MSG_TEST_QPS_REQUEST req = 2;
+  if (this->has_req()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *req_);
+  }
+
+  // int32 ret_code = 1;
+  if (this->ret_code() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_ret_code());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_TEST_QPS_RESP::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_TEST_QPS_RESP)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_TEST_QPS_RESP* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_TEST_QPS_RESP>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_TEST_QPS_RESP)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_TEST_QPS_RESP)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_TEST_QPS_RESP::MergeFrom(const MSG_TEST_QPS_RESP& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_TEST_QPS_RESP)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_req()) {
+    _internal_mutable_req()->::rpc_msg::MSG_TEST_QPS_REQUEST::MergeFrom(from._internal_req());
+  }
+  if (from.ret_code() != 0) {
+    _internal_set_ret_code(from._internal_ret_code());
+  }
+}
+
+void MSG_TEST_QPS_RESP::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_TEST_QPS_RESP)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_TEST_QPS_RESP::CopyFrom(const MSG_TEST_QPS_RESP& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_TEST_QPS_RESP)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_TEST_QPS_RESP::IsInitialized() const {
+  return true;
+}
+
+void MSG_TEST_QPS_RESP::InternalSwap(MSG_TEST_QPS_RESP* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(req_, other->req_);
+  swap(ret_code_, other->ret_code_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_TEST_QPS_RESP::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MSG_RPC_REQUEST_ECHO::InitAsDefaultInstance() {
+}
+class MSG_RPC_REQUEST_ECHO::_Internal {
+ public:
+};
+
+MSG_RPC_REQUEST_ECHO::MSG_RPC_REQUEST_ECHO()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+}
+MSG_RPC_REQUEST_ECHO::MSG_RPC_REQUEST_ECHO(const MSG_RPC_REQUEST_ECHO& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_value2().empty()) {
+    value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
+  }
+  value1_ = from.value1_;
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+}
+
+void MSG_RPC_REQUEST_ECHO::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base);
+  value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value1_ = PROTOBUF_ULONGLONG(0);
+}
+
+MSG_RPC_REQUEST_ECHO::~MSG_RPC_REQUEST_ECHO() {
+  // @@protoc_insertion_point(destructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  SharedDtor();
+}
+
+void MSG_RPC_REQUEST_ECHO::SharedDtor() {
+  value2_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void MSG_RPC_REQUEST_ECHO::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_RPC_REQUEST_ECHO& MSG_RPC_REQUEST_ECHO::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_RPC_REQUEST_ECHO::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  value2_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value1_ = PROTOBUF_ULONGLONG(0);
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_RPC_REQUEST_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint64 value1 = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          value1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string value2 = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_value2();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.MSG_RPC_REQUEST_ECHO.value2"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_RPC_REQUEST_ECHO::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 value1 = 1;
+  if (this->value1() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_value1(), target);
+  }
+
+  // string value2 = 2;
+  if (this->value2().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rpc_msg.MSG_RPC_REQUEST_ECHO.value2");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_value2(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  return target;
+}
+
+size_t MSG_RPC_REQUEST_ECHO::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string value2 = 2;
+  if (this->value2().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_value2());
+  }
+
+  // uint64 value1 = 1;
+  if (this->value1() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_value1());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_RPC_REQUEST_ECHO::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_RPC_REQUEST_ECHO* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_RPC_REQUEST_ECHO>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_RPC_REQUEST_ECHO)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_RPC_REQUEST_ECHO)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_RPC_REQUEST_ECHO::MergeFrom(const MSG_RPC_REQUEST_ECHO& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.value2().size() > 0) {
+
+    value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
+  }
+  if (from.value1() != 0) {
+    _internal_set_value1(from._internal_value1());
+  }
+}
+
+void MSG_RPC_REQUEST_ECHO::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_RPC_REQUEST_ECHO::CopyFrom(const MSG_RPC_REQUEST_ECHO& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_RPC_REQUEST_ECHO::IsInitialized() const {
+  return true;
+}
+
+void MSG_RPC_REQUEST_ECHO::InternalSwap(MSG_RPC_REQUEST_ECHO* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  value2_.Swap(&other->value2_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(value1_, other->value1_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_RPC_REQUEST_ECHO::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MSG_RPC_RESPONSE_ECHO::InitAsDefaultInstance() {
+}
+class MSG_RPC_RESPONSE_ECHO::_Internal {
+ public:
+};
+
+MSG_RPC_RESPONSE_ECHO::MSG_RPC_RESPONSE_ECHO()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+}
+MSG_RPC_RESPONSE_ECHO::MSG_RPC_RESPONSE_ECHO(const MSG_RPC_RESPONSE_ECHO& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_value2().empty()) {
+    value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
+  }
+  value1_ = from.value1_;
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+}
+
+void MSG_RPC_RESPONSE_ECHO::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base);
+  value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value1_ = PROTOBUF_ULONGLONG(0);
+}
+
+MSG_RPC_RESPONSE_ECHO::~MSG_RPC_RESPONSE_ECHO() {
+  // @@protoc_insertion_point(destructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  SharedDtor();
+}
+
+void MSG_RPC_RESPONSE_ECHO::SharedDtor() {
+  value2_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void MSG_RPC_RESPONSE_ECHO::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MSG_RPC_RESPONSE_ECHO& MSG_RPC_RESPONSE_ECHO::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MSG_RPC_RESPONSE_ECHO::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  value2_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value1_ = PROTOBUF_ULONGLONG(0);
+  _internal_metadata_.Clear();
+}
+
+const char* MSG_RPC_RESPONSE_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint64 value1 = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          value1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string value2 = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_value2();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.MSG_RPC_RESPONSE_ECHO.value2"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MSG_RPC_RESPONSE_ECHO::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 value1 = 1;
+  if (this->value1() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_value1(), target);
+  }
+
+  // string value2 = 2;
+  if (this->value2().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rpc_msg.MSG_RPC_RESPONSE_ECHO.value2");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_value2(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  return target;
+}
+
+size_t MSG_RPC_RESPONSE_ECHO::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string value2 = 2;
+  if (this->value2().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_value2());
+  }
+
+  // uint64 value1 = 1;
+  if (this->value1() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_value1());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MSG_RPC_RESPONSE_ECHO::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MSG_RPC_RESPONSE_ECHO* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_RPC_RESPONSE_ECHO>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+    MergeFrom(*source);
+  }
+}
+
+void MSG_RPC_RESPONSE_ECHO::MergeFrom(const MSG_RPC_RESPONSE_ECHO& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.value2().size() > 0) {
+
+    value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
+  }
+  if (from.value1() != 0) {
+    _internal_set_value1(from._internal_value1());
+  }
+}
+
+void MSG_RPC_RESPONSE_ECHO::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MSG_RPC_RESPONSE_ECHO::CopyFrom(const MSG_RPC_RESPONSE_ECHO& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MSG_RPC_RESPONSE_ECHO::IsInitialized() const {
+  return true;
+}
+
+void MSG_RPC_RESPONSE_ECHO::InternalSwap(MSG_RPC_RESPONSE_ECHO* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  value2_.Swap(&other->value2_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(value1_, other->value1_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MSG_RPC_RESPONSE_ECHO::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace rpc_msg
 PROTOBUF_NAMESPACE_OPEN
@@ -3306,8 +4537,23 @@ template<> PROTOBUF_NOINLINE ::rpc_msg::RPC_RESPONSE* Arena::CreateMaybeMessage<
 template<> PROTOBUF_NOINLINE ::rpc_msg::PRC_Multiplexer_Forward_Args* Arena::CreateMaybeMessage< ::rpc_msg::PRC_Multiplexer_Forward_Args >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::PRC_Multiplexer_Forward_Args >(arena);
 }
+template<> PROTOBUF_NOINLINE ::rpc_msg::EMPTY* Arena::CreateMaybeMessage< ::rpc_msg::EMPTY >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::EMPTY >(arena);
+}
 template<> PROTOBUF_NOINLINE ::rpc_msg::PRC_DeMultiplexer_Forward_Args* Arena::CreateMaybeMessage< ::rpc_msg::PRC_DeMultiplexer_Forward_Args >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::PRC_DeMultiplexer_Forward_Args >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_TEST_QPS_REQUEST* Arena::CreateMaybeMessage< ::rpc_msg::MSG_TEST_QPS_REQUEST >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::MSG_TEST_QPS_REQUEST >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_TEST_QPS_RESP* Arena::CreateMaybeMessage< ::rpc_msg::MSG_TEST_QPS_RESP >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::MSG_TEST_QPS_RESP >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_RPC_REQUEST_ECHO* Arena::CreateMaybeMessage< ::rpc_msg::MSG_RPC_REQUEST_ECHO >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::MSG_RPC_REQUEST_ECHO >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_RPC_RESPONSE_ECHO* Arena::CreateMaybeMessage< ::rpc_msg::MSG_RPC_RESPONSE_ECHO >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::MSG_RPC_RESPONSE_ECHO >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

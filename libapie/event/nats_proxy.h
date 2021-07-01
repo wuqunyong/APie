@@ -141,7 +141,7 @@ namespace Event {
 					return iRC;
 				}
 
-				std::string sSub = sub_topic_ + "/" + channel;
+				std::string sSub = APie::Event::NatsManager::GetCombineTopicChannel(sub_topic_, channel);
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -209,8 +209,8 @@ namespace Event {
 					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handlePublish|%s", ss.str().c_str());
 					return 1;
 				}
-			
-				std::string sPub = pub_topic_ + "/" + channel;
+
+				std::string sPub = APie::Event::NatsManager::GetCombineTopicChannel(pub_topic_, channel);
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -302,7 +302,9 @@ namespace Event {
 			int32_t publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
 
 		public:
-			static std::string GetTopicChannel(uint32_t type, uint32_t id);
+			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);
+			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
+
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
 
 			void Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
@@ -311,7 +313,7 @@ namespace Event {
 			void NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg);
 			void runIntervalCallbacks();
 
-			std::shared_ptr<PrxoyNATSConnector> createConnection(uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains);
+			std::shared_ptr<PrxoyNATSConnector> createConnection(uint32_t realm, uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains);
 
 		private:
 			NatsManager(const NatsManager&) = delete;

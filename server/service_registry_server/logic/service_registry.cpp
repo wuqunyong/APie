@@ -114,6 +114,7 @@ bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 	auto curTime = APie::CtxSingleton::get().getCurSeconds();
 
 	EndPoint point;
+	point.realm = instance.realm();
 	point.type = instance.type();
 	point.id = instance.id();
 
@@ -167,6 +168,7 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 	if (findIte != m_registered.end())
 	{
 		EndPoint point;
+		point.realm = findIte->second.instance.realm();
 		point.type = findIte->second.instance.type();
 		point.id = findIte->second.instance.id();
 

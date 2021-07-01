@@ -19,13 +19,14 @@ enum UpdateMode
 
 message EndPointInstance
 {
-	common.EndPointType type = 1;
-	uint32 id = 2;
-	string auth = 3;
-	string ip = 4;
-	uint32 port = 5;
-	uint32 codec_type = 6;
-	uint32 mask_flag = 7;
+	uint32 realm = 1;
+	common.EndPointType type = 2;
+	uint32 id = 3;
+	string auth = 4;
+	string ip = 5;
+	uint32 port = 6;
+	uint32 codec_type = 7;
+	uint32 mask_flag = 8;
 }
 
 // 注册服务节点 register

@@ -11,7 +11,7 @@
 
 #include <event2/util.h>
 
-#define USE_NATS_PROXY true
+//#define USE_NATS_PROXY true
 
 namespace APie {
 namespace RPC {
