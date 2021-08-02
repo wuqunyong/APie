@@ -1,25 +1,5 @@
 [# Welcome to APie!](https://github.com/wuqunyong/APie)
 
-# Docker安装
-## 拉取环境镜像
-```shell
-    docker pull wuqunyong/apie-env
-```
-## 运行容器
-```shell
-    docker run -i -t wuqunyong/apie-env /bin/bash
-```
-## 编译
-```shell
-scl enable devtoolset-8 bash
-cd /root/
-git clone https://github.com/wuqunyong/APie.git
-cd /root/APie/
-chmod +x ./bootstrap.sh
-./bootstrap.sh
-./configure
-make rpm
-```
 
 # CentOS 7 x64安装
 ## 依赖
@@ -32,7 +12,7 @@ make rpm
 
 ## 安装依赖
 ```shell
-yum install -y mysql-devel mysql-server lrzsz curl-devel openssl openssl-devel readline-devel pcre pcre-devel zlib zlib-devel libevent libevent-devel gcc gcc-c++ rpm-build automake libtool lz4-devel
+yum install -y mysql-devel mysql-server lrzsz curl-devel openssl openssl-devel readline-devel pcre pcre-devel zlib zlib-devel gcc gcc-c++ rpm-build automake libtool lz4-devel
 ```
 ## 安装git
 ```
@@ -47,6 +27,7 @@ cd /root/APie/download/
 cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
 cp protobuf-3.11.4.zip /root/
 cp yaml-cpp-master.zip /root/
+cp libevent-release-2.1.11-stable.zip /root/
 cd /root/
 ```
 ### 安装cmake
@@ -71,6 +52,15 @@ make
 make check
 make install
 ldconfig
+```
+### 安装libevent
+```shell
+unzip libevent-release-2.1.11-stable.zip
+cd libevent-release-2.1.11-stable
+mkdir build && cd build
+cmake ..
+make
+make install
 ```
 ### 安装yaml
 ```shell
@@ -99,6 +89,16 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 # Build the library
 make
 # Install the library
+make install
+```
+
+### 安装nats
+```shell
+git clone https://github.com/nats-io/nats.c.git
+cd nats.c/
+mkdir build && cd build
+cmake .. -DNATS_BUILD_STREAMING=OFF
+make
 make install
 ```
 ## 编译
