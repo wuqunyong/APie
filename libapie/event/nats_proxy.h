@@ -31,7 +31,7 @@ namespace APie {
 namespace Event {
 
 		class NatsManager;
-		
+
 		struct NATSTLSConfig {
 			std::string ca_cert;
 			std::string tls_key;
@@ -45,6 +45,8 @@ namespace Event {
 			static void ClosedCb(natsConnection* nc, void* closure);
 			static void ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure);
 
+			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
+			
 		protected:
 			NATSConnectorBase(std::string nats_server, std::unique_ptr<NATSTLSConfig> tls_config)
 				: nats_server_(nats_server), tls_config_(std::move(tls_config)) {}
@@ -143,7 +145,7 @@ namespace Event {
 					return iRC;
 				}
 
-				std::string sSub = APie::Event::NatsManager::GetCombineTopicChannel(sub_topic_, channel);
+				std::string sSub = APie::Event::NATSConnectorBase::GetCombineTopicChannel(sub_topic_, channel);
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -212,7 +214,7 @@ namespace Event {
 					return 1;
 				}
 
-				std::string sPub = APie::Event::NatsManager::GetCombineTopicChannel(pub_topic_, channel);
+				std::string sPub = APie::Event::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -305,7 +307,6 @@ namespace Event {
 
 		public:
 			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);
-			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
 
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
 

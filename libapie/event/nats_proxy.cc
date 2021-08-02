@@ -161,6 +161,12 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	}
 }
 
+std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
+{
+	std::string topic = domains + "/" + channel;
+	return topic;
+}
+
 NatsManager::NatsManager() : nats_realm(nullptr)
 {
 
@@ -547,12 +553,6 @@ std::string NatsManager::GetTopicChannel(uint32_t realm, uint32_t type, uint32_t
 {
 	std::string channel = std::to_string(realm) + "/" + std::to_string(type) + "/" + std::to_string(id);
 	return channel;
-}
-
-std::string NatsManager::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
-{
-	std::string topic = domains + "/" + channel;
-	return topic;
 }
 
 
