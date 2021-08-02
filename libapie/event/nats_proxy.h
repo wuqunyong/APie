@@ -30,6 +30,8 @@
 namespace APie {
 namespace Event {
 
+		class NatsManager;
+		
 		struct NATSTLSConfig {
 			std::string ca_cert;
 			std::string tls_key;
