@@ -454,7 +454,7 @@ namespace RPC {
 					return;
 
 				//  Trigger the timer.
-				auto findIte = m_reply.find(it->first);
+				auto findIte = m_reply.find(it->second.id);
 				if (findIte != m_reply.end())
 				{
 					::rpc_msg::STATUS status;
@@ -463,7 +463,7 @@ namespace RPC {
 
 					m_reply.erase(findIte);
 				}
-				m_serverStream.erase(it->first);
+				m_serverStream.erase(it->second.id);
 
 				//  Remove it from the list of active timers.
 				auto o = it;
