@@ -21,7 +21,7 @@ service_registry:
   type: 1
 log:
   merge: true
-  level: 3
+  level: 0
   show_pos: true
   show_console: true
   split_size: 128
